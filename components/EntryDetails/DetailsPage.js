@@ -19,7 +19,7 @@ const DetailsPage = () => {
     <div className="w-full h-screen p-14">
       <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative">
         <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
-          <FontAwesomeIcon icon={faArrowLeft}  className="goback"/>
+          <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
         </Link>
 
         <div className="m-4 p-4 pl-14  w-full ">

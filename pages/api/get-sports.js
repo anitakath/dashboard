@@ -29,13 +29,3 @@ export default function handler(req, res) {
 }
 
 
-/*
-export default function handler(req, res) {
-  const sports = [
-    { name: "Figure Skating", entries: [] },
-    { name: "Poledance", entries: [] },
-    { name: "Yoga", entries: [] }
-  ];
-  res.status(200).json({ sports });
-}
-*/

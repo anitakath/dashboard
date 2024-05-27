@@ -18,3 +18,58 @@
     color: beige;
     background-color: var(--purpleDarkHover);
 }
+
+
+
+/* SUMMARY SECTION*/
+
+.year_input{
+    border: none;
+    margin: 0px 5px;
+}
+
+.chevron{
+    color: var(--purpleDarkHover);
+    transition: 0.2s ease;
+    font-size:1.4rem;
+
+}
+
+.chevron:hover{
+    color: var(--purpleDark);
+}
+
+
+
+.add_entry_btn{
+    color: var(--purpleDarkHover);
+    font-size: 1.3rem;
+    margin: 20px 0px 10px 0px;
+    padding: 10px 5px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    width: 150px;
+}
+
+.add_entry_btn:hover{
+    color: beige; 
+    background-color: var(--purpleDarkHover);
+}
+
+
+
+
+
+
+
+
+/* SUMMARY */
+
+.month{
+    height: 100px;
+    border: 1px solid var(--purpleDark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
