@@ -6,15 +6,24 @@ import styles from './Dashboard.module.css'
 import Navigation from '../Navigation/Navigation';
 import Board from '../Main/Board'
 
+//REDUX
+import { useSelector, useDispatch } from "react-redux";
+
 
 const Dashboard = () =>{
 
-    return (
-      <div className="w-full h-full p-4 border-4">
+  const allSports = useSelector((state) => state.sport.allSports);
+  const currentSport = useSelector((state) => state.sport.selectedSport);
 
-        <div className='flex w-full h-full border-8 m-0 p-0 relative'>
+  console.log(allSports)
+  console.log(currentSport)
+
+    return (
+      <div className="w-full h-full p-4">
+
+        <div className='flex w-full h-full border-2 py-2 m-0 p-0 relative'>
           <Navigation />
-          <Board/>
+          <Board currentSport={currentSport} allSports={allSports} />
         </div>
       </div>
     ); 

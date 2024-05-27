@@ -5,10 +5,10 @@
 
 .subtitle{
     font-size: 1.3rem;
-    background: var(--purpleDark);
+    color: var(--purpleDark);
     width: 100%;
     padding: 10px;
-    color: beige;
+    font-weight: bolder;
     margin: 10px 0px;
 }
 
@@ -46,4 +46,10 @@
     color: white;
     cursor: pointer;
     background: var(--purpleDark);
+}
+
+.active{
+    color: beige;
+    background: var(--purpleDark);
+    border-radius: 3px;
 }
