@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+
+    --purpleLight: hsl(340, 90%, 55%);
+    --purpleDark: hsl(340, 100%, 35%);
+    --purpleDarkHover: rgba(179, 0, 60, 0.7);
+    --navButton: hsl(340, 100%, 35%);
+    --navButton-hover:  rgba(179, 0, 60, 0.5);
+    --background-light: rgba(255, 255, 255, 0.5);
+    --section-box-shadow:  0px 0px 30px lightgrey;
+}
+
+
+.container{
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  border: 2px solid red;
+  margin: 0;
+  padding: 30px;
+}
