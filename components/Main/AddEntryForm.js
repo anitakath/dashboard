@@ -10,7 +10,7 @@ const AddEntryForm = () =>{
         console.log('submitting...')
     }
 
-    return (
+    return ( 
       <form className=" my-2 p-2 flex flex-col" onSubmit={submitHandler}>
         <label className={styles.labels}> Title </label>
         <input

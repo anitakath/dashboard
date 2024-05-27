@@ -5,7 +5,12 @@ import Link from "next/link";
 //STYLES
 import styles from './Board.module.css'
 
-//FONT AWeSOME
+
+//TRANSITION GROUP
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
+
+//FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faHouse, faUser, faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -16,9 +21,6 @@ const Board = (props) => {
   const currentSport = props.currentSport;
   const allSports = props.allSports;
   const selectedSport = allSports[currentSport].name;
-
-  console.log(allSports)
-  console.log(selectedSport);
 
   const [entries, setEntries] = useState(null)
   const [formIsOpen, setFormIsOpen] = useState(false)
@@ -36,21 +38,30 @@ const Board = (props) => {
     setFormIsOpen((prevFormIsOpen) => !prevFormIsOpen);
   }
 
+  let addEntryText = formIsOpen ? 'close form' : 'add entry'
+
   return (
     <div className="w-full overflow-scroll h-full p-4">
       <div className="h-20 flex p-4 flex items-center relative">
-        <input type="text" placeholder="search..."></input>
-        <p className="mx-4">
+        <input
+          type="text"
+          placeholder="search..."
+          className="border-b-2 w-3/12 mx-4 p-2 text-xl"
+        ></input>
+        <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faHouse} className="font_purple" />
         </p>
-        <p className="mx-4">
+        <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faBars} className="font_purple" />
         </p>
-        <p className="mx-4">
+        <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faUser} className="font_purple" />
         </p>
 
-        <p className="absolute right-14 top-8 h-20 w-20 bg-rose-400 border-2 p-4"></p>
+        <p
+          className="absolute right-14 top-2 h-20 w-20 border-2 p-4"
+          style={{ backgroundColor: "var(--purpleDarkHover)" }}
+        ></p>
       </div>
 
       <div className="flex justify-center ">
@@ -77,16 +88,32 @@ const Board = (props) => {
 
           <div>
             <button className={styles.add_entry_btn} onClick={addEntryHandler}>
-              add an entry
+              {addEntryText}
             </button>
-            {formIsOpen &&  <AddEntryForm/>}
-            
+
+            <TransitionGroup>
+              {formIsOpen && (
+                <CSSTransition
+                  classNames={{
+                    enter: "slide-enter",
+                    enterActive: "slide-enter-active",
+                    exit: "slide-exit",
+                    exitActive: "slide-exit-active",
+                  }}
+                  timeout={300}
+                >
+                  <AddEntryForm />
+                </CSSTransition>
+              )}
+            </TransitionGroup>
+
+            {/*formIsOpen && <AddEntryForm />*/}
           </div>
 
           {entries &&
             entries.map((entry, index) => (
               <div className={styles.entry}>
-                <Link href={`/details/${index}`}>
+                <Link href={`/details/${entry.title}`}>
                   <div className={styles.link}>
                     <p>{entry.date}</p>
                     <p> {entry.entry}</p>

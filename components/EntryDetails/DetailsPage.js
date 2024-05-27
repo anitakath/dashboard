@@ -13,6 +13,9 @@ const DetailsPage = () => {
   const router = useRouter();
   const { entryId } = router.query;
 
+
+  console.log(entryId)
+
   // Hier kannst du den Eintrag basierend auf der entryId aus dem Router abrufen
 
   return (

@@ -10,13 +10,12 @@ import Board from '../Main/Board'
 import { useSelector, useDispatch } from "react-redux";
 
 
+
 const Dashboard = () =>{
 
   const allSports = useSelector((state) => state.sport.allSports);
   const currentSport = useSelector((state) => state.sport.selectedSport);
 
-  console.log(allSports)
-  console.log(currentSport)
 
     return (
       <div className="w-full h-full p-4">

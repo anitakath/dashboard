@@ -30,3 +30,7 @@
   color: var(--purpleDark);
   font-size: 1.5rem;
 }
+
+.font_purple:hover{
+  color: var(--purpleDarkHover);
+}
