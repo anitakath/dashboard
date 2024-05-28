@@ -1,10 +1,11 @@
 
-// 1. SUPABASE
-// implement supabase to move the data from the backend to an external table - alternatively firebase!!!
 
-// 2. BOARD:JS -> SUMMARY
+// BOARD:JS -> SUMMARY
 // set the default value in  Board.js´ summary section to the year we are currently in
 
-// 3. BOARDS.JS -> ADDENTRYFORM
+// BOARDS.JS -> ADDENTRYFORM
 //revise the AddEntryForm component to make the slide effect work in transition groups
 // form should work :)
+
+
+// fetching supabase table data at Navigation.js -> better at index.js?
