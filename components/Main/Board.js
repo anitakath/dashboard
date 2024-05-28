@@ -22,6 +22,8 @@ const Board = (props) => {
  
   const currentSport = props.currentSport;
 
+  
+
 
   const filteredEntries = props.filteredEntries;
   const [formIsOpen, setFormIsOpen] = useState(false);
@@ -82,27 +84,36 @@ const Board = (props) => {
             </p>
           </div>
 
-          <div>
-            <button className={styles.add_entry_btn} onClick={addEntryHandler}>
-              {addEntryText}
-            </button>
+          {currentSport === null && (
+            <p className=" my-10 text-2xl text-center"> select your sport from the navigation bar</p>
+          )}
 
-            <TransitionGroup>
-              {formIsOpen && (
-                <CSSTransition
-                  classNames={{
-                    enter: "slide-enter",
-                    enterActive: "slide-enter-active",
-                    exit: "slide-exit",
-                    exitActive: "slide-exit-active",
-                  }}
-                  timeout={300}
-                >
-                  <AddEntryForm />
-                </CSSTransition>
-              )}
-            </TransitionGroup>
-          </div>
+          {currentSport != null && (
+            <div>
+              <button
+                className={styles.add_entry_btn}
+                onClick={addEntryHandler}
+              >
+                {addEntryText}
+              </button>
+
+              <TransitionGroup>
+                {formIsOpen && (
+                  <CSSTransition
+                    classNames={{
+                      enter: "slide-enter",
+                      enterActive: "slide-enter-active",
+                      exit: "slide-exit",
+                      exitActive: "slide-exit-active",
+                    }}
+                    timeout={300}
+                  >
+                    <AddEntryForm />
+                  </CSSTransition>
+                )}
+              </TransitionGroup>
+            </div>
+          )}
 
           {filteredEntries &&
             filteredEntries.map((entry, index) => (
