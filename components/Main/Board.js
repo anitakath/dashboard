@@ -55,13 +55,13 @@ const Board = (props) => {
         </p>
 
         <p
-          className="absolute right-14 top-2 h-20 w-20 border-2 p-4"
+          className="absolute right-14 top-2 h-20 w-20 p-4"
           style={{ backgroundColor: "var(--purpleDarkHover)" }}
         ></p>
       </div>
 
-      <div className="flex justify-center ">
-        <div className="p-4 mt-4 mr-1 mb-4 w-2/3 ">
+      <div className="flex  justify-center ">
+        <div className="p-4 relative mt-4 mr-1 mb-4 w-2/3 ">
           <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
 
           <div className="flex items-center">
@@ -118,7 +118,9 @@ const Board = (props) => {
             ))}
         </div>
 
-        <div className="p-4  mt-8 ml-1 mb-4 w-1/3 relative">
+        <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative  ">
+          <h1 className="text-2xl  border-b-2 my-2"> Summary </h1>
+
           <div className="absolute right-6 top-4 p-2 flex items-center">
             <p className="text-xs">choose year</p>
             <select name="year" id="year" className={styles.year_input}>
@@ -128,7 +130,7 @@ const Board = (props) => {
               <option value="2026"> 2026</option>
             </select>
           </div>
-          <h1 className="text-xl border-b-2 my-2"> Summary </h1>
+
           <div className="flex items-center">
             <button className={"text-xl my-2 mx-1"}>
               <FontAwesomeIcon
@@ -144,7 +146,6 @@ const Board = (props) => {
             </button>
             <p className="ml-10"> chosen year...</p>
           </div>
-
           <div className="my-4 p-0 grid grid-cols-3 gap-1">
             {[
               "Jan",

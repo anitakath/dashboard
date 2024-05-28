@@ -5,17 +5,20 @@ import styles from "./AddEntryForm.module.css";
 
 //REDUX
 import { useSelector } from "react-redux";
+import { current } from "@reduxjs/toolkit";
+
+//SUPABASE
+import { supabase } from "@/services/supabaseClient";
 
 const AddEntryForm = () => {
-  /*
-  const allSports = useSelector((state)=> state.sport.allSports)
-  const currentSport = useSelector((state) => state.sport.selectedSport);
-  const selectedSport = allSports[currentSport].name
-  console.log(selectedSport)
-  */
+
+
+  
+const currentSport = useSelector((state) => state.sport.selectedSport);
 
   const [inputs, setInputs] = useState({
     //index: currentSport,
+    name: currentSport,
     title: "",
     text: "",
     img: "",
@@ -33,31 +36,36 @@ const AddEntryForm = () => {
       // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
 
       const data = {
-        index: inputs.index,
+        name: inputs.name,
         title: inputs.title,
-        text: inputs.text,
-        img: inputs.img,
+        entry: inputs.text,
+        //img: inputs.img,
       };
 
-      try {
-        const response = await fetch("/api/get-sports", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+      console.log(data)
 
-        if (response.ok) {
-          console.log("Data successfully sent to the backend");
+      
+      try {
+        const { data: newSport, error } = await supabase
+          .from("sports")
+          .insert([data]);
+
+        if (error) {
+          console.error(
+            "Failed to insert data into Supabase table:",
+            error
+          );
         } else {
-          console.error("Failed to send data to the backend");
+          console.log("Data successfully inserted into Supabase table:",newSport);
         }
       } catch (error) {
-        console.error("Error sending data to the backend:", error);
+        console.error("Error inserting data into Supabase table:", error);
       }
+      
 
       console.log("Input values:", inputs);
+
+      
     } else {
       console.log("Validation failed. Please check your input.");
     }
