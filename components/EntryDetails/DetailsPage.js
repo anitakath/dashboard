@@ -7,7 +7,7 @@ import Link from "next/link";
 
 //FONT AWeSOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 //REDUX
@@ -26,8 +26,10 @@ const DetailsPage = () => {
   const lastPathPart = pathParts[pathParts.length - 1];
   const allSports = useSelector((state) => state.sport.allSupabaseSports);
 
+
   const filteredEntry = allSports.filter((sport) => sport.title === lastPathPart)
 
+  console.log(filteredEntry)
 
   return (
     <div className="w-full h-screen p-14">
@@ -35,6 +37,10 @@ const DetailsPage = () => {
         <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
           <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
         </Link>
+
+        <button className={styles.delete_btn}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
 
         <div className="m-4 p-4 pl-14  w-full ">
           <h1 className="text-2xl border-b-2 my-2"> Details page </h1>
@@ -45,7 +51,6 @@ const DetailsPage = () => {
             </div>
           )}
         </div>
-      
       </div>
     </div>
   );

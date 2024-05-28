@@ -8,4 +8,11 @@
 // form should work :)
 
 
-// fetching supabase table data at Navigation.js -> better at index.js?
+// fetching supabase table data at Navigation.js -> better at index.js?+
+
+
+// in DetailsPage! the path can be duplicated if the user assigns the same title more than once. Solve this problem 
+//(possibly by using the id next the path? uuidv()??)
+
+
+//fix the sortHandler @ navigation to allow the user to sort his sports by most entries

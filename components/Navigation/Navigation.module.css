@@ -12,6 +12,34 @@
     margin: 10px 0px;
 }
 
+
+.select_input{
+    width: 100%;
+}
+
+.select_input:focus{
+    outline: none;
+}
+
+
+.sort{
+    position: absolute;
+    right: -3px;
+    font-size: 1.3rem;
+    background: white;
+    z-index: 100;
+    cursor: pointer;
+    transition: 0.2s ease;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 .sport_btn{
     width: 100%;
     margin: 10px 0px;

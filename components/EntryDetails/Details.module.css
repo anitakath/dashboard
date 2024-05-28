@@ -14,3 +14,17 @@
     color: var(--purpleDark);
 
 }
+
+.delete_btn{
+    position: absolute;
+    right: 45px;
+    top: 20px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: 0.2s ease;
+}
+
+.delete_btn:hover{
+    color: var(--purpleDark);
+}

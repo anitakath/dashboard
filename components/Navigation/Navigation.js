@@ -14,6 +14,10 @@ import { setSelectedSport, setAllSports, setAllSportsFromSupabase } from "@/stor
 //COMPONENTS
 import AddSportForm from './AddSportForm';
 
+//FONT AWESOME
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
+
 const Navigation = ()=> {
   
   const [formIsOpen, setFormIsOpen] = useState(false)
@@ -22,12 +26,16 @@ const Navigation = ()=> {
 
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
 
+
     
   const dispatch = useDispatch();
 
-  const uniqueSports = Array.from(
+
+  const alphabetic = Array.from(
     new Set(allSupabaseSports.map((sport) => sport.name))
-  );
+  ).sort((a, b) => a.localeCompare(b));
+
+  const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
 
   
     
@@ -71,13 +79,75 @@ const Navigation = ()=> {
 
      let addBtn_text = formIsOpen ? '-' : '+'
 
+
+     const sortHandler = (criteria) => {
+       let sortedSports = [];
+
+       switch (criteria) {
+         case "alphabetically":
+           sortedSports = [...alphabetic];
+           break;
+         case "recentlyAddedFirst":
+           sortedSports = Array.from(
+             new Set(allSupabaseSports.map((sport) => sport.name))
+           );
+           break;
+         case "recentlyAddedLast":
+           sortedSports = Array.from(
+             new Set(allSupabaseSports.map((sport) => sport.name))
+           ).reverse();
+           break;
+         case "mostEntries":
+           const sportsMap = new Map();
+           allSupabaseSports.forEach((sport) => {
+             if (!sportsMap.has(sport.name)) {
+               sportsMap.set(sport.name, sport);
+             }
+           });
+
+           const uniqueSortedSports = Array.from(sportsMap.values());
+           uniqueSortedSports.sort((a, b) => {
+             const entriesA = a.entries ? a.entries.length : 0;
+             const entriesB = b.entries ? b.entries.length : 0;
+             return entriesB - entriesA;
+           });
+
+           setUniqueSports(uniqueSortedSports.map((sport) => sport.name));
+           break;
+         default:
+           // Default to alphabetical sorting
+           sortedSports = [...alphabetic];
+       }
+
+       setUniqueSports(sortedSports);
+     };
+
+
+     
+
     return (
       <div className="border-r w-1/5 p-8 flex flex-col items-center shadow-section">
         <h1 className={styles.title}> DASHBOARD </h1>
         <h2 className={styles.subtitle}> your sports </h2>
 
+        <div className="flex w-full  mb-4 items-center relative">
+          <button onClick={sortHandler} className={styles.sort}>
+            <FontAwesomeIcon icon={faSort} />
+          </button>
+          
+          <select
+            className={styles.select_input}
+            onChange={(e) => sortHandler(e.target.value)}
+          >
+            <option value="alphabetically"> alphabetically </option>
+            <option value="recentlyAddedFirst"> recently added first </option>
+            <option value="recentlyAddedLast"> recently added last </option>
+            <option value="mostEntries"> most entries </option>
+          </select>
+        </div>
+
         {!formIsOpen && (
-          <ul className="w-full">
+          <ul className="w-full h-full  overflow-scroll">
             {uniqueSports &&
               uniqueSports.map((sport, index) => (
                 <li key={index}>
