@@ -47,7 +47,8 @@ const Navigation = ()=> {
 
 
         <ul className='w-full'>
-          {allSports.map((sport, index) => (
+          {allSports && 
+            allSports.map((sport, index) => (
             <li key={index}>
               <button 
                 className={`${styles.sport_btn} ${active === index ? styles.active : ''}`}

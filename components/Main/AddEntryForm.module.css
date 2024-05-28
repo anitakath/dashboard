@@ -1,6 +1,8 @@
 
+
+
 .labels{
-    margin-top: 4px;
+    margin-top: 10px;
     font-size: 1rem;
     color: var(--purpleDarkHover);
 }
@@ -11,6 +13,12 @@
     height: 40px;
     margin-bottom: 4px;
     font-size: 1.2rem;
+    color: black;
+    padding-left: 10px;
+}
+
+.inputs::placeholder{
+  color: lightgrey;
 }
 
 .inputs:focus{
@@ -22,12 +30,15 @@
     font-size: 1.1rem;
     margin: 10px 0px;
     padding: 5px 0px;
-    background: var(--purpleDark);
-    color: beige;
+    color:var(--purpleDark);
     height: 50px;
-    transition: 0.1s ease;
+    transition: 0.2s ease;
 }
 
+.submit_btn:hover{
+    background: var(--purpleDark);
+    color: beige;
+}
 
 
 .submit_btn:active{
@@ -56,4 +67,18 @@
   opacity: 0;
   transform: translateY(-100%);
   transition: opacity 300ms, transform 300ms;
+}
+
+
+
+.error{
+  background: var(--error-opaque);
+  color: black;
+}
+
+.errorText{
+  color: var(--error);
+  font-weight: bolder;
+  letter-spacing: 1px;
+  margin: 2px 0px;
 }

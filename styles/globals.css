@@ -7,9 +7,14 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
-    --purpleLight: hsl(340, 90%, 55%);
-    --purpleDark: hsl(340, 100%, 35%);
-    --purpleDarkHover: rgba(179, 0, 60, 0.7);
+  --purpleLight: hsl(340, 90%, 55%);
+  --purpleDark: hsl(340, 100%, 35%);
+  --purpleDarkHover: rgba(179, 0, 60, 0.7);
+  
+  --error-opaque: rgba(218, 42, 28, 0.5);
+  --error: rgba(218, 42, 28)
+  
+
     --navButton: hsl(340, 100%, 35%);
     --navButton-hover:  rgba(179, 0, 60, 0.5);
     --background-light: rgba(255, 255, 255, 0.5);

@@ -16,29 +16,33 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faHouse, faUser, faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
+import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
   const currentSport = props.currentSport;
   const allSports = props.allSports;
+  console.log(currentSport)
+  console.log(allSports)
   const selectedSport = allSports[currentSport].name;
+  console.log(selectedSport)
 
-  const [entries, setEntries] = useState(null)
-  const [formIsOpen, setFormIsOpen] = useState(false)
+  const [entries, setEntries] = useState(null);
+  const [formIsOpen, setFormIsOpen] = useState(false);
 
-  useEffect(()=>{
-    if(allSports){
-      setEntries(allSports[currentSport].entries)
+  useEffect(() => {
+    if (allSports) {
+      setEntries(allSports[currentSport].entries);
     }
-  }, [selectedSport])
+  }, [currentSport]);
 
-  console.log(entries)
+  console.log(entries);
 
-  const addEntryHandler = (e) =>{
-    e.preventDefault()
+  const addEntryHandler = (e) => {
+    e.preventDefault();
     setFormIsOpen((prevFormIsOpen) => !prevFormIsOpen);
-  }
+  };
 
-  let addEntryText = formIsOpen ? 'close form' : 'add entry'
+  let addEntryText = formIsOpen ? "close form" : "add entry";
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -66,7 +70,7 @@ const Board = (props) => {
 
       <div className="flex justify-center ">
         <div className="p-4 mt-4 mr-1 mb-4 w-2/3 ">
-          <h1 className="text-2xl border-b-2 my-2"> {selectedSport} </h1>
+          <h1 className="text-2xl border-b-2 my-2"> {selectedSport}</h1>
 
           <div className="flex items-center">
             <button className={"text-xl my-2 mx-1"}>
