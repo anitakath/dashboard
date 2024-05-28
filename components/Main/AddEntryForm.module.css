@@ -2,19 +2,19 @@
 
 
 .labels{
-    margin-top: 10px;
-    font-size: 1rem;
-    color: var(--purpleDarkHover);
+  margin-top: 10px;
+  font-size: 1rem;
+  color: var(--purpleDarkHover);
 }
 
 
 .inputs{
-    border-bottom: 1px solid var(--purpleDark);
-    height: 40px;
-    margin-bottom: 4px;
-    font-size: 1.2rem;
-    color: black;
-    padding-left: 10px;
+  border-bottom: 1px solid var(--purpleDark);
+  height: 40px;
+  margin-bottom: 4px;
+  font-size: 1.2rem;
+  color: black;
+  padding-left: 10px;
 }
 
 .inputs::placeholder{
@@ -22,29 +22,28 @@
 }
 
 .inputs:focus{
-    outline: none;
+  outline: none;
 }
 
 
 .submit_btn{
-    font-size: 1.1rem;
-    margin: 10px 0px;
-    padding: 5px 0px;
-    color:var(--purpleDark);
-    height: 50px;
-    transition: 0.2s ease;
+  font-size: 1.1rem;
+  margin: 10px 0px;
+  padding: 5px 0px;
+  color:var(--purpleDark);
+  height: 50px;
+  transition: 0.2s ease;
 }
 
 .submit_btn:hover{
-    background: var(--purpleDark);
-    color: beige;
+  background: var(--purpleDarkHover);
+  color: beige;
 }
 
 
 .submit_btn:active{
-    transform: scale(0.99);
+  transform: scale(0.99);
 }
-
 
 
 .slide-enter {
@@ -70,15 +69,13 @@
 }
 
 
-
-.error{
+.error {
   background: var(--error-opaque);
   color: black;
 }
 
-.errorText{
+.errorText {
   color: var(--error);
-  font-weight: bolder;
   letter-spacing: 1px;
   margin: 2px 0px;
 }

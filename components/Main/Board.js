@@ -19,23 +19,15 @@ import AddEntryForm from "./AddEntryForm";
 import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
+ 
   const currentSport = props.currentSport;
-  const allSports = props.allSports;
-  console.log(currentSport)
-  console.log(allSports)
-  const selectedSport = allSports[currentSport].name;
-  console.log(selectedSport)
 
-  const [entries, setEntries] = useState(null);
+
+  const filteredEntries = props.filteredEntries;
   const [formIsOpen, setFormIsOpen] = useState(false);
 
-  useEffect(() => {
-    if (allSports) {
-      setEntries(allSports[currentSport].entries);
-    }
-  }, [currentSport]);
 
-  console.log(entries);
+
 
   const addEntryHandler = (e) => {
     e.preventDefault();
@@ -70,7 +62,7 @@ const Board = (props) => {
 
       <div className="flex justify-center ">
         <div className="p-4 mt-4 mr-1 mb-4 w-2/3 ">
-          <h1 className="text-2xl border-b-2 my-2"> {selectedSport}</h1>
+          <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
 
           <div className="flex items-center">
             <button className={"text-xl my-2 mx-1"}>
@@ -110,17 +102,16 @@ const Board = (props) => {
                 </CSSTransition>
               )}
             </TransitionGroup>
-
-            {/*formIsOpen && <AddEntryForm />*/}
           </div>
 
-          {entries &&
-            entries.map((entry, index) => (
+          {filteredEntries &&
+            filteredEntries.map((entry, index) => (
               <div className={styles.entry}>
                 <Link href={`/details/${entry.title}`}>
                   <div className={styles.link}>
-                    <p>{entry.date}</p>
-                    <p> {entry.entry}</p>
+                    <p className="my-2 ">{entry.created_at}</p>
+                    <h2 className="text-2xl my-2 px-2">{entry.title}</h2>
+                    <p className="px-4"> {entry.entry}</p>
                   </div>
                 </Link>
               </div>
