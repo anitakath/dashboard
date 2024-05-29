@@ -15,6 +15,7 @@
 
 .select_input{
     width: 100%;
+    cursor: pointer;
 }
 
 .select_input:focus{

@@ -98,21 +98,20 @@ const Navigation = ()=> {
            ).reverse();
            break;
          case "mostEntries":
-           const sportsMap = new Map();
-           allSupabaseSports.forEach((sport) => {
-             if (!sportsMap.has(sport.name)) {
-               sportsMap.set(sport.name, sport);
-             }
-           });
 
-           const uniqueSortedSports = Array.from(sportsMap.values());
-           uniqueSortedSports.sort((a, b) => {
-             const entriesA = a.entries ? a.entries.length : 0;
-             const entriesB = b.entries ? b.entries.length : 0;
-             return entriesB - entriesA;
-           });
+          const countMap = {};
 
-           setUniqueSports(uniqueSortedSports.map((sport) => sport.name));
+          allSupabaseSports.forEach(sport => {
+              if (!countMap[sport.name]) {
+                  countMap[sport.name] = 1;
+              } else {
+                  countMap[sport.name]++;
+              }
+          });
+
+          const sorted = Object.entries(countMap).sort((a, b) => b[1] - a[1]);
+          //sortedSports = sorted.map((sport) => sport[0]) 
+          sortedSports = sorted.map((sport) => `${sport[0]} (${sport[1]})`);
            break;
          default:
            // Default to alphabetical sorting
