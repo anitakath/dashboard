@@ -20,9 +20,7 @@ const Dashboard = () =>{
     (state) => state.sport.allSupabaseSports
   );
 
-  const filteredEntries = allSupabaseSports.filter(sport => sport.name === currentSport)
-
-
+  const filteredEntries = allSupabaseSports ? allSupabaseSports.filter(sport => sport.name === currentSport) : [];
 
     return (
       <div className="w-full h-full p-4">

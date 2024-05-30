@@ -3,15 +3,17 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 //REDUX
-import { useDispatch } from "react-redux";
+
+import { setNavigation, setSelectedSport } from "@/store/sportReducer";
+import { useSelector, useDispatch } from "react-redux";
+
 
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
 
 
 
-//REDUX 
-import { useSelector } from "react-redux";
+
 
 //STYLES
 import styles from './AddSportForm.module.css'
@@ -23,11 +25,13 @@ const AddSportForm = (props) =>{
     const [name, setName] = useState("");
     const [error, setError] = useState(false)
 
+    const dispatch = useDispatch()
     const navigation = useSelector((state) => state.sport.navigation)
 
     console.log(navigation)
 
     console.log(name)
+
 
    
 
@@ -35,7 +39,7 @@ const AddSportForm = (props) =>{
     const handleSubmit = async (e) =>{
       e.preventDefault();
 
-      const data = {name, title, entry}
+      const data = {name}
 
       if (navigation.includes(name)) {
 
@@ -44,8 +48,15 @@ const AddSportForm = (props) =>{
       } else{
 
 
+        console.log('updating navigation')
         setError(false)
+        const updated = [...navigation, name];
+        dispatch(setNavigation(updated));
+        dispatch(setSelectedSport(name));
+        props.addSportClickHandler();
+        
 
+        /*
         try {
           const { data: newSport, error } = await supabase
             .from("sports")
@@ -68,6 +79,8 @@ const AddSportForm = (props) =>{
             console.error("Error inserting data into Supabase table:", error);
           }
 
+          */
+
 
         }
 
@@ -86,19 +99,7 @@ const AddSportForm = (props) =>{
           className={styles.input}
         ></input>
 
-        <label className=" text-xl"> Title </label>
-        <input
-          type="text"
-          onChange={(e) => setTitle(e.target.value)}
-          className={styles.input}
-        ></input>
-
-        <label className=" text-xl"> Text </label>
-        <input
-          type="text"
-          onChange={(e) => setEntry(e.target.value)}
-          className={styles.input}
-        ></input>
+      
 
         {error && (
           <p className="text-xs text-red-600s">

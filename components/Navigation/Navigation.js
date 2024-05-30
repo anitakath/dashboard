@@ -31,9 +31,9 @@ const Navigation = ()=> {
   const dispatch = useDispatch();
 
 
-  const alphabetic = Array.from(
+  const alphabetic = allSupabaseSports ? Array.from(
     new Set(allSupabaseSports.map((sport) => sport.name))
-  ).sort((a, b) => a.localeCompare(b));
+  ).sort((a, b) => a.localeCompare(b)) : " "
 
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
 
@@ -140,6 +140,11 @@ const Navigation = ()=> {
 
      }, [uniqueSports])
 
+
+     const navigation = useSelector((state) => state.sport.navigation)
+
+     console.log(navigation)
+
   
 
 
@@ -168,8 +173,8 @@ const Navigation = ()=> {
 
         {!formIsOpen && (
           <ul className="w-full h-full  overflow-scroll">
-            {uniqueSports &&
-              uniqueSports.map((sport, index) => (
+            {navigation &&
+              navigation.map((sport, index) => (
                 <li key={index}>
                   <button
                     className={`${styles.sport_btn} ${

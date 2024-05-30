@@ -20,9 +20,12 @@ import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
   const currentSport = props.currentSport;
-
   const filteredEntries = props.filteredEntries;
   const [formIsOpen, setFormIsOpen] = useState(false);
+
+  const currentYear = new Date().getFullYear(); // Aktuelles Jahr ermitteln
+  const [selectedYear, setSelectedYear] = useState(currentYear); // useState für das ausgewählte Jahr
+  const [selectedMonth, setSelectedMonth] = useState(""); // useState für den ausgewählten Monat
 
   const addEntryHandler = (e) => {
     e.preventDefault();
@@ -41,14 +44,21 @@ const Board = (props) => {
     };
     const date = new Date(dateString);
 
-    return (
-      date.toLocaleDateString("de-DE", options).replace(",", "") 
-     
-    );
+    return date.toLocaleDateString("de-DE", options).replace(",", "");
   }
 
-  const formattedDate = formatDate("2024-05-28T09:56:32.03632+00:00");
-  console.log(formattedDate); // Ausgabe: "28. Mai 2024 @ 09:56"
+  
+  const handleYearChange = (e) => {
+    setSelectedYear(parseInt(e.target.value)); // Das ausgewählte Jahr aktualisieren
+  };
+
+  const chooseMonthHandler = (e) => {
+
+    console.log('change month')
+   //setSelectedMonth(parseInt(e.target.value));
+  };
+
+  console.log(selectedYear);
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -98,7 +108,7 @@ const Board = (props) => {
 
           {currentSport === null && (
             <p className=" my-10 text-2xl text-center">
-              {" "}
+              
               select your sport from the navigation bar
             </p>
           )}
@@ -137,7 +147,9 @@ const Board = (props) => {
               <div className={styles.entry}>
                 <Link href={`/details/${entry.title}`}>
                   <div className={styles.link}>
-                    <p className="my-2 px-2 text-xs absolute right-4">{formatDate(entry.created_at)}</p>
+                    <p className="my-2 px-2 text-xs absolute right-4">
+                      {formatDate(entry.created_at)}
+                    </p>
                     <h2 className="text-2xl mb-4 mt-2 px-2">{entry.title}</h2>
                     <p className="px-2 mb-4"> {entry.entry}</p>
                   </div>
@@ -146,12 +158,20 @@ const Board = (props) => {
             ))}
         </div>
 
+        {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
+
         <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative  ">
           <h1 className="text-2xl  border-b-2 my-2"> Summary </h1>
 
           <div className="absolute right-6 top-4 p-2 flex items-center">
             <p className="text-xs">choose year</p>
-            <select name="year" id="year" className={styles.year_input}>
+            <select
+              name="year"
+              id="year"
+              className={styles.year_input}
+              defaultValue={currentYear}
+              onChange={handleYearChange}
+            >
               <option value="2023"> 2023</option>
               <option value="2024"> 2024</option>
               <option value="2025"> 2025</option>
@@ -172,7 +192,10 @@ const Board = (props) => {
                 className={styles.chevron}
               />
             </button>
-            <p className="ml-10"> chosen year...</p>
+            <p className="ml-10 w-full text-2xl">
+              {" "}
+              <span className="text-xs ">selected year:</span> {selectedYear}{" "}
+            </p>
           </div>
           <div className="my-4 p-0 grid grid-cols-3 gap-1">
             {[
@@ -189,7 +212,11 @@ const Board = (props) => {
               "Nov",
               "Dec",
             ].map((month) => (
-              <div key={month} className={styles.month}>
+              <div
+                key={month}
+                className={styles.month}
+                onClick={() => chooseMonthHandler(month)}
+              >
                 {month}
               </div>
             ))}

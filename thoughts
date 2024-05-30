@@ -1,5 +1,36 @@
 
 
+
+
+
+/ACTUAL!!!
+/*
+
+0. zu beginn werden alle tagebucheinträge (filteredEntries) des aktuellen Jahres geladen. 
+1. Wenn der User über den select ein anderes Jahr auswählt, dann alle filteredEntries aus eben diesem Jahr.
+2. Wenn der User einen bestimmten Monat anklickt, werden alle filteredEntries aus dem ausgewählten Jahr 
+   (per default das aktuelle) in eben diesem Monat angezeigt. 
+3. Wenn der User den Monat ein 2. Mal anklickt, werden einfach wieder alle aus dem ausgewählten jahr angezeigt
+
+
+
+0. At the beginning, all diary entries (filteredEntries) of the current year are loaded. 
+1. If the user chooses a different year via select, then all filteredEntries from that year are loaded. 
+2. If the user clicks on a specific month, all filteredEntries from the selected year 
+   (by default the current one) are displayed in that month. 
+3. If the user clicks on the month a second time, all filteredEntries from the selected year are displayed again
+
+Translated with DeepL.com (free version)
+
+
+
+*/
+
+
+
+
+
+
 // BOARD:JS -> SUMMARY
 // set the default value in  Board.js´ summary section to the year we are currently in
 
