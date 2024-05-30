@@ -8,7 +8,7 @@ import { supabase } from '@/services/supabaseClient';
 
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedSport, setAllSports, setAllSportsFromSupabase, setNavigation } from "@/store/sportReducer";
+import { setSelectedSport, setAllSports, setAllSportsFromSupabase, setNavigation, deleteSport } from "@/store/sportReducer";
 
 
 //COMPONENTS
@@ -133,7 +133,7 @@ const Navigation = ()=> {
        setUniqueSports(sortedSports);
      };
 
-    // console.log(uniqueSports);
+
 
      useEffect(()=>{
        dispatch(setNavigation(uniqueSports))
@@ -146,7 +146,14 @@ const Navigation = ()=> {
      console.log(navigation)
 
   
+     const [openDeleteModal, setOpenDeleteModal] = useState(false)
 
+     const deleteSportHandler = (sport) =>{
+      console.log('deleting')
+      // ADD HERE AN "ARE YOU SURE?!?!?!?" BEFORE DELETING THE SPORT
+      alert("are you sure you want to delete?")
+      //dispatch(deleteSport(sport));
+     }
 
      
 
@@ -159,7 +166,7 @@ const Navigation = ()=> {
           <button onClick={sortHandler} className={styles.sort}>
             <FontAwesomeIcon icon={faSort} />
           </button>
-          
+
           <select
             className={styles.select_input}
             onChange={(e) => sortHandler(e.target.value)}
@@ -175,7 +182,9 @@ const Navigation = ()=> {
           <ul className="w-full h-full  overflow-scroll">
             {navigation &&
               navigation.map((sport, index) => (
-                <li key={index}>
+                <div className='relative'>
+                <li key={index} className="flex">
+                  <button className={styles.delete_btn} onClick={() => deleteSportHandler(sport)}>  x  </button>
                   <button
                     className={`${styles.sport_btn} ${
                       active === sport ? styles.active : ""
@@ -184,7 +193,11 @@ const Navigation = ()=> {
                   >
                     {sport}
                   </button>
-                </li>
+                  
+                  </li>
+                   
+               
+                </div>
               ))}
           </ul>
         )}
