@@ -9,7 +9,8 @@ const sportSlice = createSlice({
       { name: "Poledance", entries: [] },
       { name: "Yoga", entries: [] },
     ],
-    allSupabaseSports: []
+    allSupabaseSports: [],
+    navigation: []
   },
   reducers: {
     setSelectedSport(state, action) {
@@ -20,10 +21,13 @@ const sportSlice = createSlice({
     },
     setAllSportsFromSupabase(state, action){
       state.allSupabaseSports = action.payload
+    },
+    setNavigation(state, action){
+      state.navigation = action.payload
     }
   },
 });
 
-export const { setSelectedSport, setAllSports, setAllSportsFromSupabase } = sportSlice.actions;
+export const { setSelectedSport, setAllSports, setAllSportsFromSupabase, setNavigation } = sportSlice.actions;
 
 export default sportSlice.reducer;

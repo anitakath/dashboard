@@ -7,6 +7,8 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
+  --dark: #2E2C2F;
+
   --purpleLight: hsl(340, 90%, 55%);
   --purpleDark: hsl(340, 100%, 35%);
   --purpleDarkHover: rgba(179, 0, 60, 0.7);

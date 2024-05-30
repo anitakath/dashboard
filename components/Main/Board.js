@@ -19,17 +19,10 @@ import AddEntryForm from "./AddEntryForm";
 import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
- 
   const currentSport = props.currentSport;
-
-  
-
 
   const filteredEntries = props.filteredEntries;
   const [formIsOpen, setFormIsOpen] = useState(false);
-
-
-
 
   const addEntryHandler = (e) => {
     e.preventDefault();
@@ -37,6 +30,25 @@ const Board = (props) => {
   };
 
   let addEntryText = formIsOpen ? "close form" : "add entry";
+
+  function formatDate(dateString) {
+    const options = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    const date = new Date(dateString);
+
+    return (
+      date.toLocaleDateString("de-DE", options).replace(",", "") 
+     
+    );
+  }
+
+  const formattedDate = formatDate("2024-05-28T09:56:32.03632+00:00");
+  console.log(formattedDate); // Ausgabe: "28. Mai 2024 @ 09:56"
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -52,9 +64,9 @@ const Board = (props) => {
         <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faBars} className="font_purple" />
         </p>
-        <p className="mx-8 cursor-pointer">
+        <Link href="/profile" className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faUser} className="font_purple" />
-        </p>
+        </Link>
 
         <p
           className="absolute right-14 top-2 h-20 w-20 p-4"
@@ -85,7 +97,10 @@ const Board = (props) => {
           </div>
 
           {currentSport === null && (
-            <p className=" my-10 text-2xl text-center"> select your sport from the navigation bar</p>
+            <p className=" my-10 text-2xl text-center">
+              {" "}
+              select your sport from the navigation bar
+            </p>
           )}
 
           {currentSport != null && (
@@ -94,7 +109,7 @@ const Board = (props) => {
                 className={styles.add_entry_btn}
                 onClick={addEntryHandler}
               >
-                {addEntryText}
+                <span className={styles.add_btn_icon}> + </span> {addEntryText}
               </button>
 
               <TransitionGroup>
@@ -115,14 +130,16 @@ const Board = (props) => {
             </div>
           )}
 
+          {/* --------------------------  THE ENTRIES -------------------------- */}
+
           {filteredEntries &&
             filteredEntries.map((entry, index) => (
               <div className={styles.entry}>
                 <Link href={`/details/${entry.title}`}>
                   <div className={styles.link}>
-                    <p className="my-2 ">{entry.created_at}</p>
-                    <h2 className="text-2xl my-2 px-2">{entry.title}</h2>
-                    <p className="px-4"> {entry.entry}</p>
+                    <p className="my-2 px-2 text-xs absolute right-4">{formatDate(entry.created_at)}</p>
+                    <h2 className="text-2xl mb-4 mt-2 px-2">{entry.title}</h2>
+                    <p className="px-2 mb-4"> {entry.entry}</p>
                   </div>
                 </Link>
               </div>

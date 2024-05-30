@@ -8,7 +8,7 @@ import { supabase } from '@/services/supabaseClient';
 
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedSport, setAllSports, setAllSportsFromSupabase } from "@/store/sportReducer";
+import { setSelectedSport, setAllSports, setAllSportsFromSupabase, setNavigation } from "@/store/sportReducer";
 
 
 //COMPONENTS
@@ -109,7 +109,18 @@ const Navigation = ()=> {
               }
           });
 
-          const sorted = Object.entries(countMap).sort((a, b) => b[1] - a[1]);
+          //const sorted = Object.entries(countMap).sort((a, b) => b[1] - a[1]);
+          
+           const sorted = Object.entries(countMap).sort((a, b) => {
+             // First sort by frequency (second element
+             if (b[1] !== a[1]) {
+               return b[1] - a[1];
+             } else {
+               // If the frequency is the same, sort by alphabet (first element)
+               return a[0].localeCompare(b[0]);
+             }
+           });
+          
           //sortedSports = sorted.map((sport) => sport[0]) 
           sortedSports = sorted.map((sport) => `${sport[0]} (${sport[1]})`);
            break;
@@ -118,8 +129,18 @@ const Navigation = ()=> {
            sortedSports = [...alphabetic];
        }
 
+        
        setUniqueSports(sortedSports);
      };
+
+    // console.log(uniqueSports);
+
+     useEffect(()=>{
+       dispatch(setNavigation(uniqueSports))
+
+     }, [uniqueSports])
+
+  
 
 
      

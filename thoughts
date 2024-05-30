@@ -15,4 +15,14 @@
 //(possibly by using the id next the path? uuidv()??)
 
 
-//fix the sortHandler @ navigation to allow the user to sort his sports by most entries
+/*
+
+fix the navigation and its form. 
+User should only be able to add sports via the form in Navigation.js 
+that are not yet available in Navigation.js. 
+Avoid potential duplicates in the navigation bar! 
+If the user is about to create a duplicate, give him the information
+that he should go to the sport via the navigation bar and then
+click on “add entry”.
+
+*/

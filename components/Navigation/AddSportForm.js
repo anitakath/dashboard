@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-
+import Link from "next/link";
 
 //REDUX
 import { useDispatch } from "react-redux";
@@ -10,6 +10,9 @@ import { supabase } from "@/services/supabaseClient";
 
 
 
+//REDUX 
+import { useSelector } from "react-redux";
+
 //STYLES
 import styles from './AddSportForm.module.css'
 
@@ -18,45 +21,64 @@ const AddSportForm = (props) =>{
     const [title, setTitle] = useState("");
     const [entry, setEntry] = useState("");
     const [name, setName] = useState("");
+    const [error, setError] = useState(false)
 
-    console.log(props)
+    const navigation = useSelector((state) => state.sport.navigation)
+
+    console.log(navigation)
+
+    console.log(name)
 
    
 
 
     const handleSubmit = async (e) =>{
-        e.preventDefault();
+      e.preventDefault();
 
-        const data = {name, title, entry}
+      const data = {name, title, entry}
 
-        console.log(data)
+      if (navigation.includes(name)) {
+
+        setError(true)
+        return;
+      } else{
+
+
+        setError(false)
+
         try {
           const { data: newSport, error } = await supabase
             .from("sports")
             .insert([data]);
 
           if (error) {
-            console.error("Failed to insert data into Supabase table:", error);
-          } else {
-            console.log(
-              "Sport successfully inserted into Supabase table:",
-              newSport
-
+            console.error(
+              "Failed to insert data into Supabase table:",
+              error
             );
+          } else {
+              console.log(
+                "Sport successfully inserted into Supabase table:",
+                newSport
+              );
 
-            props.addSportClickHandler()
-
-
+              props.addSportClickHandler();
+            }
+          } catch (error) {
+            console.error("Error inserting data into Supabase table:", error);
           }
-        } catch (error) {
-          console.error("Error inserting data into Supabase table:", error);
+
+
         }
+
+   
+      
         
     }
 
 
     return (
-      <form className=" my-2 py-2" onSubmit={handleSubmit} >
+      <form className=" my-2 py-2" onSubmit={handleSubmit}>
         <label className=" text-xl"> Type </label>
         <input
           type="text"
@@ -78,9 +100,19 @@ const AddSportForm = (props) =>{
           className={styles.input}
         ></input>
 
-        <button type="submit" className={styles.add_btn}>
-          add sport
-        </button>
+        {error && (
+          <p className="text-xs text-red-600s">
+          
+            you have already added this sport to your diary. navigate to your
+            profile <Link href="/profile" className={styles.link}> here </Link> to get an overview of sour sports
+          </p>
+        )}
+
+        {!error && (
+          <button type="submit" className={styles.add_btn}>
+            add sport
+          </button>
+        )}
       </form>
     );
 }
