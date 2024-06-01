@@ -184,13 +184,14 @@ const Navigation = ()=> {
               navigation.map((sport, index) => (
                 <div className='relative'>
                 <li key={index} className="flex">
-                  <button className={styles.delete_btn} onClick={() => deleteSportHandler(sport)}>  x  </button>
                   <button
                     className={`${styles.sport_btn} ${
                       active === sport ? styles.active : ""
                     }`}
                     onClick={() => handleSportClick(sport)}
                   >
+                      <button className={styles.delete_btn} onClick={() => deleteSportHandler(sport)}>  x  </button>
+                
                     {sport}
                   </button>
                   

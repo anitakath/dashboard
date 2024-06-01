@@ -16,6 +16,8 @@ import { useSelector } from "react-redux";
 //STYLES
 import styles from './Details.module.css'
 
+import { supabase } from "@/services/supabaseClient";
+
 
 const DetailsPage = () => {
   const router = useRouter();
@@ -29,7 +31,27 @@ const DetailsPage = () => {
 
   const filteredEntry = allSports.filter((sport) => sport.title === lastPathPart)
 
+  console.log(allSports)
   console.log(filteredEntry)
+
+  const deleteEntryHandler = async (e) =>{
+    e.preventDefault();
+    const { data, error } = await supabase
+      .from('sports')
+      .delete()
+      .eq('title', filteredEntry[0].title)
+      .eq('id', filteredEntry[0].id);
+
+      if (error) {
+        console.error('Fehler beim Löschen des Eintrags:', error.message);
+      } else {
+        console.log('Eintrag erfolgreich gelöscht');
+        // Fügen Sie hier ggf. Code hinzu, um die Benutzeroberfläche zu aktualisieren oder eine Weiterleitung durchzuführen
+      }
+
+
+    console.log('deleting')
+  }
 
   return (
     <div className="w-full h-screen p-14">
@@ -38,7 +60,7 @@ const DetailsPage = () => {
           <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
         </Link>
 
-        <button className={styles.delete_btn}>
+        <button className={styles.delete_btn} onClick={deleteEntryHandler}>
           <FontAwesomeIcon icon={faTrash} />
         </button>
 
