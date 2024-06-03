@@ -27,6 +27,11 @@ Translated with DeepL.com (free version)
 */
 
 
+/*
+
+declare fetchSportsData function @ Navigation.js && AddEntryForm.js in a seperate file!
+*/
+
 
 
 

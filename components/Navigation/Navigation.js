@@ -41,22 +41,38 @@ const Navigation = ()=> {
     
     
   const fetchSportsData = async () => {
-      try {
-        const response = await fetch("/api/sports");
-        if (!response.ok) {
-          throw new Error("Failed to fetch sports data");
-        }
-        const data = await response.json();
-
-        dispatch(setAllSportsFromSupabase(data.data));
-      } catch (error) {
-        console.error("Error fetching sports data:", error);
+    try {
+      const response = await fetch("/api/sports");
+      if (!response.ok) {
+        throw new Error("Failed to fetch sports data");
       }
-    };
+      const data = await response.json();
+
+      dispatch(setAllSportsFromSupabase(data.data));
+    } catch (error) {
+      console.error("Error fetching sports data:", error);
+    }
+  };
 
     useEffect(() => {
       fetchSportsData();
     }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -143,7 +159,6 @@ const Navigation = ()=> {
 
      const navigation = useSelector((state) => state.sport.navigation)
 
-     console.log(navigation)
 
   
      const [openDeleteModal, setOpenDeleteModal] = useState(false)

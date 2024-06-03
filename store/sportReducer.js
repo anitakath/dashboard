@@ -11,7 +11,7 @@ const sportSlice = createSlice({
       { name: "Yoga", entries: [] },
     ],
     allSupabaseSports: [],
-    navigation: []
+    navigation: [],
   },
   reducers: {
     setSelectedSport(state, action) {
@@ -20,13 +20,13 @@ const sportSlice = createSlice({
     setAllSports(state, action) {
       state.allSports = action.payload;
     },
-    setAllSportsFromSupabase(state, action){
-      state.allSupabaseSports = action.payload
+    setAllSportsFromSupabase(state, action) {
+      state.allSupabaseSports = action.payload;
     },
-    setNavigation(state, action){
-      state.navigation = action.payload
+    setNavigation(state, action) {
+      state.navigation = action.payload;
     },
-    deleteSport(state, action){
+    deleteSport(state, action) {
       const sportNameToDelete = action.payload;
 
       // Remove the sport from navigation
@@ -41,7 +41,7 @@ const sportSlice = createSlice({
 
       // You can also add logic here to delete the sport from Supabase table
 
-      console.log(sportNameToDelete)
+      console.log(sportNameToDelete);
       // Example:
       supabase
         .from("sports")
@@ -52,7 +52,7 @@ const sportSlice = createSlice({
             console.error(response.error.message);
           }
         });
-    }
+    },
   },
 });
 

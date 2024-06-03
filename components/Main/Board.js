@@ -18,14 +18,17 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import AddEntryForm from "./AddEntryForm";
 import { current } from "@reduxjs/toolkit";
 
+
+//COMPONENTS
+import Calendar from "./Calendar";
+
 const Board = (props) => {
   const currentSport = props.currentSport;
   const filteredEntries = props.filteredEntries;
   const [formIsOpen, setFormIsOpen] = useState(false);
 
-  const currentYear = new Date().getFullYear(); // Aktuelles Jahr ermitteln
-  const [selectedYear, setSelectedYear] = useState(currentYear); // useState für das ausgewählte Jahr
   const [selectedMonth, setSelectedMonth] = useState(""); // useState für den ausgewählten Monat
+
 
   const addEntryHandler = (e) => {
     e.preventDefault();
@@ -47,18 +50,6 @@ const Board = (props) => {
     return date.toLocaleDateString("de-DE", options).replace(",", "");
   }
 
-  
-  const handleYearChange = (e) => {
-    setSelectedYear(parseInt(e.target.value)); // Das ausgewählte Jahr aktualisieren
-  };
-
-  const chooseMonthHandler = (e) => {
-
-    console.log('change month')
-   //setSelectedMonth(parseInt(e.target.value));
-  };
-
-  console.log(selectedYear);
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -108,7 +99,6 @@ const Board = (props) => {
 
           {currentSport === null && (
             <p className=" my-10 text-2xl text-center">
-              
               select your sport from the navigation bar
             </p>
           )}
@@ -160,68 +150,7 @@ const Board = (props) => {
 
         {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
 
-        <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative  ">
-          <h1 className="text-2xl  border-b-2 my-2"> Summary </h1>
-
-          <div className="absolute right-6 top-4 p-2 flex items-center">
-            <p className="text-xs">choose year</p>
-            <select
-              name="year"
-              id="year"
-              className={styles.year_input}
-              defaultValue={currentYear}
-              onChange={handleYearChange}
-            >
-              <option value="2023"> 2023</option>
-              <option value="2024"> 2024</option>
-              <option value="2025"> 2025</option>
-              <option value="2026"> 2026</option>
-            </select>
-          </div>
-
-          <div className="flex items-center">
-            <button className={"text-xl my-2 mx-1"}>
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className={styles.chevron}
-              />
-            </button>
-            <button className=" text-xl my-2">
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className={styles.chevron}
-              />
-            </button>
-            <p className="ml-10 w-full text-2xl">
-              {" "}
-              <span className="text-xs ">selected year:</span> {selectedYear}{" "}
-            </p>
-          </div>
-          <div className="my-4 p-0 grid grid-cols-3 gap-1">
-            {[
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ].map((month) => (
-              <div
-                key={month}
-                className={styles.month}
-                onClick={() => chooseMonthHandler(month)}
-              >
-                {month}
-              </div>
-            ))}
-          </div>
-        </div>
+        <Calendar />
       </div>
     </div>
   );

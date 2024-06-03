@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //STYLES
 import styles from "./AddEntryForm.module.css";
 
 //REDUX
-import { useSelector } from "react-redux";
-import { current } from "@reduxjs/toolkit";
+import { useSelector, useDispatch } from "react-redux";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
+
 
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
+import { Router } from "next/router";
+
+
+import { useRouter } from "next/router";
 
 const AddEntryForm = () => {
+  const [successMessage, setSuccessMessage] = useState(false);
+  const dispatch = useDispatch();
 
-
-  
-const currentSport = useSelector((state) => state.sport.selectedSport);
+  const currentSport = useSelector((state) => state.sport.selectedSport);
 
   const [inputs, setInputs] = useState({
     //index: currentSport,
@@ -24,9 +29,9 @@ const currentSport = useSelector((state) => state.sport.selectedSport);
     img: "",
   });
 
-  console.log(inputs);
-
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
+
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -42,34 +47,57 @@ const currentSport = useSelector((state) => state.sport.selectedSport);
         //img: inputs.img,
       };
 
-      console.log(data)
-
-      
       try {
         const { data: newSport, error } = await supabase
           .from("sports")
           .insert([data]);
 
         if (error) {
-          console.error(
-            "Failed to insert data into Supabase table:",
-            error
-          );
+          console.error("Failed to insert data into Supabase table:", error);
         } else {
-          console.log("Data successfully inserted into Supabase table:",newSport);
+          console.log(
+            "Data successfully inserted into Supabase table:",
+            newSport
+          );
+          fetchSportsData()
         }
       } catch (error) {
         console.error("Error inserting data into Supabase table:", error);
       }
-      
 
-      console.log("Input values:", inputs);
+      setSuccessMessage(true);
+   
 
-      
+      setTimeout(() => {
+        setSuccessMessage(false);
+      }, 5000);
+
+
+      console.log("input values:", inputs);
+
+
     } else {
+      setSuccessMessage(false);
       console.log("Validation failed. Please check your input.");
     }
   };
+
+
+     
+  const fetchSportsData = async () => {
+    try {
+      const response = await fetch("/api/sports");
+      if (!response.ok) {
+        throw new Error("Failed to fetch sports data");
+      }
+      const data = await response.json();
+
+      dispatch(setAllSportsFromSupabase(data.data));
+    } catch (error) {
+      console.error("Error fetching sports data:", error);
+    }
+  };
+
 
   const blurHandler = (target) => {
     setIsTouched(true);
@@ -144,6 +172,9 @@ const currentSport = useSelector((state) => state.sport.selectedSport);
       <button type="submit" className={styles.submit_btn}>
         submit
       </button>
+      {successMessage && (
+        <p className={styles.successMessage_p}> entry successfully created </p>
+      )}
     </form>
   );
 };

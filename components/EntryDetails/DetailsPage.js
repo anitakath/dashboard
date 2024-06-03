@@ -46,7 +46,7 @@ const DetailsPage = () => {
         console.error('Fehler beim Löschen des Eintrags:', error.message);
       } else {
         console.log('Eintrag erfolgreich gelöscht');
-        // Fügen Sie hier ggf. Code hinzu, um die Benutzeroberfläche zu aktualisieren oder eine Weiterleitung durchzuführen
+        router.push("/")
       }
 
 

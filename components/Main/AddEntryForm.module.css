@@ -79,3 +79,9 @@
   letter-spacing: 1px;
   margin: 2px 0px;
 }
+
+
+.successMessage_p{
+  font-size: 1.2rem;
+  color: lightgreen;
+}
