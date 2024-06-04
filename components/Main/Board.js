@@ -19,6 +19,10 @@ import AddEntryForm from "./AddEntryForm";
 import { current } from "@reduxjs/toolkit";
 
 
+//REDUX
+import { useSelector } from "react-redux";
+
+
 //COMPONENTS
 import Calendar from "./Calendar";
 
@@ -27,7 +31,23 @@ const Board = (props) => {
   const filteredEntries = props.filteredEntries;
   const [formIsOpen, setFormIsOpen] = useState(false);
 
-  const [selectedMonth, setSelectedMonth] = useState(""); // useState für den ausgewählten Monat
+  const actualDate = useSelector((state) => state.calendar);
+
+
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
+  const actualMonth = actualMonthIndex + 1
+
+
+  
+  const filteredByDate = filteredEntries.filter((entry) => {
+    const entryDate = new Date(entry.created_at);
+    const entryYear = entryDate.getFullYear();
+    const entryMonth = entryDate.getMonth() + 1; 
+
+    return entryYear === actualDate.year && entryMonth === actualMonth;
+  });
+
 
 
   const addEntryHandler = (e) => {
@@ -49,7 +69,6 @@ const Board = (props) => {
 
     return date.toLocaleDateString("de-DE", options).replace(",", "");
   }
-
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -132,8 +151,9 @@ const Board = (props) => {
 
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
-          {filteredEntries &&
-            filteredEntries.map((entry, index) => (
+          {filteredByDate.length === 0 && <p className="m-2  text-xl"> no entries were made </p>}
+          {filteredByDate &&
+            filteredByDate.map((entry, index) => (
               <div className={styles.entry}>
                 <Link href={`/details/${entry.title}`}>
                   <div className={styles.link}>

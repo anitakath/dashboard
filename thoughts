@@ -33,11 +33,13 @@ declare fetchSportsData function @ Navigation.js && AddEntryForm.js in a seperat
 */
 
 
+/*
+
+@Calendar.js => update the redux state in calendarReducer.js, with the date object clicked by the user
+you may need redux thunk???
 
 
-
-// BOARD:JS -> SUMMARY
-// set the default value in  Board.js´ summary section to the year we are currently in
+*/
 
 // BOARDS.JS -> ADDENTRYFORM
 //revise the AddEntryForm component to make the slide effect work in transition groups

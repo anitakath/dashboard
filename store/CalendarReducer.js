@@ -3,19 +3,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import { supabase } from "@/services/supabaseClient";
 
 
+const initialState = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
+};
 
 const calendarSlice = createSlice({
-    name:"calendar",
-    initialState:{
-        date: null
+  name: "calendar",
+  initialState,
+  reducers: {
+    updateDate(state, action) {
+      state.year = action.payload.year;
+      state.month = action.payload.month;
     },
-    reducers:{
-        setDate(state, action){
-               state.date = action.payload;
-        }
-    }
-})
+  },
+});
 
 
 export default calendarSlice.reducer;
-export const { setDate } = calendarSlice.actions;
+export const { updateDate } = calendarSlice.actions;

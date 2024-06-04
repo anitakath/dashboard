@@ -18,8 +18,7 @@ import { current } from "@reduxjs/toolkit";
 
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { setDate } from '@/store/CalendarReducer';
-
+import { updateDate } from '@/store/CalendarReducer';
 const Calendar = () =>{
 
    const dispatch = useDispatch();
@@ -33,7 +32,19 @@ const Calendar = () =>{
    });
 
 
-   console.log(date)
+
+   useEffect(()=>{
+
+      
+    const setMonthAndFilterSports = () => {
+     
+      dispatch(updateDate(date));
+    };
+
+    setMonthAndFilterSports()
+
+
+   }, [date])
 
     function formatDate(dateString) {
       const options = {
@@ -60,21 +71,13 @@ const Calendar = () =>{
         month: month,
       }));
 
-      setMonathAndFilterSports(date)
 
 
       
     };
 
-    const setMonathAndFilterSports = (date) => {
-     console.log('dispatching')
-     console.log(date)
-     dispatch(setDate({ month: "Jan", year: 2024 }));
-
-    }
-
+  
     const actualDate = useSelector((state)=> state.calendar)
-    console.log(actualDate)
 
 
 
@@ -84,6 +87,7 @@ const Calendar = () =>{
     const currentMonth = new Date().toLocaleString("default", {
       month: "short",
     });
+
 
     setDate((prevDate) => ({
       ...prevDate,
@@ -143,7 +147,7 @@ const Calendar = () =>{
             <div
               key={month}
               className={`${styles.month} ${
-                selectedMonth === month ? styles.active : ""
+                date.month === month ? styles.active : ""
               }`}
               onClick={() => chooseMonthHandler(month)}
             >
