@@ -60,25 +60,8 @@ const Navigation = ()=> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
      const handleSportClick = (sport) => {
        setActive(sport);
-       console.log(sport)
        dispatch(setSelectedSport(sport));
      };
 

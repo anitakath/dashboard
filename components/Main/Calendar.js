@@ -7,12 +7,8 @@ import styles from './Calendar.module.css'
 //FONTAWESOME
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faHouse, faUser, faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import AddEntryForm from "./AddEntryForm";
-import { current } from "@reduxjs/toolkit";
 
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -25,6 +21,9 @@ const Calendar = (props) =>{
     (state) => state.sport.allSupabaseSports
   );
 
+  const selectedSport = useSelector((state)=> state.sport.selectedSport)
+
+
   const dispatch = useDispatch();
   const currentYear = new Date().getFullYear(); // Aktuelles Jahr ermitteln
   const [selectedYear, setSelectedYear] = useState(currentYear); // useState für das ausgewählte Jahr
@@ -35,7 +34,7 @@ const Calendar = (props) =>{
     year: selectedYear,
   });
 
-  const getEntryCountForMonth = (month, selectedYear) => {
+  const getEntryCountForMonth = (month, selectedYear, selectedSport) => {
     return allSupabaseSports.filter((entry) => {
 
       const entryDate = new Date(entry.created_at);
@@ -43,12 +42,13 @@ const Calendar = (props) =>{
         month: "short",
       });
       const entryYear = entryDate.getFullYear();
+      const sportName = entry.name;
 
 
       const monthAbbreviation = month.slice(0, 3); // Kürzen des Monatsnamens auf 3 Buchstaben
 
 
-      return entryMonth === monthAbbreviation && entryYear === selectedYear;
+      return entryMonth === monthAbbreviation && entryYear === selectedYear  && sportName === selectedSport;
     }).length;
   };
 
@@ -168,7 +168,7 @@ const Calendar = (props) =>{
           "Nov",
           "Dec",
         ].map((month) => {
-          const entryCount = getEntryCountForMonth(month, selectedYear);
+          const entryCount = getEntryCountForMonth(month, selectedYear, selectedSport);
           const monthStyle = getMonthStyle(entryCount);
 
           return (
