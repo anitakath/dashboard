@@ -29,15 +29,7 @@ declare fetchSportsData function @ Navigation.js && AddEntryForm.js in a seperat
 */
 
 
-/*
 
-@Calendar.js => 
-in Calender.js I would like the active class to always be defined before mini/midi/maxi. 
-the user should be able to see if and roughly how many entries were made in which month.
- However, above all he should know which month he is currently on in Board.js.
-
-
-*/
 
 // BOARDS.JS -> ADDENTRYFORM
 //revise the AddEntryForm component to make the slide effect work in transition groups
