@@ -204,9 +204,11 @@ const Calendar = (props) =>{
             return (
               <div
                 key={month}
-                className={`${styles.month} ${
-                  date.month === month ? styles.active : ""
-                } ${monthStyle}`}
+                className={`
+                  ${styles.month} 
+                  ${date.month === month ? styles.active : ""} 
+                  ${date.month === month ? "" : monthStyle}
+                  `}
                 onClick={() => chooseMonthHandler(month)}
               >
                 {month}
