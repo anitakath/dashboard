@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 
 //STYLES 
@@ -7,10 +6,7 @@ import styles from './Calendar.module.css'
 //FONTAWESOME
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-
-
 
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,22 +17,21 @@ const Calendar = (props) =>{
     (state) => state.sport.allSupabaseSports
   );
 
-  const selectedSport = useSelector((state)=> state.sport.selectedSport)
-
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
 
   const dispatch = useDispatch();
-  const currentYear = new Date().getFullYear(); // Aktuelles Jahr ermitteln
-  const [selectedYear, setSelectedYear] = useState(currentYear); // useState für das ausgewählte Jahr
-  const [selectedMonth, setSelectedMonth] = useState(""); // useState für den ausgewählten Monat
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear); 
+  const [selectedMonth, setSelectedMonth] = useState(""); 
 
   const [date, setDate] = useState({
     month: selectedMonth,
     year: selectedYear,
   });
 
+  //filter the entries by month, year and sport from allSupabaseSports
   const getEntryCountForMonth = (month, selectedYear, selectedSport) => {
     return allSupabaseSports.filter((entry) => {
-
       const entryDate = new Date(entry.created_at);
       const entryMonth = entryDate.toLocaleString("default", {
         month: "short",
@@ -44,11 +39,13 @@ const Calendar = (props) =>{
       const entryYear = entryDate.getFullYear();
       const sportName = entry.name;
 
+      const monthAbbreviation = month.slice(0, 3); 
 
-      const monthAbbreviation = month.slice(0, 3); // Kürzen des Monatsnamens auf 3 Buchstaben
-
-
-      return entryMonth === monthAbbreviation && entryYear === selectedYear  && sportName === selectedSport;
+      return (
+        entryMonth === monthAbbreviation &&
+        entryYear === selectedYear &&
+        sportName === selectedSport
+      );
     }).length;
   };
 
@@ -116,9 +113,6 @@ const Calendar = (props) =>{
     }));
   }, []);
 
- 
-
-
   return (
     <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative  ">
       <h1 className="text-2xl  border-b-2 my-2"> Summary </h1>
@@ -151,7 +145,6 @@ const Calendar = (props) =>{
           <span className="text-xs ">selected year:</span> {selectedYear}{" "}
         </p>
       </div>
-      
 
       <div className="my-4 p-0 grid grid-cols-3 gap-1">
         {[
@@ -168,7 +161,11 @@ const Calendar = (props) =>{
           "Nov",
           "Dec",
         ].map((month) => {
-          const entryCount = getEntryCountForMonth(month, selectedYear, selectedSport);
+          const entryCount = getEntryCountForMonth(
+            month,
+            selectedYear,
+            selectedSport
+          );
           const monthStyle = getMonthStyle(entryCount);
 
           return (

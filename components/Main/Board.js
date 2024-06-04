@@ -12,11 +12,9 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faHouse, faUser, faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
-import { current } from "@reduxjs/toolkit";
 
 
 //REDUX
@@ -36,23 +34,17 @@ const Board = (props) => {
 
 
 
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
-  const actualMonth = actualMonthIndex + 1
-
-
+  const actualMonth = actualMonthIndex + 1;
 
   const filteredByDate = filteredEntries.filter((entry) => {
     const entryDate = new Date(entry.created_at);
     const entryYear = entryDate.getFullYear();
-    const entryMonth = entryDate.getMonth() + 1; 
+    const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
 
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
-
-
-
-
 
 
   const addEntryHandler = (e) => {
@@ -178,6 +170,9 @@ const Board = (props) => {
         {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
 
         <Calendar filteredByDate={filteredByDate} />
+
+
+        
       </div>
     </div>
   );

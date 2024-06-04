@@ -3,13 +3,9 @@ import {useEffect, useState} from 'react'
 //STYLES
 import styles from './Navigation.module.css'
 
-import { supabase } from '@/services/supabaseClient';
-
-
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedSport, setAllSports, setAllSportsFromSupabase, setNavigation, deleteSport } from "@/store/sportReducer";
-
+import { setSelectedSport, setAllSports, setAllSportsFromSupabase, setNavigation } from "@/store/sportReducer";
 
 //COMPONENTS
 import AddSportForm from './AddSportForm';
@@ -18,6 +14,7 @@ import AddSportForm from './AddSportForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
+
 const Navigation = ()=> {
   
   const [formIsOpen, setFormIsOpen] = useState(false)
@@ -25,8 +22,6 @@ const Navigation = ()=> {
   const currentSport = useSelector((state) => state.sport.selectedSport);
 
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
-
-
     
   const dispatch = useDispatch();
 
@@ -36,8 +31,6 @@ const Navigation = ()=> {
   ).sort((a, b) => a.localeCompare(b)) : " "
 
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
-
-  
     
     
   const fetchSportsData = async () => {
@@ -54,105 +47,105 @@ const Navigation = ()=> {
     }
   };
 
-    useEffect(() => {
-      fetchSportsData();
-    }, []);
+  useEffect(() => {
+    fetchSportsData();
+  }, []);
 
 
 
-     const handleSportClick = (sport) => {
-       setActive(sport);
-       dispatch(setSelectedSport(sport));
-     };
+  const handleSportClick = (sport) => {
+    setActive(sport);
+    dispatch(setSelectedSport(sport));
+  };
 
 
-     useEffect(()=>{
-       setActive(currentSport)
-     }, [currentSport])
-
-
-  
-     const addSportClickHandler = () =>{
-       setFormIsOpen((prevState) => !prevState)
-     }
-
-
-     let addBtn_text = formIsOpen ? '-' : '+'
-
-
-     const sortHandler = (criteria) => {
-       let sortedSports = [];
-
-       switch (criteria) {
-         case "alphabetically":
-           sortedSports = [...alphabetic];
-           break;
-         case "recentlyAddedFirst":
-           sortedSports = Array.from(
-             new Set(allSupabaseSports.map((sport) => sport.name))
-           );
-           break;
-         case "recentlyAddedLast":
-           sortedSports = Array.from(
-             new Set(allSupabaseSports.map((sport) => sport.name))
-           ).reverse();
-           break;
-         case "mostEntries":
-
-          const countMap = {};
-
-          allSupabaseSports.forEach(sport => {
-              if (!countMap[sport.name]) {
-                  countMap[sport.name] = 1;
-              } else {
-                  countMap[sport.name]++;
-              }
-          });
-
-          //const sorted = Object.entries(countMap).sort((a, b) => b[1] - a[1]);
-          
-           const sorted = Object.entries(countMap).sort((a, b) => {
-             // First sort by frequency (second element
-             if (b[1] !== a[1]) {
-               return b[1] - a[1];
-             } else {
-               // If the frequency is the same, sort by alphabet (first element)
-               return a[0].localeCompare(b[0]);
-             }
-           });
-          
-          //sortedSports = sorted.map((sport) => sport[0]) 
-          sortedSports = sorted.map((sport) => `${sport[0]} (${sport[1]})`);
-           break;
-         default:
-           // Default to alphabetical sorting
-           sortedSports = [...alphabetic];
-       }
-
-        
-       setUniqueSports(sortedSports);
-     };
-
-
-
-     useEffect(()=>{
-       dispatch(setNavigation(uniqueSports))
-
-     }, [uniqueSports])
-
-
-     const navigation = useSelector((state) => state.sport.navigation)
+  useEffect(()=>{
+    setActive(currentSport)
+  }, [currentSport])
 
 
   
-     const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const addSportClickHandler = () =>{
+    setFormIsOpen((prevState) => !prevState)
+  }
 
-     const deleteSportHandler = (sport) =>{
-      console.log('deleting')
-      // ADD HERE AN "ARE YOU SURE?!?!?!?" BEFORE DELETING THE SPORT
-      alert("are you sure you want to delete?")
-      //dispatch(deleteSport(sport));
-     }
+
+  let addBtn_text = formIsOpen ? '-' : '+'
+
+
+  const sortHandler = (criteria) => {
+    let sortedSports = [];
+
+    switch (criteria) {
+      case "alphabetically":
+        sortedSports = [...alphabetic];
+      break;
+      case "recentlyAddedFirst":
+        sortedSports = Array.from(
+        new Set(allSupabaseSports.map((sport) => sport.name))
+        );
+      break;
+      case "recentlyAddedLast":
+        sortedSports = Array.from(
+        new Set(allSupabaseSports.map((sport) => sport.name))
+        ).reverse();
+      break;
+      case "mostEntries":
+
+        const countMap = {};
+
+        allSupabaseSports.forEach(sport => {
+          if (!countMap[sport.name]) {
+            countMap[sport.name] = 1;
+          } else {
+            countMap[sport.name]++;
+          }
+        });
+
+         
+          
+        const sorted = Object.entries(countMap).sort((a, b) => {
+
+          if (b[1] !== a[1]) {
+            return b[1] - a[1];
+          } else {
+            return a[0].localeCompare(b[0]);
+          }
+        });
+          
+      
+        sortedSports = sorted.map((sport) => `${sport[0]} (${sport[1]})`);
+      break;
+      default:
+        // Default alphabetiscch
+        sortedSports = [...alphabetic];
+    }
+
+    setUniqueSports(sortedSports);
+  };
+
+
+
+  useEffect(()=>{
+    dispatch(setNavigation(uniqueSports))
+
+  }, [uniqueSports])
+
+
+  const navigation = useSelector((state) => state.sport.navigation)
+
+
+  
+ const [openDeleteModal, setOpenDeleteModal] = useState(false)
+
+  const deleteSportHandler = (sport) =>{
+    console.log('deleting')
+
+
+    // ADD HERE AN "ARE YOU SURE?!?!?!?" BEFORE DELETING THE SPORT!!!!
+    alert("are you sure you want to delete?")
+    //dispatch(deleteSport(sport));
+  }
 
      
 
