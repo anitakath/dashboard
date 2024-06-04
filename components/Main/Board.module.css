@@ -1,27 +1,6 @@
 
 
-.entry{
-    border: 1px solid var( --purpleDark);
-    margin: 10px 0px;
-    padding: 0px;
-}
 
-
-
-.link{
-    cursor: pointer;
-    transition: 0.2s ease;
-    padding: 5px;
-}
-
-.link:hover{
-    color: beige;
-    background-color: var(--purpleDarkHover);
-}
-
-
-
-/* MAIN BOARD SECTION */
 
 .add_entry_btn{
     color: var(--purpleDarkHover);

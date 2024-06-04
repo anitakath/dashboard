@@ -174,7 +174,7 @@ const Navigation = ()=> {
           <ul className="w-full h-full  overflow-scroll">
             {navigation &&
               navigation.map((sport, index) => (
-                <div className='relative'>
+                <div className='relative' key={index}>
                 <li key={index} className="flex">
                   <button
                     className={`${styles.sport_btn} ${

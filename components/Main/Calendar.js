@@ -21,8 +21,8 @@ const Calendar = (props) =>{
 
   const dispatch = useDispatch();
   const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState(currentYear); 
-  const [selectedMonth, setSelectedMonth] = useState(""); 
+  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState("");
 
   const [date, setDate] = useState({
     month: selectedMonth,
@@ -39,7 +39,7 @@ const Calendar = (props) =>{
       const entryYear = entryDate.getFullYear();
       const sportName = entry.name;
 
-      const monthAbbreviation = month.slice(0, 3); 
+      const monthAbbreviation = month.slice(0, 3);
 
       return (
         entryMonth === monthAbbreviation &&
@@ -49,6 +49,7 @@ const Calendar = (props) =>{
     }).length;
   };
 
+  // add a style to the month-divs, depending on the number of entries
   const getMonthStyle = (entryCount) => {
     if (entryCount > 8) {
       return styles.maxi;
@@ -114,7 +115,7 @@ const Calendar = (props) =>{
   }, []);
 
   return (
-    <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative  ">
+    <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative md:w-full  ">
       <h1 className="text-2xl  border-b-2 my-2"> Summary </h1>
 
       <div className="absolute right-6 top-4 p-2 flex items-center">

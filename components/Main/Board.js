@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faUser, faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
 
@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 
 //COMPONENTS
 import Calendar from "./Calendar";
+import Entry from "./Entry";
 
 const Board = (props) => {
   const currentSport = props.currentSport;
@@ -62,6 +63,7 @@ const Board = (props) => {
       hour: "2-digit",
       minute: "2-digit",
     };
+
     const date = new Date(dateString);
 
     return date.toLocaleDateString("de-DE", options).replace(",", "");
@@ -91,8 +93,8 @@ const Board = (props) => {
         ></p>
       </div>
 
-      <div className="flex  justify-center ">
-        <div className="p-4 relative mt-4 mr-1 mb-4 w-2/3 ">
+      <div className="flex justify-center lg:flex-row flex-col ">
+        <div className="p-4 relative mt-4 mr-1 mb-4 w-2/3 md:w-full max-h-1/2 overflow-y-scroll">
           <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
 
           <div className="flex items-center">
@@ -149,30 +151,16 @@ const Board = (props) => {
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
           {filteredByDate.length === 0 && (
-            <p className="m-2  text-xl"> no entries were made </p>
+            <p className="m-2 text-xl"> no entries were made </p>
           )}
-          {filteredByDate &&
-            filteredByDate.map((entry, index) => (
-              <div className={styles.entry}>
-                <Link href={`/details/${entry.title}`}>
-                  <div className={styles.link}>
-                    <p className="my-2 px-2 text-xs absolute right-4">
-                      {formatDate(entry.created_at)}
-                    </p>
-                    <h2 className="text-2xl mb-4 mt-2 px-2">{entry.title}</h2>
-                    <p className="px-2 mb-4"> {entry.entry}</p>
-                  </div>
-                </Link>
-              </div>
-            ))}
+          {filteredByDate && (
+            <Entry filteredByDate={filteredByDate} formatDate={formatDate} />
+          )}
         </div>
 
         {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
 
         <Calendar filteredByDate={filteredByDate} />
-
-
-        
       </div>
     </div>
   );
