@@ -22,17 +22,17 @@ const Dashboard = () =>{
 
   const filteredEntries = allSupabaseSports ? allSupabaseSports.filter(sport => sport.name === currentSport) : [];
 
-    return (
-      <div className="w-full h-full p-4">
-        <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative">
-          <Navigation />
-          <Board
-            filteredEntries={filteredEntries}
-            currentSport={currentSport}
-          />
-        </div>
+  return (
+    <div className="w-full h-full p-4">
+      <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative">
+        <Navigation />
+        <Board
+          filteredEntries={filteredEntries}
+          currentSport={currentSport}
+        />
       </div>
-    ); 
+    </div>
+  ); 
 }
 
 export default Dashboard

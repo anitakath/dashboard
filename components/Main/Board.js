@@ -29,9 +29,11 @@ import Calendar from "./Calendar";
 const Board = (props) => {
   const currentSport = props.currentSport;
   const filteredEntries = props.filteredEntries;
+
   const [formIsOpen, setFormIsOpen] = useState(false);
 
   const actualDate = useSelector((state) => state.calendar);
+
 
 
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -39,7 +41,7 @@ const Board = (props) => {
   const actualMonth = actualMonthIndex + 1
 
 
-  
+
   const filteredByDate = filteredEntries.filter((entry) => {
     const entryDate = new Date(entry.created_at);
     const entryYear = entryDate.getFullYear();
@@ -47,6 +49,9 @@ const Board = (props) => {
 
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
+
+
+
 
 
 
@@ -151,7 +156,9 @@ const Board = (props) => {
 
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
-          {filteredByDate.length === 0 && <p className="m-2  text-xl"> no entries were made </p>}
+          {filteredByDate.length === 0 && (
+            <p className="m-2  text-xl"> no entries were made </p>
+          )}
           {filteredByDate &&
             filteredByDate.map((entry, index) => (
               <div className={styles.entry}>
@@ -170,7 +177,7 @@ const Board = (props) => {
 
         {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
 
-        <Calendar />
+        <Calendar filteredByDate={filteredByDate} />
       </div>
     </div>
   );

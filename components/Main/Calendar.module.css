@@ -28,7 +28,6 @@
     justify-content: center;
     transition: 0.2s ease;
     cursor: pointer;
-
 }
 
 .month:hover{
@@ -39,4 +38,17 @@
 .active{
     z-index: 1000;
     background-color: var(--purpleDarkHover);
+}
+
+
+.mini{
+    background-color: var(--greenLight);
+}
+
+.midi{
+    background-color: var(--greenMedium);
+}
+
+.maxi{
+    background-color: var(--greenDark);
 }

@@ -19,21 +19,70 @@ import { current } from "@reduxjs/toolkit";
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDate } from '@/store/CalendarReducer';
-const Calendar = () =>{
 
-   const dispatch = useDispatch();
-   const currentYear = new Date().getFullYear(); // Aktuelles Jahr ermitteln
-   const [selectedYear, setSelectedYear] = useState(currentYear); // useState für das ausgewählte Jahr
-   const [selectedMonth, setSelectedMonth] = useState(""); // useState für den ausgewählten Monat
+const Calendar = (props) =>{
 
-   const [date, setDate] = useState({
-     month: selectedMonth,
-     year: selectedYear,
-   });
+  const allSupabaseSports = useSelector((state)=> state.sport.allSupabaseSports)
+
+ 
 
 
+  const dispatch = useDispatch();
+  const currentYear = new Date().getFullYear(); // Aktuelles Jahr ermitteln
+  const [selectedYear, setSelectedYear] = useState(currentYear); // useState für das ausgewählte Jahr
+  const [selectedMonth, setSelectedMonth] = useState(""); // useState für den ausgewählten Monat
 
-   useEffect(()=>{
+  const [date, setDate] = useState({
+    month: selectedMonth,
+    year: selectedYear,
+  });
+
+
+
+
+
+
+
+
+
+
+ const getEntryCountForMonth = (month) => {
+   return allSupabaseSports.filter((entry) => {
+     const entryMonth = new Date(entry.created_at).toLocaleString("default", {
+       month: "short",
+     });
+     const monthAbbreviation = month.slice(0, 3); // Kürzen des Monatsnamens auf 3 Buchstaben
+     
+  
+     return entryMonth === monthAbbreviation;
+   }).length;
+ };
+
+
+
+  const getMonthStyle = (entryCount) => {
+
+    if (entryCount > 8) {
+      return styles.maxi;
+    } else if (entryCount > 4) {
+      return styles.midi;
+    } else if (entryCount > 0) {
+      return styles.mini;
+    } else {
+      return;
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+  useEffect(()=>{
 
       
     const setMonthAndFilterSports = () => {
@@ -44,9 +93,9 @@ const Calendar = () =>{
     setMonthAndFilterSports()
 
 
-   }, [date])
+  }, [date])
 
-    function formatDate(dateString) {
+  function formatDate(dateString) {
       const options = {
         day: "2-digit",
         month: "short",
@@ -57,28 +106,30 @@ const Calendar = () =>{
       const date = new Date(dateString);
 
       return date.toLocaleDateString("de-DE", options).replace(",", "");
-    }
+  }
 
-    const handleYearChange = (e) => {
-      setSelectedYear(parseInt(e.target.value)); // Das ausgewählte Jahr aktualisieren
-    };
+  const handleYearChange = (e) => {
+    setSelectedYear(parseInt(e.target.value));
 
-    const chooseMonthHandler = (month) => {
-      setSelectedMonth(month);
-
-      setDate((prevDate) => ({
-        ...prevDate,
-        month: month,
-      }));
+    const year = parseInt(e.target.value);
 
 
 
+    setDate((prevDate) => ({
+      ...prevDate,
+      year: year,
+    }));
+  };
+
+  const chooseMonthHandler = (month) => {
+    setSelectedMonth(month);
+
+    setDate((prevDate) => ({
+      ...prevDate,
+      month: month,
+    }));
       
-    };
-
-  
-    const actualDate = useSelector((state)=> state.calendar)
-
+  };
 
 
 
@@ -129,13 +180,16 @@ const Calendar = () =>{
             <span className="text-xs ">selected year:</span> {selectedYear}{" "}
           </p>
         </div>
+
+     
+
         <div className="my-4 p-0 grid grid-cols-3 gap-1">
           {[
             "Jan",
             "Feb",
             "Mar",
             "Apr",
-            "May",
+            "Mai",
             "Jun",
             "Jul",
             "Aug",
@@ -143,17 +197,23 @@ const Calendar = () =>{
             "Oct",
             "Nov",
             "Dec",
-          ].map((month) => (
-            <div
-              key={month}
-              className={`${styles.month} ${
-                date.month === month ? styles.active : ""
-              }`}
-              onClick={() => chooseMonthHandler(month)}
-            >
-              {month}
-            </div>
-          ))}
+          ].map((month) => {
+            const entryCount = getEntryCountForMonth(month);
+            const monthStyle = getMonthStyle(entryCount);
+
+            return (
+              <div
+                key={month}
+                className={`${styles.month} ${
+                  date.month === month ? styles.active : ""
+                } ${monthStyle}`}
+                onClick={() => chooseMonthHandler(month)}
+              >
+                {month}
+              </div>
+            );
+          })}
+          
         </div>
       </div>
     );
