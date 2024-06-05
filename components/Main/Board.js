@@ -21,9 +21,11 @@ import AddEntryForm from "./AddEntryForm";
 import { useSelector } from "react-redux";
 
 
+
 //COMPONENTS
 import Calendar from "./Calendar";
 import Entry from "./Entry";
+import Navigation from "../Navigation/Navigation";
 
 const Board = (props) => {
   const currentSport = props.currentSport;
@@ -77,12 +79,15 @@ const Board = (props) => {
           placeholder="search..."
           className="border-b-2 w-3/12 mx-4 p-2 text-xl"
         ></input>
+
         <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faHouse} className="font_purple" />
         </p>
+
         <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faBars} className="font_purple" />
         </p>
+
         <Link href="/profile" className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faUser} className="font_purple" />
         </Link>
@@ -93,8 +98,13 @@ const Board = (props) => {
         ></p>
       </div>
 
+      {/*---------------------- MOBILE NAVIGATION ---------------------- */}
+      <div className=" flex lg:hidden">
+        <Navigation />
+      </div>
+
       <div className="flex justify-center lg:flex-row flex-col ">
-        <div className="p-4 relative mt-4 mr-1 mb-4 w-2/3 md:w-full max-h-1/2 overflow-y-scroll">
+        <div className="p-4 relative  mt-4 mr-1 mb-4 w-2/3 sm:w-full max-h-1/2 overflow-y-scroll">
           <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
 
           <div className="flex items-center">

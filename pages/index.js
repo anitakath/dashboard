@@ -9,7 +9,7 @@ import Dashboard from "@/components/Dashboard/Dashboard";
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen m-0 p-10">
+    <div className="w-screen h-screen m-0 md:p-10">
       <Dashboard />
     </div>
   );

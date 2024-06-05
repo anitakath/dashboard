@@ -13,6 +13,7 @@
   --greenMedium: hsla(161, 22%, 58%, 0.7);
   --greenDark: hsla(162, 24%, 37%, 0.8);
 
+  --purpleUltraLight: hsl(340, 60%, 85%);
   --purpleLight: hsl(340, 90%, 55%);
   --purpleDark: hsl(340, 100%, 35%);
   --purpleDarkHover: rgba(179, 0, 60, 0.7);
