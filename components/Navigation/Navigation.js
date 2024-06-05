@@ -132,12 +132,11 @@ const Navigation = ()=> {
 
 
   return (
-
-    <div className="border-r w-full p-0 flex flex-col items-center shadow-section">
+    <div className=" w-full p-0 flex flex-col items-center shadow-section ">
       <h1 className={styles.title}> DASHBOARD </h1>
       <h2 className={styles.subtitle}> your sports </h2>
 
-      <div className="flex w-full  mb-4 items-center relative">
+      <div className="flex w-full  mb-4 items-center relative ">
         <button onClick={sortHandler} className={styles.sort}>
           <FontAwesomeIcon icon={faSort} />
         </button>
@@ -169,7 +168,6 @@ const Navigation = ()=> {
                       className={styles.delete_btn}
                       onClick={() => deleteSportHandler(sport)}
                     >
-        
                       x
                     </button>
 

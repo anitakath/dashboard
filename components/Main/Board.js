@@ -99,7 +99,7 @@ const Board = (props) => {
       </div>
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
-      <div className=" flex lg:hidden">
+      <div className="flex lg:hidden">
         <Navigation />
       </div>
 
