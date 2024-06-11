@@ -26,7 +26,7 @@ const Dashboard = () =>{
   return (
     <div className="w-full h-full p-4">
       <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative">
-        <div className="border-r w-1/5 p-0 flex flex-col items-center shadow-section hidden lg:flex">
+        <div className="border-r w-1/5 p-0 flex flex-col overflow-scroll items-center shadow-section hidden lg:flex">
           <Navigation />
         </div>
 

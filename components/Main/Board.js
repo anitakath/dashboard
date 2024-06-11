@@ -151,7 +151,7 @@ const Board = (props) => {
                     }}
                     timeout={300}
                   >
-                    <AddEntryForm />
+                    <AddEntryForm setFormIsOpen={setFormIsOpen} />
                   </CSSTransition>
                 )}
               </TransitionGroup>

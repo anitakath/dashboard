@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 //STYLES
 import styles from "./AddEntryForm.module.css";
@@ -10,14 +10,16 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
-import { Router } from "next/router";
 
 
-import { useRouter } from "next/router";
-
-const AddEntryForm = () => {
+const AddEntryForm = (props) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const dispatch = useDispatch();
+
+
+  const setFormIsOpen = props.setFormIsOpen;
+
+
 
   const currentSport = useSelector((state) => state.sport.selectedSport);
 
@@ -33,6 +35,8 @@ const AddEntryForm = () => {
 
 
 
+  console.log(inputs.title)
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -40,8 +44,11 @@ const AddEntryForm = () => {
       // Hier kannst du die Daten überprüfen und weiterverarbeiten
       // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
 
+      const formattedTitle = formatText(inputs.title)
+      
       const data = {
         name: inputs.name,
+        entryId: formattedTitle,
         title: inputs.title,
         entry: inputs.text,
         //img: inputs.img,
@@ -74,6 +81,7 @@ const AddEntryForm = () => {
 
 
       console.log("input values:", inputs);
+      setFormIsOpen(false)
 
 
     } else {
@@ -116,6 +124,12 @@ const AddEntryForm = () => {
   const validateText = (text) => {
     return text.length >= 5 && text.length <= 400;
   };
+
+  const formatText = (text) => {
+    return text.toLowerCase().replace(/\s+/g, "-");
+  };
+
+  
 
   return (
     <form className=" my-2 p-2 flex flex-col" onSubmit={submitHandler}>
