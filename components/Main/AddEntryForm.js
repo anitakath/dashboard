@@ -37,6 +37,32 @@ const AddEntryForm = (props) => {
 
   console.log(inputs.title)
 
+
+  /*
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(`images/${file.name}`, formData);
+      if (error) {
+        console.error("Failed to upload image to Supabase storage:", error);
+      } else {
+        console.log("Image successfully uploaded to Supabase storage:", data);
+        // Hier kannst du den Dateipfad des hochgeladenen Bildes in deinen Daten speichern
+        setInputs({ ...inputs, img: data.Key });
+      }
+    } catch (error) {
+      console.error("Error uploading image to Supabase storage:", error);
+    }
+  };
+
+  */
+
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -182,6 +208,15 @@ const AddEntryForm = (props) => {
         className={styles.inputs}
         onChange={changeHandler}
       ></input>
+
+      
+      {/*<label className={styles.labels}> Image </label>
+      <input
+        type="file"
+        name="img"
+        onChange={handleImageUpload}
+        className={styles.inputs}
+        ></input>*/}
 
       <button type="submit" className={styles.submit_btn}>
         submit

@@ -10,12 +10,11 @@ const Entry = (props) =>{
 
     const formatDate = props.formatDate
 
-
     return (
       <div>
         {filteredByDate.map((entry, index) => (
           <div className={styles.entry} key={index}>
-            <Link href={`/details/${entry.title}`}>
+            <Link href={`/details/${entry.entryId}`}>
               <div className={styles.link}>
                 <p className="my-2 px-2 text-xs absolute right-4">
                   {formatDate(entry.created_at)}

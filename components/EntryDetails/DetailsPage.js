@@ -28,30 +28,29 @@ const DetailsPage = () => {
   const lastPathPart = pathParts[pathParts.length - 1];
   const allSports = useSelector((state) => state.sport.allSupabaseSports);
 
+  //filter out the object from allSports whose entryId is identical to the last part of the URL
+  
+  const filteredEntry = allSports.filter(
+    (sport) => sport.entryId === lastPathPart
+  );
 
-  const filteredEntry = allSports.filter((sport) => sport.title === lastPathPart)
-
-  console.log(allSports)
-  console.log(filteredEntry)
-
-  const deleteEntryHandler = async (e) =>{
+  const deleteEntryHandler = async (e) => {
     e.preventDefault();
     const { data, error } = await supabase
-      .from('sports')
+      .from("sports")
       .delete()
-      .eq('title', filteredEntry[0].title)
-      .eq('id', filteredEntry[0].id);
+      .eq("title", filteredEntry[0].title)
+      .eq("id", filteredEntry[0].id);
 
-      if (error) {
-        console.error('Fehler beim Löschen des Eintrags:', error.message);
-      } else {
-        console.log('Eintrag erfolgreich gelöscht');
-        router.push("/")
-      }
+    if (error) {
+      console.error("Fehler beim Löschen des Eintrags:", error.message);
+    } else {
+      console.log("Eintrag erfolgreich gelöscht");
+      router.push("/");
+    }
 
-
-    console.log('deleting')
-  }
+    console.log("deleting");
+  };
 
   return (
     <div className="w-full h-screen   m-4 md:p-14">

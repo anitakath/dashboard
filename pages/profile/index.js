@@ -25,6 +25,8 @@ const Profile = () => {
 
     const selectedSport = useSelector((state) => state.sport.selectedSport)
 
+    const [active, setActive] = useState(false)
+
     console.log(selectedSport)
 
     const router = useRouter();
@@ -43,23 +45,26 @@ const Profile = () => {
     
   return (
     <div className="w-full h-screen p-4 md:p-14">
-      <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative">
+      <div className="flex w-full h-full border-2 overflow-scroll py-2 m-0 p-0 relative">
         <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
           <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
         </Link>
 
         <div className="m-4 p-4 pl-14  w-full">
-          <h1 className="text-2xl my-6"> your sports... </h1>
+          <h1 className="text-2xl my-8"> your sports... </h1>
 
           <div className="flex w-full  flex flex-wrap justify-center ">
             {navigation &&
               navigation.map((sport, index) => (
                 <div
                   key={index}
-                  className={styles.sport_div}
+                  className={`${styles.sport_div} ${selectedSport === sport ? styles.active : ''}`}
                   onClick={() => chooseSportHandler(index)}
                 >
-                  <p className={styles.p}>{sport}</p>
+                  <p className={styles.p}>
+                    {sport}
+                  </p>
+
                 </div>
               ))}
           </div>
