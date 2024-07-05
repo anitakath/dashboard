@@ -9,19 +9,20 @@ import Board from '../Main/Board'
 
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
+import { current } from '@reduxjs/toolkit';
 
 
+import { v4 as uuidv4 } from "uuid";
 
 const Dashboard = () =>{
 
-
   const currentSport = useSelector((state) => state.sport.selectedSport);
-
   const allSupabaseSports = useSelector(
     (state) => state.sport.allSupabaseSports
   );
-
-  const filteredEntries = allSupabaseSports ? allSupabaseSports.filter(sport => sport.name === currentSport) : [];
+  const filteredEntries = allSupabaseSports
+    ? allSupabaseSports.filter((sport) => sport.name === currentSport)
+    : [];
 
   return (
     <div className="w-full h-full p-4">
@@ -33,7 +34,7 @@ const Dashboard = () =>{
         <Board filteredEntries={filteredEntries} currentSport={currentSport} />
       </div>
     </div>
-  ); 
+  );
 }
 
 export default Dashboard

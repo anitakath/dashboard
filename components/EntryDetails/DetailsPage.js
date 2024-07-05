@@ -31,8 +31,9 @@ const DetailsPage = () => {
   //filter out the object from allSports whose entryId is identical to the last part of the URL
   
   const filteredEntry = allSports.filter(
-    (sport) => sport.entryId === lastPathPart
+    (sport) => sport.entryPath === lastPathPart
   );
+
 
   const deleteEntryHandler = async (e) => {
     e.preventDefault();

@@ -11,6 +11,7 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDate } from '@/store/CalendarReducer';
+import { setSelectedSport } from '@/store/sportReducer';
 
 const Calendar = (props) =>{
   const allSupabaseSports = useSelector(
@@ -18,7 +19,6 @@ const Calendar = (props) =>{
   );
 
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-
   const dispatch = useDispatch();
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
@@ -30,6 +30,7 @@ const Calendar = (props) =>{
   });
 
   //filter the entries by month, year and sport from allSupabaseSports
+ /*
   const getEntryCountForMonth = (month, selectedYear, selectedSport) => {
     return allSupabaseSports.filter((entry) => {
       const entryDate = new Date(entry.created_at);
@@ -41,12 +42,45 @@ const Calendar = (props) =>{
 
       const monthAbbreviation = month.slice(0, 3);
 
+
+      //console.log(entryMonth) //Mär
+      //console.log(entryYear) //2024
+      //console.log(sportName) //Poledance
+
       return (
         entryMonth === monthAbbreviation &&
         entryYear === selectedYear &&
         sportName === selectedSport
       );
     }).length;
+  };
+  */
+
+  const getEntryCountForMonth = (month, selectedYear, selectedSport) => {
+
+    const filteredEntries = allSupabaseSports.filter((entry) => {
+      const entryDate = new Date(entry.created_at);
+      let entryMonth = entryDate.toLocaleString("default", {
+        month: "short",
+      });
+      const entryYear = entryDate.getFullYear();
+      const sportName = entry.name;
+
+      const monthAbbreviation = month.slice(0, 3);
+
+      if(entryMonth === "Mär"){
+        entryMonth = 'Mar'
+      }
+
+
+      return (
+        entryMonth === monthAbbreviation &&
+        entryYear === selectedYear &&
+        sportName === selectedSport
+      );
+    });
+
+    return filteredEntries.length;
   };
 
   // add a style to the month-divs, depending on the number of entries
@@ -61,6 +95,30 @@ const Calendar = (props) =>{
       return;
     }
   };
+
+
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+
+
+
+
+
+  
 
   useEffect(() => {
     const setMonthAndFilterSports = () => {
@@ -114,10 +172,19 @@ const Calendar = (props) =>{
     }));
   }, []);
 
-  return (
-    <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative md:w-full  ">
-      <h1 className="text-2xl  border-b-2 my-2"> Summary </h1>
 
+  const summarizeAllHandler = (e) =>{
+    e.preventDefault()
+
+    dispatch(setSelectedSport('all'))
+  }
+
+  console.log(selectedSport)
+
+  return (
+    <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative md:w-full">
+      <h1 className="text-2xl  border-b-2 my-2"> Summary:  <span className={styles.summary_span}>{selectedSport}</span> </h1>
+      <button className={styles.summary_allSports} onClick={summarizeAllHandler}> summary of all sports  </button>
       <div className="absolute right-6 top-4 p-2 flex items-center">
         <p className="text-xs">choose year</p>
         <select
@@ -142,32 +209,17 @@ const Calendar = (props) =>{
           <FontAwesomeIcon icon={faChevronRight} className={styles.chevron} />
         </button>
         <p className="ml-10 w-full text-2xl">
-          {" "}
           <span className="text-xs ">selected year:</span> {selectedYear}{" "}
         </p>
       </div>
 
-      <div className="my-4 p-0 grid grid-cols-3 gap-1">
-        {[
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "Mai",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ].map((month) => {
-          const entryCount = getEntryCountForMonth(
-            month,
-            selectedYear,
-            selectedSport
-          );
+      <div className="my-4 p-0 grid grid-cols-3 gap-1 border-4">
+        {months.map((month) => {
+          const entryCount = getEntryCountForMonth( month, selectedYear, selectedSport );
           const monthStyle = getMonthStyle(entryCount);
+
+
+          console.log(entryCount)
 
           return (
             <div
@@ -179,7 +231,8 @@ const Calendar = (props) =>{
                   `}
               onClick={() => chooseMonthHandler(month)}
             >
-              {month}
+             <p>{month}</p>
+             <p className={styles.amount}>{entryCount}</p>
             </div>
           );
         })}

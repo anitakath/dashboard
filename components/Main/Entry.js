@@ -5,16 +5,14 @@ import styles from './Entry.module.css'
 
 const Entry = (props) =>{
 
+  const filteredByDate = props.filteredByDate
+  const formatDate = props.formatDate
 
-    const filteredByDate = props.filteredByDate
-
-    const formatDate = props.formatDate
-
-    return (
+  return (
       <div>
         {filteredByDate.map((entry, index) => (
           <div className={styles.entry} key={index}>
-            <Link href={`/details/${entry.entryId}`}>
+            <Link href={`/details/${entry.entryPath}`}>
               <div className={styles.link}>
                 <p className="my-2 px-2 text-xs absolute right-4">
                   {formatDate(entry.created_at)}
@@ -27,7 +25,7 @@ const Entry = (props) =>{
         ))}
         
       </div>
-    );
+  );
 }
 
 export default Entry

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //STYLES
 import styles from "./AddEntryForm.module.css";
@@ -10,6 +10,7 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
+import { v4 as uuidv4 } from "uuid";
 
 
 const AddEntryForm = (props) => {
@@ -28,14 +29,141 @@ const AddEntryForm = (props) => {
     name: currentSport,
     title: "",
     text: "",
+    duration: "",
+    label: "",
     img: "",
   });
 
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
 
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
 
-  console.log(inputs.title)
+  console.log(file)
+
+  useEffect(()=>{
+    async function fetchSportImages() {
+      try {
+        const { data, error } = await supabase.storage
+          .from("sport_images")
+          .list();
+
+
+        console.log('HALLO?')
+
+        console.log(data)
+        console.log(error)
+
+        if (error) {
+          console.error(error.message);
+          return;
+        }
+
+        if (data) {
+          data.forEach((image) => {
+            console.log(image.name); // Hier kannst du die Namen der Bilder ausgeben oder weitere Aktionen durchführen
+          });
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+
+    console.log('FETCH')
+    fetchSportImages()
+  }, [])
+
+
+   const [emotion, setEmotion] = useState("");
+
+   const handleEmotionChange = (e) => {
+     setEmotion(e.target.value);
+   };
+
+
+
+  const handleUpload = async () => {
+    if (file) {
+      const { data, error } = await supabase.storage
+        .from("sport_images")
+        .upload(`/`, file);
+      if (error) {
+        console.error("Error uploading image:", error.message);
+      } else {
+        console.log("Image uploaded successfully:", data.Key);
+      }
+    }
+  };
+
+
+  /*
+
+  async function uploadFile(e) {
+    const file = e.target.files[0];
+    console.log(file);
+
+    // Überprüfe, ob der Benutzer authentifiziert ist
+    /*
+    const user = supabase.auth.session();
+    if (!user) {
+      console.log("Benutzer nicht authentifiziert");
+      return;
+    }*//*
+
+    const user = {
+      id: "111"
+    }
+
+    // Lade die Datei in den Storage Bucket hoch
+    const { data, error } = await supabase.storage
+      .from("sport_images")
+      .upload(`${user.id}/${file.name}`, file); // Speichere die Datei im Ordner des Benutzers mit seiner ID
+
+    if (error) {
+      // Behandle Fehler beim Hochladen
+      console.log(error);
+    } else {
+      // Handle Erfolg beim Hochladen
+      console.log("Datei erfolgreich hochgeladen");
+    }
+  }*/
+
+  /*
+
+  async function uploadFile(e) {
+    const file = e.target.files[0]
+    console.log(file)
+    const { data, error } = await supabase.storage
+      .from("sport_images")
+      .upload("sport_images", file);
+    if (error) {
+      // Handle error
+      console.log(error)
+    } else {
+      // Handle success
+      console.log('yeah')
+    }
+  }
+  */
+
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const { data, error } = await supabase.storage
+      .from("sport_images/public")
+      .upload(`images/${file.name}`, file);
+
+    if (error) {
+      console.error("Error uploading image:", error.message);
+    } else {
+      console.log("Image uploaded successfully:", data.Key);
+      // Hier kannst du weitere Aktionen nach dem erfolgreichen Upload durchführen
+    }
+  };
 
 
   /*
@@ -71,12 +199,15 @@ const AddEntryForm = (props) => {
       // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
 
       const formattedTitle = formatText(inputs.title)
+      const uniqueID = uuidv4();
+      console.log(uniqueID); 
       
       const data = {
         name: inputs.name,
-        entryId: formattedTitle,
+        entryId: uniqueID,
         title: inputs.title,
         entry: inputs.text,
+        entryPath: formattedTitle + "-" + uniqueID,
         //img: inputs.img,
       };
 
@@ -155,12 +286,11 @@ const AddEntryForm = (props) => {
     return text.toLowerCase().replace(/\s+/g, "-");
   };
 
-  
+  console.log(inputs)
 
   return (
     <form className=" my-2 p-2 flex flex-col" onSubmit={submitHandler}>
       <label className={styles.labels}> Title </label>
-
       <input
         type="text"
         name="title"
@@ -200,23 +330,70 @@ const AddEntryForm = (props) => {
         )}
       </div>
 
-      <label className={styles.labels}> Image </label>
-      <input
-        type="text"
-        name="img"
-        placeholder="upload image..."
-        className={styles.inputs}
-        onChange={changeHandler}
-      ></input>
+      <div className={styles.duration_div}>
+        <label className={styles.labels}> Duration </label>
+        <input
+          type="number"
+          name="duration"
+          placeholder="60 min"
+          className={`${styles.inputs} ${
+            isTouched.text && !validateText(inputs.text) ? styles.error : ""
+          }`}
+          onBlur={() => blurHandler("duration")}
+          onChange={changeHandler}
+        ></input>
+       
+       
+          <label className={styles.labels}>Emotion</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="emotion"
+                value="sad"
+                checked={emotion === "sad"}
+                onChange={handleEmotionChange}
+              />
+              😢 Traurig
+            </label>
+          </div>
 
-      
-      {/*<label className={styles.labels}> Image </label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="emotion"
+                value="neutral"
+                checked={emotion === "neutral"}
+                onChange={handleEmotionChange}
+              />
+              😐 Neutral
+            </label>
+          </div>
+
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="emotion"
+                value="happy"
+                checked={emotion === "happy"}
+                onChange={handleEmotionChange}
+              />
+              😄 Lachend
+            </label>
+          </div>
+       
+      </div>
+
+      <label className={styles.labels}> Image </label>
       <input
         type="file"
         name="img"
-        onChange={handleImageUpload}
+        onChange={handleFileChange}
         className={styles.inputs}
-        ></input>*/}
+      ></input>
+      <button onClick={handleUpload}> go </button>
 
       <button type="submit" className={styles.submit_btn}>
         submit

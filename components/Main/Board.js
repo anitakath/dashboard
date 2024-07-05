@@ -34,9 +34,6 @@ const Board = (props) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
 
   const actualDate = useSelector((state) => state.calendar);
-
-
-
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
   const actualMonth = actualMonthIndex + 1;
