@@ -26,13 +26,13 @@ import { useSelector } from "react-redux";
 import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
+import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
   const currentSport = props.currentSport;
   const filteredEntries = props.filteredEntries;
-
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [formIsOpen, setFormIsOpen] = useState(false);
-
   const actualDate = useSelector((state) => state.calendar);
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
@@ -68,6 +68,9 @@ const Board = (props) => {
     return date.toLocaleDateString("de-DE", options).replace(",", "");
   }
 
+
+  console.log(currentSport)
+  console.log(allSupabaseSports)
   return (
     <div className="w-full overflow-scroll h-full p-4">
       <div className="h-20 flex p-4 flex items-center relative">
@@ -157,11 +160,17 @@ const Board = (props) => {
 
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
-          {filteredByDate.length === 0 && (
+          {filteredByDate.length === 0 && currentSport != "all" && (
             <p className="m-2 text-xl"> no entries were made </p>
           )}
-          {filteredByDate && (
-            <Entry filteredByDate={filteredByDate} formatDate={formatDate} />
+          {currentSport === "all" && (
+            <Entry filteredByDate={allSupabaseSports} formatDate={formatDate} />
+          )}
+          {filteredByDate && currentSport != "all" && (
+            <Entry 
+              filteredByDate={filteredByDate}
+              formatDate={formatDate}
+            />
           )}
         </div>
 

@@ -1,6 +1,6 @@
 //STYLES
 import styles from './Dashboard.module.css'
-
+import { useEffect, useState } from 'react';
 
 //COMPONENTS
 import Navigation from '../Navigation/Navigation';
@@ -11,18 +11,18 @@ import Board from '../Main/Board'
 import { useSelector, useDispatch } from "react-redux";
 import { current } from '@reduxjs/toolkit';
 
-
 import { v4 as uuidv4 } from "uuid";
 
 const Dashboard = () =>{
+  
+  const [entries, setEntries] = useState([])
 
   const currentSport = useSelector((state) => state.sport.selectedSport);
-  const allSupabaseSports = useSelector(
-    (state) => state.sport.allSupabaseSports
-  );
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const filteredEntries = allSupabaseSports
     ? allSupabaseSports.filter((sport) => sport.name === currentSport)
     : [];
+
 
   return (
     <div className="w-full h-full p-4">
