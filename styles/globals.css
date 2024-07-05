@@ -20,13 +20,30 @@
   --purpleDarkHoverOpacity:rgba(179, 0, 60, 0.2);
   
   --error-opaque: rgba(218, 42, 28, 0.5);
-  --error: rgba(218, 42, 28)
+  --error: rgba(218, 42, 28);
   
 
-    --navButton: hsl(340, 100%, 35%);
-    --navButton-hover:  rgba(179, 0, 60, 0.5);
-    --background-light: rgba(255, 255, 255, 0.5);
-    --section-box-shadow:  0px 0px 30px lightgrey;
+  --navButton: hsl(340, 100%, 35%);
+  --navButton-hover:  rgba(179, 0, 60, 0.5);
+  --background-light: rgba(255, 255, 255, 0.5);
+  --section-box-shadow:  0px 0px 30px lightgrey;
+
+
+
+  /*   label colors*/
+
+  --fandango: #A80874;
+  --celeste: #B7FDFE;
+  --springGreen: #5EF38C;
+  --sinopia: #C73E1D;
+  --lightOrange: #FCDDBC;
+  --wenge: #69585F;
+  --spaceCadet: #F8C0C8;
+  --mauve: #E2A0FF;
+  --aquamarine: #B7FFD8;
+  --paleDogwood: #C5AFA4;
+  --brown: #A44200;
+  --jasmine: #F4D58D;
 }
 
 

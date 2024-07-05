@@ -3,42 +3,74 @@ import Link from "next/link";
 //STYLES
 import styles from './Entry.module.css'
 import { useSelector } from "react-redux";
+import { current } from "@reduxjs/toolkit";
 
 
 
 
 
 const Entry = (props) => {
-  
+  const currentSport = useSelector((state) => state.sport.selectedSport)
   const currentYear = useSelector((state) => state.calendar.year);
   const filteredByDate = props.filteredByDate;
   const formatDate = props.formatDate;
 
+
+
+
+  function getMonth(created_at) {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const date = new Date(created_at);
+    const monthIndex = date.getMonth();
+
+    return months[monthIndex];
+  }
+
  const entriesByMonth = {};
  const entriesByDay = {};
 
+
  filteredByDate.forEach((entry) => {
-   const monthYear = formatDate(entry.created_at).split(" ")[1]; // Extrahiere den Monat und das Jahr z.B. "April 2024"
+   const monthYear = `${getMonth(entry.created_at)} `;
+   //${new Date(entry.created_at).getFullYear()}
+
    if (!entriesByMonth[monthYear]) {
      entriesByMonth[monthYear] = [];
    }
    entriesByMonth[monthYear].push(entry);
 
-   const dayMonthYear = formatDate(entry.created_at).split(" ")[0]; // z.B. "01 April 2024"
+   const dayMonthYear = `${new Date(entry.created_at).getDate()} ${getMonth(
+     entry.created_at
+   )} ${new Date(entry.created_at).getFullYear()}`;
+
    if (!entriesByDay[dayMonthYear]) {
      entriesByDay[dayMonthYear] = [];
    }
+
    entriesByDay[dayMonthYear].push(entry);
  });
 
-  console.log(entriesByMonth)
 
   return (
     <div className={styles.container}>
 
       {Object.keys(entriesByMonth).map((monthYear) => (
         <div key={monthYear}>
-          <h2 className={styles.monthYear_header}>{monthYear}</h2>
+          {currentSport === "all" && <h2 className={styles.monthYear_header}>{monthYear}</h2>}
           {entriesByMonth[monthYear].map((entry, index) => (
             <div className={styles.entry} key={index}>
               <Link href={`/details/${entry.entryPath}`}>

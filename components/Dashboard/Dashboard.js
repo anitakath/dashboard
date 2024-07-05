@@ -17,12 +17,15 @@ const Dashboard = () =>{
   
   const [entries, setEntries] = useState([])
 
+  const selectedSport = useSelector((state) => state.sport.currentSport)
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const filteredEntries = allSupabaseSports
     ? allSupabaseSports.filter((sport) => sport.name === currentSport)
     : [];
 
+    console.log(currentSport)
+    console.log(selectedSport)
 
   return (
     <div className="w-full h-full p-4">

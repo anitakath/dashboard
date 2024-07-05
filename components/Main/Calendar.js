@@ -179,7 +179,6 @@ const Calendar = (props) =>{
     dispatch(setSelectedSport('all'))
   }
 
-  console.log(selectedSport)
 
   return (
     <div className="p-4 mt-4 ml-1 mb-4 w-1/3 relative md:w-full">
@@ -217,9 +216,6 @@ const Calendar = (props) =>{
         {months.map((month) => {
           const entryCount = getEntryCountForMonth( month, selectedYear, selectedSport );
           const monthStyle = getMonthStyle(entryCount);
-
-
-          console.log(entryCount)
 
           return (
             <div

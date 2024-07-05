@@ -4,24 +4,15 @@ import Link from "next/link";
 
 //STYLES
 import styles from './Board.module.css'
-
-
 //TRANSITION GROUP
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-
-
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
-
-
 //REDUX
 import { useSelector } from "react-redux";
-
-
-
 //COMPONENTS
 import Calendar from "./Calendar";
 import Entry from "./Entry";
@@ -69,8 +60,6 @@ const Board = (props) => {
   }
 
 
-  console.log(currentSport)
-  console.log(allSupabaseSports)
   return (
     <div className="w-full overflow-scroll h-full p-4">
       <div className="h-20 flex p-4 flex items-center relative">

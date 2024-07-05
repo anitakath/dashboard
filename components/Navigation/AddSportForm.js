@@ -4,75 +4,112 @@ import Link from "next/link";
 
 //REDUX
 
-import { setNavigation, setSelectedSport } from "@/store/sportReducer";
+import { setNavigation, setSelectedSport, setCurrentSport } from "@/store/sportReducer";
 import { useSelector, useDispatch } from "react-redux";
 
 
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
 
-
-
-
-
 //STYLES
 import styles from './AddSportForm.module.css'
 
-const AddSportForm = (props) =>{
 
+
+const AddSportForm = (props) => {
   const [name, setName] = useState("");
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
+  const [color, setColor] = useState(null);
+  const dispatch = useDispatch();
+  const navigation = useSelector((state) => state.sport.navigation);
 
-  const dispatch = useDispatch()
-  const navigation = useSelector((state) => state.sport.navigation) 
 
-
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const data = {name}
+    const data = { name, color };
 
     if (navigation.includes(name)) {
-      setError(true)
+      setError(true);
       return;
-    } else{
-
-
-      console.log('updating navigation')
-      setError(false)
-      const updated = [...navigation, name];
+    } else {
+      console.log("updating navigation");
+      setError(false);
+      const updated = [...navigation, data];
       dispatch(setNavigation(updated));
+
       dispatch(setSelectedSport(name));
+      dispatch(setCurrentSport({ name, color }));
       props.addSportClickHandler();
-    } 
-  }
+    }
+  };
+
+  const colorLabelHandler = (selectedColor) => {
 
 
-    return (
-      <form className="w-full my-2 p-2" onSubmit={handleSubmit}>
-        <label className=" text-xl"> Type </label>
-        <input
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-          className={styles.input}
-        ></input>
+    console.log(selectedColor)
+    setColor(selectedColor);
+  };
 
+  console.log(color)
+  console.log(name)
 
-        {error && (
-          <p className="text-xs text-red-600s">
-          
-            you have already added this sport to your diary. navigate to your
-            profile <Link href="/profile" className={styles.link}> here </Link> to get an overview of sour sports
-          </p>
-        )}
+  // Array mit Farben für die Buttons
+  const colors = [
+    "fandango",
+    "celeste",
+    "springGreen",
+    "sinopia",
+    "lightOrange",
+    "wenge",
+    "spaceCadet",
+    "mauve",
+    "aquamarine",
+    "paleDogwood",
+    "brown",
+    "jasmine",
+  ];
 
-        {!error && (
-          <button type="submit" className={styles.add_btn}>
-            add sport
+  return (
+    <form className="w-full my-2 p-2" onSubmit={handleSubmit}>
+      <label className="text-xl">Type</label>
+      <input
+        type="text"
+        onChange={(e) => setName(e.target.value)}
+        className={styles.input}
+      ></input>
+
+      <label>Choose a label</label>
+      <div className={styles.colors_div}>
+        {colors.map((color) => (
+          <button
+            key={color}
+            type="button"
+            className={`${styles.colors} ${styles[color]}`}
+            onClick={() => colorLabelHandler(color)}
+          >
+            ABC
           </button>
-        )}
-      </form>
-    );
-}
+        ))}
+      </div>
 
-export default AddSportForm
+      {error && (
+        <p className="text-xs text-red-600s">
+          You have already added this sport to your diary. Navigate to your
+          profile
+          <Link href="/profile" className={styles.link}>
+            here
+          </Link>
+          to get an overview of your sports.
+        </p>
+      )}
+
+      {!error && (
+        <button type="submit" className={styles.add_btn}>
+          Add Sport
+        </button>
+      )}
+    </form>
+  );
+};
+
+export default AddSportForm;

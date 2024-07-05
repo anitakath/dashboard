@@ -5,6 +5,9 @@ const sportSlice = createSlice({
   name: "sport",
   initialState: {
     selectedSport: null,
+    /********/
+    currentSport: { name: null, color: null },
+    /********/
     allSports: [
       { name: "Figure Skating", entries: [] },
       { name: "Poledance", entries: [] },
@@ -17,6 +20,12 @@ const sportSlice = createSlice({
     setSelectedSport(state, action) {
       state.selectedSport = action.payload;
     },
+    setCurrentSport(state, action){
+      state.selectedSport = action.payload;
+    },
+
+
+    
     setAllSports(state, action) {
       state.allSports = action.payload;
     },
@@ -58,6 +67,7 @@ const sportSlice = createSlice({
 
 export const {
   setSelectedSport,
+  setCurrentSport,
   setAllSports,
   setAllSportsFromSupabase,
   setNavigation,

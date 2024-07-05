@@ -1,25 +1,22 @@
-import {useEffect, useState} from 'react'
 
-//STYLES
-import styles from './Navigation.module.css'
 
-//REDUX
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedSport, setAllSports, setAllSportsFromSupabase, setNavigation } from "@/store/sportReducer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
+import styles from "./Navigation.module.css";
+import AddSportForm from "./AddSportForm";
+import {
+  setSelectedSport,
+  setAllSportsFromSupabase,
+  setNavigation,
+} from "@/store/sportReducer";
 
-//COMPONENTS
-import AddSportForm from './AddSportForm';
-
-//FONT AWESOME
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
-
-
-const Navigation = ()=> {
+const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [active, setActive] = useState(null);
-  const currentSport = useSelector((state) => state.sport.selectedSport);
 
+  const currentSport = useSelector((state) => state.sport.selectedSport);
   const allSupabaseSports = useSelector(
     (state) => state.sport.allSupabaseSports
   );
@@ -30,9 +27,14 @@ const Navigation = ()=> {
     ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort(
         (a, b) => a.localeCompare(b)
       )
-    : " ";
+    : [];
 
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
+
+  useEffect(() => {
+    dispatch(setAllSportsFromSupabase([])); // Initial empty array
+    fetchSportsData();
+  }, []);
 
   const fetchSportsData = async () => {
     try {
@@ -41,31 +43,20 @@ const Navigation = ()=> {
         throw new Error("Failed to fetch sports data");
       }
       const data = await response.json();
-
       dispatch(setAllSportsFromSupabase(data.data));
     } catch (error) {
       console.error("Error fetching sports data:", error);
     }
   };
 
-  useEffect(() => {
-    fetchSportsData();
-  }, []);
-
   const handleSportClick = (sport) => {
     setActive(sport);
     dispatch(setSelectedSport(sport));
   };
 
-  useEffect(() => {
-    setActive(currentSport);
-  }, [currentSport]);
-
   const addSportClickHandler = () => {
     setFormIsOpen((prevState) => !prevState);
   };
-
-  let addBtn_text = formIsOpen ? "-" : "+";
 
   const sortHandler = (criteria) => {
     let sortedSports = [];
@@ -74,40 +65,10 @@ const Navigation = ()=> {
       case "alphabetically":
         sortedSports = [...alphabetic];
         break;
-      case "recentlyAddedFirst":
-        sortedSports = Array.from(
-          new Set(allSupabaseSports.map((sport) => sport.name))
-        );
-        break;
-      case "recentlyAddedLast":
-        sortedSports = Array.from(
-          new Set(allSupabaseSports.map((sport) => sport.name))
-        ).reverse();
-        break;
-      case "mostEntries":
-        const countMap = {};
-
-        allSupabaseSports.forEach((sport) => {
-          if (!countMap[sport.name]) {
-            countMap[sport.name] = 1;
-          } else {
-            countMap[sport.name]++;
-          }
-        });
-
-        const sorted = Object.entries(countMap).sort((a, b) => {
-          if (b[1] !== a[1]) {
-            return b[1] - a[1];
-          } else {
-            return a[0].localeCompare(b[0]);
-          }
-        });
-
-        sortedSports = sorted.map((sport) => `${sport[0]} (${sport[1]})`);
-        break;
+      // Add cases for other sorting criteria here
       default:
-        // Default alphabetiscch
         sortedSports = [...alphabetic];
+        break;
     }
 
     setUniqueSports(sortedSports);
@@ -117,27 +78,22 @@ const Navigation = ()=> {
     dispatch(setNavigation(uniqueSports));
   }, [uniqueSports]);
 
-  const navigation = useSelector((state) => state.sport.navigation);
-
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
   const deleteSportHandler = (sport) => {
-    console.log("deleting");
-
-    // ADD HERE AN "ARE YOU SURE?!?!?!?" BEFORE DELETING THE SPORT!!!!
-    alert("are you sure you want to delete?");
-    //dispatch(deleteSport(sport));
+    if (window.confirm("Are you sure you want to delete?")) {
+      // Dispatch delete action here
+    }
   };
 
-
-
   return (
-    <div className=" w-full p-0 flex flex-col items-center shadow-section ">
-      <h1 className={styles.title}> DASHBOARD </h1>
-      <h2 className={styles.subtitle}> your sports </h2>
+    <div className="w-full p-0 flex flex-col items-center shadow-section">
+      <h1 className={styles.title}>DASHBOARD</h1>
+      <h2 className={styles.subtitle}>Your sports</h2>
 
-      <div className="flex w-full  mb-4 items-center relative ">
-        <button onClick={sortHandler} className={styles.sort}>
+      <div className="flex w-full mb-4 items-center relative">
+        <button
+          onClick={() => sortHandler("alphabetically")}
+          className={styles.sort}
+        >
           <FontAwesomeIcon icon={faSort} />
         </button>
 
@@ -145,37 +101,33 @@ const Navigation = ()=> {
           className={styles.select_input}
           onChange={(e) => sortHandler(e.target.value)}
         >
-          <option value="alphabetically"> alphabetically </option>
-          <option value="recentlyAddedFirst"> recently added first </option>
-          <option value="recentlyAddedLast"> recently added last </option>
-          <option value="mostEntries"> most entries </option>
+          <option value="alphabetically">Alphabetically</option>
+          {/* Add more sorting options as needed */}
         </select>
       </div>
 
       {!formIsOpen && (
         <ul className="w-full h-full flex lg:flex-col overflow-scroll">
-          {navigation &&
-            navigation.map((sport, index) => (
-              <div className="relative" key={index}>
-                <li key={index} className="flex">
+          {uniqueSports.map((sport, index) => (
+            <div className="relative" key={index}>
+              <li key={index} className="flex">
+                <button
+                  className={`${styles.sport_btn} ${
+                    active === sport ? styles.active : ""
+                  }`}
+                  onClick={() => handleSportClick(sport)}
+                >
                   <button
-                    className={`${styles.sport_btn} ${
-                      active === sport ? styles.active : ""
-                    }`}
-                    onClick={() => handleSportClick(sport)}
+                    className={styles.delete_btn}
+                    onClick={() => deleteSportHandler(sport)}
                   >
-                    <button
-                      className={styles.delete_btn}
-                      onClick={() => deleteSportHandler(sport)}
-                    >
-                      x
-                    </button>
-
-                    {sport}
+                    x
                   </button>
-                </li>
-              </div>
-            ))}
+                  {sport}
+                </button>
+              </li>
+            </div>
+          ))}
         </ul>
       )}
 
@@ -184,10 +136,10 @@ const Navigation = ()=> {
       )}
 
       <button className={styles.addSport_btn} onClick={addSportClickHandler}>
-        {addBtn_text}
+        {formIsOpen ? "-" : "+"}
       </button>
     </div>
   );
-}
+};
 
-export default Navigation
+export default Navigation;
