@@ -24,8 +24,6 @@ const Dashboard = () =>{
     ? allSupabaseSports.filter((sport) => sport.name === currentSport)
     : [];
 
-    console.log(currentSport)
-    console.log(selectedSport)
 
   return (
     <div className="w-full h-full p-4">

@@ -6,6 +6,7 @@ import storage from "redux-persist/lib/storage";
 
 import sportReducer from "./sportReducer";
 import CalendarReducer from "./CalendarReducer";
+import navigationReducer from "./navigationReducer";
 // Hier kannst du deine Reducer importieren
 // import sportReducer from './reducers/sportReducer';
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   // Hier fügst du deine Reducer hinzu
   sport: sportReducer,
   calendar: CalendarReducer,
+  navigation: navigationReducer,
 });
 
 const persistConfig = {

@@ -4,7 +4,7 @@ import { supabase } from "@/services/supabaseClient";
 const sportSlice = createSlice({
   name: "sport",
   initialState: {
-    selectedSport: null,
+    selectedSport: "Poledance",
     /********/
     currentSport: { name: null, color: null },
     /********/
@@ -21,6 +21,9 @@ const sportSlice = createSlice({
       state.selectedSport = action.payload;
     },
     setCurrentSport(state, action){
+      state.selectedSport = action.payload;
+    },
+    setSortSportsNavigation(state, action){
       state.selectedSport = action.payload;
     },
 
@@ -68,6 +71,7 @@ const sportSlice = createSlice({
 export const {
   setSelectedSport,
   setCurrentSport,
+  setSortSportsNavigation,
   setAllSports,
   setAllSportsFromSupabase,
   setNavigation,

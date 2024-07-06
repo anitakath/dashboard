@@ -12,6 +12,8 @@ import {
   setNavigation,
 } from "@/store/sportReducer";
 
+import SortSports from "./SortSports";
+
 const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [active, setActive] = useState(null);
@@ -22,6 +24,7 @@ const Navigation = () => {
   );
 
   const dispatch = useDispatch();
+
 
   const alphabetic = allSupabaseSports
     ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort(
@@ -58,21 +61,6 @@ const Navigation = () => {
     setFormIsOpen((prevState) => !prevState);
   };
 
-  const sortHandler = (criteria) => {
-    let sortedSports = [];
-
-    switch (criteria) {
-      case "alphabetically":
-        sortedSports = [...alphabetic];
-        break;
-      // Add cases for other sorting criteria here
-      default:
-        sortedSports = [...alphabetic];
-        break;
-    }
-
-    setUniqueSports(sortedSports);
-  };
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
@@ -89,7 +77,14 @@ const Navigation = () => {
       <h1 className={styles.title}>DASHBOARD</h1>
       <h2 className={styles.subtitle}>Your sports</h2>
 
-      <div className="flex w-full mb-4 items-center relative">
+      <SortSports
+        uniqueSports={uniqueSports}
+        setUniqueSports={setUniqueSports}
+        allSupabaseSports={allSupabaseSports}
+      />
+
+      {/*
+      <div className="flex w-full mb-4 items-center relative border-4">
         <button
           onClick={() => sortHandler("alphabetically")}
           className={styles.sort}
@@ -102,9 +97,10 @@ const Navigation = () => {
           onChange={(e) => sortHandler(e.target.value)}
         >
           <option value="alphabetically">Alphabetically</option>
-          {/* Add more sorting options as needed */}
+        
         </select>
-      </div>
+      </div> 
+      */}
 
       {!formIsOpen && (
         <ul className="w-full h-full flex lg:flex-col overflow-scroll">
