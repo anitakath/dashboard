@@ -17,7 +17,6 @@ const Entry = (props) => {
 
 
 
-
   function getMonth(created_at) {
     const months = [
       "January",
@@ -72,7 +71,7 @@ const Entry = (props) => {
         <div key={monthYear}>
           {currentSport === "all" && <h2 className={styles.monthYear_header}>{monthYear}</h2>}
           {entriesByMonth[monthYear].map((entry, index) => (
-            <div className={styles.entry} key={index}>
+            <div className={styles.entry} key={index} style={{ background: getComputedStyle(document.documentElement).getPropertyValue(`--${entry.label}`) }}>
               <Link href={`/details/${entry.entryPath}`}>
                 <div className={styles.link}>
                   <p className="my-2 px-2 text-xs absolute right-4">

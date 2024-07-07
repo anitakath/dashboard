@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Navigation.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortSportsNavigation } from "@/store/sportReducer";
+
+import { setSort } from "@/store/navigationReducer";
 
 const SortSports = (props) => {
 
@@ -11,19 +12,21 @@ const SortSports = (props) => {
     const uniqueSports = props.uniqueSports;
     const setUniqueSports = props.setUniqueSports;
     const allSupabaseSports = props.allSupabaseSports;
+    const selectedSport = useSelector((state) => state.sport.selectedSport);
 
-    //console.log(uniqueSports)
-    //console.log(allSupabaseSports)
 
     const dispatch = useDispatch();
 
     const currentSort = useSelector((state) => state.navigation.sort);
+    //console.log(currentSort)
+
 
 
   const sortHandler = (criteria) => {
     let sortedSports = [];
 
-    dispatch(setSortSportsNavigation(criteria))
+
+    dispatch(setSort(criteria))
 
 
     switch (criteria) {
@@ -63,6 +66,7 @@ const SortSports = (props) => {
 
     setUniqueSports(sortedSports);
   };
+  /*
 
   useEffect(()=>{
       console.log(
@@ -70,12 +74,12 @@ const SortSports = (props) => {
       );
       sortHandler(currentSort);
 
-  }, [allSupabaseSports])
+  }, [allSupabaseSports])*/
 
   //console.log(currentSort)
 
   return (
-    <div className="flex w-full mb-4 items-center relative border-4">
+    <div className="flex w-full mb-4 items-center relative">
      
      <button
         onClick={() => sortHandler("alphabetically")}

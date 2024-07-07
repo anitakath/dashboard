@@ -4,15 +4,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const navigationSlice = createSlice({
-  name: "naviation",
+  name: "navigation",
   initialState: {
     sort: "alphabetically",
   },
   reducers: {
     setSort(state, action) {
-      state.allSports = action.payload;
-  
+      state.sort = action.payload;
     },
+   
+    
   },
 });
 

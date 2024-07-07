@@ -17,20 +17,39 @@ const AddEntryForm = (props) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const dispatch = useDispatch();
 
+  const currentSport = useSelector((state) => state.sport.selectedSport);
+
 
   const setFormIsOpen = props.setFormIsOpen;
 
 
+  let label = "";
 
-  const currentSport = useSelector((state) => state.sport.selectedSport);
+    const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports
+    );
 
+    if (currentSport) {
+      const selectedSport = allSupabaseSports.find(
+        (sport) => sport.name === currentSport
+      );
+
+      if (selectedSport) {
+        label  = selectedSport.label;
+      } else {
+        //console.log(`Kein Sport mit dem Namen ${currentSport} gefunden`);
+      }
+    }
+
+
+
+ 
   const [inputs, setInputs] = useState({
     //index: currentSport,
     name: currentSport,
     title: "",
     text: "",
     duration: "",
-    label: "",
+    label: label,
     img: "",
   });
 
@@ -43,7 +62,7 @@ const AddEntryForm = (props) => {
   };
 
 
-  console.log(file)
+
 
   useEffect(()=>{
     async function fetchSportImages() {
@@ -52,11 +71,6 @@ const AddEntryForm = (props) => {
           .from("sport_images")
           .list();
 
-
-        console.log('HALLO?')
-
-        console.log(data)
-        console.log(error)
 
         if (error) {
           console.error(error.message);
@@ -72,8 +86,6 @@ const AddEntryForm = (props) => {
         console.error(error.message);
       }
     }
-
-    console.log('FETCH')
     fetchSportImages()
   }, [])
 
@@ -200,14 +212,15 @@ const AddEntryForm = (props) => {
 
       const formattedTitle = formatText(inputs.title)
       const uniqueID = uuidv4();
-      console.log(uniqueID); 
       
       const data = {
         name: inputs.name,
+        label: label,
         entryId: uniqueID,
         title: inputs.title,
         entry: inputs.text,
         entryPath: formattedTitle + "-" + uniqueID,
+        duration: inputs.duration,
         //img: inputs.img,
       };
 
@@ -286,7 +299,7 @@ const AddEntryForm = (props) => {
     return text.toLowerCase().replace(/\s+/g, "-");
   };
 
-  console.log(inputs)
+
 
   return (
     <form className=" my-2 p-2 flex flex-col" onSubmit={submitHandler}>

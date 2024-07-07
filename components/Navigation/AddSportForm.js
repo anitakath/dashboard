@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 //REDUX
-
 import { setNavigation, setSelectedSport, setCurrentSport } from "@/store/sportReducer";
+
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -13,6 +13,7 @@ import { supabase } from "@/services/supabaseClient";
 
 //STYLES
 import styles from './AddSportForm.module.css'
+import { current } from "@reduxjs/toolkit";
 
 
 
@@ -21,7 +22,9 @@ const AddSportForm = (props) => {
   const [error, setError] = useState(false);
   const [color, setColor] = useState(null);
   const dispatch = useDispatch();
+
   const navigation = useSelector((state) => state.sport.navigation);
+
 
 
   const handleSubmit = async (e) => {
@@ -32,26 +35,21 @@ const AddSportForm = (props) => {
       setError(true);
       return;
     } else {
-      console.log("updating navigation");
       setError(false);
-      const updated = [...navigation, data];
+      const updated = [...navigation, data.name];
+      console.log(updated)
       dispatch(setNavigation(updated));
-
-      dispatch(setSelectedSport(name));
-      dispatch(setCurrentSport({ name, color }));
+      dispatch(setSelectedSport(data.name));
+      dispatch(setCurrentSport(data));
       props.addSportClickHandler();
     }
   };
 
   const colorLabelHandler = (selectedColor) => {
-
-
-    console.log(selectedColor)
     setColor(selectedColor);
   };
 
-  console.log(color)
-  console.log(name)
+
 
   // Array mit Farben für die Buttons
   const colors = [
@@ -64,10 +62,11 @@ const AddSportForm = (props) => {
     "spaceCadet",
     "mauve",
     "aquamarine",
-    "paleDogwood",
+    "mandarine",
     "brown",
     "jasmine",
   ];
+
 
   return (
     <form className="w-full my-2 p-2" onSubmit={handleSubmit}>

@@ -6,26 +6,24 @@ const sportSlice = createSlice({
   initialState: {
     selectedSport: "Poledance",
     /********/
-    currentSport: { name: null, color: null },
+    currentSport: [],
     /********/
-    allSports: [
-      { name: "Figure Skating", entries: [] },
-      { name: "Poledance", entries: [] },
-      { name: "Yoga", entries: [] },
-    ],
+    
     allSupabaseSports: [],
     navigation: [],
+    label: [],
   },
   reducers: {
     setSelectedSport(state, action) {
       state.selectedSport = action.payload;
     },
+    
     setCurrentSport(state, action){
-      state.selectedSport = action.payload;
+
+      state.currentSport.push(action.payload);
     },
-    setSortSportsNavigation(state, action){
-      state.selectedSport = action.payload;
-    },
+   
+  
 
 
     
@@ -37,6 +35,9 @@ const sportSlice = createSlice({
     },
     setNavigation(state, action) {
       state.navigation = action.payload;
+    },
+    setLabel(state, action){
+      state.label = action.payload;
     },
     deleteSport(state, action) {
       const sportNameToDelete = action.payload;
@@ -71,10 +72,11 @@ const sportSlice = createSlice({
 export const {
   setSelectedSport,
   setCurrentSport,
-  setSortSportsNavigation,
+
   setAllSports,
   setAllSportsFromSupabase,
   setNavigation,
+  setLabel,
   deleteSport,
 } = sportSlice.actions;
 

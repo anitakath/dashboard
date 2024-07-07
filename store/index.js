@@ -1,3 +1,5 @@
+
+
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
@@ -29,3 +31,34 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+
+
+/*import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import sportReducer from "./sportReducer";
+import CalendarReducer from "./CalendarReducer";
+import navigationReducer from "./navigationReducer";
+import thunk from 'redux-thunk';
+
+const rootReducer = combineReducers({
+  sport: sportReducer,
+  calendar: CalendarReducer,
+  navigation: navigationReducer,
+});
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: [thunk], // Füge redux-thunk als Middleware hinzu
+});
+
+export const persistor = persistStore(store);*/

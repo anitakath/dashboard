@@ -10,6 +10,7 @@ import {
   setSelectedSport,
   setAllSportsFromSupabase,
   setNavigation,
+  setLabel
 } from "@/store/sportReducer";
 
 import SortSports from "./SortSports";
@@ -18,21 +19,88 @@ const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [active, setActive] = useState(null);
 
-  const currentSport = useSelector((state) => state.sport.selectedSport);
-  const allSupabaseSports = useSelector(
-    (state) => state.sport.allSupabaseSports
-  );
+  //fetch all objects from supabase
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
+  const alphabetic = allSupabaseSports ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort((a, b) => a.localeCompare(b)): [];
+  
+  const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
+
+
+
+  /*
+  useEffect(() => {
+    if (allSupabaseSports) {
+      const uniqueLabels = {};
+      allSupabaseSports.forEach((sport) => {
+        if (!uniqueLabels[sport.name]) {
+          uniqueLabels[sport.name] = sport.label;
+        }
+      });
+
+      const labelsArray = Object.keys(uniqueLabels).map((name) => ({
+        name,
+        label: uniqueLabels[name],
+      }));
+      setLabel(labelsArray);
+     
+    }
+  }, [allSupabaseSports]);
+  */
+ const uniqueLabels = allSupabaseSports
+   ? allSupabaseSports.reduce((acc, sport) => {
+       if (!acc[sport.name]) {
+         acc[sport.name] = sport.label;
+       }
+       return acc;
+     }, {})
+   : {};
+
+
+   /*
+
+ const labelsArray = Object.keys(uniqueLabels).map((name) => ({
+   name,
+   label: uniqueLabels[name],
+ }));
+
+ console.log(uniqueLabels)
+ console.log(labelsArray)
+ //setLabel(labelsArray);
+
+  const [label, setLabel] = useState([...labelsArray]);
+
+  
+ useEffect(()=>{
+   dispatch(setLabel(label))
+
+ }, [label])*/
+
+
+  useEffect(() => {
+    dispatch(setNavigation(uniqueSports));
+  }, [uniqueSports]);
+
+
+
+  const navigation = useSelector((state) => state.sport.navigation)
+
+
+
+  const sportReducer = useSelector((state) => state.sport)
+
+
+  useEffect(()=>{
+    setUniqueSports(navigation)
+
+  }, [navigation])
+
+
 
   const dispatch = useDispatch();
 
 
-  const alphabetic = allSupabaseSports
-    ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort(
-        (a, b) => a.localeCompare(b)
-      )
-    : [];
 
-  const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
+
 
   useEffect(() => {
     dispatch(setAllSportsFromSupabase([])); // Initial empty array
@@ -62,9 +130,7 @@ const Navigation = () => {
   };
 
 
-  useEffect(() => {
-    dispatch(setNavigation(uniqueSports));
-  }, [uniqueSports]);
+
 
   const deleteSportHandler = (sport) => {
     if (window.confirm("Are you sure you want to delete?")) {
