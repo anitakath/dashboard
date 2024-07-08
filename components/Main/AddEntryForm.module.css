@@ -9,7 +9,6 @@
 }
 
 
-
 .inputs{
   border-bottom: 1px solid var(--purpleDark);
   height: 40px;
@@ -25,6 +24,22 @@
 
 .inputs:focus{
   outline: none;
+}
+
+.date_div{
+  height: 6vh;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 15px 0px 5px 0px;
+  color:  var(--purpleDarkHover);
+}
+
+.date_picker{
+  cursor: pointer;
+}
+.date_picker:focus{
+  outline: none;
+  border: none;
 }
 
 .duration_div{

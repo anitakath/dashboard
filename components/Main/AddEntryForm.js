@@ -48,10 +48,13 @@ const AddEntryForm = (props) => {
     name: currentSport,
     title: "",
     text: "",
+    created_at: "",
     duration: "",
     label: label,
     img: "",
   });
+
+  console.log(inputs.created_at)
 
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
 
@@ -221,6 +224,7 @@ const AddEntryForm = (props) => {
         entry: inputs.text,
         entryPath: formattedTitle + "-" + uniqueID,
         duration: inputs.duration,
+        created_at: inputs.created_at,
         //img: inputs.img,
       };
 
@@ -292,7 +296,7 @@ const AddEntryForm = (props) => {
   };
 
   const validateText = (text) => {
-    return text.length >= 5 && text.length <= 400;
+    return text.length >= 5 && text.length <= 1000;
   };
 
   const formatText = (text) => {
@@ -334,6 +338,16 @@ const AddEntryForm = (props) => {
         onBlur={() => blurHandler("text")}
         onChange={changeHandler}
       ></input>
+      <div className={styles.date_div}>
+        <input
+          type="datetime-local"
+          value={inputs.created_at}
+          onChange={(e) => setInputs({ ...inputs, created_at: e.target.value })}
+          className={styles.date_picker}
+        />
+
+        
+      </div>
 
       <div className="h-8">
         {isTouched.text && !validateText(inputs.text) && (
@@ -355,48 +369,46 @@ const AddEntryForm = (props) => {
           onBlur={() => blurHandler("duration")}
           onChange={changeHandler}
         ></input>
-       
-       
-          <label className={styles.labels}>Emotion</label>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="emotion"
-                value="sad"
-                checked={emotion === "sad"}
-                onChange={handleEmotionChange}
-              />
-              😢 Traurig
-            </label>
-          </div>
 
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="emotion"
-                value="neutral"
-                checked={emotion === "neutral"}
-                onChange={handleEmotionChange}
-              />
-              😐 Neutral
-            </label>
-          </div>
+        <label className={styles.labels}>Emotion</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="emotion"
+              value="sad"
+              checked={emotion === "sad"}
+              onChange={handleEmotionChange}
+            />
+            😢 Traurig
+          </label>
+        </div>
 
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="emotion"
-                value="happy"
-                checked={emotion === "happy"}
-                onChange={handleEmotionChange}
-              />
-              😄 Lachend
-            </label>
-          </div>
-       
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="emotion"
+              value="neutral"
+              checked={emotion === "neutral"}
+              onChange={handleEmotionChange}
+            />
+            😐 Neutral
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="emotion"
+              value="happy"
+              checked={emotion === "happy"}
+              onChange={handleEmotionChange}
+            />
+            😄 Lachend
+          </label>
+        </div>
       </div>
 
       <label className={styles.labels}> Image </label>
