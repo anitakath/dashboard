@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from './Entry.module.css'
 import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
-
+import { useState } from "react";
 
 
 
@@ -14,8 +14,7 @@ const Entry = (props) => {
   const currentYear = useSelector((state) => state.calendar.year);
   const filteredByDate = props.filteredByDate;
   const formatDate = props.formatDate;
-
-
+  const [openMonths, setOpenMonths] = useState({});
 
   function getMonth(created_at) {
     const months = [
@@ -95,38 +94,63 @@ const Entry = (props) => {
 
 
 
+
+ 
+
+  const toggleMonthEntries = (monthYear) => {
+    setOpenMonths((prevState) => ({
+      ...prevState,
+      [monthYear]: !prevState[monthYear],
+    }));
+  };
+
+
+
+
+
+
   return (
     <div className={styles.container}>
       {Object.keys(entriesByMonth).map((monthYear) => (
         <div key={monthYear}>
           {currentSport === "all" && (
-            <h2 className={styles.monthYear_header}>{monthYear}</h2>
+            <button
+              className={styles.monthYear_header}
+              onClick={() => toggleMonthEntries(monthYear)}
+            >
+              {monthYear}
+            </button>
           )}
 
-          {entriesByMonth[monthYear].map((entry, index) => (
-            <div
-              className={styles.entry}
-              key={index}
-              style={{
-                background: getComputedStyle(
-                  document.documentElement
-                ).getPropertyValue(`--${entry.label}`),
-              }}
-            >
-              <Link href={`/details/${entry.entryPath}`}>
-                <div className={styles.link}>
-                  <p className="my-2 px-2 text-xs absolute right-4">
-                    {formatDate(entry.created_at)}
-                  </p>
-                  <h2 className="text-2xl mb-4 mt-2 px-2">{entry.title}</h2>
-                  <p className="px-2 mb-4">{entry.entry}</p>
-                </div>
-              </Link>
-            </div>
-          ))}
+          {openMonths[monthYear] &&
+            entriesByMonth[monthYear].map((entry, index) => (
+              <div
+                className={styles.entry}
+                key={index}
+                style={{
+                  background: getComputedStyle(
+                    document.documentElement
+                  ).getPropertyValue(`--${entry.label}`),
+                }}
+              >
+                <Link href={`/details/${entry.entryPath}`}>
+                  <div className={styles.link}>
+                    <p className="my-2 px-2 text-xs absolute right-4">
+                      {formatDate(entry.created_at)}
+                    </p>
+                    <h2 className="text-2xl mb-4 mt-2 px-2">{entry.title}</h2>
+                    <p className="px-2 mb-4">{entry.entry}</p>
+                  </div>
+                </Link>
+              </div>
+            ))}
           {currentSport === "all" && (
             <p className={styles.totalHours_p}>
-              Total hours of sport: <span className={styles.totalHours_span}> {sumDurationsByMonth[monthYear]}</span>
+              Total hours of sport:{" "}
+              <span className={styles.totalHours_span}>
+                {" "}
+                {sumDurationsByMonth[monthYear]}
+              </span>
             </p>
           )}
         </div>

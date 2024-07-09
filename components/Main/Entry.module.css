@@ -6,6 +6,8 @@
     border: 1px solid var( --purpleDark);
     margin: 10px 0px;
     padding: 0px;
+    max-height: 300px;
+    overflow: scroll;
 }
 
 
@@ -16,6 +18,9 @@
     background-color: var(--purpleDarkHoverOpacity);
     padding: 10px 5px;
     text-align: center;
+    cursor: pointer;
+    width: 100%;
+    cursor: pointer;
 }
 
 .link{
