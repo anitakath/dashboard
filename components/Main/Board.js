@@ -59,6 +59,8 @@ const Board = (props) => {
     return date.toLocaleDateString("de-DE", options).replace(",", "");
   }
 
+  console.log(currentSport)
+
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -122,12 +124,15 @@ const Board = (props) => {
 
           {currentSport != null && (
             <div>
-              <button
-                className={styles.add_entry_btn}
-                onClick={addEntryHandler}
-              >
-                <span className={styles.add_btn_icon}> + </span> {addEntryText}
-              </button>
+              {currentSport != "all" && (
+                <button
+                  className={styles.add_entry_btn}
+                  onClick={addEntryHandler}
+                >
+                  <span className={styles.add_btn_icon}> + </span>{" "}
+                  {addEntryText}
+                </button>
+              )}
 
               <TransitionGroup>
                 {formIsOpen && (
@@ -156,10 +161,7 @@ const Board = (props) => {
             <Entry filteredByDate={allSupabaseSports} formatDate={formatDate} />
           )}
           {filteredByDate && currentSport != "all" && (
-            <Entry 
-              filteredByDate={filteredByDate}
-              formatDate={formatDate}
-            />
+            <Entry filteredByDate={filteredByDate} formatDate={formatDate} />
           )}
         </div>
 

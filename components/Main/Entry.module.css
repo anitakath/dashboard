@@ -9,7 +9,6 @@
 }
 
 
-
 .monthYear_header{
     color: var(--purpleDark);
     font-size: 1.5rem;
@@ -28,4 +27,19 @@
 .link:hover{
     color: beige;
     background-color: var(--purpleDarkHover);
+}
+
+.totalHours_p{
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    color: var(--purpleDark);
+    font-size: 1.4rem;
+}
+
+.totalHours_span{
+    color: black;
+    width: 100px;
+    display: flex;
+    justify-content: center;
 }

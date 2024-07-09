@@ -63,15 +63,56 @@ const Entry = (props) => {
    entriesByDay[dayMonthYear].push(entry);
  });
 
+ console.log(entriesByMonth);
+
+ //const total =  entriesByMonth[monthYear].reduce((total, entry) => total + parseInt(entry.duration), 0) / 60
+
+ function convertMinutesToHours(minutes) {
+   const hours = Math.floor(minutes / 60);
+   const remainingMinutes = minutes % 60;
+   return `${hours}h ${remainingMinutes}m`;
+ }
+
+ const sumDurationsByMonth = {};
+ for (const month in entriesByMonth) {
+   const entries = entriesByMonth[month];
+   const totalDurationInMinutes = entries.reduce(
+     (acc, entry) => acc + entry.duration,
+     0
+   );
+   const totalDurationInHours = convertMinutesToHours(totalDurationInMinutes);
+   sumDurationsByMonth[month] = totalDurationInHours;
+ }
+
+  console.log(sumDurationsByMonth);
+
+ 
+  const durationsArray = Object.entries(sumDurationsByMonth).map(
+    ([month, duration]) => ({ [month]: duration })
+  );
+
+  console.log(durationsArray);
+
+
 
   return (
     <div className={styles.container}>
-
       {Object.keys(entriesByMonth).map((monthYear) => (
         <div key={monthYear}>
-          {currentSport === "all" && <h2 className={styles.monthYear_header}>{monthYear}</h2>}
+          {currentSport === "all" && (
+            <h2 className={styles.monthYear_header}>{monthYear}</h2>
+          )}
+
           {entriesByMonth[monthYear].map((entry, index) => (
-            <div className={styles.entry} key={index} style={{ background: getComputedStyle(document.documentElement).getPropertyValue(`--${entry.label}`) }}>
+            <div
+              className={styles.entry}
+              key={index}
+              style={{
+                background: getComputedStyle(
+                  document.documentElement
+                ).getPropertyValue(`--${entry.label}`),
+              }}
+            >
               <Link href={`/details/${entry.entryPath}`}>
                 <div className={styles.link}>
                   <p className="my-2 px-2 text-xs absolute right-4">
@@ -83,6 +124,11 @@ const Entry = (props) => {
               </Link>
             </div>
           ))}
+          {currentSport === "all" && (
+            <p className={styles.totalHours_p}>
+              Total hours of sport: <span className={styles.totalHours_span}> {sumDurationsByMonth[monthYear]}</span>
+            </p>
+          )}
         </div>
       ))}
     </div>
