@@ -57,30 +57,33 @@ const Calendar = (props) =>{
   */
 
   const getEntryCountForMonth = (month, selectedYear, selectedSport) => {
+     if (!allSupabaseSports) {
+       return 0; // oder einen anderen Standardwert zurückgeben
+     }
 
-    const filteredEntries = allSupabaseSports.filter((entry) => {
-      const entryDate = new Date(entry.created_at);
-      let entryMonth = entryDate.toLocaleString("default", {
-        month: "short",
-      });
-      const entryYear = entryDate.getFullYear();
-      const sportName = entry.name;
+     const filteredEntries = allSupabaseSports.filter((entry) => {
+        const entryDate = new Date(entry.created_at);
+        let entryMonth = entryDate.toLocaleString("default", {
+          month: "short",
+        });
+        const entryYear = entryDate.getFullYear();
+        const sportName = entry.name;
 
-      const monthAbbreviation = month.slice(0, 3);
+        const monthAbbreviation = month.slice(0, 3);
 
-      if(entryMonth === "Mär"){
-        entryMonth = 'Mar'
-      }
+        if (entryMonth === "Mär") {
+          entryMonth = "Mar";
+        }
 
-
-      return (
-        entryMonth === monthAbbreviation &&
-        entryYear === selectedYear &&
-        sportName === selectedSport
-      );
-    });
+        return (
+          entryMonth === monthAbbreviation &&
+          entryYear === selectedYear &&
+          sportName === selectedSport
+        );
+     });
 
     return filteredEntries.length;
+
   };
 
   // add a style to the month-divs, depending on the number of entries

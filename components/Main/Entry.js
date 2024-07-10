@@ -41,26 +41,28 @@ const Entry = (props) => {
  const entriesByMonth = {};
  const entriesByDay = {};
 
+if (filteredByDate) {
+  filteredByDate.forEach((entry) => {
+    const monthYear = `${getMonth(entry.created_at)} `;
+    //${new Date(entry.created_at).getFullYear()}
 
- filteredByDate.forEach((entry) => {
-   const monthYear = `${getMonth(entry.created_at)} `;
-   //${new Date(entry.created_at).getFullYear()}
+    if (!entriesByMonth[monthYear]) {
+      entriesByMonth[monthYear] = [];
+    }
+    entriesByMonth[monthYear].push(entry);
 
-   if (!entriesByMonth[monthYear]) {
-     entriesByMonth[monthYear] = [];
-   }
-   entriesByMonth[monthYear].push(entry);
+    const dayMonthYear = `${new Date(entry.created_at).getDate()} ${getMonth(
+      entry.created_at
+    )} ${new Date(entry.created_at).getFullYear()}`;
 
-   const dayMonthYear = `${new Date(entry.created_at).getDate()} ${getMonth(
-     entry.created_at
-   )} ${new Date(entry.created_at).getFullYear()}`;
+    if (!entriesByDay[dayMonthYear]) {
+      entriesByDay[dayMonthYear] = [];
+    }
 
-   if (!entriesByDay[dayMonthYear]) {
-     entriesByDay[dayMonthYear] = [];
-   }
-
-   entriesByDay[dayMonthYear].push(entry);
- });
+    entriesByDay[dayMonthYear].push(entry);
+  });
+}
+ 
 
  console.log(entriesByMonth);
 
