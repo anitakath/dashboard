@@ -25,9 +25,9 @@ const Profile = () => {
 
     const selectedSport = useSelector((state) => state.sport.selectedSport)
 
+    const [profileSection, setProfileSection] = useState("sports")
     const [active, setActive] = useState(false)
 
-    console.log(selectedSport)
 
     const router = useRouter();
     
@@ -35,14 +35,22 @@ const Profile = () => {
 
     const chooseSportHandler = (index) => {
       const selectedSport = navigation[index];
-      console.log("changing");
-      console.log(selectedSport);
+
       dispatch(setSelectedSport(selectedSport));
       router.push("/")
     };
 
- 
-    
+    const profileSectionHandler = (section) =>{
+      if(section === "sports"){
+        setProfileSection(section)
+      } else if(section === "plans"){
+        setProfileSection(section);
+      } else if(section === "settings"){
+        setProfileSection("settings")
+      }
+
+    }
+
   return (
     <div className="w-full h-screen p-4 md:p-14">
       <div className="flex w-full h-full border-2 overflow-scroll py-2 m-0 p-0 relative">
@@ -51,22 +59,46 @@ const Profile = () => {
         </Link>
 
         <div className="m-4 p-4 pl-14  w-full">
-          <h1 className="text-2xl my-8"> your sports... </h1>
+          <h1 className="text-2xl my-8"> your profile... </h1>
+
+          <div className=" text-xl flex mt-4 mb-4 justify-evenly">
+            <button onClick={() => profileSectionHandler("sports")}>
+              <h2> Sports</h2>
+            </button>
+            <button onClick={() => profileSectionHandler("plans")}>
+              <h2> Plans </h2>
+            </button>
+            <button onClick={() => profileSectionHandler("settings")}>
+              <h2>Settings</h2>
+            </button>
+          </div>
 
           <div className="flex w-full  flex flex-wrap justify-center ">
-            {navigation &&
+            {profileSection === "sports" &&
+              navigation &&
               navigation.map((sport, index) => (
                 <div
                   key={index}
-                  className={`${styles.sport_div} ${selectedSport === sport ? styles.active : ''}`}
+                  className={`${styles.sport_div} ${
+                    selectedSport === sport ? styles.active : ""
+                  }`}
                   onClick={() => chooseSportHandler(index)}
                 >
-                  <p className={styles.p}>
-                    {sport}
-                  </p>
-
+                  <p className={styles.p}>{sport}</p>
                 </div>
               ))}
+
+            {profileSection === "plans" && (
+              <div className={styles.sport_div}>
+                <p> plans </p>
+              </div>
+            )}
+
+            {profileSection === "settings" && (
+              <div className={styles.sport_div}>
+                <p> settings </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
