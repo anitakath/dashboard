@@ -25,3 +25,21 @@
 }
 
 
+.entryField {
+  padding: 1rem; 
+  position: relative; 
+  margin-top: 1rem;
+  margin-right: 0.25rem; 
+  margin-bottom: 1rem; 
+  width: 80%; 
+  max-height: 50%; 
+  overflow-y: scroll; 
+
+}
+
+@media screen and (max-width: 1300px) {
+  .entryField {
+    width: 100%; 
+    border-width: 8px; 
+  }
+}

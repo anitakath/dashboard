@@ -20,8 +20,9 @@ import Navigation from "../Navigation/Navigation";
 import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
-  const currentSport = props.currentSport;
+   const currentSport = useSelector((state) => state.sport.selectedSport);
   const filteredEntries = props.filteredEntries;
+  const sportsDurationByMonth = props.sportsDurationByMonth;
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [formIsOpen, setFormIsOpen] = useState(false);
   const actualDate = useSelector((state) => state.calendar);
@@ -45,21 +46,15 @@ const Board = (props) => {
 
   let addEntryText = formIsOpen ? "close form" : "add entry";
 
-  function formatDate(dateString) {
-    const options = {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
+  
 
-    const date = new Date(dateString);
 
-    return date.toLocaleDateString("de-DE", options).replace(",", "");
-  }
 
+  /*
+  console.log(filteredEntries);
+  console.log(filteredByDate)
   console.log(currentSport)
+  */
 
 
   return (
@@ -94,8 +89,8 @@ const Board = (props) => {
         <Navigation />
       </div>
 
-      <div className="flex justify-center lg:flex-row flex-col ">
-        <div className="p-4 relative  mt-4 mr-1 mb-4 w-2/3 sm:w-full max-h-1/2 overflow-y-scroll">
+      <div className="flex justify-center lg:flex-row flex-col sm:w-full max-h-screen overflow-y-scroll">
+        <div className={styles.entryField}>
           <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
 
           <div className="flex items-center">
@@ -158,10 +153,13 @@ const Board = (props) => {
             <p className="m-2 text-xl"> no entries were made </p>
           )}
           {currentSport === "all" && (
-            <Entry filteredByDate={allSupabaseSports} formatDate={formatDate} />
+            <Entry filteredByDate={allSupabaseSports} />
           )}
-          {filteredByDate && currentSport != "all" && (
-            <Entry filteredByDate={filteredByDate} formatDate={formatDate} />
+          {currentSport != "all" && (
+            <Entry
+              filteredEntries={filteredEntries}
+              sportsDurationByMonth={sportsDurationByMonth}
+            />
           )}
         </div>
 

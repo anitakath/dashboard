@@ -6,23 +6,54 @@ import { useEffect, useState } from 'react';
 import Navigation from '../Navigation/Navigation';
 import MobileNavigation from '../Navigation/MobileNavigation';
 import Board from '../Main/Board'
-
+//HOOKS
+import { convertMinutesToHours } from '@/custom-hooks/minutesToHours';
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
-import { current } from '@reduxjs/toolkit';
-
-import { v4 as uuidv4 } from "uuid";
 
 const Dashboard = () =>{
   
-  const [entries, setEntries] = useState([])
+  const [filteredEntries, setFilteredEntries] = useState([])
 
-  const selectedSport = useSelector((state) => state.sport.currentSport)
+  const currentDate = useSelector((state) => state.calendar);
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  const filteredEntries = allSupabaseSports
+  const entries = allSupabaseSports
     ? allSupabaseSports.filter((sport) => sport.name === currentSport)
     : [];
+
+  const [sportsDurationByMonth, setSportsDurationByMonth] = useState(null)
+  
+    useEffect(() => {
+      if (entries) {
+        const filterEntries = entries.filter((entry) => {
+          const entryDate = new Date(entry.created_at);
+          return (
+            entryDate.getFullYear() === currentDate.year &&
+            entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
+          );
+        });
+
+        const totalDurationInMinutes = filterEntries.reduce(
+          (total, entry) => total + entry.duration,
+          0
+        );
+        const totalDurationInHours = convertMinutesToHours(
+          totalDurationInMinutes
+        );
+        setSportsDurationByMonth(totalDurationInHours);
+
+        setFilteredEntries(filterEntries);
+      }
+    }, [allSupabaseSports, currentDate, currentSport]);
+
+    const getMonthNumber = (month) => {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return months.indexOf(month) + 1;
+    };
+
+
+
 
 
   return (
@@ -32,7 +63,10 @@ const Dashboard = () =>{
           <Navigation />
         </div>
 
-        <Board filteredEntries={filteredEntries} currentSport={currentSport} />
+        <Board
+          filteredEntries={filteredEntries}
+          sportsDurationByMonth={sportsDurationByMonth}
+        />
       </div>
     </div>
   );

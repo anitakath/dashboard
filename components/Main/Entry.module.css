@@ -2,6 +2,7 @@
 .container{
     position: relative;
 }
+
 .entry{
     border: 1px solid var( --purpleDark);
     margin: 10px 0px;
@@ -47,4 +48,34 @@
     width: 100px;
     display: flex;
     justify-content: center;
+}
+
+
+@media screen and (max-width: 1600px){
+
+    .monthYear_header{
+        margin: 15px 0px;
+    }
+    .totalHours_p{
+        height:4vh;
+    }
+}
+
+
+
+@media screen and (max-width: 1400px){
+
+    .monthYear_header{
+        margin: 25px 0px;
+    }
+    .totalHours_p{
+        height:4vh;
+    }
+}
+
+
+@media screen and (max-width: 600px){
+    .container{
+        width: 100%
+    }
 }
