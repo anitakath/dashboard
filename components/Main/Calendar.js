@@ -10,6 +10,8 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setSelectedSport } from '@/store/sportReducer';
 //HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
+
+
 const Calendar = (props) =>{
   const allSupabaseSports = useSelector(
     (state) => state.sport.allSupabaseSports
@@ -26,7 +28,22 @@ const Calendar = (props) =>{
     year: selectedYear,
   });
 
-  
+  const restDays = useSelector((state) => state.calendar.restDaysPerMonth)
+
+
+
+
+const renderRestDays = () => {
+  return Object.keys(restDays).map((month) => (
+    <div key={month}>
+      <ul>
+        <li className={styles.restDays_li}>
+          <span className={styles.restDays_li_span}>{month}: </span> {restDays[month]}
+        </li>
+      </ul>
+    </div>
+  ));
+};
 
   const getEntryCountForMonth = (month, selectedYear, selectedSport) => {
      if (!allSupabaseSports) {
@@ -63,13 +80,18 @@ const Calendar = (props) =>{
 
   // add a style to the month-divs, depending on the number of entries
   const getMonthStyle = (entryCount) => {
-    if (entryCount > 8) {
+
+    if(entryCount > 14){
+      return styles.maxixl
+    } else if (entryCount > 10) {
       return styles.maxi;
-    } else if (entryCount > 4) {
+    } else if (entryCount > 6) {
       return styles.midi;
-    } else if (entryCount > 0) {
+    } else if (entryCount > 4) {
       return styles.mini;
-    } else {
+    } else if(entryCount > 0){
+      return styles.minixs
+    }else {
       return;
     }
   };
@@ -90,10 +112,6 @@ const Calendar = (props) =>{
     "Nov",
     "Dec",
   ];
-
-
-
-
 
 
   
@@ -148,8 +166,19 @@ const Calendar = (props) =>{
 
   return (
     <div className="p-4 mt-4 ml-1 mb-4 w-2/3 relative ">
-      <h1 className="text-2xl  border-b-2 my-2"> Summary:  <span className={styles.summary_span}>{selectedSport}</span> </h1>
-      <button className={styles.summary_allSports} onClick={summarizeAllHandler}> summary of all sports  </button>
+      <h1 className="text-2xl  border-b-2 my-2">
+        {" "}
+        Summary: <span className={styles.summary_span}>
+          {selectedSport}
+        </span>{" "}
+      </h1>
+      <button
+        className={styles.summary_allSports}
+        onClick={summarizeAllHandler}
+      >
+        {" "}
+        summary of all sports{" "}
+      </button>
       <div className="absolute right-6 top-4 p-2 flex items-center">
         <p className="text-xs">choose year</p>
         <select
@@ -180,7 +209,11 @@ const Calendar = (props) =>{
 
       <div className="my-4 p-0 grid grid-cols-3 gap-1 border-4">
         {months.map((month) => {
-          const entryCount = getEntryCountForMonth( month, selectedYear, selectedSport );
+          const entryCount = getEntryCountForMonth(
+            month,
+            selectedYear,
+            selectedSport
+          );
           const monthStyle = getMonthStyle(entryCount);
 
           return (
@@ -193,12 +226,19 @@ const Calendar = (props) =>{
                   `}
               onClick={() => chooseMonthHandler(month)}
             >
-             <p>{month}</p>
-             <p className={styles.amount}>{entryCount}</p>
+              <p>{month}</p>
+              <p className={styles.amount}>{entryCount}</p>
             </div>
           );
         })}
       </div>
+
+      {selectedSport === "all" && (
+        <div className="border-2">
+          <h1 className=" text-xl m-2">Rest Days Per Month</h1>
+          {renderRestDays()}
+        </div>
+      )}
     </div>
   );
 }

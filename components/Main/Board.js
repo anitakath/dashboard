@@ -20,7 +20,7 @@ import Navigation from "../Navigation/Navigation";
 import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
-   const currentSport = useSelector((state) => state.sport.selectedSport);
+  const currentSport = useSelector((state) => state.sport.selectedSport);
   const filteredEntries = props.filteredEntries;
   const sportsDurationByMonth = props.sportsDurationByMonth;
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
@@ -45,9 +45,6 @@ const Board = (props) => {
   };
 
   let addEntryText = formIsOpen ? "close form" : "add entry";
-
-  
-
 
 
   /*

@@ -3,11 +3,11 @@
 import { useRouter } from "next/router";
 import Navigation from "../Navigation/Navigation";
 import Link from "next/link";
-
+import Image from "next/image";
 
 //FONT AWeSOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
 
 
 //REDUX
@@ -50,19 +50,30 @@ const DetailsPage = () => {
       router.push("/");
     }
 
-    console.log("deleting");
   };
 
+  const editEntryHandler = (e) =>{
+    e.preventDefault();
+
+    console.log('edit entry')
+  }
+
   return (
-    <div className="w-full h-screen   m-4 md:p-14">
-      <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative">
-        <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
+    <div className="w-full h-screen  m-0 md:p-14">
+      <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative z-20">
+        <div className=" absolute w-full h-full m-0  z-0 top-0">  {/* future image div*/} </div>
+        <div className="absolute w-full h-full z-10 top-0">
+           <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
           <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
         </Link>
-
-        <button className={styles.delete_btn} onClick={deleteEntryHandler}>
+        
+        <div className={styles.buttons_div}>
+           <button className={styles.delete_btn} onClick={deleteEntryHandler}>
           <FontAwesomeIcon icon={faTrash} />
         </button>
+        <button  className={styles.edit_btn} onClick={editEntryHandler}> <FontAwesomeIcon icon={faPencil} /></button>
+        </div>
+       
 
         <div className="m-4 p-4 pl-14  w-full ">
           <h1 className="text-2xl border-b-2 my-2"> Details page </h1>
@@ -73,6 +84,8 @@ const DetailsPage = () => {
             </div>
           )}
         </div>
+        </div>
+       
       </div>
     </div>
   );

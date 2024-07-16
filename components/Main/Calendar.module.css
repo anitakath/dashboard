@@ -65,15 +65,37 @@
     background-color: var(--purpleDarkHover);
 }
 
+.minixs{
+    background-color: var(--ultraLight);
+}
 
 .mini{
-    background-color: var(--greenLight);
+    background-color: var(--light);
 }
 
 .midi{
-    background-color: var(--greenMedium);
+    background-color: var(--mediumLight);
 }
 
 .maxi{
-    background-color: var(--greenDark);
+    background-color: var(--medium);
+}
+
+.maxixl{
+    background-color: var(--dark);
+}
+
+
+
+.restDays_li{
+    margin: 5px 0px; 
+    width: 50%;
+    display: flex;
+}
+
+.restDays_li_span{
+    min-width: 100px;
+    margin: 0px 10px;
+    text-align: center;
+    color: var(--purpleDark);
 }

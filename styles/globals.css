@@ -9,9 +9,19 @@
 
   --dark: #2E2C2F;
 
+  /* CALENDAR.JS */
+  --ultraLight: #FAEFF6;
+  --light: #EBC1DD;
+  --mediumLight: #D784BB;
+  --medium: #C34699;
+  --dark: #6C2354;
+
   --greenLight: hsla( 160, 47%, 79%, 0.5);
   --greenMedium: hsla(161, 22%, 58%, 0.7);
   --greenDark: hsla(162, 24%, 37%, 0.8);
+
+
+
 
   --purpleUltraLight: hsl(340, 60%, 85%);
   --purpleLight: hsl(340, 90%, 55%);

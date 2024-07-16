@@ -15,10 +15,17 @@
 
 }
 
-.delete_btn{
+
+.buttons_div{
     position: absolute;
-    right: 45px;
-    top: 20px;
+    right: 10px;
+    top: 10px;
+}
+
+.delete_btn, .edit_btn{
+    width: 60px;
+    height: 60px;
+    margin: 0px 10px;
     font-size: 1.6rem;
     cursor: pointer;
     padding: 5px;

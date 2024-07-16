@@ -54,7 +54,7 @@ const AddEntryForm = (props) => {
     img: "",
   });
 
-  console.log(inputs.created_at)
+
 
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
 
@@ -254,7 +254,7 @@ const AddEntryForm = (props) => {
       }, 5000);
 
 
-      console.log("input values:", inputs);
+
       setFormIsOpen(false)
 
 
