@@ -1,0 +1,24 @@
+
+.input, .btn{
+    border-bottom: 2px solid var(--purpleDark);
+    font-size: 1.5rem;
+    margin: 10px 0px;
+    padding: 5px;
+    width: 400px;
+}
+
+.input:focus{
+    outline: none;
+    cursor: pointer;
+}
+.btn{
+    width: 400px;
+    height: 50px;
+    font-size: 1.3rem;
+    background-color: var(--purpleDarkHover);
+}
+
+.btn:hover{
+    background-color: var(--purpleDark);
+    color: beige;
+}

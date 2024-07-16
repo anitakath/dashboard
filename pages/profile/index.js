@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Image from "next/image";
 
 
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";
-
+import { setLogout } from "@/store/authReducer";
 
 import styles from './Profile.module.css'
 
@@ -49,6 +49,11 @@ const Profile = () => {
         setProfileSection("settings")
       }
 
+    }
+
+    const logoutHandler = () =>{
+      console.log('logging out')
+      dispatch(setLogout(false))
     }
 
   return (
@@ -99,6 +104,16 @@ const Profile = () => {
                 <p> settings </p>
               </div>
             )}
+          </div>
+          <div className="flex justify-center my-4">
+            <button className="pointer" onClick={logoutHandler}>
+              <Image
+                src="/power-off.png"
+                alt="Power Off Icon"
+                width={50}
+                height={50}
+              />
+            </button>
           </div>
         </div>
       </div>

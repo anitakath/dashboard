@@ -112,11 +112,11 @@ const Entry = (props) => {
     setRestDays(dateData.restDaysPerMonth);
   }, [dateData]);
 
-  console.log(filteredEntries); // Undefined
+
 
   // always sort sortedEntriesByMonth by date of creation of the respective entries.
 
-  
+
   for (const month in sortedEntriesByMonth) {
     sortedEntriesByMonth[month].sort((a, b) => {
       return new Date(b.created_at) - new Date(a.created_at);

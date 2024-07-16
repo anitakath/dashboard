@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Link from "next/link";
-
+import Image from "next/image";
 //STYLES
 import styles from './Board.module.css'
 //TRANSITION GROUP
@@ -12,7 +12,8 @@ import { faHouse, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
 //REDUX
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
+import { setLogout } from "@/store/authReducer";
 //COMPONENTS
 import Calendar from "./Calendar";
 import Entry from "./Entry";
@@ -38,6 +39,8 @@ const Board = (props) => {
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
 
+  const dispatch = useDispatch();
+
 
   const addEntryHandler = (e) => {
     e.preventDefault();
@@ -52,6 +55,12 @@ const Board = (props) => {
   console.log(filteredByDate)
   console.log(currentSport)
   */
+
+     const logoutHandler = () => {
+       console.log("logging out");
+       dispatch(setLogout(false));
+     };
+
 
 
   return (
@@ -74,6 +83,14 @@ const Board = (props) => {
         <Link href="/profile" className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faUser} className="font_purple" />
         </Link>
+        <button className="pointer" onClick={logoutHandler}>
+          <Image
+            src="/power-off.png"
+            alt="Power Off Icon"
+            width={50}
+            height={50}
+          />
+        </button>
 
         <p
           className="absolute right-14 top-2 h-20 w-20 p-4"
