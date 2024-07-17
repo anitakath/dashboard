@@ -22,30 +22,12 @@ const Navigation = () => {
   //fetch all objects from supabase
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const alphabetic = allSupabaseSports ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort((a, b) => a.localeCompare(b)): [];
-  
+  const sportObject = useSelector((state) => state.sport.currentSport[0]);
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
 
+  //console.log(sportObject)
 
 
-  /*
-  useEffect(() => {
-    if (allSupabaseSports) {
-      const uniqueLabels = {};
-      allSupabaseSports.forEach((sport) => {
-        if (!uniqueLabels[sport.name]) {
-          uniqueLabels[sport.name] = sport.label;
-        }
-      });
-
-      const labelsArray = Object.keys(uniqueLabels).map((name) => ({
-        name,
-        label: uniqueLabels[name],
-      }));
-      setLabel(labelsArray);
-     
-    }
-  }, [allSupabaseSports]);
-  */
  const uniqueLabels = allSupabaseSports
    ? allSupabaseSports.reduce((acc, sport) => {
        if (!acc[sport.name]) {
@@ -56,24 +38,7 @@ const Navigation = () => {
    : {};
 
 
-   /*
-
- const labelsArray = Object.keys(uniqueLabels).map((name) => ({
-   name,
-   label: uniqueLabels[name],
- }));
-
- console.log(uniqueLabels)
- console.log(labelsArray)
- //setLabel(labelsArray);
-
-  const [label, setLabel] = useState([...labelsArray]);
-
-  
- useEffect(()=>{
-   dispatch(setLabel(label))
-
- }, [label])*/
+   
 
 
   useEffect(() => {
@@ -149,25 +114,6 @@ const Navigation = () => {
         allSupabaseSports={allSupabaseSports}
       />
 
-      {/*
-      <div className="flex w-full mb-4 items-center relative border-4">
-        <button
-          onClick={() => sortHandler("alphabetically")}
-          className={styles.sort}
-        >
-          <FontAwesomeIcon icon={faSort} />
-        </button>
-
-        <select
-          className={styles.select_input}
-          onChange={(e) => sortHandler(e.target.value)}
-        >
-          <option value="alphabetically">Alphabetically</option>
-        
-        </select>
-      </div> 
-      */}
-
       {!formIsOpen && (
         <ul className="w-full h-full flex lg:flex-col overflow-scroll">
           {uniqueSports.map((sport, index) => (
@@ -185,7 +131,26 @@ const Navigation = () => {
                   >
                     x
                   </button>
-                  {sport}
+                  <span className={styles.sportBtnText}>{sport}</span>
+                  {sportObject.map((sportsObj) => {
+                    if (sportsObj.name === sport) {
+                      return (
+                        <div className={styles.circle_div}>
+                          <div
+                            className={`${styles.circle_background} ${
+                              styles[sportsObj.color]
+                            } `}
+                          ></div>
+                          <div
+                            className={`${styles[sportsObj.color]} ${
+                              styles.circle
+                            }`}
+                          ></div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
                 </button>
               </li>
             </div>

@@ -50,11 +50,9 @@ const Board = (props) => {
   let addEntryText = formIsOpen ? "close form" : "add entry";
 
 
-  /*
-  console.log(filteredEntries);
-  console.log(filteredByDate)
-  console.log(currentSport)
-  */
+
+
+
 
      const logoutHandler = () => {
        console.log("logging out");

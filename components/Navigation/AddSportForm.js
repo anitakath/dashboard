@@ -7,13 +7,8 @@ import { setNavigation, setSelectedSport, setCurrentSport } from "@/store/sportR
 
 import { useSelector, useDispatch } from "react-redux";
 
-
-//SUPABASE
-import { supabase } from "@/services/supabaseClient";
-
 //STYLES
 import styles from './AddSportForm.module.css'
-import { current } from "@reduxjs/toolkit";
 
 
 
@@ -24,12 +19,15 @@ const AddSportForm = (props) => {
   const dispatch = useDispatch();
 
   const navigation = useSelector((state) => state.sport.navigation);
+  const sports = useSelector((state) => state.sport.currentSport[0])
 
+  console.log(sports)
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { name, color };
+    console.log(data)
 
     if (navigation.includes(name)) {
       setError(true);
@@ -37,10 +35,16 @@ const AddSportForm = (props) => {
     } else {
       setError(false);
       const updated = [...navigation, data.name];
-      console.log(updated)
+
+      // Push data object into the existing sports array
+      const updatedSports = [...sports, data];
+      console.log(updatedSports);
+
       dispatch(setNavigation(updated));
       dispatch(setSelectedSport(data.name));
-      dispatch(setCurrentSport(data));
+      
+      dispatch(setCurrentSport(updatedSports));
+
       props.addSportClickHandler();
     }
   };
@@ -49,6 +53,7 @@ const AddSportForm = (props) => {
     setColor(selectedColor);
   };
 
+  console.log(color)
 
 
   // Array mit Farben für die Buttons
@@ -65,6 +70,7 @@ const AddSportForm = (props) => {
     "mandarine",
     "brown",
     "jasmine",
+    "mustard"
   ];
 
 

@@ -19,7 +19,6 @@ const sportSlice = createSlice({
     },
     
     setCurrentSport(state, action){
-
       state.currentSport.push(action.payload);
     },
    
