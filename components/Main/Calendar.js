@@ -10,6 +10,7 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setSelectedSport } from '@/store/sportReducer';
 //HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
+import { useEntryCountForMonth, useGetMonthStyle } from "@/custom-hooks/useCalendar"; // Importiere die neuen Hooks
 
 
 const Calendar = (props) =>{
@@ -45,38 +46,9 @@ const renderRestDays = () => {
   ));
 };
 
-  const getEntryCountForMonth = (month, selectedYear, selectedSport) => {
-     if (!allSupabaseSports) {
-       return 0; 
-     }
 
-     const filteredEntries = allSupabaseSports.filter((entry) => {
-        const entryDate = new Date(entry.created_at);
-        let entryMonth = entryDate.toLocaleString("default", {
-          month: "short",
-        });
-        const entryYear = entryDate.getFullYear();
-        const sportName = entry.name;
+   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
 
-        const monthAbbreviation = month.slice(0, 3);
-
-        if (entryMonth === "Mär") {
-          entryMonth = "Mar";
-        }
-        if(entryMonth === "Mai"){
-          entryMonth = "May"
-        }
-
-        return (
-          entryMonth === monthAbbreviation &&
-          entryYear === selectedYear &&
-          sportName === selectedSport
-        );
-     });
-
-    return filteredEntries.length;
-
-  };
 
   // add a style to the month-divs, depending on the number of entries
   const getMonthStyle = (entryCount) => {

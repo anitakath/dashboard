@@ -33,8 +33,35 @@
   margin-bottom: 1rem; 
   width: 80%; 
   max-height: 50%; 
-  overflow-y: scroll; 
+  overflow-y: scroll;
+}
 
+.calendar_icon{
+  margin: 0px 8px;
+  color: black;
+}
+
+.plannedSports_btn{
+  padding: 3px;
+  font-size: 1.2rem;
+  margin: 0px 5px;
+  color: var(--purpleDarkHover);
+}
+
+
+.plannedSports_btn:hover{
+  border-bottom: 2px solid var(--purpleDarkHover);
+}
+
+.logout_btn{
+  color: grey;
+  transition: 0.2s ease;
+  margin-left: 20px;
+  opacity: 0.4;
+}
+
+.logout_btn:hover{
+  opacity: 1;
 }
 
 @media screen and (max-width: 1300px) {

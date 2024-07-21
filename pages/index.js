@@ -17,11 +17,9 @@ export default function Home() {
   const [sports, setSports] = useState(null)
   const currentSport = useSelector((state) => state.sport.currentSport)
 
-
-  //console.log(currentSport);
-    const addSportsToReduxStore = (arr) => {
-      dispatch(setCurrentSport(arr));
-    };
+  const addSportsToReduxStore = (arr) => {
+    dispatch(setCurrentSport(arr));
+  };
 
 
 useEffect(() => {
@@ -76,17 +74,12 @@ useEffect(() => {
       }
   };
 
-  //console.log(sports)
-
 
   useEffect(()=>{
     fetchSportsData();
   }, [])
 
   
-
-
-  //console.log(isLoggedIn)
   return (
     <div className="w-screen h-screen m-0 md:p-10">
       {!isLoggedIn && <Login />}

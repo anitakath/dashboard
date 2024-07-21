@@ -18,12 +18,16 @@ import SortSports from "./SortSports";
 const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [active, setActive] = useState(null);
-
+  const dispatch = useDispatch();
   //fetch all objects from supabase
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const alphabetic = allSupabaseSports ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort((a, b) => a.localeCompare(b)): [];
   const sportObject = useSelector((state) => state.sport.currentSport && state.sport.currentSport.length > 0 ? state.sport.currentSport[0] : null);
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
+  const currentSport = useSelector((state) => state.sport.currentSport);
+  const navigation = useSelector((state) => state.sport.navigation);
+  const sportReducer = useSelector((state) => state.sport);
+
 
   
 
@@ -38,8 +42,7 @@ const Navigation = () => {
    : {};
 
 
-   
-
+  
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
@@ -47,21 +50,11 @@ const Navigation = () => {
 
 
 
-  const navigation = useSelector((state) => state.sport.navigation)
-
-
-
-  const sportReducer = useSelector((state) => state.sport)
-
 
   useEffect(()=>{
     setUniqueSports(navigation)
 
   }, [navigation])
-
-
-
-  const dispatch = useDispatch();
 
 
 
@@ -102,12 +95,6 @@ const Navigation = () => {
       // Dispatch delete action here
     }
   };
-
-
-  const currentSport = useSelector((state) => state.sport.currentSport)
-  //console.log(currentSport)
-
-  //console.log(sportObject);
 
 
 

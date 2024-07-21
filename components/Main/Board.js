@@ -10,6 +10,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
@@ -102,8 +103,9 @@ const Board = (props) => {
           <Image
             src="/power-off.png"
             alt="Power Off Icon"
-            width={50}
-            height={50}
+            width={37}
+            height={37}
+            className={styles.logout_btn}
           />
         </button>
 
@@ -122,23 +124,9 @@ const Board = (props) => {
         <div className={styles.entryField}>
           <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
 
-          <div className="flex items-center">
-            <button className={"text-xl my-2 mx-1"}>
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className={styles.chevron}
-              />
-            </button>
-            <button className=" text-xl my-2">
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className={styles.chevron}
-              />
-            </button>
-            <p className="mx-10 text-xs">
-              click on the diary entries to get more details
-            </p>
-          </div>
+          <p className="mx-10 mt-4 text-xs">
+            click on the diary entries to get more details
+          </p>
 
           {currentSport === null && (
             <p className=" my-10 text-2xl text-center">
@@ -157,6 +145,11 @@ const Board = (props) => {
                   {addEntryText}
                 </button>
               )}
+
+              <button className={styles.plannedSports_btn}> 
+                <FontAwesomeIcon icon={faCalendar} className={styles.calendar_icon} />
+                planned sports units
+              </button>
 
               <TransitionGroup>
                 {formIsOpen && (
