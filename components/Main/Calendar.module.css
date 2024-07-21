@@ -8,7 +8,7 @@
     color: var(--purpleDark);
 }
 
-.summary_allSports{
+.summary_allSports, .diagram_allSports{
     background-color: var(--purpleDarkHover);
     color: beige;
     padding: 5px 10px;
@@ -17,6 +17,16 @@
     right: 20px;
     cursor: pointer;
 }
+
+.diagram_allSports{
+    right: 200px;
+}
+
+.diagram_allSports:hover, .summary_allSports:hover{
+    background-color: var(--purpleDark);
+}
+
+
 .year_input{
     border: none;
     margin: 0px 5px;

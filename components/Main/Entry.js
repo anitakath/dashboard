@@ -8,9 +8,7 @@ import { formatDate } from "@/custom-hooks/formatDate";
 import { getMonth } from "@/custom-hooks/formatDate";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useDaysWithoutEntry from "@/custom-hooks/useDaysWithoutEntry";
-
-
-
+import useSortedEntriesByMonth from "@/custom-hooks/useSortedEntriesByMonth"; // Importiere die neue Hook
 
 const Entry = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -47,28 +45,10 @@ const Entry = (props) => {
     }
   }, []);
 
-  const sortedEntriesByMonth = Object.entries(entriesByMonth)
-    .sort(([monthA], [monthB]) => {
-      const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      return months.indexOf(monthB.trim()) - months.indexOf(monthA.trim());
-    })
-    .reduce((acc, [key, value]) => {
-      acc[key] = value;
-      return acc;
-    }, {});
+
+  const sortedEntriesByMonth = useSortedEntriesByMonth(entriesByMonth);
+
+
 
   const sumDurationsByMonth = {};
   for (const month in entriesByMonth) {
@@ -112,16 +92,23 @@ const Entry = (props) => {
     setRestDays(dateData.restDaysPerMonth);
   }, [dateData]);
 
-
-
   // always sort sortedEntriesByMonth by date of creation of the respective entries.
-
 
   for (const month in sortedEntriesByMonth) {
     sortedEntriesByMonth[month].sort((a, b) => {
       return new Date(b.created_at) - new Date(a.created_at);
     });
   }
+
+  console.log(filteredEntries);
+  // create a copy of filteredEntries, so filteredEntries is not mutated
+
+  const sortedEntries = Array.isArray(filteredEntries) ? [...filteredEntries] : [];
+
+  //sort the entries by .created_at
+  sortedEntries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+
 
   return (
     <div className={styles.container}>
@@ -132,7 +119,7 @@ const Entry = (props) => {
         </h1>
       )}
       {currentSport !== "all" &&
-        filteredEntries.map((entry, index) => (
+        sortedEntries.map((entry, index) => (
           <div
             className={styles.entry}
             key={index}

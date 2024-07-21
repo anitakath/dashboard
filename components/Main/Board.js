@@ -19,7 +19,6 @@ import { setSelectedSport } from "@/store/sportReducer";
 import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
-import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -62,12 +61,10 @@ const Board = (props) => {
      };
 
 
-     console.log(currentSport);
-     console.log(navigation)
+
 
      useEffect(()=> {
 
-      console.log('MOINCITO')
        if(navigation.includes(currentSport)){
          console.log(`${currentSport} exists`)
        } else{
@@ -77,6 +74,8 @@ const Board = (props) => {
 
 
      }, [navigation])
+
+     console.log(filteredEntries);
 
 
   return (

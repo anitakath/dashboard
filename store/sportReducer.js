@@ -6,10 +6,12 @@ const sportSlice = createSlice({
   initialState: {
     selectedSport: "Poledance",
     /********/
+    //array with object .name, .color
     currentSport: [],
     /********/
     
     allSupabaseSports: [],
+    //array with strings (name of sport)
     navigation: [],
     label: [],
   },

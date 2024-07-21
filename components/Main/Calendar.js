@@ -167,17 +167,19 @@ const renderRestDays = () => {
   return (
     <div className="p-4 mt-4 ml-1 mb-4 w-2/3 relative ">
       <h1 className="text-2xl  border-b-2 my-2">
-        {" "}
+
         Summary: <span className={styles.summary_span}>
           {selectedSport}
-        </span>{" "}
+        </span>
       </h1>
+      <button className={styles.diagram_allSports}>
+        each sport in a diagram
+      </button>
       <button
         className={styles.summary_allSports}
         onClick={summarizeAllHandler}
       >
-        {" "}
-        summary of all sports{" "}
+        summary of all sports
       </button>
       <div className="absolute right-6 top-4 p-2 flex items-center">
         <p className="text-xs">choose year</p>
