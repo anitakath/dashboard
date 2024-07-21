@@ -110,17 +110,17 @@ const Board = (props) => {
         </button>
 
         <p
-          className="absolute right-14 top-2 h-20 w-20 p-4"
+          className="absolute right-14 top-2 h-20 w-20 p-4 "
           style={{ backgroundColor: "var(--purpleDarkHover)" }}
         ></p>
       </div>
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
-      <div className="flex lg:hidden">
+      <div className="flex  lg:hidden">
         <Navigation />
       </div>
 
-      <div className="flex justify-center lg:flex-row flex-col sm:w-full max-h-screen overflow-y-scroll">
+      <div className="flex justify-center lg:flex-row flex-col  sm:w-full lg:max-h-screen  overflow-y-scroll">
         <div className={styles.entryField}>
           <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
 

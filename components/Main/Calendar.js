@@ -10,7 +10,7 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setSelectedSport } from '@/store/sportReducer';
 //HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
-import { useEntryCountForMonth, useGetMonthStyle } from "@/custom-hooks/useCalendar"; // Importiere die neuen Hooks
+import { useEntryCountForMonth, useGetMonthStyle, months } from "@/custom-hooks/useCalendar"; // Importiere die neuen Hooks
 
 
 const Calendar = (props) =>{
@@ -50,6 +50,7 @@ const renderRestDays = () => {
    const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
 
 
+   // make getMonthStyle in  useCalendar.js work!! 
   // add a style to the month-divs, depending on the number of entries
   const getMonthStyle = (entryCount) => {
 
@@ -69,21 +70,6 @@ const renderRestDays = () => {
   };
 
 
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
 
 
   
@@ -137,12 +123,9 @@ const renderRestDays = () => {
 
 
   return (
-    <div className="p-4 mt-4 ml-1 mb-4 w-2/3 relative ">
+    <div className="p-4 mt-4 ml-1 mb-4  w-full lg:w-2/3 relative ">
       <h1 className="text-2xl  border-b-2 my-2">
-
-        Summary: <span className={styles.summary_span}>
-          {selectedSport}
-        </span>
+        Summary: <span className={styles.summary_span}>{selectedSport}</span>
       </h1>
       <button className={styles.diagram_allSports}>
         each sport in a diagram

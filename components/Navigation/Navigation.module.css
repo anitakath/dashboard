@@ -105,6 +105,14 @@
     font-weight: bolder;
 }
 
+.trash_icon{
+    color: lightgrey;
+}
+
+.trash_icon:hover{
+    color: var(--purpleDark);
+}
+
 
 
 .fandango{
@@ -174,8 +182,6 @@
     z-index: 10;
     
 }
-
-
 
 
 .sport_btn:hover + .circle_background{

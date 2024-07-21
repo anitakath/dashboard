@@ -38,7 +38,7 @@
 
 .calendar_icon{
   margin: 0px 8px;
-  color: black;
+  color: lightgrey;
 }
 
 .plannedSports_btn{
@@ -67,6 +67,6 @@
 @media screen and (max-width: 1300px) {
   .entryField {
     width: 100%; 
-    border-width: 8px; 
+    height: 500px;
   }
 }

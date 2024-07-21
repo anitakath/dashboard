@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Navigation.module.css";
 import AddSportForm from "./AddSportForm";
 import {
@@ -124,28 +125,29 @@ const Navigation = () => {
                     className={styles.delete_btn}
                     onClick={() => deleteSportHandler(sport)}
                   >
-                    x
+                    <FontAwesomeIcon icon={faTrash} className={styles.trash_icon}/>
                   </button>
                   <span className={styles.sportBtnText}>{sport}</span>
-                  {sportObject && sportObject.map((sportsObj) => {
-                    if (sportsObj.name === sport) {
-                      return (
-                        <div className={styles.circle_div}>
-                          <div
-                            className={`${styles.circle_background} ${
-                              styles[sportsObj.color]
-                            } `}
-                          ></div>
-                          <div
-                            className={`${styles[sportsObj.color]} ${
-                              styles.circle
-                            }`}
-                          ></div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
+                  {sportObject &&
+                    sportObject.map((sportsObj) => {
+                      if (sportsObj.name === sport) {
+                        return (
+                          <div className={styles.circle_div}>
+                            <div
+                              className={`${styles.circle_background} ${
+                                styles[sportsObj.color]
+                              } `}
+                            ></div>
+                            <div
+                              className={`${styles[sportsObj.color]} ${
+                                styles.circle
+                              }`}
+                            ></div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
                 </button>
               </li>
             </div>
