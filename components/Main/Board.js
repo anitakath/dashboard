@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -14,6 +14,7 @@ import AddEntryForm from "./AddEntryForm";
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
 import { setLogout } from "@/store/authReducer";
+import { setSelectedSport } from "@/store/sportReducer";
 //COMPONENTS
 import Calendar from "./Calendar";
 import Entry from "./Entry";
@@ -22,6 +23,7 @@ import { current } from "@reduxjs/toolkit";
 
 const Board = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
+  const navigation = useSelector((state => state.sport.navigation))
   const filteredEntries = props.filteredEntries;
   const sportsDurationByMonth = props.sportsDurationByMonth;
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
@@ -59,6 +61,22 @@ const Board = (props) => {
        dispatch(setLogout(false));
      };
 
+
+     console.log(currentSport);
+     console.log(navigation)
+
+     useEffect(()=> {
+
+      console.log('MOINCITO')
+       if(navigation.includes(currentSport)){
+         console.log(`${currentSport} exists`)
+       } else{
+         console.log(`${currentSport} does not exist`);
+         dispatch(setSelectedSport(navigation[0]))
+       }
+
+
+     }, [navigation])
 
 
   return (

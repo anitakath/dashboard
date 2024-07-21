@@ -11,13 +11,15 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
+import { current } from "@reduxjs/toolkit";
 
 
 const AddEntryForm = (props) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const dispatch = useDispatch();
 
-  const currentSport = useSelector((state) => state.sport.selectedSport);
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
+  const currentSport = useSelector((state) => state.sport.currentSport)
 
 
   const setFormIsOpen = props.setFormIsOpen;
@@ -28,24 +30,21 @@ const AddEntryForm = (props) => {
     const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports
     );
 
-    if (currentSport) {
-      const selectedSport = allSupabaseSports.find(
-        (sport) => sport.name === currentSport
-      );
-
-      if (selectedSport) {
-        label  = selectedSport.label;
-      } else {
-        //console.log(`Kein Sport mit dem Namen ${currentSport} gefunden`);
-      }
-    }
-
-
+   if (selectedSport) {
+     const foundSport = allSupabaseSports.find(
+       (sport) => sport.name === selectedSport
+     );
+     if (foundSport) {
+       label = foundSport.label;
+     } else {
+       //console.log(`Kein Sport mit dem Namen ${selectedSport} gefunden`);
+     }
+   }
 
  
   const [inputs, setInputs] = useState({
     //index: currentSport,
-    name: currentSport,
+    name: selectedSport,
     title: "",
     text: "",
     created_at: "",
@@ -115,95 +114,6 @@ const AddEntryForm = (props) => {
   };
 
 
-  /*
-
-  async function uploadFile(e) {
-    const file = e.target.files[0];
-    console.log(file);
-
-    // Überprüfe, ob der Benutzer authentifiziert ist
-    /*
-    const user = supabase.auth.session();
-    if (!user) {
-      console.log("Benutzer nicht authentifiziert");
-      return;
-    }*//*
-
-    const user = {
-      id: "111"
-    }
-
-    // Lade die Datei in den Storage Bucket hoch
-    const { data, error } = await supabase.storage
-      .from("sport_images")
-      .upload(`${user.id}/${file.name}`, file); // Speichere die Datei im Ordner des Benutzers mit seiner ID
-
-    if (error) {
-      // Behandle Fehler beim Hochladen
-      console.log(error);
-    } else {
-      // Handle Erfolg beim Hochladen
-      console.log("Datei erfolgreich hochgeladen");
-    }
-  }*/
-
-  /*
-
-  async function uploadFile(e) {
-    const file = e.target.files[0]
-    console.log(file)
-    const { data, error } = await supabase.storage
-      .from("sport_images")
-      .upload("sport_images", file);
-    if (error) {
-      // Handle error
-      console.log(error)
-    } else {
-      // Handle success
-      console.log('yeah')
-    }
-  }
-  */
-
-
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    const { data, error } = await supabase.storage
-      .from("sport_images/public")
-      .upload(`images/${file.name}`, file);
-
-    if (error) {
-      console.error("Error uploading image:", error.message);
-    } else {
-      console.log("Image uploaded successfully:", data.Key);
-      // Hier kannst du weitere Aktionen nach dem erfolgreichen Upload durchführen
-    }
-  };
-
-
-  /*
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const { data, error } = await supabase.storage
-        .from("images")
-        .upload(`images/${file.name}`, formData);
-      if (error) {
-        console.error("Failed to upload image to Supabase storage:", error);
-      } else {
-        console.log("Image successfully uploaded to Supabase storage:", data);
-        // Hier kannst du den Dateipfad des hochgeladenen Bildes in deinen Daten speichern
-        setInputs({ ...inputs, img: data.Key });
-      }
-    } catch (error) {
-      console.error("Error uploading image to Supabase storage:", error);
-    }
-  };
-
-  */
 
 
   const submitHandler = async (e) => {
@@ -218,14 +128,14 @@ const AddEntryForm = (props) => {
       
       const data = {
         name: inputs.name,
-        label: label,
+        label: inputs.label,
         entryId: uniqueID,
         title: inputs.title,
         entry: inputs.text,
         entryPath: formattedTitle + "-" + uniqueID,
         duration: inputs.duration,
         created_at: inputs.created_at,
-        //img: inputs.img,
+       
       };
 
       try {
@@ -303,7 +213,18 @@ const AddEntryForm = (props) => {
     return text.toLowerCase().replace(/\s+/g, "-");
   };
 
-
+  useEffect(() => {
+    if (currentSport && selectedSport) {
+      const foundSport = currentSport[0].find((obj) => obj.name === selectedSport);
+      console.log(foundSport)
+      if (foundSport) {
+        setInputs((prevInputs) => ({
+          ...prevInputs,
+          label: foundSport.color,
+        }));
+      }
+    }
+  }, [currentSport, selectedSport]);
 
   return (
     <form className=" my-2 p-2 flex flex-col" onSubmit={submitHandler}>

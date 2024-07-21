@@ -21,8 +21,6 @@ const AddSportForm = (props) => {
   const navigation = useSelector((state) => state.sport.navigation);
   const sports = useSelector((state) => state.sport.currentSport[0])
 
-  console.log(sports)
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +51,7 @@ const AddSportForm = (props) => {
     setColor(selectedColor);
   };
 
-  console.log(color)
+
 
 
   // Array mit Farben für die Buttons

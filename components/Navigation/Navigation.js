@@ -22,10 +22,10 @@ const Navigation = () => {
   //fetch all objects from supabase
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const alphabetic = allSupabaseSports ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort((a, b) => a.localeCompare(b)): [];
-  const sportObject = useSelector((state) => state.sport.currentSport[0]);
+  const sportObject = useSelector((state) => state.sport.currentSport && state.sport.currentSport.length > 0 ? state.sport.currentSport[0] : null);
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
 
-  //console.log(sportObject)
+  
 
 
  const uniqueLabels = allSupabaseSports
@@ -103,6 +103,14 @@ const Navigation = () => {
     }
   };
 
+
+  const currentSport = useSelector((state) => state.sport.currentSport)
+  //console.log(currentSport)
+
+  //console.log(sportObject);
+
+
+
   return (
     <div className="w-full p-0 flex flex-col items-center shadow-section">
       <h1 className={styles.title}>DASHBOARD</h1>
@@ -132,7 +140,7 @@ const Navigation = () => {
                     x
                   </button>
                   <span className={styles.sportBtnText}>{sport}</span>
-                  {sportObject.map((sportsObj) => {
+                  {sportObject && sportObject.map((sportsObj) => {
                     if (sportsObj.name === sport) {
                       return (
                         <div className={styles.circle_div}>

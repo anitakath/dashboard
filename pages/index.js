@@ -18,18 +18,18 @@ export default function Home() {
   const currentSport = useSelector((state) => state.sport.currentSport)
 
 
-  console.log(currentSport);
+  //console.log(currentSport);
     const addSportsToReduxStore = (arr) => {
       dispatch(setCurrentSport(arr));
     };
 
 
-  useEffect(() => {
-    if (currentSport.length > 1) {
-      const shortenedArray = [currentSport[0]];
-       console.log(shortenedArray);
-    }
-  }, [currentSport]);
+useEffect(() => {
+  if (currentSport && currentSport.length > 1) {
+    const shortenedArray = [currentSport[0]];
+    console.log(shortenedArray);
+  }
+}, [currentSport]);
 
 
   const fetchSportsData = async () => {
@@ -76,7 +76,7 @@ export default function Home() {
       }
   };
 
-  console.log(sports)
+  //console.log(sports)
 
 
   useEffect(()=>{
@@ -86,7 +86,7 @@ export default function Home() {
   
 
 
-  console.log(isLoggedIn)
+  //console.log(isLoggedIn)
   return (
     <div className="w-screen h-screen m-0 md:p-10">
       {!isLoggedIn && <Login />}

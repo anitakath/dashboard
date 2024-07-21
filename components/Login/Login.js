@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { setLogin } from "@/store/authReducer";
-
+import { useRouter } from "next/router";
 import styles from './Login.module.css'
 const Login = () =>{
+
+  const router = useRouter()
 
     const dispatch = useDispatch();
 
     const LoginHandler = () =>{
+      dispatch(setLogin(true))
 
-        dispatch(setLogin(true))
     }
 
 
