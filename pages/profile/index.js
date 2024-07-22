@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -13,29 +12,33 @@ import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";
 import { setLogout } from "@/store/authReducer";
+import { setSection } from "@/store/profileReducer";
+import styles from "../../styles/Profile.module.css";
 
-import styles from './Profile.module.css'
+//COMPONENTS
+import Plans from "@/components/Profile/Plans";
 
 const Profile = () => {
-
     const dispatch = useDispatch();
-
     const navigation = useSelector((state) => state.sport.navigation)
-
-
     const selectedSport = useSelector((state) => state.sport.selectedSport)
-
     const [profileSection, setProfileSection] = useState("sports")
     const [active, setActive] = useState(false)
-
-
     const router = useRouter();
+    const section = useSelector((state) => state.profile.section)
+  
+
+
+    useEffect(()=>{
+      dispatch(setSection(section))
+      setProfileSection(section);
+
+    }, [section])
     
 
 
     const chooseSportHandler = (index) => {
       const selectedSport = navigation[index];
-
       dispatch(setSelectedSport(selectedSport));
       router.push("/")
     };
@@ -52,7 +55,6 @@ const Profile = () => {
     }
 
     const logoutHandler = () =>{
-      console.log('logging out')
       dispatch(setLogout(false))
     }
 
@@ -78,7 +80,7 @@ const Profile = () => {
             </button>
           </div>
 
-          <div className="flex w-full  flex flex-wrap justify-center ">
+          <div className="flex w-full  flex flex-wrap justify-center">
             {profileSection === "sports" &&
               navigation &&
               navigation.map((sport, index) => (
@@ -94,8 +96,8 @@ const Profile = () => {
               ))}
 
             {profileSection === "plans" && (
-              <div className={styles.sport_div}>
-                <p> plans </p>
+              <div className={styles.plan_div}>
+                <Plans/>
               </div>
             )}
 

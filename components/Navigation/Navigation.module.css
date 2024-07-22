@@ -109,6 +109,7 @@
 
 .trash_icon{
     color: lightgrey;
+    margin-left: 8px;
 }
 
 .trash_icon:hover{
@@ -140,7 +141,7 @@
 }
 
 .sport_btn:hover .circle_div {
-    transform: translateX(-175px); /* Bewege die circle_div um 300px nach links */
+    transform: translateX(-245px); /* Bewege die circle_div um 300px nach links */
 }
 
 

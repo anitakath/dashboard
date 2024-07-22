@@ -100,7 +100,7 @@ const Entry = (props) => {
     });
   }
 
-  console.log(filteredEntries);
+
   // create a copy of filteredEntries, so filteredEntries is not mutated
 
   const sortedEntries = Array.isArray(filteredEntries) ? [...filteredEntries] : [];

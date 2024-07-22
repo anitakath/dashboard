@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 //STYLES
@@ -14,8 +14,8 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
-import { setLogout } from "@/store/authReducer";
 import { setSelectedSport } from "@/store/sportReducer";
+import { setSection } from "@/store/profileReducer";
 //COMPONENTS
 import Calendar from "./Calendar";
 import Entry from "./Entry";
@@ -32,15 +32,15 @@ const Board = (props) => {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
   const actualMonth = actualMonthIndex + 1;
-
   const filteredByDate = filteredEntries.filter((entry) => {
-    const entryDate = new Date(entry.created_at);
-    const entryYear = entryDate.getFullYear();
-    const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
+  const entryDate = new Date(entry.created_at);
+  const entryYear = entryDate.getFullYear();
+  const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
 
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
 
+  const router = useRouter()
   const dispatch = useDispatch();
 
 
@@ -67,16 +67,23 @@ const Board = (props) => {
      useEffect(()=> {
 
        if(navigation.includes(currentSport)){
-         console.log(`${currentSport} exists`)
+         //console.log(`${currentSport} exists`)
        } else{
-         console.log(`${currentSport} does not exist`);
+        // console.log(`${currentSport} does not exist`);
          dispatch(setSelectedSport(navigation[0]))
        }
 
 
      }, [navigation])
 
-     console.log(filteredEntries);
+
+
+
+
+     const navigateToSportPlanHandler = () =>{
+      dispatch(setSection("plans"));
+      router.push("/profile")
+     }
 
 
   return (
@@ -146,8 +153,14 @@ const Board = (props) => {
                 </button>
               )}
 
-              <button className={styles.plannedSports_btn}> 
-                <FontAwesomeIcon icon={faCalendar} className={styles.calendar_icon} />
+              <button
+                className={styles.plannedSports_btn}
+                onClick={navigateToSportPlanHandler}
+              >
+                <FontAwesomeIcon
+                  icon={faCalendar}
+                  className={styles.calendar_icon}
+                />
                 planned sports units
               </button>
 

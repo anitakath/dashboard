@@ -37,6 +37,8 @@
 .date_picker{
   cursor: pointer;
 }
+
+
 .date_picker:focus{
   outline: none;
   border: none;
@@ -56,6 +58,7 @@
   color:var(--purpleDark);
   height: 50px;
   transition: 0.2s ease;
+  border-top: 1px solid var(--purpleDark);
 }
 
 .submit_btn:hover{

@@ -10,6 +10,7 @@ import sportReducer from "./sportReducer";
 import CalendarReducer from "./CalendarReducer";
 import navigationReducer from "./navigationReducer";
 import authReducer from "./authReducer";
+import profileReducer from "./profileReducer";
 // Hier kannst du deine Reducer importieren
 // import sportReducer from './reducers/sportReducer';
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   calendar: CalendarReducer,
   navigation: navigationReducer,
   auth: authReducer,
+  profile: profileReducer
 });
 
 const persistConfig = {

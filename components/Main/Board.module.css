@@ -5,8 +5,8 @@
 .add_entry_btn{
     color: var(--purpleDarkHover);
     font-size: 1.3rem;
-    margin: 20px 0px 10px 0px;
-    padding: 10px 5px;
+    margin: 20px 5px 10px 0px;
+    padding: 10px;
     cursor: pointer;
     transition: 0.2s ease;
     width: 150px;
@@ -25,6 +25,27 @@
 }
 
 
+.plannedSports_btn{
+  font-size: 1.3rem;
+  margin: 20px 0px 10px 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: var(--purpleDarkHover);
+}
+
+
+.plannedSports_btn:hover, .add_entry_btn:hover{
+    color: beige; 
+    background-color: var(--purpleDarkHover);
+}
+
+.calendar_icon{
+  margin: 0px 8px;
+  color: lightgrey;
+}
+
+
 .entryField {
   padding: 1rem; 
   position: relative; 
@@ -36,22 +57,8 @@
   overflow-y: scroll;
 }
 
-.calendar_icon{
-  margin: 0px 8px;
-  color: lightgrey;
-}
-
-.plannedSports_btn{
-  padding: 3px;
-  font-size: 1.2rem;
-  margin: 0px 5px;
-  color: var(--purpleDarkHover);
-}
 
 
-.plannedSports_btn:hover{
-  border-bottom: 2px solid var(--purpleDarkHover);
-}
 
 .logout_btn{
   color: grey;

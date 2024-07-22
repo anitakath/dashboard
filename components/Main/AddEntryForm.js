@@ -259,26 +259,19 @@ const AddEntryForm = (props) => {
         onBlur={() => blurHandler("text")}
         onChange={changeHandler}
       ></input>
-      <div className={styles.date_div}>
-        <input
-          type="datetime-local"
-          value={inputs.created_at}
-          onChange={(e) => setInputs({ ...inputs, created_at: e.target.value })}
-          className={styles.date_picker}
-        />
 
-        
-      </div>
+      <div className="flex items-center justify-evenly">
+        <div className={styles.date_div}>
+          <input
+            type="datetime-local"
+            value={inputs.created_at}
+            onChange={(e) =>
+              setInputs({ ...inputs, created_at: e.target.value })
+            }
+            className={styles.date_picker}
+          />
+        </div>
 
-      <div className="h-8">
-        {isTouched.text && !validateText(inputs.text) && (
-          <p className={styles.errorText}>
-            Text must be between 5 and 400 characters
-          </p>
-        )}
-      </div>
-
-      <div className={styles.duration_div}>
         <label className={styles.labels}> Duration </label>
         <input
           type="number"
@@ -290,56 +283,20 @@ const AddEntryForm = (props) => {
           onBlur={() => blurHandler("duration")}
           onChange={changeHandler}
         ></input>
-
-        <label className={styles.labels}>Emotion</label>
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="emotion"
-              value="sad"
-              checked={emotion === "sad"}
-              onChange={handleEmotionChange}
-            />
-            😢 Traurig
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="emotion"
-              value="neutral"
-              checked={emotion === "neutral"}
-              onChange={handleEmotionChange}
-            />
-            😐 Neutral
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="emotion"
-              value="happy"
-              checked={emotion === "happy"}
-              onChange={handleEmotionChange}
-            />
-            😄 Lachend
-          </label>
-        </div>
       </div>
 
-      <label className={styles.labels}> Image </label>
-      <input
-        type="file"
-        name="img"
-        onChange={handleFileChange}
-        className={styles.inputs}
-      ></input>
-      <button onClick={handleUpload}> go </button>
+      <div className="h-8">
+        {isTouched.text && !validateText(inputs.text) && (
+          <p className={styles.errorText}>
+            Text must be between 5 and 400 characters
+          </p>
+        )}
+      </div>
+
+     
+
+  
+  
 
       <button type="submit" className={styles.submit_btn}>
         submit

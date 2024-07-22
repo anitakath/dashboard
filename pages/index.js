@@ -42,12 +42,10 @@ useEffect(() => {
           throw new Error("Failed to fetch sports data");
         }
         const data = await response.json();
-        console.log(data);
+
         if (data) {
           // Neues Set erstellen, um eindeutige Kombinationen von name und label zu speichern
           const uniqueSet = new Set();
-
-          console.log(uniqueSet);
 
           // Filtere das Supabase-Array, um nur ein einziges Objekt für jede eindeutige Kombination von name und label zu erhalten
           const uniqueSportsArray = data.data.filter((obj) => {
@@ -58,7 +56,7 @@ useEffect(() => {
             }
             return false;
           });
-          console.log(uniqueSet);
+  
 
           // Erstelle das neue Array mit den gewünschten Eigenschaften
           const sportsArray = uniqueSportsArray.map((obj) => ({
