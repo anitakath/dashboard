@@ -127,16 +127,20 @@ const renderRestDays = () => {
       <h1 className="text-2xl  border-b-2 my-2">
         Summary: <span className={styles.summary_span}>{selectedSport}</span>
       </h1>
+
       <button className={styles.diagram_allSports}>
         each sport in a diagram
       </button>
+
       <button
         className={styles.summary_allSports}
         onClick={summarizeAllHandler}
       >
         summary of all sports
       </button>
-      <div className="absolute right-6 top-4 p-2 flex items-center">
+
+
+      <div className="absolute right-6 top-6 p-2  items-center flex">
         <p className="text-xs">choose year</p>
         <select
           name="year"
@@ -159,9 +163,6 @@ const renderRestDays = () => {
         <button className=" text-xl my-2">
           <FontAwesomeIcon icon={faChevronRight} className={styles.chevron} />
         </button>
-        <p className="ml-10 w-full text-2xl">
-          <span className="text-xs ">selected year:</span> {selectedYear}{" "}
-        </p>
       </div>
 
       <div className="my-4 p-0 grid grid-cols-3 gap-1 border-4">

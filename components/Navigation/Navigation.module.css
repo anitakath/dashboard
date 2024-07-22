@@ -54,19 +54,19 @@
     transition: 0.2s ease;
     cursor: pointer;
     color: var(--purpleDark);
-    
+    position: relative; 
+    z-index: 100;
+    overflow: hidden;
 }
 
-.sport_btn:hover{
-    background: var(--purpleDarkHover);
-    color: beige;
+.sport_btn:hover{ 
     overflow: hidden;
 }
 
 
 
 .addSport_btn{
-    width: 60px;
+    width: 50px;
     height: 60px;
     padding: 0;
     margin: 0;
@@ -77,14 +77,17 @@
     margin: 10px 0px;
     font-size: 2rem;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     
 }
 
 .addSport_btn:hover{
-    color: white;
+    color: black;
     cursor: pointer;
-    background: var(--purpleDark);
-
+    font-size: 3rem;
 }
 
 .active{
@@ -115,88 +118,37 @@
 
 
 
-.fandango{
-    background: var(--fandango);
-}
-
-.celeste{
-    background: var(--celeste);
-}
-
-.springGreen{
-    background: var(--springGreen);
-}
-
-.sinopia{
-    background: var(--sinopia);
-}
-
-.lightOrange{
-    background: var(--lightOrange);
-}
-
-.wenge{
-    background: var(--wenge);
-}
-
-.spaceCadet{
-    background: var(--spaceCadet);
-}
-
-.mauve{
-    background: var(--mauve)
-}
-
-.aquamarine{
-    background: var(--aquamarine)
-}
-
-.mandarine{
-    background: var(--mandarine)
-}
-
-.brown{
-    background: var(--brown)
-}
-
-.mustard{
-    background: var(--mustard);
-}
-
-
-.jasmine{
-    background: var(--jasmine)
-}
 
 .sportBtnText{
     z-index: 100000;
+    max-width: 150px;
 }
 
 
 .circle_div{
-    width: 100%;
     position: absolute;
-    height: 100%;
+    right: -60px;
+    top: 5.5px;
+    width:  100px;
+    height:40px;
     display: flex;
+    justify-content: center;
     align-items: center;
     z-index: 10;
+    transition: transform 0.5s ease;
+
     
 }
 
-
-.sport_btn:hover + .circle_background{
-    background: transparent;
+.sport_btn:hover .circle_div {
+    transform: translateX(-175px); /* Bewege die circle_div um 300px nach links */
 }
 
 
-
 .circle{
-    width: 15px;
-    height: 15px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    margin-left: 10px;
-    position: absolute;
-    right: 50px;
     bottom: 27.5px;
 }
 
@@ -207,10 +159,17 @@
 }
 
 
+@media screen and (max-width: 1400px){
+      .sport_btn{
+
+      }
+}
+
 @media screen and (max-width: 1300px){
 
     .title{
         display: none;
+        
     
     }
 
@@ -223,7 +182,6 @@
     }
 
     .sort{
-        border: 2px solid green;
         display: none;
     }
 
@@ -258,3 +216,56 @@
     }
 }
 
+
+.spaceCadet{
+    background: var(--spaceCadet);
+}
+
+.mauve{
+    background: var(--mauve)
+}
+
+.aquamarine{
+    background: var(--aquamarine)
+}
+
+.mandarine{
+    background: var(--mandarine)
+}
+
+.brown{
+    background: var(--brown)
+}
+
+.mustard{
+    background: var(--mustard);
+}
+
+
+.jasmine{
+    background: var(--jasmine)
+}
+
+.fandango{
+    background: var(--fandango);
+}
+
+.celeste{
+    background: var(--celeste);
+}
+
+.springGreen{
+    background: var(--springGreen);
+}
+
+.sinopia{
+    background: var(--sinopia);
+}
+
+.lightOrange{
+    background: var(--lightOrange);
+}
+
+.wenge{
+    background: var(--wenge);
+}
