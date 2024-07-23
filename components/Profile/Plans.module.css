@@ -1,7 +1,7 @@
 
 
 .container{
-    width: 100%;
+    width: 80%;
 }
 
 
@@ -24,6 +24,7 @@
     justify-content: center;
     align-items: center;
     padding: 5px;
+    width: 100%;
 }
 
 
@@ -34,6 +35,7 @@
     cursor: pointer;
     transition: 0.2s ease;
     font-size: 1.3rem;
+    
 }
 
 .sport_buttons:hover{
@@ -48,121 +50,24 @@
     padding: 5px; 
 }
 
+.sport_entry_title_div{
+    width: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin-left: 0.5px;
 
 
-.fandango{
-    background: var(--fandango);
-}
-
-.fandago_title{
-    color: var(--fandango)
-}
-
-.celeste{
-    background: var(--celeste);
-}
-
-.celeste_title{
-    color: var(--celeste);
-}
-
-.springGreen{
-    background: var(--springGreen);
-}
-
-.springGreen_title{
-    color: var(--springGreen);
-}
-
-.sinopia{
-    background: var(--sinopia);
-}
-
-.sinopia_title{
-    color: var(--sinopia);
-}
-
-.lightOrange{
-    background: var(--lightOrange);
-}
-
-.lightOrange_title{
-    color: var(--lightOrange);
-}
-
-.wenge{
-    background: var(--wenge);
-}
-
-.wenge_title{
-    color: var(--wenge);
-}
-
-.spaceCadet{
-    background: var(--spaceCadet);
-}
-
-.spaceCadet_title{
-    color: var(--spaceCadet);
-}
-
-.mauve{
-    background: var(--mauve)
-}
-
-.mauve_title{
-    color: var(--mauve)
-}
-
-.aquamarine{
-    background: var(--aquamarine)
-}
-
-.aquamarine_title{
-    color: var(--aquamarine)
-}
-
-.mandarine{
-    background: var(--mandarine)
-}
-
-.mandarine_title{
-    color: var(--mandarine)
 }
 
 
-.brown{
-    background: var(--brown)
-}
 
-.brown_title{
-    color: var(--brown)
-}
-
-.mustard{
-    background: var(--mustard);
-}
-
-.mustard_title{
-    color: var(--mustard);
-}
-
-
-.jasmine{
-    background: var(--jasmine)
-}
-
-.jasmine_title{
-    color: var(--jasmine)
-}
 
 .sport_entry_name{
-    width: 200px;
-    padding: 5px;
-    position: relative;
-    left: -5px;
+    width: 150px;
+    padding: 15px;
+   
     margin-right: 5px;
-    border-radius: 2px;
     background: var(--purpleDarkHover);
 
 }
@@ -172,6 +77,16 @@
     right: 5px;
     top: -3px;
     font-size: 1.1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sport_entry_duration{
+    position: absolute;
+    right: 0;
+    top: 30px;
 }
 
 .action_btns{
@@ -193,3 +108,141 @@
 .check_icon{
     color: green;
 }
+
+.sport_entry_name{
+    min-width: 150px;
+    padding: 15px;
+    margin-right: 5px;
+    background: var(--purpleDarkHover);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: linear-gradient(to right, var(--purpleDarkHoverOpacity), transparent);
+}
+
+
+
+.sport_entry_title{
+    height: 100%;
+    margin: 0px 20px;
+    font-size: 1.3rem;
+}
+
+.fandango_bg {
+    background: linear-gradient(to right, transparent, var(--fandango));
+}
+
+.celeste_bg {
+    background: linear-gradient(to right, transparent, var(--celeste));
+}
+
+.springGreen_bg {
+    background: linear-gradient(to right, transparent, var(--springGreen));
+}
+
+.sinopia_bg {
+    background: linear-gradient(to right, transparent, var(--sinopia));
+}
+
+.lightOrange_bg {
+    background: linear-gradient(to right, transparent, var(--lightOrange));
+}
+
+.wenge_bg {
+    background: linear-gradient(to right, transparent, var(--wenge));
+}
+
+.spaceCadet_bg {
+    background: linear-gradient(to right, transparent, var(--spaceCadet));
+}
+
+.mauve_bg {
+    background: linear-gradient(to right, transparent, var(--mauve));
+}
+
+.aquamarine_bg {
+    background: linear-gradient(to right, transparent, var(--aquamarine));
+}
+
+.mandarine_bg{
+    background: linear-gradient(to right, transparent, var(--mandarine));
+}
+
+.brown_bg{
+    background: linear-gradient(to right, transparent, var(--brown));
+}
+
+.mustard_bg {
+    background: linear-gradient(to right, transparent, var(--mustard));
+}
+
+.jasmine_bg {
+    background: linear-gradient(to right, transparent, var(--jasmine));
+}
+
+
+
+
+
+.fandango{
+    background: var(--fandango);
+}
+
+
+
+.celeste{
+    background: var(--celeste);
+}
+
+
+.springGreen{
+    background: var(--springGreen);
+}
+
+
+.sinopia{
+    background: var(--sinopia);
+}
+
+.lightOrange{
+    background: var(--lightOrange);
+}
+
+.wenge{
+    background: var(--wenge);
+}
+
+
+.spaceCadet{
+    background: var(--spaceCadet);
+}
+
+
+.mauve{
+    background: var(--mauve)
+}
+
+
+.aquamarine{
+    background: var(--aquamarine)
+}
+
+
+
+.mandarine{
+    background: var(--mandarine)
+}
+
+.brown{
+    background: var(--brown)
+}
+
+
+.mustard{
+    background: var(--mustard);
+}
+
+
+.jasmine{
+    background: var(--jasmine)
+}
+

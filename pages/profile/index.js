@@ -28,9 +28,6 @@ const Profile = () => {
     const section = useSelector((state) => state.profile.section)
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
-    console.log(isLoggedIn)
-  
-
 
     useEffect(()=>{
       dispatch(setSection(section))
@@ -113,7 +110,7 @@ const Profile = () => {
               )}
             </div>
             <div className="flex justify-center my-4">
-              <button className="pointer" onClick={logoutHandler}>
+              <button className={styles.logout_btn} onClick={logoutHandler}>
                 <Image
                   src="/power-off.png"
                   alt="Power Off Icon"

@@ -11,19 +11,23 @@ const profileSlice = createSlice({
       state.section = action.payload;
     },
     setSportsArray(state, action) {
-        console.log("Current state:", state); // Debugging-Ausgabe
-        console.log("Action payload:", action.payload); // Debugging-Ausgabe
-
-        if (action.payload) {
-          if (!state.sportsArray) {
-            console.error("sportsArray is undefined!"); // Fehlerausgabe
-          } else {
-            state.sportsArray.push(action.payload);
-          }
+      if (action.payload) {
+        if (!state.sportsArray) {
+          console.error("sportsArray is undefined!"); // Fehlerausgabe
+        } else {
+          state.sportsArray.push(action.payload);
         }
+      }
+    },
+    removeSport(state, action) {
+      // Neue Action zum Entfernen eines Sports
+      const entryIdToRemove = action.payload; // Erwarte die entryId des zu löschenden Sports
+      state.sportsArray = state.sportsArray.filter(
+        (sport) => sport.entryId !== entryIdToRemove
+      );
     },
   },
 });
 
 export default profileSlice.reducer;
-export const { setSection, setSportsArray } = profileSlice.actions;
+export const { setSection, setSportsArray, removeSport } = profileSlice.actions;

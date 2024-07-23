@@ -45,3 +45,8 @@
 .active p{
     font-size: 1.3rem;
 }
+
+.logout_btn{
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
