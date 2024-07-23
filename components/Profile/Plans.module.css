@@ -48,7 +48,11 @@
     width: 100%;
     margin: 10px 5px;
     padding: 5px; 
+    background: linear-gradient(to right, var(--purpleDarkHoverOpacity), transparent);
 }
+
+
+
 
 .sport_entry_title_div{
     width: 100%;
@@ -94,9 +98,13 @@
     height: 40px;
     margin: 0px 10px;
     font-size: 1.2rem;
-    background: var(--purpleUltraLight);
+    background: rgba(255,255,255, 0.3);
     transition: 0.2s ease;
     border-radius: 50%;
+}
+
+.action_btns:hover{
+    background: rgba(255,255,255, 0.7);
 }
 
 
@@ -114,10 +122,13 @@
     padding: 15px;
     margin-right: 5px;
     background: var(--purpleDarkHover);
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background: linear-gradient(to right, var(--purpleDarkHoverOpacity), transparent);
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+
 }
+
+
+
 
 
 

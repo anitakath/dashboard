@@ -39,7 +39,7 @@ const Plans = () =>{
 
   const sortedSportsArray = sportsArray
     ?.slice()
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
   const deleteSportHandler = (sport) => {
     // Bestätigungsdialog anzeigen
@@ -143,14 +143,18 @@ const Plans = () =>{
             <p className="text-xl my-2 "> your entries </p>
             {sortedSportsArray &&
               sortedSportsArray.map((sport) => (
-                <div key={sport.entryId} className={styles.sport_entry_div}>
+                <div
+                  key={sport.entryId}
+                  className={`${styles.sport_entry_div} ${
+                    styles[sport.label + "_bg"]
+                  }`}
+                >
                   <div>
                     <div className="relative flex justify-center items-center">
                       <div className={styles.sport_entry_title_div}>
                         <div
-                          className={`${styles.sport_entry_name} ${
-                            styles[sport.label + "_bg"]
-                          }`}
+                          className={`${styles.sport_entry_name} ${styles[sport.label + "_bg"]
+                  }`}
                         >
                           <h3>{sport.name}</h3>
                         </div>
