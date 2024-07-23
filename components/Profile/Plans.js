@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import ReactModal from 'react-modal';
+
+
 //STYLES 
 import styles from './Plans.module.css'
 //FONT AWESOME
@@ -9,12 +12,15 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 //COMPONENTS
 import AddEntryForm from '../Main/AddEntryForm';
 import AddSportForm from '../Navigation/AddSportForm';
+import EditEntry from "./EditEntry";
 //REDUX 
 import { useSelector, useDispatch } from 'react-redux';
-import { removeSport } from '@/store/profileReducer';
+import { removeSport, replaceSportsArray } from "@/store/profileReducer";
 //CUSTOM HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
 import { supabase } from '@/services/supabaseClient';
+
+
 
 
 const Plans = () =>{
@@ -25,6 +31,11 @@ const Plans = () =>{
   const [sportsArray, setSportsArray] = useState(
     useSelector((state) => state.profile.sportsArray)
   ); 
+  const [sortedSportsArray, setSortedSportsArray] = useState(
+    sportsArray
+      ?.slice()
+      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+  );
   const dispatch = useDispatch()
 
   const addSportHandler = () => {
@@ -37,9 +48,7 @@ const Plans = () =>{
     setChosenSport(e.currSport);
   };
 
-  const sortedSportsArray = sportsArray
-    ?.slice()
-    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
 
   const deleteSportHandler = (sport) => {
     // Bestätigungsdialog anzeigen
@@ -89,20 +98,67 @@ const Plans = () =>{
     }
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentSport, setCurrentSport] = useState(null);
+
   const editSportHandler = (sport) =>{
-    console.log('to be edited')
-    //map through sortedSportsArray an filter the clicked object.
-    // open a Modal, in which every key of the object is displayed and
-    // give the user the opportunity to edit every objects key.
+    console.log('workout to be edited')
+    setCurrentSport(sport);
+    setIsModalOpen(true);
 
   }
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentSport((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  console.log(currentSport)
+
+  const saveChanges = () => {
+    if (!currentSport) return; // Überprüfen, ob currentSport gesetzt ist
+
+    // Funktion zum Ersetzen des Objekts in einem Array
+    const replaceObjectInArray = (array, currentSport) => {
+        return array.map(item => {
+            if (item.entryId === currentSport.entryId) {
+                return currentSport; // Ersetze das Objekt durch currentSport
+            }
+            return item; // Behalte das ursprüngliche Objekt bei
+        }).filter(item => item !== null); // Filtere eventuell null-Werte heraus
+    };
+
+    // Aktualisiere beide Arrays
+    const updatedSortedSportsArray = replaceObjectInArray(sortedSportsArray, currentSport);
+    const updatedSportsArray = replaceObjectInArray(sportsArray, currentSport);
+
+    // Setze die aktualisierten Arrays in den State
+    setSortedSportsArray(updatedSortedSportsArray);
+    setSportsArray(updatedSportsArray);
+    console.log(updatedSportsArray)
+    console.log(sportsArray);
+    dispatch(replaceSportsArray(updatedSortedSportsArray));
+
+    // Schließe das Modal nach dem Speichern der Änderungen
+    setIsModalOpen(false);
+};
+ 
 
 
 
 
   return (
     <div className="flex-col justify-center items-center">
+      
+      <EditEntry 
+        isModalOpen={isModalOpen} 
+        currentSport={currentSport} 
+        saveChanges={saveChanges}
+        handleInputChange={handleInputChange}/>
+
       <div className="flex justify-center h-16 items-center relative">
         <button className={styles.addSport_btn} onClick={addSportHandler}>
           {addSportBtnText}
@@ -153,8 +209,9 @@ const Plans = () =>{
                     <div className="relative flex justify-center items-center">
                       <div className={styles.sport_entry_title_div}>
                         <div
-                          className={`${styles.sport_entry_name} ${styles[sport.label + "_bg"]
-                  }`}
+                          className={`${styles.sport_entry_name} ${
+                            styles[sport.label]
+                          }`}
                         >
                           <h3>{sport.name}</h3>
                         </div>

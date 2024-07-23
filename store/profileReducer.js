@@ -10,7 +10,7 @@ const profileSlice = createSlice({
     setSection(state, action) {
       state.section = action.payload;
     },
-    setSportsArray(state, action) {
+    setSportsArrayy(state, action) {
       if (action.payload) {
         if (!state.sportsArray) {
           console.error("sportsArray is undefined!"); // Fehlerausgabe
@@ -18,6 +18,9 @@ const profileSlice = createSlice({
           state.sportsArray.push(action.payload);
         }
       }
+    },
+    replaceSportsArray(state, action){
+      state.sportsArray = action.payload;
     },
     removeSport(state, action) {
       // Neue Action zum Entfernen eines Sports
@@ -30,4 +33,4 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const { setSection, setSportsArray, removeSport } = profileSlice.actions;
+export const { setSection, setSportsArrayy, removeSport, replaceSportsArray } = profileSlice.actions;

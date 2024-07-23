@@ -6,7 +6,7 @@ import styles from "./AddEntryForm.module.css";
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-import { setSportsArray } from "@/store/profileReducer";
+import { setSportsArrayy } from "@/store/profileReducer";
 
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
@@ -135,7 +135,7 @@ const AddEntryForm = (props) => {
        console.log(data)
 
        if(data){
-         dispatch(setSportsArray(data));
+         dispatch(setSportsArrayy(data));
        }
       return
     } else{
