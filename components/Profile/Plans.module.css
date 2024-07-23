@@ -1,5 +1,195 @@
 
 
 .container{
+    width: 100%;
+}
+
+
+.addSport_btn{
+    color: var(--purpleDarkHover);
+    font-size: 1.5rem;
+}
+
+.home_link{
+    position: absolute;
+    left:10px;
+    color: lightgrey;
+    font-size: 1.2rem;
+}
+
+
+.form_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+
+.sport_buttons{
+    width: 100%;
+    margin: 5px 0px;
+    height: 40px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 1.3rem;
+}
+
+.sport_buttons:hover{
+    box-shadow: 0px 0px 10px grey;
+}
+
+
+.sport_entry_div{
+    background: var(--purpleDarkHoverOpacity);
+    width: 100%;
+    margin: 10px 5px;
+    padding: 5px; 
+}
+
+
+
+.fandango{
+    background: var(--fandango);
+}
+
+.fandago_title{
+    color: var(--fandango)
+}
+
+.celeste{
+    background: var(--celeste);
+}
+
+.celeste_title{
+    color: var(--celeste);
+}
+
+.springGreen{
+    background: var(--springGreen);
+}
+
+.springGreen_title{
+    color: var(--springGreen);
+}
+
+.sinopia{
+    background: var(--sinopia);
+}
+
+.sinopia_title{
+    color: var(--sinopia);
+}
+
+.lightOrange{
+    background: var(--lightOrange);
+}
+
+.lightOrange_title{
+    color: var(--lightOrange);
+}
+
+.wenge{
+    background: var(--wenge);
+}
+
+.wenge_title{
+    color: var(--wenge);
+}
+
+.spaceCadet{
+    background: var(--spaceCadet);
+}
+
+.spaceCadet_title{
+    color: var(--spaceCadet);
+}
+
+.mauve{
+    background: var(--mauve)
+}
+
+.mauve_title{
+    color: var(--mauve)
+}
+
+.aquamarine{
+    background: var(--aquamarine)
+}
+
+.aquamarine_title{
+    color: var(--aquamarine)
+}
+
+.mandarine{
+    background: var(--mandarine)
+}
+
+.mandarine_title{
+    color: var(--mandarine)
+}
+
+
+.brown{
+    background: var(--brown)
+}
+
+.brown_title{
+    color: var(--brown)
+}
+
+.mustard{
+    background: var(--mustard);
+}
+
+.mustard_title{
+    color: var(--mustard);
+}
+
+
+.jasmine{
+    background: var(--jasmine)
+}
+
+.jasmine_title{
+    color: var(--jasmine)
+}
+
+.sport_entry_name{
+    width: 200px;
+    padding: 5px;
+    position: relative;
+    left: -5px;
+    margin-right: 5px;
+    border-radius: 2px;
     background: var(--purpleDarkHover);
+
+}
+
+.sport_entry_date{
+    position: absolute;
+    right: 5px;
+    top: -3px;
+    font-size: 1.1em;
+}
+
+.action_btns{
+    width: 40px;
+    height: 40px;
+    margin: 0px 10px;
+    font-size: 1.2rem;
+    background: var(--purpleUltraLight);
+    transition: 0.2s ease;
+    border-radius: 50%;
+}
+
+
+
+.delete_icon{
+    color: red;
+}
+
+.check_icon{
+    color: green;
 }

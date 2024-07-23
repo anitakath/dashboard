@@ -1,28 +1,28 @@
 import { useEffect, useState } from "react";
-
+import { useRouter } from "next/router";
 //STYLES
 import styles from "./AddEntryForm.module.css";
 
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-
+import { setSportsArray } from "@/store/profileReducer";
 
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
-import { current } from "@reduxjs/toolkit";
 
 
 const AddEntryForm = (props) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const currentSport = useSelector((state) => state.sport.currentSport)
-
-
   const setFormIsOpen = props.setFormIsOpen;
+  const currentPath = router.pathname;
+  const chosenSport = props.chosenSport;
+  console.log(currentPath)
 
 
   let label = "";
@@ -92,12 +92,7 @@ const AddEntryForm = (props) => {
   }, [])
 
 
-   const [emotion, setEmotion] = useState("");
-
-   const handleEmotionChange = (e) => {
-     setEmotion(e.target.value);
-   };
-
+  
 
 
   const handleUpload = async () => {
@@ -119,59 +114,84 @@ const AddEntryForm = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (validateTitle(inputs.title) && validateText(inputs.text)) {
-      // Hier kannst du die Daten überprüfen und weiterverarbeiten
-      // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
+    if(currentPath === "/profile"){
+      console.log('you are on profile page')
+       const formattedTitle = formatText(inputs.title);
+       const uniqueID = uuidv4();
 
-      const formattedTitle = formatText(inputs.title)
-      const uniqueID = uuidv4();
-      
-      const data = {
-        name: inputs.name,
-        label: inputs.label,
-        entryId: uniqueID,
-        title: inputs.title,
-        entry: inputs.text,
-        entryPath: formattedTitle + "-" + uniqueID,
-        duration: inputs.duration,
-        created_at: inputs.created_at,
-       
-      };
+       console.log(chosenSport);
 
-      try {
-        const { data: newSport, error } = await supabase
-          .from("sports")
-          .insert([data]);
+       const data = {
+         name: chosenSport.name,
+         label: chosenSport.color,
+         entryId: uniqueID,
+         title: inputs.title,
+         entry: inputs.text,
+         entryPath: formattedTitle + "-" + uniqueID,
+         duration: inputs.duration,
+         created_at: inputs.created_at,
+       };
 
-        if (error) {
-          console.error("Failed to insert data into Supabase table:", error);
-        } else {
-          console.log(
-            "Data successfully inserted into Supabase table:",
-            newSport
-          );
-          fetchSportsData()
-        }
-      } catch (error) {
-        console.error("Error inserting data into Supabase table:", error);
-      }
+       console.log(data)
 
-      setSuccessMessage(true);
-   
+       if(data){
+         dispatch(setSportsArray(data));
+       }
+      return
+    } else{
+      if (validateTitle(inputs.title) && validateText(inputs.text)) {
+        // Hier kannst du die Daten überprüfen und weiterverarbeiten
+       // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
 
-      setTimeout(() => {
-        setSuccessMessage(false);
-      }, 5000);
+         const formattedTitle = formatText(inputs.title);
+         const uniqueID = uuidv4();
+
+         const data = {
+           name: inputs.name,
+           label: inputs.label,
+           entryId: uniqueID,
+           title: inputs.title,
+           entry: inputs.text,
+           entryPath: formattedTitle + "-" + uniqueID,
+           duration: inputs.duration,
+           created_at: inputs.created_at,
+         };
+
+         try {
+           const { data: newSport, error } = await supabase
+             .from("sports")
+             .insert([data]);
+
+           if (error) {
+             console.error("Failed to insert data into Supabase table:", error);
+           } else {
+             console.log(
+               "Data successfully inserted into Supabase table:",
+               newSport
+             );
+             fetchSportsData();
+           }
+         } catch (error) {
+           console.error("Error inserting data into Supabase table:", error);
+         }
+
+         setSuccessMessage(true);
+
+         setTimeout(() => {
+           setSuccessMessage(false);
+         }, 5000);
+
+         setFormIsOpen(false);
+       } else {
+         setSuccessMessage(false);
+         console.log("Validation failed. Please check your input.");
+       }
 
 
-
-      setFormIsOpen(false)
-
-
-    } else {
-      setSuccessMessage(false);
-      console.log("Validation failed. Please check your input.");
     }
+
+
+   
   };
 
 
@@ -227,7 +247,7 @@ const AddEntryForm = (props) => {
   }, [currentSport, selectedSport]);
 
   return (
-    <form className=" my-2 p-2 flex flex-col" onSubmit={submitHandler}>
+    <form className="my-2 p-2 flex flex-col" onSubmit={submitHandler}>
       <label className={styles.labels}> Title </label>
       <input
         type="text"
