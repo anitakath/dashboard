@@ -39,7 +39,11 @@
 .active{
     background: var(--purpleDark);
     box-shadow: 0px 0px 5px grey;
-    
+}
+
+.activeSection{
+    color: var(--purpleDarkHover);
+    font-weight: bolder;
 }
 
 .active p{

@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import ReactModal from 'react-modal';
 
 
 //STYLES 
 import styles from './Plans.module.css'
 //FONT AWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faCheck, faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 //COMPONENTS
 import AddEntryForm from '../Main/AddEntryForm';
@@ -19,8 +18,6 @@ import { removeSport, replaceSportsArray } from "@/store/profileReducer";
 //CUSTOM HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
 import { supabase } from '@/services/supabaseClient';
-
-
 
 
 const Plans = () =>{
@@ -179,7 +176,7 @@ const Plans = () =>{
 
         <div className="w-full">
           {addSport && (
-            <div className="w-full  mx-2 flex">
+            <div className="w-full mx-2 flex">
               <div className="flex-col mx-2 w-6/12">
                 <h2 className="text-xl my-2 px-2"> choose your sport </h2>
                 {currentSports &&
@@ -212,75 +209,73 @@ const Plans = () =>{
           )}
         </div>
 
-        <div>
-
-          {!addSport && sportsArray != null && (
-            <div className={styles.container}>
-              <p className="text-xl my-2 "> your entries </p>
-              {sortedSportsArray &&
-                sortedSportsArray.map((sport) => (
-                  <div
-                    key={sport.entryId}
-                    className={`${styles.sport_entry_div} ${
-                      styles[sport.label + "_bg"]
-                    }`}
-                  >
-                    <div>
-                      <div className="relative flex justify-center items-center">
-                        <div className={styles.sport_entry_title_div}>
-                          <div
-                            className={`${styles.sport_entry_name} ${
-                              styles[sport.label]
-                            }`}
-                          >
-                            <h3>{sport.name}</h3>
-                          </div>
-                          <h3 className={styles.sport_entry_title}>
-                            - {sport.title} -
-                          </h3>
+        {!addSport && sportsArray != null && (
+          <div className={styles.container}>
+            <p className="text-xl my-2 w-full ml-14"> your entries </p>
+            {sortedSportsArray &&
+              sortedSportsArray.map((sport) => (
+                <div
+                  key={sport.entryId}
+                  className={`${styles.sport_entry_div} ${
+                    styles[sport.label + "_bg"]
+                  }`}
+                >
+                  <div>
+                    <div className="relative flex justify-center items-center">
+                      <div className={styles.sport_entry_title_div}>
+                        <div
+                          className={`${styles.sport_entry_name} ${
+                            styles[sport.label]
+                          }`}
+                        >
+                          <h3>{sport.name}</h3>
                         </div>
-
-                        <h3 className={styles.sport_entry_date}>
-                          {formatDate(sport.created_at)}
-                          <span className={styles.sport_entry_duration}>
-                            {sport.duration} min
-                          </span>
-                        </h3>
+                        
                       </div>
 
-                      <p className="m-2 border-l-4 p-2 min-h-24 border-rose-300">
-                        {sport.entry}
-                      </p>
+                      <h3 className={styles.sport_entry_date}>
+                        {formatDate(sport.created_at)}
+                        <span className={styles.sport_entry_duration}>
+                          {sport.duration} min
+                        </span>
+                      </h3>
                     </div>
 
-                    <div className=" flex justify-center m-2 p-1">
-                      <button className={styles.action_btns}>
-                        <FontAwesomeIcon
-                          icon={faXmark}
-                          className={styles.delete_icon}
-                          onClick={() => deleteSportHandler(sport)}
-                        />
-                      </button>
-                      <button className={styles.action_btns}>
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={styles.check_icon}
-                          onClick={() => checkSportHandler(sport)}
-                        />
-                      </button>
-                      <button className={styles.action_btns}>
-                        <FontAwesomeIcon
-                          icon={faPencil}
-                          className={styles.edit_icon}
-                          onClick={() => editSportHandler(sport)}
-                        />
-                      </button>
-                    </div>
+                    <h3 className={styles.sport_entry_title}>
+                      - {sport.title} -
+                    </h3>
+                    <p className="m-2 border-l-4 p-2 min-h-24 border-rose-300">
+                      {sport.entry}
+                    </p>
                   </div>
-                ))}
-            </div>
-          )}
-        </div>
+
+                  <div className=" flex justify-center m-2 p-1">
+                    <button className={styles.action_btns}>
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        className={styles.delete_icon}
+                        onClick={() => deleteSportHandler(sport)}
+                      />
+                    </button>
+                    <button className={styles.action_btns}>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={styles.check_icon}
+                        onClick={() => checkSportHandler(sport)}
+                      />
+                    </button>
+                    <button className={styles.action_btns}>
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        className={styles.edit_icon}
+                        onClick={() => editSportHandler(sport)}
+                      />
+                    </button>
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -129,10 +129,10 @@ const Navigation = () => {
                   </button>
                   <span className={styles.sportBtnText}>{sport}</span>
                   {sportObject &&
-                    sportObject.map((sportsObj) => {
+                    sportObject.map((sportsObj, index) => {
                       if (sportsObj.name === sport) {
                         return (
-                          <div className={styles.circle_div}>
+                          <div className={styles.circle_div} key={index}>
                             <div
                               className={`${styles.circle_background} ${
                                 styles[sportsObj.color]

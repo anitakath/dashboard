@@ -6,7 +6,7 @@ import Link from "next/link";
 
 //FONT AWeSOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
@@ -44,13 +44,7 @@ const Profile = () => {
     };
 
     const profileSectionHandler = (section) =>{
-      if(section === "sports"){
-        setProfileSection(section)
-      } else if(section === "plans"){
-        setProfileSection(section);
-      } else if(section === "settings"){
-        setProfileSection("settings")
-      }
+      setProfileSection(section);
 
     }
 
@@ -70,19 +64,39 @@ const Profile = () => {
           <div className="m-4 p-4 pl-14  w-full">
             <h1 className="text-2xl my-8"> your profile... </h1>
 
-            <div className=" text-xl flex mt-4 mb-4 justify-evenly">
+            <div className=" text-xl flex mt-4 mb-4 justify-evenly border-b pb-2">
               <button onClick={() => profileSectionHandler("sports")}>
-                <h2> Sports</h2>
+                <h2
+                  className={
+                    profileSection === "sports" ? styles.activeSection : ""
+                  }
+                >
+                  {" "}
+                  Sports
+                </h2>
               </button>
               <button onClick={() => profileSectionHandler("plans")}>
-                <h2> Plans </h2>
+                <h2
+                  className={
+                    profileSection === "plans" ? styles.activeSection : ""
+                  }
+                >
+                  {" "}
+                  Plans{" "}
+                </h2>
               </button>
               <button onClick={() => profileSectionHandler("settings")}>
-                <h2>Settings</h2>
+                <h2
+                  className={
+                    profileSection === "settings" ? styles.activeSection : ""
+                  }
+                >
+                  Settings
+                </h2>
               </button>
             </div>
 
-            <div className="flex w-full  flex flex-wrap justify-center">
+            <div className="flex w-full flex flex-wrap justify-center">
               {profileSection === "sports" &&
                 navigation &&
                 navigation.map((sport, index) => (
@@ -116,6 +130,7 @@ const Profile = () => {
                   alt="Power Off Icon"
                   width={50}
                   height={50}
+                  fetchpriority="eager"
                 />
               </button>
             </div>

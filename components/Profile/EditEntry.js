@@ -61,11 +61,11 @@ const EditEntry = ({
             Save Changes
           </button>
           <button
-            onClick={() => setIsModalOpen(false)}
+           
             className={styles.cancel_button}
           >
             Cancel
-          </button>{" "}
+          </button>
           {/* Stelle sicher, dass setIsModalOpen übergeben wird */}
         </div>
       </form>

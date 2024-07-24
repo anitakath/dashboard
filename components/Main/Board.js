@@ -16,6 +16,7 @@ import AddEntryForm from "./AddEntryForm";
 import { useSelector, useDispatch} from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";
 import { setSection } from "@/store/profileReducer";
+import { setLogout } from "@/store/authReducer";
 //COMPONENTS
 import Calendar from "./Calendar";
 import Entry from "./Entry";
@@ -53,18 +54,11 @@ const Board = (props) => {
 
 
 
+  const logoutHandler = () => {
+    dispatch(setLogout(false));
+  };
 
-
-
-     const logoutHandler = () => {
-       console.log("logging out");
-       dispatch(setLogout(false));
-     };
-
-
-
-
-     useEffect(()=> {
+  useEffect(()=> {
 
        if(navigation.includes(currentSport)){
          //console.log(`${currentSport} exists`)
@@ -113,6 +107,7 @@ const Board = (props) => {
             width={37}
             height={37}
             className={styles.logout_btn}
+            fetchpriority="eager"
           />
         </button>
 

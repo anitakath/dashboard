@@ -1,7 +1,10 @@
 
 
 .container{
-    width: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -52,7 +55,8 @@
 
 .sport_entry_div{
     background: var(--purpleDarkHoverOpacity);
-    width: 100%;
+    width: 95%;
+   /* border: 2px solid blue;*/
     margin: 10px 5px;
     padding: 5px; 
     background: linear-gradient(to right, var(--purpleDarkHoverOpacity), transparent);
@@ -135,14 +139,28 @@
 }
 
 
-
-
-
-
 .sport_entry_title{
     height: 100%;
-    margin: 0px 20px;
+    margin: 10px 20px;
     font-size: 1.3rem;
+}
+
+
+
+@media screen and (max-width: 1200px){
+    .container{
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 900px){
+
+    .sport_entry_div{
+        margin: 5px 2px;
+        width: 98%;
+    }
+
 }
 
 .fandango_bg {
