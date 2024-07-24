@@ -1,7 +1,7 @@
 
 
 .container{
-    width: 80%;
+    width: 100%;
 }
 
 
@@ -40,6 +40,13 @@
 
 .sport_buttons:hover{
     box-shadow: 0px 0px 10px grey;
+}
+
+.active{
+    border-radius: 5px;
+    transform: scale(1.02);
+    margin: 8px 0px;
+    border-bottom: 4px solid var(--purpleDarkHover);
 }
 
 

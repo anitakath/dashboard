@@ -22,7 +22,7 @@ const AddEntryForm = (props) => {
   const setFormIsOpen = props.setFormIsOpen;
   const currentPath = router.pathname;
   const chosenSport = props.chosenSport;
-  console.log(currentPath)
+  const [durationErrorMessage, setDurationErrorMessage] = useState(false)
 
 
   let label = "";
@@ -115,77 +115,97 @@ const AddEntryForm = (props) => {
     e.preventDefault();
 
     if(currentPath === "/profile"){
-      console.log('you are on profile page')
-       const formattedTitle = formatText(inputs.title);
-       const uniqueID = uuidv4();
+       if (
+        validateTitle(inputs.title) &&
+        validateText(inputs.text) &&
+        validateDuration(inputs.duration) && 
+        inputs.created_at != ""
+       ){
 
-       console.log(chosenSport);
+        setDurationErrorMessage(false);
+        const formattedTitle = formatText(inputs.title);
+        const uniqueID = uuidv4();
 
-       const data = {
-         name: chosenSport.name,
-         label: chosenSport.color,
-         entryId: uniqueID,
-         title: inputs.title,
-         entry: inputs.text,
-         entryPath: formattedTitle + "-" + uniqueID,
-         duration: inputs.duration,
-         created_at: inputs.created_at,
-       };
+        console.log(chosenSport);
 
-       console.log(data)
+        const data = {
+          name: chosenSport.name,
+          label: chosenSport.color,
+          entryId: uniqueID,
+          title: inputs.title,
+          entry: inputs.text,
+          entryPath: formattedTitle + "-" + uniqueID,
+          duration: inputs.duration,
+          created_at: inputs.created_at,
+        };
 
-       if(data){
-         dispatch(setSportsArrayy(data));
-       }
-      return
-    } else{
-      if (validateTitle(inputs.title) && validateText(inputs.text)) {
-        // Hier kannst du die Daten überprüfen und weiterverarbeiten
-       // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
+        console.log(data);
 
-         const formattedTitle = formatText(inputs.title);
-         const uniqueID = uuidv4();
+        if (data) {
+          dispatch(setSportsArrayy(data));
+          setSuccessMessage(true)
+        }
 
-         const data = {
-           name: inputs.name,
-           label: inputs.label,
-           entryId: uniqueID,
-           title: inputs.title,
-           entry: inputs.text,
-           entryPath: formattedTitle + "-" + uniqueID,
-           duration: inputs.duration,
-           created_at: inputs.created_at,
-         };
-
-         try {
-           const { data: newSport, error } = await supabase
-             .from("sports")
-             .insert([data]);
-
-           if (error) {
-             console.error("Failed to insert data into Supabase table:", error);
-           } else {
-             console.log(
-               "Data successfully inserted into Supabase table:",
-               newSport
-             );
-             fetchSportsData();
-           }
-         } catch (error) {
-           console.error("Error inserting data into Supabase table:", error);
+       } else{
+        
+         if(inputs.created_at === ""){
+           setDurationErrorMessage(true)
          }
-
-         setSuccessMessage(true);
-
-         setTimeout(() => {
-           setSuccessMessage(false);
-         }, 5000);
-
-         setFormIsOpen(false);
-       } else {
-         setSuccessMessage(false);
-         console.log("Validation failed. Please check your input.");
        }
+      
+    } else{
+      if (
+        validateTitle(inputs.title) &&
+        validateText(inputs.text) &&
+        validateDuration(inputs.duration) && 
+        inputs.created_at != ""
+      ) {
+        // Hier kannst du die Daten überprüfen und weiterverarbeiten
+        // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
+
+        const formattedTitle = formatText(inputs.title);
+        const uniqueID = uuidv4();
+
+        const data = {
+          name: inputs.name,
+          label: inputs.label,
+          entryId: uniqueID,
+          title: inputs.title,
+          entry: inputs.text,
+          entryPath: formattedTitle + "-" + uniqueID,
+          duration: inputs.duration,
+          created_at: inputs.created_at,
+        };
+
+        try {
+          const { data: newSport, error } = await supabase
+            .from("sports")
+            .insert([data]);
+
+          if (error) {
+            console.error("Failed to insert data into Supabase table:", error);
+          } else {
+            console.log(
+              "Data successfully inserted into Supabase table:",
+              newSport
+            );
+            fetchSportsData();
+          }
+        } catch (error) {
+          console.error("Error inserting data into Supabase table:", error);
+        }
+
+        setSuccessMessage(true);
+
+        setTimeout(() => {
+          setSuccessMessage(false);
+        }, 5000);
+
+        setFormIsOpen(false);
+      } else {
+        setSuccessMessage(false);
+        console.log("Validation failed. Please check your input.");
+      }
 
 
     }
@@ -229,6 +249,13 @@ const AddEntryForm = (props) => {
     return text.length >= 5 && text.length <= 1000;
   };
 
+ const validateDuration = (duration) => {
+   const num = parseFloat(duration);
+   if (isNaN(num) || num <= 0) {
+     return false; // Wenn duration keine positive Zahl ist
+   }
+   return true; // Wenn duration eine positive Zahl ist
+ };
   const formatText = (text) => {
     return text.toLowerCase().replace(/\s+/g, "-");
   };
@@ -245,6 +272,9 @@ const AddEntryForm = (props) => {
       }
     }
   }, [currentSport, selectedSport]);
+
+
+  console.log(inputs)
 
   return (
     <form className="my-2 p-2 flex flex-col" onSubmit={submitHandler}>
@@ -280,6 +310,14 @@ const AddEntryForm = (props) => {
         onChange={changeHandler}
       ></input>
 
+      <div className="h-8">
+        {isTouched.text && !validateText(inputs.text) && (
+          <p className={styles.errorText}>
+            Text must be between 5 and 400 characters
+          </p>
+        )}
+      </div>
+
       <div className="flex items-center justify-evenly">
         <div className={styles.date_div}>
           <input
@@ -298,25 +336,24 @@ const AddEntryForm = (props) => {
           name="duration"
           placeholder="60 min"
           className={`${styles.inputs} ${
-            isTouched.text && !validateText(inputs.text) ? styles.error : ""
+            isTouched.duration && !validateDuration(inputs.duration)
+              ? styles.error
+              : ""
           }`}
           onBlur={() => blurHandler("duration")}
           onChange={changeHandler}
         ></input>
       </div>
 
-      <div className="h-8">
-        {isTouched.text && !validateText(inputs.text) && (
-          <p className={styles.errorText}>
-            Text must be between 5 and 400 characters
-          </p>
+      <div className="h-14">
+        {isTouched.duration && !validateDuration(inputs.duration) && (
+          <p className={styles.errorText}>Please set a duration</p>
+        )}
+
+        {durationErrorMessage && (
+          <p className={styles.errorText}> please set a date!</p>
         )}
       </div>
-
-     
-
-  
-  
 
       <button type="submit" className={styles.submit_btn}>
         submit
