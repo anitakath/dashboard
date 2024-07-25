@@ -16,7 +16,7 @@ import PlansEntryField from "./PlansEntryField";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSport, replaceSportsArray } from "@/store/profileReducer";
 //CUSTOM HOOKS
-import { formatDate } from '@/custom-hooks/formatDate';
+
 import { supabase } from '@/services/supabaseClient';
 
 
@@ -132,7 +132,6 @@ const Plans = () =>{
 
   const saveChanges = () => {
     if (!currentSport) return; // Überprüfen, ob currentSport gesetzt ist
-
     // Funktion zum Ersetzen des Objekts in einem Array
     const replaceObjectInArray = (array, currentSport) => {
       return array
@@ -151,14 +150,12 @@ const Plans = () =>{
       currentSport
     );
     const updatedSportsArray = replaceObjectInArray(sportsArray, currentSport);
-
    
     //updated arrays set in state
     setSortedSportsArray(updatedSortedSportsArray);
     setSportsArray(updatedSportsArray);
 
     dispatch(replaceSportsArray(updatedSortedSportsArray));
-
     // close modal after editing
     setIsModalOpen(false);
   };
@@ -187,6 +184,7 @@ const Plans = () =>{
      setAreAllOpen(!areAllOpen); 
    };
 
+   console.log(sortedSportsArray)
   return (
     <div className="flex-col justify-center items-center">
       <EditEntry

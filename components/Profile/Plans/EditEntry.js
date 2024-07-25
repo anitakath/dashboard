@@ -1,3 +1,4 @@
+import { current } from "@reduxjs/toolkit";
 import React from "react";
 import styles from "./EditEntry.module.css"; // Importiere die CSS-Moduldatei
 
@@ -10,6 +11,8 @@ const EditEntry = ({
 }) => {
   // Füge setIsModalOpen als Prop hinzu
   if (!isModalOpen) return null;
+
+
 
   return (
     <div className={styles.modal_container}>
@@ -45,27 +48,35 @@ const EditEntry = ({
               className={styles.modal_textarea}
             />
           </label>
-          <label className="py-2">
-            Duration:
-            <input
-              type="number"
-              name="duration"
-              value={currentSport.duration}
-              onChange={handleInputChange}
-              className={styles.modal_input}
-            />
-          </label>
+
+          <div className="border-2 flex justify-evenly">
+            <label className="py-2">
+              Duration:
+              <input
+                type="number"
+                name="duration"
+                value={currentSport.duration}
+                onChange={handleInputChange}
+                className={styles.modal_input}
+              />
+            </label>
+            <label className="py-2">
+              Date:
+              <input
+                type="datetime-local"
+                name="created_at" // Ändere den Namen auf "created_at", um die Änderungen zu verfolgen
+                value={currentSport.created_at} // Verwende created_at direkt
+                onChange={(e) => handleInputChange(e)} // Stelle sicher, dass die Änderung verarbeitet wird
+                className={styles.modal_input}
+              />
+            </label>
+          </div>
         </div>
         <div className={styles.modal_buttons}>
           <button onClick={saveChanges} className={styles.save_button}>
             Save Changes
           </button>
-          <button
-           
-            className={styles.cancel_button}
-          >
-            Cancel
-          </button>
+          <button className={styles.cancel_button}>Cancel</button>
           {/* Stelle sicher, dass setIsModalOpen übergeben wird */}
         </div>
       </form>

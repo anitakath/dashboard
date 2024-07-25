@@ -116,6 +116,7 @@
 .sport_entry_details {
     overflow: hidden;
     transition: max-height 1s ease; 
+    padding: 10px 20px;
 }
 
 .sport_entry_details.collapsed {

@@ -11,7 +11,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
 
 
     return (
-      <div className=' w-full'>
+      <div className=' w-full '>
         {sortedSportsArray &&
           sortedSportsArray.map((sport) => (
             <div
@@ -41,9 +41,10 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
                     </div>
                   </div>
 
-                  <h2 className="text-xl mx-4"> - {sport.title} </h2>
+                  <h2 className="text-xl mx-4"> - {sport.title}</h2>
 
                   <h3 className={styles.sport_entry_date}>
+                    
                     {formatDate(sport.created_at)}
                     <span className={styles.sport_entry_duration}>
                       {sport.duration} min
