@@ -66,24 +66,73 @@
 
 
 .sport_entry_title_div{
-    width: 100%;
     display: flex;
     position: relative;
     align-items: center;
     margin-left: 0.5px;
 
+}
 
+.toggleEntries_btn{
+    border-bottom: 2px solid var(--purpleDarkHover);
+    width: 200px;
+    height: 40px;
+    margin-bottom: 10px;
+    transition: 0.4s ease;
+    letter-spacing: 1px;
+    font-size: 1rem;
+}
+
+.toggleEntries_btn_open{
+    color: beige;
+    background: var(--purpleDarkHover);
+}
+
+.toggleEntries_btn_closed{
+    color: black;
+    background: transparent
 }
 
 
+.enlarge_btn{
+    width: 40px;
+    position: relative;
+    left: -10px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: lightgrey;
+}
+
+
+.enlarge_btn:hover{
+    color: black;
+}
+
+.enlarge_icon{
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.sport_entry_details {
+    overflow: hidden;
+    transition: max-height 1s ease; 
+}
+
+.sport_entry_details.collapsed {
+    max-height: 0; 
+}
+
+.sport_entry_details.expanded {
+    max-height: 500px; 
+}
 
 
 .sport_entry_name{
-    width: 150px;
+    width: 180px;
     padding: 15px;
-   
     margin-right: 5px;
     background: var(--purpleDarkHover);
+    display: flex;
 
 }
 

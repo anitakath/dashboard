@@ -15,7 +15,7 @@ import { setLogout } from "@/store/authReducer";
 import { setSection } from "@/store/profileReducer";
 import styles from "../../styles/Profile.module.css";
 //COMPONENTS
-import Plans from "@/components/Profile/Plans";
+import Plans from "@/components/Profile/Plans/Plans";
 import Login from "@/components/Login/Login";
 
 const Profile = () => {

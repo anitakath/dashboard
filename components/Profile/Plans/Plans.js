@@ -1,17 +1,17 @@
 import Link from 'next/link';
-import { useState } from 'react';
-
-
+import { useEffect, useState } from 'react';
 //STYLES 
 import styles from './Plans.module.css'
 //FONT AWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faCheck, faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faHouse} from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
-import AddEntryForm from '../Main/AddEntryForm';
-import AddSportForm from '../Navigation/AddSportForm';
+import AddEntryForm from '../../Main/AddEntryForm';
+import AddSportForm from '../../Navigation/AddSportForm';
+import PlansHeader from './PlansHeader';
 import EditEntry from "./EditEntry";
+import EditEntryField from './EditEntryField';
+import PlansEntryField from "./PlansEntryField";
 //REDUX 
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSport, replaceSportsArray } from "@/store/profileReducer";
@@ -21,7 +21,9 @@ import { supabase } from '@/services/supabaseClient';
 
 
 const Plans = () =>{
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [openDetailsIds, setOpenDetailsIds] = useState([]); // Zustand für mehrere geöffnete IDs
+  const [areAllOpen, setAreAllOpen] = useState(false);
+
   const [addSport, setAddSport] = useState(false);
   const currentSports = useSelector((state) => state.sport.currentSport[0]);
   const [chosenSport, setChosenSport] = useState(null);
@@ -109,12 +111,22 @@ const Plans = () =>{
 
   }
 
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCurrentSport((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+   
+    setCurrentSport((prev) => {
+      // look for an object in currentSports (name & color)whose .name matches the input.name property
+      const matchingSport = currentSports.find((sport) => sport.name === value);
+
+      //If there is an object whose name property matches the name of the input, the colour of the object is used as the label property.
+      return {
+        ...prev,
+        [name]: value,
+        label: matchingSport ? matchingSport.color : prev.label, 
+      };
+    });
   };
 
 
@@ -140,7 +152,7 @@ const Plans = () =>{
     );
     const updatedSportsArray = replaceObjectInArray(sportsArray, currentSport);
 
-
+   
     //updated arrays set in state
     setSortedSportsArray(updatedSortedSportsArray);
     setSportsArray(updatedSportsArray);
@@ -152,6 +164,28 @@ const Plans = () =>{
   };
 
 
+  useEffect(()=>{
+    setSortedSportsArray(sportsArray)
+  }, [sportsArray])
+
+   const enlargeWorkoutHandler = (entryId) => {
+     setOpenDetailsIds((prev) =>
+       prev.includes(entryId)
+         ? prev.filter((id) => id !== entryId)
+         : [...prev, entryId]
+     );
+   };
+
+
+   const toggleAllEntries = () => {
+     if (areAllOpen) {
+       setOpenDetailsIds([]);
+     } else {
+       const allEntryIds = sportsArray.map((sport) => sport.entryId);
+       setOpenDetailsIds(allEntryIds); 
+     }
+     setAreAllOpen(!areAllOpen); 
+   };
 
   return (
     <div className="flex-col justify-center items-center">
@@ -162,16 +196,13 @@ const Plans = () =>{
         handleInputChange={handleInputChange}
       />
 
-      <div className="flex justify-center h-16 items-center relative">
-        <button className={styles.addSport_btn} onClick={addSportHandler}>
-          {addSportBtnText}
-        </button>
-        <Link href="/" className={styles.home_link}>
-          <FontAwesomeIcon icon={faHouse} />
-        </Link>
-      </div>
+      <EditEntryField
+      addSportBtnText={addSportBtnText}
+      addSportHandler={addSportHandler}
+      />
 
       <div className={styles.form_container}>
+        
         {sportsArray === null && !addSport && <p>no entries were made yet</p>}
 
         <div className="w-full">
@@ -211,69 +242,19 @@ const Plans = () =>{
 
         {!addSport && sportsArray != null && (
           <div className={styles.container}>
-            <p className="text-xl my-2 w-full ml-14"> your entries </p>
-            {sortedSportsArray &&
-              sortedSportsArray.map((sport) => (
-                <div
-                  key={sport.entryId}
-                  className={`${styles.sport_entry_div} ${
-                    styles[sport.label + "_bg"]
-                  }`}
-                >
-                  <div>
-                    <div className="relative flex justify-center items-center">
-                      <div className={styles.sport_entry_title_div}>
-                        <div
-                          className={`${styles.sport_entry_name} ${
-                            styles[sport.label]
-                          }`}
-                        >
-                          <h3>{sport.name}</h3>
-                        </div>
-                        
-                      </div>
+            <PlansHeader
+              toggleAllEntries={toggleAllEntries}
+              areAllOpen={areAllOpen}
+            />
 
-                      <h3 className={styles.sport_entry_date}>
-                        {formatDate(sport.created_at)}
-                        <span className={styles.sport_entry_duration}>
-                          {sport.duration} min
-                        </span>
-                      </h3>
-                    </div>
-
-                    <h3 className={styles.sport_entry_title}>
-                      - {sport.title} -
-                    </h3>
-                    <p className="m-2 border-l-4 p-2 min-h-24 border-rose-300">
-                      {sport.entry}
-                    </p>
-                  </div>
-
-                  <div className=" flex justify-center m-2 p-1">
-                    <button className={styles.action_btns}>
-                      <FontAwesomeIcon
-                        icon={faXmark}
-                        className={styles.delete_icon}
-                        onClick={() => deleteSportHandler(sport)}
-                      />
-                    </button>
-                    <button className={styles.action_btns}>
-                      <FontAwesomeIcon
-                        icon={faCheck}
-                        className={styles.check_icon}
-                        onClick={() => checkSportHandler(sport)}
-                      />
-                    </button>
-                    <button className={styles.action_btns}>
-                      <FontAwesomeIcon
-                        icon={faPencil}
-                        className={styles.edit_icon}
-                        onClick={() => editSportHandler(sport)}
-                      />
-                    </button>
-                  </div>
-                </div>
-              ))}
+            <PlansEntryField
+              openDetailsIds={openDetailsIds}
+              deleteSportHandler={deleteSportHandler}
+              checkSportHandler={checkSportHandler}
+              editSportHandler={editSportHandler}
+              sortedSportsArray={sortedSportsArray}
+              enlargeWorkoutHandler={enlargeWorkoutHandler}
+            />
           </div>
         )}
       </div>
