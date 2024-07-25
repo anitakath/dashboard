@@ -184,7 +184,6 @@ const Plans = () =>{
      setAreAllOpen(!areAllOpen); 
    };
 
-   console.log(sortedSportsArray)
   return (
     <div className="flex-col justify-center items-center">
       <EditEntry
