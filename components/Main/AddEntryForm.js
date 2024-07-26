@@ -18,30 +18,29 @@ const AddEntryForm = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-  const currentSport = useSelector((state) => state.sport.currentSport)
+  const currentSport = useSelector((state) => state.sport.currentSport);
   const setFormIsOpen = props.setFormIsOpen;
   const currentPath = router.pathname;
   const chosenSport = props.chosenSport;
-  const [durationErrorMessage, setDurationErrorMessage] = useState(false)
-
+  const [durationErrorMessage, setDurationErrorMessage] = useState(false);
 
   let label = "";
 
-    const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports
+  const allSupabaseSports = useSelector(
+    (state) => state.sport.allSupabaseSports
+  );
+
+  if (selectedSport) {
+    const foundSport = allSupabaseSports.find(
+      (sport) => sport.name === selectedSport
     );
+    if (foundSport) {
+      label = foundSport.label;
+    } else {
+      //console.log(`Kein Sport mit dem Namen ${selectedSport} gefunden`);
+    }
+  }
 
-   if (selectedSport) {
-     const foundSport = allSupabaseSports.find(
-       (sport) => sport.name === selectedSport
-     );
-     if (foundSport) {
-       label = foundSport.label;
-     } else {
-       //console.log(`Kein Sport mit dem Namen ${selectedSport} gefunden`);
-     }
-   }
-
- 
   const [inputs, setInputs] = useState({
     //index: currentSport,
     name: selectedSport,
@@ -53,8 +52,6 @@ const AddEntryForm = (props) => {
     img: "",
   });
 
-
-
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
 
   const [file, setFile] = useState(null);
@@ -63,16 +60,12 @@ const AddEntryForm = (props) => {
     setFile(e.target.files[0]);
   };
 
-
-
-
-  useEffect(()=>{
+  useEffect(() => {
     async function fetchSportImages() {
       try {
         const { data, error } = await supabase.storage
           .from("sport_images")
           .list();
-
 
         if (error) {
           console.error(error.message);
@@ -88,23 +81,19 @@ const AddEntryForm = (props) => {
         console.error(error.message);
       }
     }
-    fetchSportImages()
-  }, [])
-
-
-
+    fetchSportImages();
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if(currentPath === "/profile"){
-       if (
+    if (currentPath === "/profile") {
+      if (
         validateTitle(inputs.title) &&
         validateText(inputs.text) &&
-        validateDuration(inputs.duration) && 
+        validateDuration(inputs.duration) &&
         inputs.created_at != ""
-       ){
-
+      ) {
         setDurationErrorMessage(false);
         const formattedTitle = formatText(inputs.title);
         const uniqueID = uuidv4();
@@ -147,27 +136,20 @@ const AddEntryForm = (props) => {
           // Hier kannst du auch eine Fehlermeldung setzen
         }
 
-
-        
-        
-
         if (data) {
           dispatch(setSportsArrayy(data));
-          setSuccessMessage(true)
+          setSuccessMessage(true);
         }
-
-       } else{
-        
-         if(inputs.created_at === ""){
-           setDurationErrorMessage(true)
-         }
-       }
-      
-    } else{
+      } else {
+        if (inputs.created_at === "") {
+          setDurationErrorMessage(true);
+        }
+      }
+    } else {
       if (
         validateTitle(inputs.title) &&
         validateText(inputs.text) &&
-        validateDuration(inputs.duration) && 
+        validateDuration(inputs.duration) &&
         inputs.created_at != ""
       ) {
         // Hier kannst du die Daten überprüfen und weiterverarbeiten
@@ -216,16 +198,9 @@ const AddEntryForm = (props) => {
         setSuccessMessage(false);
         console.log("Validation failed. Please check your input.");
       }
-
-
     }
-
-
-   
   };
 
-
-     
   const fetchSportsData = async () => {
     try {
       const response = await fetch("/api/sports");
@@ -239,7 +214,6 @@ const AddEntryForm = (props) => {
       console.error("Error fetching sports data:", error);
     }
   };
-
 
   const blurHandler = (target) => {
     setIsTouched(true);
@@ -259,20 +233,61 @@ const AddEntryForm = (props) => {
     return text.length >= 5 && text.length <= 1000;
   };
 
- const validateDuration = (duration) => {
-   const num = parseFloat(duration);
-   if (isNaN(num) || num <= 0) {
-     return false; // Wenn duration keine positive Zahl ist
-   }
-   return true; // Wenn duration eine positive Zahl ist
- };
+  const validateDuration = (duration) => {
+    const num = parseFloat(duration);
+    if (isNaN(num) || num <= 0) {
+      return false; // Wenn duration keine positive Zahl ist
+    }
+    return true; // Wenn duration eine positive Zahl ist
+  };
   const formatText = (text) => {
     return text.toLowerCase().replace(/\s+/g, "-");
   };
 
   useEffect(() => {
+    if (
+      Array.isArray(currentSport) &&
+      currentSport.length > 0 &&
+      selectedSport
+    ) {
+      const foundSport = currentSport.find((obj) => obj.name === selectedSport);
+      console.log(foundSport);
+
+      if (foundSport) {
+        setInputs((prevInputs) => ({
+          ...prevInputs,
+          // Hier kannst du die Werte von foundSport setzen
+        }));
+      }
+    } else {
+      console.warn("currentSport is not an array or is empty");
+      console.log(currentSport)
+    }
+  }, [currentSport, selectedSport]); // Füge die Abhängigkeiten hinzu
+
+  /*
+  const navigation= useSelector((state) => state.sport.navigation)
+
+  console.log(navigation)
+
+  
+   useEffect(() => {
+     if (navigation && selectedSport) {
+       const foundSport = navigation.find((sport) => sport === selectedSport);
+       console.log(foundSport);
+       if (foundSport) {
+         setInputs((prevInputs) => ({
+           ...prevInputs,
+           label: foundSport.color,
+         }));
+       }
+     }
+   }, [selectedSport]);
+   */
+  
+  useEffect(() => {
     if (currentSport && selectedSport) {
-      const foundSport = currentSport[0].find((obj) => obj.name === selectedSport);
+      const foundSport =  currentSport[0].find((obj) => obj.name === selectedSport);
       console.log(foundSport)
       if (foundSport) {
         setInputs((prevInputs) => ({

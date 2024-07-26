@@ -29,27 +29,9 @@ const Navigation = () => {
   const navigation = useSelector((state) => state.sport.navigation);
   const sportReducer = useSelector((state) => state.sport);
 
-
-  
-
-
- const uniqueLabels = allSupabaseSports
-   ? allSupabaseSports.reduce((acc, sport) => {
-       if (!acc[sport.name]) {
-         acc[sport.name] = sport.label;
-       }
-       return acc;
-     }, {})
-   : {};
-
-
-  
-
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
   }, [uniqueSports]);
-
-
 
 
   useEffect(()=>{
@@ -58,9 +40,7 @@ const Navigation = () => {
   }, [navigation])
 
 
-
-
-  
+  /*
 
   useEffect(() => {
     dispatch(setAllSportsFromSupabase([])); // Initial empty array
@@ -79,7 +59,7 @@ const Navigation = () => {
       console.error("Error fetching sports data:", error);
     }
   };
-  
+  */
 
   const handleSportClick = (sport) => {
     setActive(sport);
@@ -103,6 +83,12 @@ const Navigation = () => {
 
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   
+  //console.log(selectedSport);
+
+  const sporty = useSelector((state) => state.sport);
+  console.log(sporty)
+
+  //console.log(uniqueSports);
 
 
   return (

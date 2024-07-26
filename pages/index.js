@@ -12,8 +12,6 @@ import Login from "@/components/Login/Login";
 //REDUX
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
-
-
 export async function getServerSideProps() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -55,16 +53,39 @@ export async function getServerSideProps() {
 
 
 export default function Home({ sportsData }) {
-  console.log(sportsData);
-
+  //console.log(sportsData); => allSupabaseSports initial state???
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [sports, setSports] = useState(null);
   const currentSport = useSelector((state) => state.sport.currentSport);
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
+
+
+
+    const fetchSportsData = async () => {
+      try {
+        const response = await fetch("/api/sports");
+        if (!response.ok) {
+          throw new Error("Failed to fetch sports data");
+        }
+        const data = await response.json();
+        dispatch(setAllSportsFromSupabase(data.data));
+      } catch (error) {
+        console.error("Error fetching sports data:", error);
+      }
+    };
+
+    useEffect(() => {
+      dispatch(setAllSportsFromSupabase([])); // Initial empty array
+      fetchSportsData();
+    }, []);
+
+
 
   const addSportsToReduxStore = (arr) => {
+    console.log(arr);
     dispatch(setCurrentSport(arr));
   };
+
 
   useEffect(() => {
     if (currentSport && currentSport.length > 1) {
@@ -86,63 +107,52 @@ export default function Home({ sportsData }) {
     }
   }, [sportsData, dispatch]);
 
+  
 
-  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
-
-  console.log(allSupabaseSports)
-
-  /*
-  const fetchSportsData = async () => {
-    if (currentSport && currentSport.length > 1) {
-      console.log("theres already a sportsarr");
+  const processSportsData = () => {
+    if (currentSport?.length > 1) {
+      console.log("Es gibt bereits ein Sport-Array");
       return;
     }
+
     try {
-      const response = await fetch("/api/sports");
-      if (!response.ok) {
-        throw new Error("Failed to fetch sports data");
-      }
-      const data = await response.json();
+      // Neues Set erstellen, um eindeutige Kombinationen von name zu speichern
+      const uniqueSet = new Set();
 
-      if (data) {
-        // Neues Set erstellen, um eindeutige Kombinationen von name und label zu speichern
-        const uniqueSet = new Set();
+      // Filtere das Supabase-Array, um nur ein einziges Objekt für jede eindeutige Kombination von name zu erhalten
+      const uniqueSportsArray = allSupabaseSports.filter((obj) => {
+        const key = obj.name;
+        if (!uniqueSet.has(key)) {
+          uniqueSet.add(key);
+          return true;
+        }
+        return false;
+      });
 
-        // Filtere das Supabase-Array, um nur ein einziges Objekt für jede eindeutige Kombination von name und label zu erhalten
-        const uniqueSportsArray = data.data.filter((obj) => {
-          const key = obj.name;
-          if (!uniqueSet.has(key)) {
-            uniqueSet.add(key);
-            return true;
-          }
-          return false;
-        });
+      // Erstelle das neue Array mit den gewünschten Eigenschaften
+      const sportsArray = uniqueSportsArray.map((obj) => ({
+        name: obj.name,
+        color: obj.label,
+      }));
 
-        // Erstelle das neue Array mit den gewünschten Eigenschaften
-        const sportsArray = uniqueSportsArray.map((obj) => ({
-          name: obj.name,
-          color: obj.label,
-        }));
-
-        setSports(sportsArray);
-        addSportsToReduxStore(sportsArray);
-      }
+      addSportsToReduxStore(sportsArray);
     } catch (error) {
-      console.error("Error fetching sports data:", error);
+      console.error("Fehler beim Verarbeiten der Sportdaten:", error);
     }
   };
+
+  
   
   useEffect(() => {
-    fetchSportsData();
-  }, []);
+    processSportsData();
+  }, [allSupabaseSports]);
 
-  */
 
-  const year = useSelector((state) => state.calendar.year);
-  const month = useSelector((state) => state.calendar.month);
-  const date = month + " " + year;
 
-  console.log(date);
+
+
+
+  
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">

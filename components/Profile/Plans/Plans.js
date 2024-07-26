@@ -23,13 +23,10 @@ import { supabase } from '@/services/supabaseClient';
 const Plans = () =>{
   const [openDetailsIds, setOpenDetailsIds] = useState([]); // Zustand für mehrere geöffnete IDs
   const [areAllOpen, setAreAllOpen] = useState(false);
-
   const [addSport, setAddSport] = useState(false);
   const currentSports = useSelector((state) => state.sport.currentSport[0]);
   const [chosenSport, setChosenSport] = useState(null);
-  const [sportsArray, setSportsArray] = useState(
-    useSelector((state) => state.profile.sportsArray)
-  ); 
+  const [sportsArray, setSportsArray] = useState([]); 
   const [sortedSportsArray, setSortedSportsArray] = useState(
     sportsArray
       ?.slice()
@@ -39,6 +36,22 @@ const Plans = () =>{
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSport, setCurrentSport] = useState(null);
   const [activeSport, setActiveSport] = useState(null);
+
+  useEffect(() => {
+    const fetchPlannedSports = async () => {
+      try {
+        const response = await fetch("/api/get-plannedSports");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setSportsArray(data.data); // Setze die erhaltenen Objekte in den State
+      } catch (error) {
+        console.error("Error fetching planned sports:", error);
+      }
+    };
+    fetchPlannedSports();
+  }, []);
 
 
   const addSportHandler = () => {
@@ -227,7 +240,7 @@ const Plans = () =>{
                   ))}
               </div>
 
-              <div className="flex-col mx-2 w-6/12 justify-start ">
+              <div className="flex-col mx-2 w-6/12 justify-start">
                 <h2 className="text-xl my-2 px-2">
                   tell us more about your goals :)
                 </h2>
