@@ -92,23 +92,6 @@ const AddEntryForm = (props) => {
   }, [])
 
 
-  
-
-
-  const handleUpload = async () => {
-    if (file) {
-      const { data, error } = await supabase.storage
-        .from("sport_images")
-        .upload(`/`, file);
-      if (error) {
-        console.error("Error uploading image:", error.message);
-      } else {
-        console.log("Image uploaded successfully:", data.Key);
-      }
-    }
-  };
-
-
 
 
   const submitHandler = async (e) => {
@@ -140,6 +123,33 @@ const AddEntryForm = (props) => {
         };
 
         console.log(data);
+
+        // Sende die Daten an die API
+        try {
+          const response = await fetch("/api/send-plannedSports", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (!response.ok) {
+            throw new Error("Fehler beim Senden der Daten");
+          }
+          const result = await response.json();
+
+          // Dispatch und Erfolgsmeldung setzen
+          dispatch(setSportsArrayy(result.data));
+          setSuccessMessage(true);
+        } catch (error) {
+          console.error("Fehler:", error);
+          // Hier kannst du auch eine Fehlermeldung setzen
+        }
+
+
+        
+        
 
         if (data) {
           dispatch(setSportsArrayy(data));
