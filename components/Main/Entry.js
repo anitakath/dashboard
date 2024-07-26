@@ -102,11 +102,12 @@ const Entry = (props) => {
 
 
   // create a copy of filteredEntries, so filteredEntries is not mutated
-
   const sortedEntries = Array.isArray(filteredEntries) ? [...filteredEntries] : [];
 
   //sort the entries by .created_at
   sortedEntries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+
 
 
 

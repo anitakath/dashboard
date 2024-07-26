@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateDate } from '@/store/CalendarReducer';
 import { setSelectedSport } from '@/store/sportReducer';
 //HOOKS
-import { formatDate } from '@/custom-hooks/formatDate';
 import { useEntryCountForMonth, useGetMonthStyle, months } from "@/custom-hooks/useCalendar"; // Importiere die neuen Hooks
 
 
@@ -17,18 +16,15 @@ const Calendar = (props) =>{
   const allSupabaseSports = useSelector(
     (state) => state.sport.allSupabaseSports
   );
-
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const dispatch = useDispatch();
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMonth, setSelectedMonth] = useState("");
-
   const [date, setDate] = useState({
     month: selectedMonth,
     year: selectedYear,
   });
-
   const restDays = useSelector((state) => state.calendar.restDaysPerMonth)
 
 
@@ -53,7 +49,6 @@ const renderRestDays = () => {
    // make getMonthStyle in  useCalendar.js work!! 
   // add a style to the month-divs, depending on the number of entries
   const getMonthStyle = (entryCount) => {
-
     if(entryCount > 14){
       return styles.maxixl
     } else if (entryCount > 10) {
@@ -68,10 +63,6 @@ const renderRestDays = () => {
       return;
     }
   };
-
-
-
-
   
 
   useEffect(() => {
@@ -117,9 +108,9 @@ const renderRestDays = () => {
 
   const summarizeAllHandler = (e) =>{
     e.preventDefault()
-
     dispatch(setSelectedSport('all'))
   }
+
 
 
   return (

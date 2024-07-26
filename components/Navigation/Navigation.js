@@ -60,6 +60,7 @@ const Navigation = () => {
 
 
 
+  
 
   useEffect(() => {
     dispatch(setAllSportsFromSupabase([])); // Initial empty array
@@ -78,6 +79,7 @@ const Navigation = () => {
       console.error("Error fetching sports data:", error);
     }
   };
+  
 
   const handleSportClick = (sport) => {
     setActive(sport);
@@ -99,6 +101,10 @@ const Navigation = () => {
 
 
 
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
+  
+
+
   return (
     <div className="w-full p-0 flex flex-col items-center shadow-section">
       <h1 className={styles.title}>DASHBOARD</h1>
@@ -117,7 +123,7 @@ const Navigation = () => {
               <li key={index} className="flex">
                 <button
                   className={`${styles.sport_btn} ${
-                    active === sport ? styles.active : ""
+                    active === sport && selectedSport != "all" ? styles.active : ""
                   }`}
                   onClick={() => handleSportClick(sport)}
                 >

@@ -27,21 +27,3 @@ export default function handler(req, res) {
 
   res.status(200).json({ sports });
 }
-
-/*
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseKey = 'YOUR_SUPABASE_KEY';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-export default async function handler(req, res) {
-  const { data: sports, error } = await supabase.from('sports').select('*');
-
-  if (error) {
-    return res.status(500).json({ error: 'An error occurred while fetching sports data.' });
-  }
-
-  res.status(200).json({ sports });
-}
-*/
