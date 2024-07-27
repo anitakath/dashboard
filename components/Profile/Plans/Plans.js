@@ -26,13 +26,13 @@ const Plans = () =>{
   const [addSport, setAddSport] = useState(false);
   const currentSports = useSelector((state) => state.sport.currentSport[0]);
   const [chosenSport, setChosenSport] = useState(null);
-  const [sportsArray, setSportsArray] = useState([]); 
+  const [sportsArray, setSportsArray] = useState([]);
   const [sortedSportsArray, setSortedSportsArray] = useState(
     sportsArray
       ?.slice()
       .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
   );
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSport, setCurrentSport] = useState(null);
   const [activeSport, setActiveSport] = useState(null);
@@ -53,82 +53,117 @@ const Plans = () =>{
     fetchPlannedSports();
   }, []);
 
-
   const addSportHandler = () => {
     setAddSport(!addSport);
   };
 
   let addSportBtnText = addSport ? "close form" : "add a sport";
 
-
   const chooseSportHandler = (e) => {
-    const currSport = e.currSport
+    const currSport = e.currSport;
     setChosenSport(e.currSport);
-    setActiveSport(currSport.name)
-
+    setActiveSport(currSport.name);
   };
 
-
-
-  const deleteSportHandler = (sport) => {
-    // Bestätigungsdialog anzeigen
+  const deleteSportHandler = async (sport) => {
+    // Show confirmation dialog
     if (window.confirm("Are you sure you want to delete your workout?")) {
-      // Filtere das ursprüngliche sportsArray
-      const filteredSportsArray = sportsArray.filter(
-        (sportObj) => sportObj.entryId !== sport.entryId
-      );
+      try {
+        // Send DELETE request to the API
+        const response = await fetch("/api/plannedSports", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
+        });
 
-      // Aktualisiere den Zustand mit dem gefilterten Array
-      setSportsArray(filteredSportsArray);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
-      // Dispatch die removeSport Action an den Redux Store
-      dispatch(removeSport(sport.entryId)); // Übergib die entryId des zu löschenden Sports
+        // Filter the original sportsArray
+        const filteredSportsArray = sportsArray.filter(
+          (sportObj) => sportObj.entryId !== sport.entryId
+        );
+
+        // Update the state with the filtered array
+        setSportsArray(filteredSportsArray);
+
+        // Dispatch the removeSport action to the Redux Store
+        dispatch(removeSport(sport.entryId));
+      } catch (error) {
+        console.error("Error deleting sport:", error);
+      }
     }
   };
 
   const checkSportHandler = async (sport) => {
-  
-    //insert the sport object to my supabase table "sport"
-    const { data, error } = await supabase
-        .from('sports') // Name der Tabelle
+    try {
+      // 1. Insert the sports object into the 'sports' table
+      const { data: insertData, error: insertError } = await supabase
+        .from("sports")
         .insert([
-            {
-                entryId: sport.entryId,
-                name: sport.name,
-                title: sport.title,
-                entry: sport.entry,
-                label: sport.label,
-                entryPath: sport.entryPath,
-                duration: sport.duration,
-                created_at: sport.created_at,
-            },
+          {
+            entryId: sport.entryId,
+            name: sport.name,
+            title: sport.title,
+            entry: sport.entry,
+            label: sport.label,
+            entryPath: sport.entryPath,
+            duration: sport.duration,
+            created_at: new Date().toISOString(), // Current date as creation date
+          },
         ]);
 
-    if (error) {
-        console.error("Error inserting data:", error);
-    } else {
-        console.log("Data inserted successfully:", data);
-        const filteredSportsArray = sportsArray.filter(
+      if (insertError) {
+        console.error("Error inserting data:", insertError);
+        return; // Exit the function if an error occurs
+      }
+
+      console.log("Data inserted successfully:", insertData);
+
+      // 2. Delete the sports object from the 'sports_planned' table via the API
+      const response = await fetch("/api/plannedSports", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error deleting planned sport:", errorData.error);
+        return; // Exit the function if an error occurs
+      }
+
+      const deleteData = await response.json();
+      console.log("Planned sport deleted successfully:", deleteData);
+
+      // 3. Update the state and remove the deleted sport object from the array
+      const filteredSportsArray = sportsArray.filter(
         (sportObj) => sportObj.entryId !== sport.entryId
       );
 
-
       setSportsArray(filteredSportsArray);
+
+      // Dispatch die removeSport Action an den Redux Store
       dispatch(removeSport(sport.entryId));
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
     }
   };
 
-  const editSportHandler = (sport) =>{
+  const editSportHandler = (sport) => {
     setCurrentSport(sport);
     setIsModalOpen(true);
-
-  }
-
+    console.log(sport);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-   
     setCurrentSport((prev) => {
       // look for an object in currentSports (name & color)whose .name matches the input.name property
       const matchingSport = currentSports.find((sport) => sport.name === value);
@@ -137,65 +172,75 @@ const Plans = () =>{
       return {
         ...prev,
         [name]: value,
-        label: matchingSport ? matchingSport.color : prev.label, 
+        label: matchingSport ? matchingSport.color : prev.label,
       };
     });
   };
 
+  const saveChanges = async () => {
+    if (!currentSport) return; //Check whether currentSport is set
 
-  const saveChanges = () => {
-    if (!currentSport) return; // Überprüfen, ob currentSport gesetzt ist
-    // Funktion zum Ersetzen des Objekts in einem Array
-    const replaceObjectInArray = (array, currentSport) => {
-      return array
-        .map((item) => {
-          if (item.entryId === currentSport.entryId) {
-            return currentSport; // Ersetze das Objekt durch currentSport
-          }
-          return item; // Behalte das ursprüngliche Objekt bei
-        })
-        .filter((item) => item !== null); // Filtere eventuell null-Werte heraus
-    };
+    try {
+      // 1. Send the edited sports object to the API for updating
+      const response = await fetch("/api/plannedSports", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(currentSport), // Send the entire current sports object
+      });
 
-    //updated arrays
-    const updatedSortedSportsArray = replaceObjectInArray(
-      sortedSportsArray,
-      currentSport
-    );
-    const updatedSportsArray = replaceObjectInArray(sportsArray, currentSport);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error updating planned sport:", errorData.error);
+        return; // Exit the function if an error occurs
+      }
+
+      const updateData = await response.json();
+      console.log("Planned sport updated successfully:", updateData);
+
+      // 2. replace the object in the local array
+      const replaceObjectInArray = (array, currentSport) => {
+        return array
+          .map((item) => {
+            if (item.entryId === currentSport.entryId) {
+              return currentSport; // Replace the object with currentSport
+            }
+            return item; //stay with the original object
+          })
+          .filter((item) => item !== null); // Filter out any zero values
+      };
+
+      setSportsArray((prevArray) =>
+        replaceObjectInArray(prevArray, currentSport)
+      );
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+    }
+  };
    
-    //updated arrays set in state
-    setSortedSportsArray(updatedSortedSportsArray);
-    setSportsArray(updatedSportsArray);
 
-    dispatch(replaceSportsArray(updatedSortedSportsArray));
-    // close modal after editing
-    setIsModalOpen(false);
+  useEffect(() => {
+    setSortedSportsArray(sportsArray);
+  }, [sportsArray]);
+
+  const enlargeWorkoutHandler = (entryId) => {
+    setOpenDetailsIds((prev) =>
+      prev.includes(entryId)
+        ? prev.filter((id) => id !== entryId)
+        : [...prev, entryId]
+    );
   };
 
-
-  useEffect(()=>{
-    setSortedSportsArray(sportsArray)
-  }, [sportsArray])
-
-   const enlargeWorkoutHandler = (entryId) => {
-     setOpenDetailsIds((prev) =>
-       prev.includes(entryId)
-         ? prev.filter((id) => id !== entryId)
-         : [...prev, entryId]
-     );
-   };
-
-
-   const toggleAllEntries = () => {
-     if (areAllOpen) {
-       setOpenDetailsIds([]);
-     } else {
-       const allEntryIds = sportsArray.map((sport) => sport.entryId);
-       setOpenDetailsIds(allEntryIds); 
-     }
-     setAreAllOpen(!areAllOpen); 
-   };
+  const toggleAllEntries = () => {
+    if (areAllOpen) {
+      setOpenDetailsIds([]);
+    } else {
+      const allEntryIds = sportsArray.map((sport) => sport.entryId);
+      setOpenDetailsIds(allEntryIds);
+    }
+    setAreAllOpen(!areAllOpen);
+  };
 
   return (
     <div className="flex-col justify-center items-center">
@@ -207,12 +252,11 @@ const Plans = () =>{
       />
 
       <EditEntryField
-      addSportBtnText={addSportBtnText}
-      addSportHandler={addSportHandler}
+        addSportBtnText={addSportBtnText}
+        addSportHandler={addSportHandler}
       />
 
       <div className={styles.form_container}>
-        
         {sportsArray === null && !addSport && <p>no entries were made yet</p>}
 
         <div className="w-full">

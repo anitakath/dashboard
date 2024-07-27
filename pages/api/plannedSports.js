@@ -13,7 +13,6 @@ export default async function handler(req, res) {
       }
       return res.status(200).json({ data: insertData });
 
-      
     case "GET":
       // 2. get an object from the table
       const { data: selectData, error: selectError } = await supabase
@@ -25,10 +24,9 @@ export default async function handler(req, res) {
       }
       return res.status(200).json({ data: selectData });
 
-
     case "DELETE":
       // 3. delete the object in the table that corresponds to the specified parameter
-      const { entryId } = req.body; 
+      const { entryId } = req.body;
 
       const { data: deleteData, error: deleteError } = await supabase
         .from("sports_planned")
@@ -40,8 +38,20 @@ export default async function handler(req, res) {
       }
       return res.status(200).json({ data: deleteData });
 
+    case "PUT": // Neue Methode zum Aktualisieren eines Eintrags
+      const { id, ...updateFields } = req.body; // Extrahiere id und die restlichen Felder
+      const { data: updateData, error: updateError } = await supabase
+        .from("sports_planned")
+        .update(updateFields)
+        .eq("id", id); // Hier wird angenommen, dass 'id' der Primärschlüssel ist
+
+      if (updateError) {
+        return res.status(400).json({ error: updateError.message });
+      }
+      return res.status(200).json({ data: updateData });
+
     default:
-      res.setHeader("Allow", ["POST", "GET", "DELETE"]);
+      res.setHeader("Allow", ["POST", "GET", "DELETE", "PUT"]);
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

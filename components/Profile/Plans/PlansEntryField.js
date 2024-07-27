@@ -15,6 +15,8 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
   );
 
+  
+
   return (
     <div className=" w-full ">
       {sortedByDate &&

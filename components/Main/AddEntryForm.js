@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const AddEntryForm = (props) => {
   const [successMessage, setSuccessMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('')
   const dispatch = useDispatch();
   const router = useRouter();
   const selectedSport = useSelector((state) => state.sport.selectedSport);
@@ -99,6 +100,11 @@ const AddEntryForm = (props) => {
         const uniqueID = uuidv4();
 
         console.log(chosenSport);
+
+        if(chosenSport === null){
+          setErrorMessage('choose a sport!')
+          return
+        }
 
         const data = {
           name: chosenSport.name,
@@ -381,6 +387,7 @@ const AddEntryForm = (props) => {
       <button type="submit" className={styles.submit_btn}>
         submit
       </button>
+      <p className={styles.errorMessage_p}> {errorMessage} </p>
       {successMessage && (
         <p className={styles.successMessage_p}> entry successfully created </p>
       )}
