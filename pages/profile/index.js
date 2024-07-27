@@ -17,6 +17,7 @@ import styles from "../../styles/Profile.module.css";
 //COMPONENTS
 import Plans from "@/components/Profile/Plans/Plans";
 import Login from "@/components/Login/Login";
+import Settings from "@/components/Profile/Settings/Settings";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -71,7 +72,6 @@ const Profile = () => {
                     profileSection === "sports" ? styles.activeSection : ""
                   }
                 >
-                  {" "}
                   Sports
                 </h2>
               </button>
@@ -81,8 +81,7 @@ const Profile = () => {
                     profileSection === "plans" ? styles.activeSection : ""
                   }
                 >
-                  {" "}
-                  Plans{" "}
+                  Plans
                 </h2>
               </button>
               <button onClick={() => profileSectionHandler("settings")}>
@@ -118,8 +117,8 @@ const Profile = () => {
               )}
 
               {profileSection === "settings" && (
-                <div className={styles.sport_div}>
-                  <p> settings </p>
+                <div className={styles.plan_div}>
+                  <Settings/>
                 </div>
               )}
             </div>
