@@ -207,7 +207,8 @@
 
 
     .circle_div{
-       left: -29px;
+       left: 0px;
+       opacity: 0;
     }
 
     .circle{
@@ -217,12 +218,13 @@
     }
 
     .sport_btn:hover .circle_div {
+        opacity: 1;
         transform: translateX(0px); /* Bewege die circle_div um 300px nach links */
     }
 
     .sport_btn:hover .circle{
-        width: 70px;
-        height: 70px;
+        width: 100px;
+        height: 100px;
     }
 
 }

@@ -16,6 +16,7 @@
     position: absolute;
     right: 20px;
     cursor: pointer;
+    min-width: 150px;
 }
 
 .diagram_allSports{
@@ -109,3 +110,5 @@
     text-align: center;
     color: var(--purpleDark);
 }
+
+

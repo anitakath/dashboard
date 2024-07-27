@@ -119,9 +119,7 @@ const renderRestDays = () => {
         Summary: <span className={styles.summary_span}>{selectedSport}</span>
       </h1>
 
-      <button className={styles.diagram_allSports}>
-        each sport in a diagram
-      </button>
+      <button className={styles.diagram_allSports}> daily overview</button>
 
       <button
         className={styles.summary_allSports}
@@ -129,7 +127,6 @@ const renderRestDays = () => {
       >
         summary of all sports
       </button>
-
 
       <div className="absolute right-6 top-6 p-2  items-center flex">
         <p className="text-xs">choose year</p>
@@ -147,11 +144,11 @@ const renderRestDays = () => {
         </select>
       </div>
 
-      <div className="flex items-center">
-        <button className={"text-xl my-2 mx-1"}>
+      <div className="flex items-center mx-2 h-8">
+        <button className={"text-xl my-2 mx-1 hidden"}>
           <FontAwesomeIcon icon={faChevronLeft} className={styles.chevron} />
         </button>
-        <button className=" text-xl my-2">
+        <button className=" text-xl my-2 hidden">
           <FontAwesomeIcon icon={faChevronRight} className={styles.chevron} />
         </button>
       </div>

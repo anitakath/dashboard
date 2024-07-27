@@ -83,12 +83,6 @@ const Navigation = () => {
 
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   
-  //console.log(selectedSport);
-
-  const sporty = useSelector((state) => state.sport);
-  console.log(sporty)
-
-  //console.log(uniqueSports);
 
 
   return (
