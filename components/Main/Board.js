@@ -21,6 +21,7 @@ import { setLogout } from "@/store/authReducer";
 import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
+import SummarizedEntries from "./SummarizedEntries";
 
 const Board = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -79,6 +80,9 @@ const Board = (props) => {
       router.push("/profile")
      }
 
+
+  console.log(currentSport);
+  console.log(filteredEntries);
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -181,6 +185,9 @@ const Board = (props) => {
 
           {filteredByDate.length === 0 && currentSport != "all" && (
             <p className="m-2 text-xl"> no entries were made </p>
+          )}
+          {currentSport === "daily" && (
+            <SummarizedEntries filteredEntries={filteredEntries} />
           )}
           {currentSport === "all" && (
             <Entry filteredByDate={allSupabaseSports} />

@@ -8,7 +8,7 @@
     color: var(--purpleDark);
 }
 
-.summary_allSports, .diagram_allSports{
+.summary_allSports, .daily_allSports{
     background-color: var(--purpleDarkHover);
     color: beige;
     padding: 5px 10px;
@@ -19,7 +19,7 @@
     min-width: 150px;
 }
 
-.diagram_allSports{
+.daily_allSports{
     right: 200px;
 }
 

@@ -1,0 +1,108 @@
+.calendar_div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 Spalten */
+    gap: 16px; /* Abstand zwischen den Feldern */
+}
+
+.month {
+    border: 1px solid #ccc; /* Optional: Rahmen um jeden Monat */
+    padding: 16px; /* Innenabstand */
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 Tage pro Woche */
+    gap: 8px; /* Abstand zwischen den Tagen */
+}
+
+.day {
+    border: 1px solid #ddd; /* Optional: Rahmen um jeden Tag */
+    text-align: center; /* Zentriert den Text */
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    position: relative;
+    width: 50px;
+    overflow: scroll;
+}
+
+.day_date{
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    font-size: 1.2rem;
+    opacity: 1;
+    
+}
+
+.sport_subsection{
+    width: 100%;
+    height: 100%;
+}
+
+.sport_subsectionLabel{
+    width: 100%;
+    height: 25%;
+}
+
+
+.fandango_opaque{
+    background: var(--fandango_opaque);
+    
+}
+
+.celeste_opaque{
+    background: var(--celeste_opaque);
+}
+
+
+.springGreen_opaque{
+    background: var(--springGreen_opaque);
+}
+
+
+.sinopia_opaque{
+    background: var(--sinopia_opaque);
+}
+
+.lightOrange_opaque{
+    background: var(--lightOrange_opaque);
+}
+
+.wenge_opaque{
+    background: var(--wenge_opaque);
+}
+
+
+.spaceCadet_opaque{
+    background: var(--spaceCadet_opaque);
+}
+
+
+.mauve_opaque{
+    background: var(--mauve_opaque)
+}
+
+
+.aquamarine_opaque{
+    background: var(--aquamarine_opaque)
+    /*background: red;*/
+}
+
+.mandarine_opaque{
+    background: var(--mandarine_opaque)
+}
+
+.brown_opaque{
+    background: var(--brown_opaque)
+}
+
+
+.mustard_opaque{
+    background: var(--mustard_opaque);
+}
+
+
+.jasmine_opaque{
+    background: var(--jasmine_opaque)
+}

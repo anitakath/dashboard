@@ -84,13 +84,13 @@ const Entry = (props) => {
     filteredEntriesByMonth[month] = filteredEntries;
   }
 
-  const dateData = useDaysWithoutEntry(filteredEntriesByMonth);
+  //const dateData = useDaysWithoutEntry(filteredEntriesByMonth);
 
-  const [restDays, setRestDays] = useState(null);
-
+  //const [restDays, setRestDays] = useState(null);
+/*
   useEffect(() => {
     setRestDays(dateData.restDaysPerMonth);
-  }, [dateData]);
+  }, [dateData]);*/
 
   // always sort sortedEntriesByMonth by date of creation of the respective entries.
 

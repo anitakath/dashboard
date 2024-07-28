@@ -111,6 +111,10 @@ const renderRestDays = () => {
     dispatch(setSelectedSport('all'))
   }
 
+  const dailyAllHandler = () =>{
+     dispatch(setSelectedSport("daily"));
+  }
+
 
 
   return (
@@ -119,7 +123,9 @@ const renderRestDays = () => {
         Summary: <span className={styles.summary_span}>{selectedSport}</span>
       </h1>
 
-      <button className={styles.diagram_allSports}> daily overview</button>
+      <button className={styles.daily_allSports} onClick={dailyAllHandler}>
+        daily overview
+      </button>
 
       <button
         className={styles.summary_allSports}
