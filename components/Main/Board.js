@@ -183,7 +183,7 @@ const Board = (props) => {
 
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
-          {filteredByDate.length === 0 && currentSport != "all" && (
+          {filteredByDate.length === 0 && currentSport != "all" && currentSport !== "daily" && (
             <p className="m-2 text-xl"> no entries were made </p>
           )}
           {currentSport === "daily" && (
@@ -192,7 +192,7 @@ const Board = (props) => {
           {currentSport === "all" && (
             <Entry filteredByDate={allSupabaseSports} />
           )}
-          {currentSport != "all" && (
+          {currentSport != "all"  &&  currentSport !== "daily"  && (
             <Entry
               filteredEntries={filteredEntries}
               sportsDurationByMonth={sportsDurationByMonth}
