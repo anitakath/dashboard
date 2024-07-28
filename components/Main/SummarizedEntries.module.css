@@ -1,23 +1,23 @@
 .calendar_div {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 Spalten */
-    gap: 16px; /* Abstand zwischen den Feldern */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 16px; 
 }
 
 .month {
-    border: 1px solid #ccc; /* Optional: Rahmen um jeden Monat */
-    padding: 16px; /* Innenabstand */
+    border: 1px solid #ccc;
+    padding: 16px; 
 }
 
 .days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 Tage pro Woche */
-    gap: 8px; /* Abstand zwischen den Tagen */
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 8px;
 }
 
 .day {
-    border: 1px solid #ddd; /* Optional: Rahmen um jeden Tag */
-    text-align: center; /* Zentriert den Text */
+    border: 1px solid #ddd; 
+    text-align: center; 
     display: flex;
     flex-direction: column;
     height: 50px;
@@ -35,6 +35,7 @@
     
 }
 
+
 .sport_subsection{
     width: 100%;
     height: 100%;
@@ -44,6 +45,55 @@
     width: 100%;
     height: 25%;
 }
+
+
+
+
+.entries_div{
+    margin: 10px;
+    background: var(--purpleDarkHoverOpacity);
+    padding: 5px;
+}
+
+.title_days{    
+    margin-bottom: 3px;
+    border-bottom: 1px solid var(--purpleDark);
+}
+
+.expand_icon{
+    margin-right:7px;
+    font-size: 1.5rem;
+    transition: 0.4s ease;
+}
+
+.expand_btn{
+    color: var(--purpleDark);
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    transition: 0.4s ease;
+
+}
+
+.expand_icon:hover{
+    font-size: 1.8rem;
+}
+
+
+
+.expanded {
+    position: fixed; /* Oder absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* Oder eine andere Farbe */
+    z-index: 9999; /* Damit es über anderen Inhalten liegt */
+    overflow: scroll;
+    padding: 20px;
+    margin: 0;
+}
+
 
 
 .fandango_opaque{
