@@ -6,12 +6,17 @@ import { formatDate } from "@/custom-hooks/formatDate";
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter} from "@fortawesome/free-solid-svg-icons";
+//COMPONENTS
+import SearchBar from "../UI/SearchBar";
+
 
 const SummarizedEntries = (props) => {
-  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
+  const allSupabaseSports = useSelector(
+    (state) => state.sport.allSupabaseSports
+  );
   const [isExpanded, setIsExpanded] = useState(false);
-
   const currentDate = new Date();
+  const [showAllThisYear, setShowAllThisYear] = useState(false);
 
   const groupAndSortEntries = (entries) => {
     const groupedEntries = {};
@@ -111,9 +116,7 @@ const SummarizedEntries = (props) => {
                             <div
                               key={entry.entryId}
                               className={`${styles.sport_subsectionLabel} ${entryClass}`}
-                            >
-                              {/* Hier kannst du den Inhalt anpassen */}
-                            </div>
+                            ></div>
                           );
                         }
                       )}
@@ -128,18 +131,68 @@ const SummarizedEntries = (props) => {
     );
   };
 
-  const expandButtonText = isExpanded ? 'collapse' : 'expand'
+  // Funktion zum Filtern der Einträge des aktuellen Jahres, die nicht im aktuellen Monat sind
+  const filterAllThisYearNotInCurrentMonthEntries = (entries) => {
+    return entries.filter((entry) => {
+      const createdAtDate = new Date(entry.created_at);
+      return (
+        createdAtDate.getFullYear() === currentDate.getFullYear() &&
+        createdAtDate.getMonth() !== currentDate.getMonth()
+      );
+    });
+  };
 
-  console.log(isExpanded)
+  // Einträge des aktuellen Jahres, wenn der Button geklickt wird
+  const allThisYearEntries = showAllThisYear
+    ? groupAndSortEntries(
+        filterAllThisYearNotInCurrentMonthEntries(allSupabaseSports)
+      )
+    : {};
+
+  // Funktion zum Filtern der Einträge des aktuellen Jahres
+  const filterAllThisYearEntries = (entries) => {
+    return entries.filter((entry) => {
+      const createdAtDate = new Date(entry.created_at);
+      return createdAtDate.getFullYear() === currentDate.getFullYear();
+    });
+  };
+
+  /*
+  // Einträge des aktuellen Jahres, wenn der Button geklickt wird
+  const allThisYearEntries = showAllThisYear
+    ? groupAndSortEntries(filterAllThisYearEntries(allSupabaseSports))
+    : {};
+    */
+
+    console.log(allThisYearEntries);
 
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
-      <button className={styles.expand_btn} onClick={() => setIsExpanded(!isExpanded)}>
-        {!isExpanded && <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} className={styles.expand_icon} />}
-        {isExpanded && <FontAwesomeIcon icon={faDownLeftAndUpRightToCenter} className={styles.expand_icon}  />}
+      <button
+        className={styles.expand_btn}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        {!isExpanded && (
+          <FontAwesomeIcon
+            icon={faUpRightAndDownLeftFromCenter}
+            className={styles.expand_icon}
+          />
+        )}
+        {isExpanded && (
+          <FontAwesomeIcon
+            icon={faDownLeftAndUpRightToCenter}
+            className={styles.expand_icon}
+          />
+        )}
       </button>
       {renderCalendar()}
-      <div>
+
+      <SearchBar />
+
+
+
+
+      <div className="my-6">
         {Object.keys(currentMonthEntries).map((date) => (
           <div key={date} className={styles.entries_div}>
             <h2 className={styles.title_days}>{formatDate(date)}</h2>
@@ -161,14 +214,14 @@ const SummarizedEntries = (props) => {
           </div>
         ))}
 
-        {!showLastMonth && (
+        {/*
           <button
-            onClick={() => setShowLastMonth(true)}
-            className="mt-4 p-2 bg-blue-500 text-white "
+            onClick={() => setShowLastMonth(!showLastMonth)}
+            className={styles.show_more_btn}
           >
-            Zeige mehr
+            Show more from last month
           </button>
-        )}
+        
 
         {showLastMonth &&
           Object.keys(lastMonthEntries).map((date) => (
@@ -190,6 +243,34 @@ const SummarizedEntries = (props) => {
               })}
             </div>
           ))}
+*/}
+        <button
+          onClick={() => setShowAllThisYear(!showAllThisYear)}
+          className={styles.show_more_btn}
+        >
+          Show all entries this year
+        </button>
+
+        {showAllThisYear &&
+          Object.keys(allThisYearEntries).map((date) => (
+            <div key={date} className="my-4 p-2 bg-zinc-100">
+              <h2>{formatDate(date)}</h2>
+              {allThisYearEntries[date].map((entry) => {
+                const createdAtDate = new Date(entry.created_at);
+                const timeString = createdAtDate.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+                return (
+                  <div key={entry.entryId}>
+                    <p>
+                      {entry.title} - {timeString}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
       </div>
     </div>
   );
@@ -199,19 +280,3 @@ export default SummarizedEntries;
 
 
 
-
-  /*<div>
-       
-        {Object.keys(filteredAndGroupedEntries).map((date) => (
-          <div key={date} className=" my-4 p-2 bg-zinc-100">
-            <h2>{formatDate(date)}</h2>
-            {filteredAndGroupedEntries[date].map((entry) => (
-              <div key={entry.entryId}>
-                <p>
-                  {entry.title} - {entry.created_at}
-                </p>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>*/
