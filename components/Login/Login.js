@@ -44,7 +44,7 @@ const Login = () =>{
       // Redirect or update state to show logged-in content
       console.log("User logged in:", user);
     }
-*/
+ */
     dispatch(setLogin(true));
     router.push("/")
 

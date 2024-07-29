@@ -13,7 +13,7 @@ import Login from "@/components/Login/Login";
 //REDUX
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
-export async function getServerSideProps() {
+export async function ggetServerSideProps() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth(); // 0-basiert (0 = Januar)

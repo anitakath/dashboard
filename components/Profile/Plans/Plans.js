@@ -18,6 +18,7 @@ import { removeSport, replaceSportsArray } from "@/store/profileReducer";
 //CUSTOM HOOKS
 
 import { supabase } from '@/services/supabaseClient';
+import { current } from '@reduxjs/toolkit';
 
 
 const Plans = () =>{
@@ -51,7 +52,7 @@ const Plans = () =>{
       }
     };
     fetchPlannedSports();
-  }, []);
+  }, [addSport]);
 
   const addSportHandler = () => {
     setAddSport(!addSport);
@@ -241,6 +242,8 @@ const Plans = () =>{
     }
     setAreAllOpen(!areAllOpen);
   };
+
+
 
   return (
     <div className="flex-col justify-center items-center">
