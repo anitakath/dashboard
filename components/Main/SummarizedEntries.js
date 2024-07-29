@@ -108,11 +108,17 @@ const SummarizedEntries = (props) => {
               {[...Array(month.days)].map((_, dayIndex) => {
                 const dayNumber = dayIndex + 1;
                 const dateString = `${
+                  new Date(currentDate.getFullYear(), monthIndex, dayNumber + 1) 
+                    .toISOString()
+                    .split("T")[0]
+                }`;
+                /*
+                const dateString = `${
                   new Date(currentDate.getFullYear(), monthIndex, dayNumber)
                     .toISOString()
                     .split("T")[0]
                 }`;
-
+                */
                 return (
                   <div key={dayNumber} className={styles.day}>
                     <span className={styles.day_date}>{dayNumber}</span>
@@ -128,7 +134,7 @@ const SummarizedEntries = (props) => {
                               key={entry.entryId}
                               className={`${styles.sport_subsectionLabel} ${entryClass}`}
                             >
-                              {entry.title}
+                    
                             </div>
                           );
                         }
