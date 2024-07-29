@@ -5,6 +5,7 @@ import { supabase } from "@/services/supabaseClient";
 import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 import { setCurrentSport } from "@/store/sportReducer";
+import { useRouter } from "next/router";
 
 //COMPONENTS
 import Dashboard from "@/components/Dashboard/Dashboard";
@@ -53,12 +54,30 @@ export async function getServerSideProps() {
 
 
 export default function Home({ sportsData }) {
+
+    const router = useRouter();
+
+    /*IMPLEMENT AUTH!!!!  */
+    /*useEffect(() => {
+      const checkUserSession = async () => {
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
+        if (!session) {
+          router.push("/login");
+        }
+      };
+
+      checkUserSession();
+    }, [router]);*/
+
+
   //console.log(sportsData); => allSupabaseSports initial state???
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const currentSport = useSelector((state) => state.sport.currentSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-
 
 
     const fetchSportsData = async () => {
