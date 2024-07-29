@@ -58,10 +58,15 @@
 
 
 
-.entries_div{
+.entries_div, .searchEntries_div{
     margin: 10px;
     background: var(--purpleDarkHoverOpacity);
     padding: 5px;
+}
+
+.searchEntries_div{
+    background: var(--purpleDark);
+    color: beige;
 }
 
 .title_days{    
@@ -116,6 +121,22 @@
 .show_more_btn:hover{
     color: beige;
    background:  var(--purpleDark);
+}
+
+
+@media screen and (max-width: 1300px){
+    .calendar_div {
+        grid-template-columns: repeat(2, 1fr); 
+    
+    }
+}
+
+
+@media screen and (max-width: 1000px){
+    .calendar_div {
+        grid-template-columns: repeat(1, 1fr); 
+    
+    }
 }
 
 

@@ -3,24 +3,24 @@
 //STYLES
 import styles from './SearchBar.module.css'
 
+import React from 'react';
 
-const SearchBar = () =>{
+const SearchBar = ({ searchTerm, setSearchTerm }) => {
 
-    const submitHandler = (e) =>{
 
-        e.preventDefault()
 
-    }
-
-    return (
-    <div className="mx-2 my-8" onSubmit={submitHandler}> 
-    <form className={styles.form}>
-        <label className="hidden"> search</label>
-        <input type="search" placeholder="search" className={styles.search_input}></input>
-        <button className={styles.submit_btn}> 🔍 </button>
-    </form>
-    
+  return (
+    <div className={styles.form}>
+      <input
+        type="text"
+        placeholder="search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className={styles.search_input}
+      />
+       <button className={styles.submit_btn}> 🔍 </button>
     </div>
-    )}
+  );
+};
 
-export default SearchBar
+export default SearchBar;

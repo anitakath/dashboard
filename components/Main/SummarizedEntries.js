@@ -17,6 +17,7 @@ const SummarizedEntries = (props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const currentDate = new Date();
   const [showAllThisYear, setShowAllThisYear] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const groupAndSortEntries = (entries) => {
     const groupedEntries = {};
@@ -76,7 +77,7 @@ const SummarizedEntries = (props) => {
   const renderCalendar = () => {
     const monthsInYear = [
       { name: "JANUARY", days: 31 },
-      { name: "FEBRUARY", days: 28 }, // Schaltjahre nicht berücksichtigt für Einfachheit
+      { name: "FEBRUARY", days: 29 }, // Schaltjahre nicht berücksichtigt für Einfachheit
       { name: "MARCH", days: 31 },
       { name: "APRIL", days: 30 },
       { name: "MAY", days: 31 },
@@ -88,6 +89,15 @@ const SummarizedEntries = (props) => {
       { name: "NOVEMBER", days: 30 },
       { name: "DECEMBER", days: 31 },
     ];
+
+    // Filtere alle Einträge basierend auf dem Suchbegriff
+    const filterBySearchTerm = (entries) => {
+      if (!searchTerm) return entries; // Wenn kein Suchbegriff eingegeben wurde, gebe alle Einträge zurück.
+
+      return entries.filter((entry) =>
+        entry.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    };
 
     return (
       <div className={styles.calendar_div}>
@@ -102,6 +112,7 @@ const SummarizedEntries = (props) => {
                     .toISOString()
                     .split("T")[0]
                 }`;
+
                 return (
                   <div key={dayNumber} className={styles.day}>
                     <span className={styles.day_date}>{dayNumber}</span>
@@ -116,7 +127,9 @@ const SummarizedEntries = (props) => {
                             <div
                               key={entry.entryId}
                               className={`${styles.sport_subsectionLabel} ${entryClass}`}
-                            ></div>
+                            >
+                              {entry.title}
+                            </div>
                           );
                         }
                       )}
@@ -157,14 +170,25 @@ const SummarizedEntries = (props) => {
     });
   };
 
-  /*
-  // Einträge des aktuellen Jahres, wenn der Button geklickt wird
-  const allThisYearEntries = showAllThisYear
-    ? groupAndSortEntries(filterAllThisYearEntries(allSupabaseSports))
-    : {};
-    */
+  console.log(searchTerm);
 
-    console.log(allThisYearEntries);
+  // Filter all entries based on the search term
+  const filterBySearchTerm = (entries) => {
+    console.log(entries);
+    if (!searchTerm) return entries; // If no search term was entered, return all entries
+
+    return entries.filter((entry) => {
+      // Check whether title, name or entry contain the searchTerm
+      return (
+        entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        entry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (entry.entry &&
+          entry.entry.toLowerCase().includes(searchTerm.toLowerCase())) // Check that entry is not zero
+      );
+    });
+  };
+
+  const filteredCurrentMonthEntries = filterBySearchTerm(allSupabaseSports);
 
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
@@ -187,10 +211,23 @@ const SummarizedEntries = (props) => {
       </button>
       {renderCalendar()}
 
-      <SearchBar />
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+     
 
+      {filteredCurrentMonthEntries &&
+        filteredCurrentMonthEntries.map((entry, index) => (
+          <div key={index} className={styles.searchEntries_div}>
+            <h3 className={styles.title_days}>{entry.title}</h3>
+            <div className="flex my-2 justify-between relative">
+              <p>{entry.name}</p>
+              <p className="absolute top-0 right-2">
+                {" "}
+                {formatDate(entry.created_at)}
+              </p>
+            </div>
 
-
+          </div>
+        ))}
 
       <div className="my-6">
         {Object.keys(currentMonthEntries).map((date) => (
