@@ -82,7 +82,6 @@ export default function Home({ sportsData }) {
 
 
   const addSportsToReduxStore = (arr) => {
-    console.log(arr);
     dispatch(setCurrentSport(arr));
   };
 

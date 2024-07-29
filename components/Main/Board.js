@@ -81,9 +81,6 @@ const Board = (props) => {
      }
 
 
-  console.log(currentSport);
-  console.log(filteredEntries);
-
   return (
     <div className="w-full overflow-scroll h-full p-4">
       <div className="h-20 flex p-4 flex items-center relative">

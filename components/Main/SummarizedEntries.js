@@ -170,12 +170,14 @@ const SummarizedEntries = (props) => {
     });
   };
 
-  console.log(searchTerm);
+
 
   // Filter all entries based on the search term
-  const filterBySearchTerm = (entries) => {
-    console.log(entries);
-    if (!searchTerm) return entries; // If no search term was entered, return all entries
+  const filterBySearchTerm = (entries) => {;
+    if (!searchTerm){
+      return; // If no search term was entered, return no entries
+    }
+    
 
     return entries.filter((entry) => {
       // Check whether title, name or entry contain the searchTerm
