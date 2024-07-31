@@ -1,0 +1,14 @@
+
+
+.result_entry{
+   height: 60px;
+   overflow: scroll;
+   background: var(--purpleSuperLight);
+   margin: 5px 0px;
+   padding: 5px;
+   cursor: pointer;
+}
+
+.result_entry:hover{
+    box-shadow:0px 0px 5px grey;
+}

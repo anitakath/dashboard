@@ -24,6 +24,7 @@
 
 
   --purpleUltraLight: hsl(340, 60%, 85%);
+  --purpleSuperLight: hsl(340, 60%, 65%);
   --purpleLight: hsl(340, 90%, 55%);
   --purpleDark: hsl(340, 100%, 35%);
   --purpleDarkHover: rgba(179, 0, 60, 0.7);

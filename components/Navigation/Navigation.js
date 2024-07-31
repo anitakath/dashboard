@@ -86,7 +86,7 @@ const Navigation = () => {
 
 
   return (
-    <div className="w-full p-0 flex flex-col items-center shadow-section">
+    <div className="w-full p-0 flex flex-col items-center shadow-section border-8">
       <h1 className={styles.title}>DASHBOARD</h1>
       <h2 className={styles.subtitle}>Your sports</h2>
 
@@ -103,7 +103,9 @@ const Navigation = () => {
               <li key={index} className="flex">
                 <button
                   className={`${styles.sport_btn} ${
-                    active === sport && selectedSport != "all" ? styles.active : ""
+                    active === sport && selectedSport != "all"
+                      ? styles.active
+                      : ""
                   }`}
                   onClick={() => handleSportClick(sport)}
                 >
@@ -111,7 +113,10 @@ const Navigation = () => {
                     className={styles.delete_btn}
                     onClick={() => deleteSportHandler(sport)}
                   >
-                    <FontAwesomeIcon icon={faTrash} className={styles.trash_icon}/>
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      className={styles.trash_icon}
+                    />
                   </button>
                   <span className={styles.sportBtnText}>{sport}</span>
                   {sportObject &&

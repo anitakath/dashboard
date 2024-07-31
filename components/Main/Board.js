@@ -9,7 +9,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
 //REDUX
@@ -22,6 +22,10 @@ import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./SummarizedEntries";
+import SearchBar from "../UI/SearchBar";
+import ResultsBar from "../UI/ResultsBar";
+//HOOK
+import {useSearchTerm} from '../../custom-hooks/useSearchTerm'
 
 const Board = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -34,6 +38,11 @@ const Board = (props) => {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
   const actualMonth = actualMonthIndex + 1;
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+
   const filteredByDate = filteredEntries.filter((entry) => {
   const entryDate = new Date(entry.created_at);
   const entryYear = entryDate.getFullYear();
@@ -74,30 +83,35 @@ const Board = (props) => {
 
 
 
+  const navigateToSportPlanHandler = () =>{
+    dispatch(setSection("plans"));
+    router.push("/profile")
+  }
 
-     const navigateToSportPlanHandler = () =>{
-      dispatch(setSection("plans"));
-      router.push("/profile")
-     }
+  const filteredSearchedEntries = useSearchTerm(allSupabaseSports, searchTerm)
 
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
       <div className="h-20 flex p-4 flex items-center relative">
-        <input
-          type="text"
-          placeholder="search..."
-          className="border-b-2 w-3/12 mx-4 p-2 text-xl"
-        ></input>
+        <div className={styles.searchBarResult_div}>
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          {searchTerm != "" && (
+            <div className={styles.results_div}>
+              <ResultsBar filteredSearchedEntries={filteredSearchedEntries} />
+              <button className={styles.close_resultsBar_div} onClick={() => setSearchTerm("")}>
+                <FontAwesomeIcon icon={faXmark} />
+              </button>
+            </div>
+          )}
+        </div>
 
         <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faHouse} className="font_purple" />
         </p>
-
         <p className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faBars} className="font_purple" />
         </p>
-
         <Link href="/profile" className="mx-8 cursor-pointer">
           <FontAwesomeIcon icon={faUser} className="font_purple" />
         </Link>
@@ -111,7 +125,6 @@ const Board = (props) => {
             fetchpriority="eager"
           />
         </button>
-
         <p
           className="absolute right-14 top-2 h-20 w-20 p-4 "
           style={{ backgroundColor: "var(--purpleDarkHover)" }}
@@ -180,16 +193,18 @@ const Board = (props) => {
 
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
-          {filteredByDate.length === 0 && currentSport != "all" && currentSport !== "daily" && (
-            <p className="m-2 text-xl"> no entries were made </p>
-          )}
+          {filteredByDate.length === 0 &&
+            currentSport != "all" &&
+            currentSport !== "daily" && (
+              <p className="m-2 text-xl"> no entries were made </p>
+            )}
           {currentSport === "daily" && (
             <SummarizedEntries filteredEntries={filteredEntries} />
           )}
           {currentSport === "all" && (
             <Entry filteredByDate={allSupabaseSports} />
           )}
-          {currentSport != "all"  &&  currentSport !== "daily"  && (
+          {currentSport != "all" && currentSport !== "daily" && (
             <Entry
               filteredEntries={filteredEntries}
               sportsDurationByMonth={sportsDurationByMonth}
