@@ -54,8 +54,6 @@ const DetailsPage = () => {
 
   const editEntryHandler = (e) =>{
     e.preventDefault();
-
-    console.log('edit entry')
   }
 
   return (
@@ -63,9 +61,9 @@ const DetailsPage = () => {
       <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative z-20">
         <div className=" absolute w-full h-full m-0  z-0 top-0">  {/* future image div*/} </div>
         <div className="absolute w-full h-full z-10 top-0">
-           <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
-          <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
-        </Link>
+          <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
+            <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
+          </Link>
         
         <div className={styles.buttons_div}>
            <button className={styles.delete_btn} onClick={deleteEntryHandler}>

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter} from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
 import SearchBar from "../UI/SearchBar";
-
+import Link from "next/link";
 
 const SummarizedEntries = (props) => {
   const allSupabaseSports = useSelector(
@@ -112,16 +112,19 @@ const SummarizedEntries = (props) => {
                     .toISOString()
                     .split("T")[0]
                 }`;
-                /*
-                const dateString = `${
-                  new Date(currentDate.getFullYear(), monthIndex, dayNumber)
-                    .toISOString()
-                    .split("T")[0]
-                }`;
-                */
+
+
                 return (
                   <div key={dayNumber} className={styles.day}>
-                    <span className={styles.day_date}>{dayNumber}</span>
+                    <Link
+                      className={styles.day_date}
+                      href={`/daily-details/${dayNumber}${month.name}`}
+                    >
+                      {dayNumber}
+                    
+                    </Link>
+          
+
                     <div className={styles.sport_subsection}>
                       {(filteredAndGroupedEntries[dateString] || []).map(
                         (entry) => {
@@ -133,9 +136,7 @@ const SummarizedEntries = (props) => {
                             <div
                               key={entry.entryId}
                               className={`${styles.sport_subsectionLabel} ${entryClass}`}
-                            >
-                    
-                            </div>
+                            ></div>
                           );
                         }
                       )}
@@ -220,20 +221,18 @@ const SummarizedEntries = (props) => {
       {renderCalendar()}
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-     
 
       {filteredCurrentMonthEntries &&
         filteredCurrentMonthEntries.map((entry, index) => (
           <div key={index} className={styles.searchEntries_div}>
             <h3 className={styles.title_days}>{entry.title}</h3>
+
             <div className="flex my-2 justify-between relative">
-              <p>{entry.name}</p>
-              <p className="absolute top-0 right-2">
-                {" "}
+              <p className="m-2 mt-4"> {entry.entry}</p>
+              <p className={styles.created_at}>
                 {formatDate(entry.created_at)}
               </p>
             </div>
-
           </div>
         ))}
 

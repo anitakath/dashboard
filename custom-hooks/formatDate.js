@@ -10,6 +10,8 @@ export function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleString("de-DE", options).replace(",", "");
 }
+
+
 export function getMonth(created_at) {
   const months = [
     "January",

@@ -38,10 +38,19 @@
 .day_date{
     position: absolute;
     top: 0px;
-    left: 5px;
+    left: 0px;
     font-size: 1.2rem;
     opacity: 1;
+    width: 100%;
+    height: 100px;
+    cursor: pointer;
     
+}
+
+.day_date:hover{
+    color: var(--purpleDark);
+    font-weight: bolder;
+    font-size: 1.3rem;
 }
 
 
@@ -72,8 +81,17 @@
 .title_days{    
     margin-bottom: 3px;
     border-bottom: 1px solid var(--purpleDark);
+    font-size: 1.2rem;
+    margin: 3px;
 }
 
+
+.created_at{
+    position: absolute;
+    top: -30px;
+    right: 5px;
+    color: lightrey;
+}
 .expand_icon{
     margin-right:7px;
     font-size: 1.5rem;

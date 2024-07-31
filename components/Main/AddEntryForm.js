@@ -145,6 +145,7 @@ const AddEntryForm = (props) => {
         if (data) {
           dispatch(setSportsArrayy(data));
           setSuccessMessage(true);
+
         }
       } else {
         if (inputs.created_at === "") {
