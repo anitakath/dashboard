@@ -17,6 +17,7 @@ const AddSportForm = (props) => {
   const [error, setError] = useState(false);
   const [color, setColor] = useState(null);
   const dispatch = useDispatch();
+  const [selectedSportStyle, setSelectedSportStyle] = useState("")
 
   const navigation = useSelector((state) => state.sport.navigation);
   const sports = useSelector((state) => state.sport.currentSport[0])
@@ -49,6 +50,8 @@ const AddSportForm = (props) => {
 
   const colorLabelHandler = (selectedColor) => {
     setColor(selectedColor);
+    setSelectedSportStyle(selectedColor)
+
   };
 
 
@@ -87,11 +90,11 @@ const AddSportForm = (props) => {
           <button
             key={color}
             type="button"
-            className={`${styles.colors} ${styles[color]}`}
+            className={`${styles.colors} ${styles[color]} ${
+              color === selectedSportStyle ? styles.selectedSport : ""
+            }`}
             onClick={() => colorLabelHandler(color)}
-          >
-            ABC
-          </button>
+          ></button>
         ))}
       </div>
 

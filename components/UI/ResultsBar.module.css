@@ -5,6 +5,7 @@
    overflow: scroll;
    background: var(--purpleSuperLight);
    margin: 5px 0px;
+   margin-right: 7px;
    padding: 5px;
    cursor: pointer;
 }

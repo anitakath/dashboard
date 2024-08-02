@@ -258,7 +258,7 @@ const AddEntryForm = (props) => {
       selectedSport
     ) {
       const foundSport = currentSport.find((obj) => obj.name === selectedSport);
-      console.log(foundSport);
+
 
       if (foundSport) {
         setInputs((prevInputs) => ({
@@ -295,7 +295,7 @@ const AddEntryForm = (props) => {
   useEffect(() => {
     if (currentSport && selectedSport) {
       const foundSport =  currentSport[0].find((obj) => obj.name === selectedSport);
-      console.log(foundSport)
+    
       if (foundSport) {
         setInputs((prevInputs) => ({
           ...prevInputs,

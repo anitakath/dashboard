@@ -35,6 +35,14 @@
     box-shadow: 0px 0px 5px silver;
 }
 
+
+
+.selectedSport{
+    box-shadow: 0px 0px 5px var(--purpleDarkHover);
+    
+}
+
+
 .fandango{
     background: var(--fandango);
 }

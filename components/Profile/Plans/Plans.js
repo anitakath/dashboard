@@ -243,10 +243,16 @@ const Plans = () =>{
     setAreAllOpen(!areAllOpen);
   };
 
+  const [formIsOpen, setFormIsOpen] = useState(false);
+
+
+   const addSportClickHandler = () => {
+     setFormIsOpen((prevState) => !prevState);
+   };
 
 
   return (
-    <div className="flex-col justify-center items-center">
+    <div className="flex-col justify-center  items-center">
       <EditEntry
         isModalOpen={isModalOpen}
         currentSport={currentSport}
@@ -260,31 +266,37 @@ const Plans = () =>{
       />
 
       <div className={styles.form_container}>
-        {sportsArray === null && !addSport && <p>no entries were made yet</p>}
+        {sportsArray === null && !addSport && <p> no entries were made yet</p>}
 
         <div className="w-full">
           {addSport && (
-            <div className="w-full mx-2 flex">
-              <div className="flex-col mx-2 w-6/12">
-                <h2 className="text-xl my-2 px-2"> choose your sport </h2>
-                {currentSports &&
-                  currentSports.map((currSport) => (
-                    <div
-                      key={currSport.name}
-                      className={styles.current_sport_div}
-                    >
-                      <button
-                        onClick={() => chooseSportHandler({ currSport })}
-                        className={`${styles.sport_buttons} ${
-                          styles[currSport.color]
-                        } ${
-                          activeSport === currSport.name ? styles.active : ""
-                        }`}
+            <div className="w-full flex">
+              <div className="w-6/12 flex items-center h-full flex-col  ">
+                <div className="flex-col w-full">
+                  <h2 className="text-2xl my-2 px-2"> choose your sport </h2>
+                  {currentSports &&
+                    currentSports.map((currSport) => (
+                      <div
+                        key={currSport.name}
+                        className={styles.current_sport_div}
                       >
-                        {currSport.name}
-                      </button>
-                    </div>
-                  ))}
+                        <button
+                          onClick={() => chooseSportHandler({ currSport })}
+                          className={`${styles.sport_buttons} ${
+                            styles[currSport.color]
+                          } ${
+                            activeSport === currSport.name ? styles.active : ""
+                          }`}
+                        >
+                          {currSport.name}
+                        </button>
+                      </div>
+                    ))}
+                </div>
+
+                <h2 className="text-2xl my-4 px-2"> Your sport is not listed?</h2>
+                <button onClick={addSportClickHandler} className={styles.addNewSport_btn}> Add a new sport!</button>
+                {formIsOpen && <AddSportForm addSportClickHandler={addSportClickHandler} />}
               </div>
 
               <div className="flex-col mx-2 w-6/12 justify-start">

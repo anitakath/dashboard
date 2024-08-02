@@ -197,6 +197,21 @@
 
 
 
+.addNewSport_btn{
+    background: var(--purpleDarkHoverOpacity);
+    padding: 10px;
+    width: 50%;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.addNewSport_btn:hover{
+    background: var(--purpleDark);
+    color: beige;
+}
+
+
+
 @media screen and (max-width: 1200px){
     .container{
         width: 100%;

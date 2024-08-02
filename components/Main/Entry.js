@@ -9,6 +9,8 @@ import { getMonth } from "@/custom-hooks/formatDate";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useDaysWithoutEntry from "@/custom-hooks/useDaysWithoutEntry";
 import useSortedEntriesByMonth from "@/custom-hooks/useSortedEntriesByMonth"; // Importiere die neue Hook
+//COMPONENTS
+import SportsGrafic from "./All/SportsGrafic";
 
 const Entry = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -17,6 +19,7 @@ const Entry = (props) => {
   const sportsDurationByMonth = props.sportsDurationByMonth;
   const [openMonths, setOpenMonths] = useState({});
   const [entriesByMonth, setEntriesByMonth] = useState({});
+  const [showGrafic, setShowGrafic] = useState(null)
 
   useEffect(() => {
     if (filteredByDate) {
@@ -84,13 +87,13 @@ const Entry = (props) => {
     filteredEntriesByMonth[month] = filteredEntries;
   }
 
-  //const dateData = useDaysWithoutEntry(filteredEntriesByMonth);
+  const dateData = useDaysWithoutEntry(filteredEntriesByMonth);
 
-  //const [restDays, setRestDays] = useState(null);
-/*
+  const [restDays, setRestDays] = useState(null);
+
   useEffect(() => {
     setRestDays(dateData.restDaysPerMonth);
-  }, [dateData]);*/
+  }, [dateData]);
 
   // always sort sortedEntriesByMonth by date of creation of the respective entries.
 
@@ -106,10 +109,6 @@ const Entry = (props) => {
 
   //sort the entries by .created_at
   sortedEntries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-
-
-
 
   return (
     <div className={styles.container}>
@@ -149,7 +148,7 @@ const Entry = (props) => {
               className={styles.monthYear_header}
               onClick={() => toggleMonthEntries(monthYear)}
             >
-              {monthYear}
+              {monthYear} 
             </button>
           )}
           {openMonths[monthYear] &&
@@ -182,6 +181,10 @@ const Entry = (props) => {
                   {sumDurationsByMonth[monthYear]}
                 </span>
               </p>
+              <button onClick={() => setShowGrafic(monthYear)}> show grafic </button>
+              {showGrafic === monthYear && <div>
+                <SportsGrafic setShowGrafic={setShowGrafic} showGrafic={showGrafic}/>
+              </div>}
             </div>
           )}
         </div>

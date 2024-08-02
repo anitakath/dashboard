@@ -1,17 +1,13 @@
-
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort } from "@fortawesome/free-solid-svg-icons";
+
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Navigation.module.css";
 import AddSportForm from "./AddSportForm";
 import {
   setSelectedSport,
-  setAllSportsFromSupabase,
   setNavigation,
-  setLabel
 } from "@/store/sportReducer";
 
 import SortSports from "./SortSports";
@@ -20,14 +16,13 @@ const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [active, setActive] = useState(null);
   const dispatch = useDispatch();
-  //fetch all objects from supabase
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const alphabetic = allSupabaseSports ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort((a, b) => a.localeCompare(b)): [];
   const sportObject = useSelector((state) => state.sport.currentSport && state.sport.currentSport.length > 0 ? state.sport.currentSport[0] : null);
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
-  const currentSport = useSelector((state) => state.sport.currentSport);
   const navigation = useSelector((state) => state.sport.navigation);
-  const sportReducer = useSelector((state) => state.sport);
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
+
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
@@ -39,27 +34,6 @@ const Navigation = () => {
 
   }, [navigation])
 
-
-  /*
-
-  useEffect(() => {
-    dispatch(setAllSportsFromSupabase([])); // Initial empty array
-    fetchSportsData();
-  }, []);
-
-  const fetchSportsData = async () => {
-    try {
-      const response = await fetch("/api/sports");
-      if (!response.ok) {
-        throw new Error("Failed to fetch sports data");
-      }
-      const data = await response.json();
-      dispatch(setAllSportsFromSupabase(data.data));
-    } catch (error) {
-      console.error("Error fetching sports data:", error);
-    }
-  };
-  */
 
   const handleSportClick = (sport) => {
     setActive(sport);
@@ -78,15 +52,11 @@ const Navigation = () => {
       // Dispatch delete action here
     }
   };
-
-
-
-  const selectedSport = useSelector((state) => state.sport.selectedSport);
   
 
 
   return (
-    <div className="w-full p-0 flex flex-col items-center shadow-section border-8">
+    <div className="w-full p-0 flex flex-col items-center shadow-section">
       <h1 className={styles.title}>DASHBOARD</h1>
       <h2 className={styles.subtitle}>Your sports</h2>
 
