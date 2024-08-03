@@ -11,6 +11,10 @@
     overflow: scroll;
 }
 
+.yearHeader{
+    font-weight: bolder;
+    color: var(--purpleDark)
+}
 
 .monthYear_header{
     color: var(--purpleDark);
@@ -22,7 +26,32 @@
     cursor: pointer;
     width: 100%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: relative;
+
 }
+
+.monthYear_header_p{
+    margin: 0px 20px;
+    width: 150px;
+    color: black;
+    display: flex;
+}
+
+.monthYear_header_span{
+    font-size: 1rem;
+    height: 100%;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+
+}
+
+.totalDuration{
+    color: black;
+}
+
 
 .link{
     cursor: pointer;

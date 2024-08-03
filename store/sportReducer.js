@@ -11,6 +11,8 @@ const sportSlice = createSlice({
     /********/
     
     allSupabaseSports: [],
+    /* needs to be changed to sortedEntriesByYearbyMonth: */
+    sortedEntriesByMonth: [],
     //array with strings (name of sport)
     navigation: [],
     label: [],
@@ -31,6 +33,9 @@ const sportSlice = createSlice({
     },
     setAllSportsFromSupabase(state, action) {
       state.allSupabaseSports = action.payload;
+    },
+    setSortedEntriesByMonth(state, action) {
+      state.sortedEntriesByMonth = action.payload;
     },
     setNavigation(state, action) {
       state.navigation = action.payload;
@@ -74,6 +79,7 @@ export const {
 
   setAllSports,
   setAllSportsFromSupabase,
+  setSortedEntriesByMonth,
   setNavigation,
   setLabel,
   deleteSport,

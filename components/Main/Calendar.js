@@ -42,7 +42,6 @@ const renderRestDays = () => {
   ));
 };
 
-
    const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
 
 

@@ -1,5 +1,5 @@
 
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import useSortedEntriesByMonth from "@/custom-hooks/useSortedEntriesByMonth";
 
 
@@ -10,6 +10,11 @@ const SportsGrafic= (props) =>{
     (state) => state.sport.allSupabaseSports
   );
 
+  const sortedEntriesByMonth = useSelector(
+    (state) => state.sport.sortedEntriesByMonth
+  );
+
+  console.log(sortedEntriesByMonth)
   /* Funktion zum Filtern der Objekte nach Monat
   
     return sportsArray.filter((sport) => {
@@ -38,7 +43,7 @@ const getUniqueMonths = (sportsArray) => {
 
 const uniqueMonths = getUniqueMonths(allSupabaseSports);
 
-//console.log(uniqueMonths)
+  console.log(uniqueMonths)
 
   /*
   Gefilterte Sportobjekte für den angegebenen Monat

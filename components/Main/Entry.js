@@ -1,7 +1,7 @@
 import Link from "next/link";
 //STYLES
 import styles from './Entry.module.css'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { formatDate } from "@/custom-hooks/formatDate";
 //HOOKS
@@ -9,8 +9,13 @@ import { getMonth } from "@/custom-hooks/formatDate";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useDaysWithoutEntry from "@/custom-hooks/useDaysWithoutEntry";
 import useSortedEntriesByMonth from "@/custom-hooks/useSortedEntriesByMonth"; // Importiere die neue Hook
+import useSortedEntriesByYearAndMonth from "@/custom-hooks/useSortedEntriesByYearAndMonth";
 //COMPONENTS
-import SportsGrafic from "./All/SportsGrafic";
+//import SportsGrafic from "./All/SportsGrafic";
+//REDUX
+import { setSortedEntriesByMonth } from "@/store/sportReducer";
+//COMPONENTS
+import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
 const Entry = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -19,7 +24,9 @@ const Entry = (props) => {
   const sportsDurationByMonth = props.sportsDurationByMonth;
   const [openMonths, setOpenMonths] = useState({});
   const [entriesByMonth, setEntriesByMonth] = useState({});
+  const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null)
   const [showGrafic, setShowGrafic] = useState(null)
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (filteredByDate) {
@@ -42,16 +49,56 @@ const Entry = (props) => {
           updatedEntriesByDay[dayMonthYear] = [];
         }
         updatedEntriesByDay[dayMonthYear].push(entry);
-      });
+      })
+
+      const sortedEntries = {};
+
+      // Iteriere über jedes Datum im updatedEntriesByDay
+      for (const date in updatedEntriesByDay) {
+        const entries = updatedEntriesByDay[date];
+
+        // Extrahiere Jahr, Monat und Tag aus dem Datum
+        const [day, monthName, year] = date.split(" ");
+
+        // Stelle sicher, dass das Jahr im sortedEntries existiert
+        if (!sortedEntries[year]) {
+          sortedEntries[year] = {};
+        }
+
+        // Stelle sicher, dass der Monat im Jahr existiert
+        if (!sortedEntries[year][monthName]) {
+          sortedEntries[year][monthName] = [];
+        }
+
+        // Füge die Einträge zum entsprechenden Jahr und Monat hinzu
+        sortedEntries[year][monthName].push(...entries);
+      }
+
+      // Umwandeln des Objekts in das gewünschte Array-Format
+      // Umwandeln des Objekts in das gewünschte Array-Format
+     const finalSortedArray = Object.keys(sortedEntries)
+       .filter((year) => year !== "1014") // Filtere das Jahr 1014 heraus
+       .sort((a, b) => b - a) // Sortiere die Jahre in absteigender Reihenfolge
+       .map((year) => ({
+         [year]: Object.keys(sortedEntries[year]).map((month) => ({
+           [month]: sortedEntries[year][month],
+         })),
+       }));
+
+     setEntriesByYearAndMonth(finalSortedArray);
+     // const final = useSortedEntriesByYearAndMonth(updatedEntriesByDay)
+      //console.log(final)
 
       setEntriesByMonth(updatedEntriesByMonth);
     }
   }, []);
+  
+
 
 
   const sortedEntriesByMonth = useSortedEntriesByMonth(entriesByMonth);
 
-
+  
 
   const sumDurationsByMonth = {};
   for (const month in entriesByMonth) {
@@ -110,6 +157,14 @@ const Entry = (props) => {
   //sort the entries by .created_at
   sortedEntries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
+    useEffect(() => {
+      dispatch(setSortedEntriesByMonth(entriesByMonth));
+    }, []);
+
+    console.log(entriesByMonth);
+    console.log(sortedEntriesByMonth);
+    console.log(entriesByYearAndMonth);
+
   return (
     <div className={styles.container}>
       {currentSport != "all" && (
@@ -141,54 +196,19 @@ const Entry = (props) => {
           </div>
         ))}
 
-      {Object.keys(sortedEntriesByMonth).map((monthYear) => (
-        <div key={monthYear}>
-          {currentSport === "all" && (
-            <button
-              className={styles.monthYear_header}
-              onClick={() => toggleMonthEntries(monthYear)}
-            >
-              {monthYear} 
-            </button>
-          )}
-          {openMonths[monthYear] &&
-            sortedEntriesByMonth[monthYear].map((entry, index) => (
-              <div
-                className={styles.entry}
-                key={index}
-                style={{
-                  background: getComputedStyle(
-                    document.documentElement
-                  ).getPropertyValue(`--${entry.label}`),
-                }}
-              >
-                <Link href={`/details/${entry.entryPath}`}>
-                  <div className={styles.link}>
-                    <p className="my-2 px-2 text-xs absolute right-4">
-                      {formatDate(entry.created_at)}
-                    </p>
-                    <h2 className="text-2xl mb-4 mt-2 px-2">{entry.title}</h2>
-                    <p className="px-2 mb-4">{entry.entry}</p>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          {currentSport === "all" && (
-            <div>
-              <p className={styles.totalHours_p}>
-                Total hours of sport:
-                <span className={styles.totalHours_span}>
-                  {sumDurationsByMonth[monthYear]}
-                </span>
-              </p>
-              <button onClick={() => setShowGrafic(monthYear)}> show grafic </button>
-              {showGrafic === monthYear && <div>
-                <SportsGrafic setShowGrafic={setShowGrafic} showGrafic={showGrafic}/>
-              </div>}
-            </div>
-          )}
-        </div>
-      ))}
+
+     
+     <EntriesByYearAndMonth 
+  
+      entriesByYearAndMonth={entriesByYearAndMonth} 
+      currentSport={currentSport} 
+      toggleMonthEntries={toggleMonthEntries} 
+      openMonths={openMonths} 
+      /> 
+
+    
+      
+         
     </div>
   );
 };
