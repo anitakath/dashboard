@@ -42,7 +42,9 @@ const renderRestDays = () => {
   ));
 };
 
-   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
+  const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
+
+  console.log(getEntryCountForMonth)
 
 
    // make getMonthStyle in  useCalendar.js work!! 
@@ -166,7 +168,7 @@ const renderRestDays = () => {
             selectedSport
           );
           const monthStyle = getMonthStyle(entryCount);
-
+          console.log(entryCount);
           return (
             <div
               key={month}
