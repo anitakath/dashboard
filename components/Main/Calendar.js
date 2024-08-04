@@ -10,7 +10,8 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setSelectedSport } from '@/store/sportReducer';
 //HOOKS
 import { useEntryCountForMonth, useGetMonthStyle, months } from "@/custom-hooks/useCalendar"; // Importiere die neuen Hooks
-
+//COMPONENTS
+import RestDays from './Calendar/RestDays';
 
 const Calendar = (props) =>{
   const allSupabaseSports = useSelector(
@@ -25,27 +26,9 @@ const Calendar = (props) =>{
     month: selectedMonth,
     year: selectedYear,
   });
-  const restDays = useSelector((state) => state.calendar.restDaysPerMonth)
-
-
-
-
-const renderRestDays = () => {
-  return Object.keys(restDays).map((month) => (
-    <div key={month}>
-      <ul>
-        <li className={styles.restDays_li}>
-          <span className={styles.restDays_li_span}>{month}: </span> {restDays[month]}
-        </li>
-      </ul>
-    </div>
-  ));
-};
+ 
 
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
-
-  console.log(getEntryCountForMonth)
-
 
    // make getMonthStyle in  useCalendar.js work!! 
   // add a style to the month-divs, depending on the number of entries
@@ -168,7 +151,7 @@ const renderRestDays = () => {
             selectedSport
           );
           const monthStyle = getMonthStyle(entryCount);
-          console.log(entryCount);
+     
           return (
             <div
               key={month}
@@ -189,7 +172,7 @@ const renderRestDays = () => {
       {selectedSport === "all" && (
         <div className="border-2">
           <h1 className=" text-xl m-2">Rest Days Per Month</h1>
-          {renderRestDays()}
+          <RestDays/>
         </div>
       )}
     </div>

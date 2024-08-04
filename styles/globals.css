@@ -57,6 +57,13 @@
   --spaceCadet: #F8C0C8;
   --aquamarine: #B7FFD8;
 
+  /*to be added to AddSport.js*/
+  --frenchGrey: #BCBDC0;
+  --eggplant: #734B5E;
+  --chiliRed: #E3170A;
+  --mossGreen: #255200;
+  /*----*/
+
     --fandango_opaque: rgba(168, 8, 116, 0.7); /* #A80874 */
     --sinopia_opaque: rgba(199, 62, 29, 0.7); /* #C73E1D */
     --mandarine_opaque: rgba(251, 139, 36, 0.7); /* #FB8B24 */

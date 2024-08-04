@@ -161,9 +161,7 @@ const Entry = (props) => {
       dispatch(setSortedEntriesByMonth(entriesByMonth));
     }, []);
 
-    console.log(entriesByMonth);
-    console.log(sortedEntriesByMonth);
-    console.log(entriesByYearAndMonth);
+ 
 
   return (
     <div className={styles.container}>
