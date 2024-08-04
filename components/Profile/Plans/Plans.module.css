@@ -280,6 +280,18 @@
     background: linear-gradient(to right, transparent, var(--jasmine));
 }
 
+.frenchGrey_bg{
+    background: linear-gradient(to right, transparent, var(--frenchGrey));
+}
+
+.eggplant_bg{
+    background: linear-gradient(to right, transparent, var(--eggplant));
+}
+
+.mossGreen_bg{
+    background: linear-gradient(to right, transparent, var(--mossGreen));
+}
+
 
 
 
@@ -288,17 +300,13 @@
     background: var(--fandango);
 }
 
-
-
 .celeste{
     background: var(--celeste);
 }
 
-
 .springGreen{
     background: var(--springGreen);
 }
-
 
 .sinopia{
     background: var(--sinopia);
@@ -317,18 +325,14 @@
     background: var(--spaceCadet);
 }
 
-
 .mauve{
     background: var(--mauve)
 }
-
 
 .aquamarine{
     background: var(--aquamarine);
   
 }
-
-
 
 .mandarine{
     background: var(--mandarine)
@@ -338,13 +342,22 @@
     background: var(--brown)
 }
 
-
 .mustard{
     background: var(--mustard);
 }
-
 
 .jasmine{
     background: var(--jasmine)
 }
 
+.frenchGrey{
+    background:var(--frenchGrey);
+}
+
+.eggplant{
+    background: var(--eggplant);
+}
+
+.mossGreen{
+    background: var(--mossGreen);
+}

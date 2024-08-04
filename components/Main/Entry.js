@@ -144,10 +144,12 @@ const Entry = (props) => {
 
   // always sort sortedEntriesByMonth by date of creation of the respective entries.
 
-  for (const month in sortedEntriesByMonth) {
-    sortedEntriesByMonth[month].sort((a, b) => {
-      return new Date(b.created_at) - new Date(a.created_at);
-    });
+  if(sortedEntriesByMonth){
+    for (const month in sortedEntriesByMonth) {
+      sortedEntriesByMonth[month].sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+    }
   }
 
 
@@ -197,7 +199,6 @@ const Entry = (props) => {
 
      
      <EntriesByYearAndMonth 
-  
       entriesByYearAndMonth={entriesByYearAndMonth} 
       currentSport={currentSport} 
       toggleMonthEntries={toggleMonthEntries} 

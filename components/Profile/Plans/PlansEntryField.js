@@ -6,7 +6,10 @@ import styles from './Plans.module.css'
 
 //HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
-
+import { useEffect } from 'react';
+//REDUX
+import { useDispatch, useSelector } from 'react-redux';
+import { setAllPlannedSports } from '@/store/sportReducer';
 const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHandler, deleteSportHandler, checkSportHandler, openDetailsIds}) =>{
   
   
@@ -14,8 +17,15 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
   const sortedByDate = [...sortedSportsArray].sort(
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
   );
+  const dispatch = useDispatch();
 
+  console.log(sortedByDate)
+  useEffect(() => {
+    dispatch(setAllPlannedSports(sortedByDate));
 
+  }, [sortedByDate])
+
+  
 
   return (
     <div className=" w-full ">

@@ -6,8 +6,6 @@ import { formatDate } from '@/custom-hooks/formatDate';
 
 
 const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport, toggleMonthEntries, openMonths }) =>{
-
-    console.log(entriesByYearAndMonth)
     return (
       <div className=''>
         {entriesByYearAndMonth &&

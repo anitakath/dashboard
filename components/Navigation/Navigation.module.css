@@ -295,3 +295,15 @@
 .wenge{
     background: var(--wenge);
 }
+
+.frenchGrey{
+    background:var(--frenchGrey);
+}
+
+.eggplant{
+    background: var(--eggplant);
+}
+
+.mossGreen{
+    background: var(--mossGreen);
+}

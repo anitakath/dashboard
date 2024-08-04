@@ -7,8 +7,7 @@ export const useEntryCountForMonth = (allSupabaseSports) => {
     }
 
     if (selectedSport === "all") {
-      console.log("MOINCITO");
-      console.log(allSupabaseSports);
+
 
       // Create an object to group the entries by year and month
       const groupedEntries = {};

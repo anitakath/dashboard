@@ -44,6 +44,12 @@ const AddSportForm = (props) => {
   const navigation = useSelector((state) => state.sport.navigation);
   const sports = useSelector((state) => state.sport.currentSport[0]);
 
+  const allPlannedSports = useSelector(
+    (state) => state.sport.allPlannedSports
+  );
+
+  console.log(allPlannedSports);
+
   const colors = [
     "fandango",
     "celeste",
@@ -58,9 +64,16 @@ const AddSportForm = (props) => {
     "brown",
     "jasmine",
     "mustard",
+    "frenchGrey",
+    "eggplant",
+    "mossGreen",
   ];
 
-  const usedColors = new Set(sports.map((sport) => sport.color));
+  //const usedColors = new Set(sports.map((sport) => sport.color));
+  const usedColors = new Set([
+    ...sports.map((sport) => sport.color),
+    ...allPlannedSports.map((sport) => sport.label), // Hier fügen wir die Labels hinzu
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,6 +138,7 @@ const AddSportForm = (props) => {
       dispatch({ type: "SET_ERROR", payload: { error: false, message: "" } });
     }
   };
+
 
   return (
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>

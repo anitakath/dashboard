@@ -6,8 +6,8 @@ import styles from './Plans.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse} from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
-import AddEntryForm from '../../Main/AddEntryForm';
-import AddSportForm from '../../Navigation/AddSportForm';
+import AddSportField from './AddSportField';
+
 import PlansHeader from './PlansHeader';
 import EditEntry from "./EditEntry";
 import EditEntryField from './EditEntryField';
@@ -250,6 +250,7 @@ const Plans = () =>{
      setFormIsOpen((prevState) => !prevState);
    };
 
+ 
 
   return (
     <div className="flex-col justify-center  items-center">
@@ -269,44 +270,15 @@ const Plans = () =>{
         {sportsArray === null && !addSport && <p> no entries were made yet</p>}
 
         <div className="w-full">
-          {addSport && (
-            <div className="w-full flex">
-              <div className="w-6/12 flex items-center h-full flex-col  ">
-                <div className="flex-col w-full">
-                  <h2 className="text-2xl my-2 px-2"> choose your sport </h2>
-                  {currentSports &&
-                    currentSports.map((currSport) => (
-                      <div
-                        key={currSport.name}
-                        className={styles.current_sport_div}
-                      >
-                        <button
-                          onClick={() => chooseSportHandler({ currSport })}
-                          className={`${styles.sport_buttons} ${
-                            styles[currSport.color]
-                          } ${
-                            activeSport === currSport.name ? styles.active : ""
-                          }`}
-                        >
-                          {currSport.name}
-                        </button>
-                      </div>
-                    ))}
-                </div>
-
-                <h2 className="text-2xl my-4 px-2"> Your sport is not listed?</h2>
-                <button onClick={addSportClickHandler} className={styles.addNewSport_btn}> Add a new sport!</button>
-                {formIsOpen && <AddSportForm addSportClickHandler={addSportClickHandler} />}
-              </div>
-
-              <div className="flex-col mx-2 w-6/12 justify-start">
-                <h2 className="text-xl my-2 px-2">
-                  tell us more about your goals :)
-                </h2>
-                <AddEntryForm chosenSport={chosenSport} />
-              </div>
-            </div>
-          )}
+          <AddSportField
+            addSport={addSport}
+            currentSports={currentSports}
+            activeSport={activeSport}
+            addSportClickHandler={addSportClickHandler}
+            formIsOpen={formIsOpen}
+            chosenSport={chosenSport}
+            chooseSportHandler={chooseSportHandler}
+          />
         </div>
 
         {!addSport && sportsArray != null && (

@@ -94,6 +94,18 @@
     background: var(--jasmine)
 }
 
+.frenchGrey{
+    background:var(--frenchGrey);
+}
+
+.eggplant{
+    background: var(--eggplant);
+}
+
+.mossGreen{
+    background: var(--mossGreen);
+}
+
 .add_btn{
     background: var(--purpleDark);
     color: beige;

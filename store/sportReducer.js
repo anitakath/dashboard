@@ -9,8 +9,8 @@ const sportSlice = createSlice({
     //array with object .name, .color
     currentSport: [],
     /********/
-    
     allSupabaseSports: [],
+    allPlannedSports: [],
     /* needs to be changed to sortedEntriesByYearbyMonth: */
     sortedEntriesByMonth: [],
     //array with strings (name of sport)
@@ -25,9 +25,9 @@ const sportSlice = createSlice({
     setCurrentSport(state, action){
       state.currentSport = [action.payload]; 
     },
-   
-
-    
+    setAllPlannedSports(state, action){
+      state.allPlannedSports = action.payload;
+    },
     setAllSports(state, action) {
       state.allSports = action.payload;
     },
@@ -76,7 +76,7 @@ const sportSlice = createSlice({
 export const {
   setSelectedSport,
   setCurrentSport,
-
+  setAllPlannedSports,
   setAllSports,
   setAllSportsFromSupabase,
   setSortedEntriesByMonth,
