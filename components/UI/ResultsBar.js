@@ -1,3 +1,4 @@
+import Link from 'next/link';
 
 //STYLES
 import styles from './ResultsBar.module.css'
@@ -16,12 +17,14 @@ const ResultsBar = ({ filteredSearchedEntries }) => {
     <div>
       {filteredSearchedEntries.map((entry) => (
         <div key={entry.id} className={styles.result_entry}>
-          <h3>
-            <strong> {entry.title}</strong>
-          </h3>
-          <p>{entry.entry}</p>
+          <Link href={`/details/${entry.entryPath}`}>
+            <h3>
+              <strong> {entry.title}</strong>
+            </h3>
+            <p>{entry.entry}</p>
 
-          <p>{new Date(entry.created_at).toLocaleString()}</p>
+            <p>{new Date(entry.created_at).toLocaleString()}</p>
+          </Link>
         </div>
       ))}
     </div>
