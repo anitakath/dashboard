@@ -8,6 +8,7 @@ import { formatDate } from '@/custom-hooks/formatDate';
 const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport, toggleMonthEntries, openMonths }) =>{
     return (
       <div className=''>
+       
         {entriesByYearAndMonth &&
           entriesByYearAndMonth.map((yearEntry) => {
             const year = Object.keys(yearEntry)[0]; // Holen des Jahres
@@ -63,7 +64,7 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport, toggleMont
                                     {formatDate(entry.created_at)}
                                   </p>
                                   <h2 className="text-2xl mb-4 mt-2 px-2">
-                                    {entry.title}
+                                    {entry.title} 
                                   </h2>
                                   <p className="px-2 mb-4">{entry.entry}</p>
                                 </div>

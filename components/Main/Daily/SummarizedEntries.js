@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 import styles from "./SummarizedEntries.module.css";
 //HOOKS
 import { formatDate } from "@/custom-hooks/formatDate";
@@ -7,8 +8,9 @@ import { formatDate } from "@/custom-hooks/formatDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter} from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
-import SearchBar from "../UI/SearchBar";
-import Link from "next/link";
+import SearchBar from "../../UI/SearchBar"
+import SummarizedCalendar from "./SummarizedCalendar";
+
 
 const SummarizedEntries = (props) => {
   const allSupabaseSports = useSelector(
@@ -32,10 +34,9 @@ const SummarizedEntries = (props) => {
     return groupedEntries;
   };
 
-  // Gefilterte und gruppierte/sortierte Einträge (jetzt ungefiltert)
+
   const filteredAndGroupedEntries = groupAndSortEntries(allSupabaseSports);
 
-  // Funktion zum Filtern der Einträge nach dem aktuellen Monat
   const filterCurrentMonthEntries = (entries) => {
     return entries.filter((entry) => {
       const createdAtDate = new Date(entry.created_at);
@@ -72,84 +73,6 @@ const SummarizedEntries = (props) => {
   const lastMonthEntries = showLastMonth
     ? groupAndSortEntries(filterLastMonthEntries(allSupabaseSports))
     : {};
-
-  // Funktion zum Rendern des Kalenders
-  const renderCalendar = () => {
-    const monthsInYear = [
-      { name: "JANUARY", days: 31 },
-      { name: "FEBRUARY", days: 29 }, // Schaltjahre nicht berücksichtigt für Einfachheit
-      { name: "MARCH", days: 31 },
-      { name: "APRIL", days: 30 },
-      { name: "MAY", days: 31 },
-      { name: "JUNE", days: 30 },
-      { name: "JULY", days: 31 },
-      { name: "AUGUST", days: 31 },
-      { name: "SEPTEMBER", days: 30 },
-      { name: "OCTOBER", days: 31 },
-      { name: "NOVEMBER", days: 30 },
-      { name: "DECEMBER", days: 31 },
-    ];
-
-    // Filtere alle Einträge basierend auf dem Suchbegriff
-    const filterBySearchTerm = (entries) => {
-      if (!searchTerm) return entries; // Wenn kein Suchbegriff eingegeben wurde, gebe alle Einträge zurück.
-
-      return entries.filter((entry) =>
-        entry.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    };
-
-    return (
-      <div className={styles.calendar_div}>
-        {monthsInYear.map((month, monthIndex) => (
-          <div key={month.name} className={styles.month}>
-            <h3 className={styles.title}>{month.name}</h3>
-            <div className={styles.days}>
-              {[...Array(month.days)].map((_, dayIndex) => {
-                const dayNumber = dayIndex + 1;
-                const dateString = `${
-                  new Date(currentDate.getFullYear(), monthIndex, dayNumber + 1) 
-                    .toISOString()
-                    .split("T")[0]
-                }`;
-
-
-                return (
-                  <div key={dayNumber} className={styles.day}>
-                    <Link
-                      className={styles.day_date}
-                      href={`/daily-details/${dayNumber}${month.name}`}
-                    >
-                      {dayNumber}
-                    
-                    </Link>
-          
-
-                    <div className={styles.sport_subsection}>
-                      {(filteredAndGroupedEntries[dateString] || []).map(
-                        (entry) => {
-                          // Hier wird die Klasse dynamisch basierend auf entry.label hinzugefügt
-                          const entryClass =
-                            styles[`${entry.label}_opaque`] ||
-                            styles.defaultLabel; // Fallback-Klasse falls label nicht existiert
-                          return (
-                            <div
-                              key={entry.entryId}
-                              className={`${styles.sport_subsectionLabel} ${entryClass}`}
-                            ></div>
-                          );
-                        }
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   // Funktion zum Filtern der Einträge des aktuellen Jahres, die nicht im aktuellen Monat sind
   const filterAllThisYearNotInCurrentMonthEntries = (entries) => {
@@ -218,7 +141,8 @@ const SummarizedEntries = (props) => {
           />
         )}
       </button>
-      {renderCalendar()}
+     
+      <SummarizedCalendar filteredAndGroupedEntries={filteredAndGroupedEntries} currentDate={currentDate} />
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
@@ -258,36 +182,7 @@ const SummarizedEntries = (props) => {
           </div>
         ))}
 
-        {/*
-          <button
-            onClick={() => setShowLastMonth(!showLastMonth)}
-            className={styles.show_more_btn}
-          >
-            Show more from last month
-          </button>
-        
-
-        {showLastMonth &&
-          Object.keys(lastMonthEntries).map((date) => (
-            <div key={date} className="my-4 p-2 bg-zinc-100">
-              <h2>{formatDate(date)}</h2>
-              {lastMonthEntries[date].map((entry) => {
-                const createdAtDate = new Date(entry.created_at);
-                const timeString = createdAtDate.toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }); // Format: HH:MM
-                return (
-                  <div key={entry.entryId}>
-                    <p>
-                      {entry.title} - {timeString}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          ))}
-*/}
+       
         <button
           onClick={() => setShowAllThisYear(!showAllThisYear)}
           className={styles.show_more_btn}

@@ -21,7 +21,7 @@ import { setLogout } from "@/store/authReducer";
 import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
-import SummarizedEntries from "./SummarizedEntries";
+import SummarizedEntries from "./Daily/SummarizedEntries";
 import SearchBar from "../UI/SearchBar";
 import ResultsBar from "../UI/ResultsBar";
 //HOOK

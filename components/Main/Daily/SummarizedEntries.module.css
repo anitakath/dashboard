@@ -35,6 +35,10 @@
     overflow: scroll;
 }
 
+.day:hover{
+    background: var(--purpleDarkHoverOpacity);
+}
+
 .day_date{
     position: absolute;
     top: 0px;
@@ -50,7 +54,7 @@
 .day_date:hover{
     color: var(--purpleDark);
     font-weight: bolder;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
 }
 
 
