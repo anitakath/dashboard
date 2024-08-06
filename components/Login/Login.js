@@ -5,8 +5,12 @@ import { setLogin } from "@/store/authReducer";
 import { useRouter } from "next/router";
 import styles from './Login.module.css'
 import { supabase } from "@/services/supabaseClient";
+import { StyleRegistry } from "styled-jsx";
 
-const Login = () =>{
+const Login = (props) =>{
+
+  const setRegister = props.setRegister;
+  const successMessage = props.successMessage;
 
   const [loginData, setLoginData] = useState({
     email: null,
@@ -19,18 +23,12 @@ const Login = () =>{
   const dispatch = useDispatch();
 
 
-    const username = process.env.NEXT_PUBLIC_LOGIN_USERNAME;
-    const password = process.env.NEXT_PUBLIC_LOGIN_PASSWORD;
 
-    console.log(username)
-    console.log(password)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
    setLoginData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  console.log(loginData)
 
   const loginHandler = async (e) => {
     e.preventDefault(); // Verhindert das Standardverhalten des Formulars
@@ -110,6 +108,15 @@ const Login = () =>{
               LOGIN
             </button>
             {error && <p className="text-red-500">{error}</p>}
+            <p> not registered yet? </p>
+            <button
+              type="button"
+              className={styles.register_btn}
+              onClick={() => setRegister(true)}
+            >
+              register here
+            </button>
+            {successMessage && <p> {successMessage}</p>}
           </form>
         </div>
       </div>

@@ -22,3 +22,9 @@
     background-color: var(--purpleDark);
     color: beige;
 }
+
+.register_btn{
+    color: var(--purpleDark);
+    margin: 10px 0px;
+}
+

@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 //COMPONENTS
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
+import Register from "@/components/Login/Register";
 //REDUX
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
@@ -76,9 +77,10 @@ export default function Home({ sportsData }) {
   //console.log(sportsData); => allSupabaseSports initial state???
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const [register, setRegister] = useState(false)
   const currentSport = useSelector((state) => state.sport.currentSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-
+  const [successMessage, setSuccessMessage] = useState(null);
 
     const fetchSportsData = async () => {
       try {
@@ -174,7 +176,22 @@ export default function Home({ sportsData }) {
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">
-      {!isLoggedIn && <Login />}
+      {register && (
+        <Register
+          setSuccessMessage={setSuccessMessage}
+          successMessage={successMessage}
+          setRegister={setRegister}
+          register={register}
+        />
+      )}
+      {!isLoggedIn && !register && (
+        <Login
+          setSuccessMessage={setSuccessMessage}
+          successMessage={successMessage}
+          setRegister={setRegister}
+          register={register}
+        />
+      )}
       {isLoggedIn && <Dashboard />}
     </div>
   );
