@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 const RestDays = (props) => {
   const restDays = useSelector((state) => state.calendar.restDaysPerMonth);
 
+
   const renderRestDays = () => {
     return Object.keys(restDays).map((month) => (
       <div key={month}>

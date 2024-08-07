@@ -168,12 +168,6 @@ export default function Home({ sportsData }) {
   }, [allSupabaseSports]);
 
 
-
-
-
-
-  
-
   return (
     <div className="w-screen h-screen m-0 md:p-10">
       {register && (

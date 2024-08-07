@@ -10,8 +10,6 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setSelectedSport } from '@/store/sportReducer';
 //HOOKS
 import { useEntryCountForMonth, useGetMonthStyle, months } from "@/custom-hooks/useCalendar"; // Importiere die neuen Hooks
-//COMPONENTS
-import RestDays from './Calendar/RestDays';
 
 const Calendar = (props) =>{
   const allSupabaseSports = useSelector(
@@ -169,12 +167,7 @@ const Calendar = (props) =>{
         })}
       </div>
 
-      {selectedSport === "all" && (
-        <div className="border-2">
-          <h1 className=" text-xl m-2">Rest Days Per Month</h1>
-          <RestDays/>
-        </div>
-      )}
+     
     </div>
   );
 }

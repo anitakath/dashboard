@@ -1,5 +1,7 @@
 import Link from "next/link";
 import styles from './SummarizedEntries.module.css'
+
+
 const SummarizedCalendar = (props) =>{
 
     const currentDate = props.currentDate;

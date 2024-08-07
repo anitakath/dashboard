@@ -41,8 +41,6 @@ const Board = (props) => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-
-
   const filteredByDate = filteredEntries.filter((entry) => {
   const entryDate = new Date(entry.created_at);
   const entryYear = entryDate.getFullYear();
@@ -90,6 +88,12 @@ const Board = (props) => {
 
   const filteredSearchedEntries = useSearchTerm(allSupabaseSports, searchTerm)
 
+    const summarizeAllHandler = (e) => {
+      e.preventDefault();
+      dispatch(setSelectedSport("all"));
+    };
+
+  console.log(currentSport);
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -99,7 +103,10 @@ const Board = (props) => {
           {searchTerm != "" && (
             <div className={styles.results_div}>
               <ResultsBar filteredSearchedEntries={filteredSearchedEntries} />
-              <button className={styles.close_resultsBar_div} onClick={() => setSearchTerm("")}>
+              <button
+                className={styles.close_resultsBar_div}
+                onClick={() => setSearchTerm("")}
+              >
                 <FontAwesomeIcon icon={faXmark} />
               </button>
             </div>
@@ -172,6 +179,15 @@ const Board = (props) => {
                 />
                 planned sports units
               </button>
+              {currentSport === "daily" && (
+                 <button
+                className={styles.summary_allSports_btn}
+                onClick={summarizeAllHandler}
+              >
+                summary of all sports
+              </button>
+              )}
+             
 
               <TransitionGroup>
                 {formIsOpen && (
@@ -214,7 +230,9 @@ const Board = (props) => {
 
         {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
 
-        <Calendar filteredByDate={filteredByDate} />
+        {currentSport != "daily" && (
+          <Calendar filteredByDate={filteredByDate} />
+        )}
       </div>
     </div>
   );

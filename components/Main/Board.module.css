@@ -80,6 +80,15 @@
   color: lightgrey;
 }
 
+.summary_allSports_btn{
+    background-color: var(--purpleDarkHover);
+    color: beige;
+    padding: 5px 10px;
+    margin: 5px 10px;
+    cursor: pointer;
+    min-width: 150px;
+}
+
 
 .entryField {
   padding: 1rem; 
