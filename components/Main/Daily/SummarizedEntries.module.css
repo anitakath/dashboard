@@ -35,6 +35,11 @@
     overflow: scroll;
 }
 
+.today {
+    border: 2px solid var(--purpleDarkHover);
+    background: var(--purpleDarkHoverOpacity);
+}
+
 .day:hover{
     background: var(--purpleDarkHoverOpacity);
 }

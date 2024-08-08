@@ -25,14 +25,6 @@ const SummarizedCalendar = (props) =>{
      { name: "DECEMBER", days: 31 },
    ];
 
-   // Filtere alle Einträge basierend auf dem Suchbegriff
-   const filterBySearchTerm = (entries) => {
-     if (!searchTerm) return entries; // Wenn kein Suchbegriff eingegeben wurde, gebe alle Einträge zurück.
-
-     return entries.filter((entry) =>
-       entry.title.toLowerCase().includes(searchTerm.toLowerCase())
-     );
-   };
 
    return (
      <div className={styles.calendar_div}>
@@ -48,8 +40,10 @@ const SummarizedCalendar = (props) =>{
                    .split("T")[0]
                }`;
 
+                const isToday = new Date().toISOString().split("T")[0] === dateString;
+
                return (
-                 <div key={dayNumber} className={styles.day}>
+                <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ''}`}>
                    <Link
                      className={styles.day_date}
                      href={`/daily-details/${dayNumber}${month.name}`}
