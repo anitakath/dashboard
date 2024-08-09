@@ -79,8 +79,6 @@ const Board = (props) => {
      }, [navigation])
 
 
-
-
   const navigateToSportPlanHandler = () =>{
     dispatch(setSection("plans"));
     router.push("/profile")
@@ -92,8 +90,6 @@ const Board = (props) => {
       e.preventDefault();
       dispatch(setSelectedSport("all"));
     };
-
-  console.log(currentSport);
 
   return (
     <div className="w-full overflow-scroll h-full p-4">
@@ -145,11 +141,7 @@ const Board = (props) => {
 
       <div className="flex justify-center lg:flex-row flex-col  sm:w-full lg:max-h-screen  overflow-y-scroll">
         <div className={styles.entryField}>
-          <h1 className="text-2xl border-b-2 my-2"> {currentSport} </h1>
-
-          <p className="mx-10 mt-4 text-xs">
-            click on the diary entries to get more details
-          </p>
+          <h1 className="text-2xl border-b-2 my-2 "> {currentSport} </h1>
 
           {currentSport === null && (
             <p className=" my-10 text-2xl text-center">
@@ -158,10 +150,10 @@ const Board = (props) => {
           )}
 
           {currentSport != null && (
-            <div>
+            <div className="mb-2">
               {currentSport != "all" && (
                 <button
-                  className={styles.add_entry_btn}
+                  className={styles.allSports_btn}
                   onClick={addEntryHandler}
                 >
                   <span className={styles.add_btn_icon}> + </span>{" "}
@@ -170,7 +162,7 @@ const Board = (props) => {
               )}
 
               <button
-                className={styles.plannedSports_btn}
+                className={styles.allSports_btn}
                 onClick={navigateToSportPlanHandler}
               >
                 <FontAwesomeIcon
@@ -180,14 +172,13 @@ const Board = (props) => {
                 planned sports units
               </button>
               {currentSport === "daily" && (
-                 <button
-                className={styles.summary_allSports_btn}
-                onClick={summarizeAllHandler}
-              >
-                summary of all sports
-              </button>
+                <button
+                  className={styles.allSports_btn}
+                  onClick={summarizeAllHandler}
+                >
+                  summary of all sports
+                </button>
               )}
-             
 
               <TransitionGroup>
                 {formIsOpen && (

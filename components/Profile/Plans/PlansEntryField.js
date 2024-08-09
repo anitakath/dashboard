@@ -19,7 +19,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
   );
   const dispatch = useDispatch();
 
-  console.log(sortedByDate)
+
   useEffect(() => {
     dispatch(setAllPlannedSports(sortedByDate));
 

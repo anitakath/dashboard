@@ -8,25 +8,40 @@
     color: var(--purpleDark);
 }
 
+.buttons_div{
+    display: flex;
+
+}
+
 .summary_allSports, .daily_allSports{
     background-color: var(--purpleDarkHover);
     color: beige;
     padding: 5px 10px;
-    margin: 5px 0px;
-    position: absolute;
-    right: 20px;
+    margin: 5px;
     cursor: pointer;
     min-width: 150px;
 }
 
-.daily_allSports{
-    right: 200px;
-}
+
+
+
 
 .diagram_allSports:hover, .summary_allSports:hover{
     background-color: var(--purpleDark);
 }
 
+
+.chooseYear_div{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
 
 .year_input{
     border: none;
@@ -112,3 +127,15 @@
 }
 
 
+@media screen and (max-width: 600px){
+    .buttons_div{
+        flex-direction: column;
+        margin-top: 40px;
+    }
+
+    .chooseYear_div{
+        top: 40px;
+        right: 0;
+        width: 150px;
+    }
+}

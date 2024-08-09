@@ -92,14 +92,15 @@
     border-bottom: 1px solid var(--purpleDark);
     font-size: 1.2rem;
     margin: 3px;
+    border-bottom: 2px solid beige;
+    padding-bottom: 10px;
 }
 
 
 .created_at{
     position: absolute;
-    top: -30px;
+    top: -45px;
     right: 5px;
-    color: lightrey;
 }
 .expand_icon{
     margin-right:7px;

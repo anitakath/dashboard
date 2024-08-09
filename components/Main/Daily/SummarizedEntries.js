@@ -11,6 +11,7 @@ import { faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter} from "@fo
 import SearchBar from "../../UI/SearchBar"
 import SummarizedCalendar from "./SummarizedCalendar";
 import CurrentMonthEntries from "./CurrentMonthEntries";
+import FilteredMonthEntries from "./FilteredMonthsEntries";
 
 const SummarizedEntries = (props) => {
   const allSupabaseSports = useSelector(
@@ -148,21 +149,13 @@ const SummarizedEntries = (props) => {
       />
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      
+      {/* the sports units filtered according to the search term */}
+      <FilteredMonthEntries
+        filteredCurrentMonthEntries={filteredCurrentMonthEntries}
+      />
 
-      {filteredCurrentMonthEntries &&
-        filteredCurrentMonthEntries.map((entry, index) => (
-          <div key={index} className={styles.searchEntries_div}>
-            <h3 className={styles.title_days}>{entry.title}</h3>
-
-            <div className="flex my-2 justify-between relative">
-              <p className="m-2 mt-4"> {entry.entry}</p>
-              <p className={styles.created_at}>
-                {formatDate(entry.created_at)}
-              </p>
-            </div>
-          </div>
-        ))}
-
+      {/* the sports units of the current month */}
       <CurrentMonthEntries
         currentMonthEntries={currentMonthEntries}
         showAllThisYear={showAllThisYear}

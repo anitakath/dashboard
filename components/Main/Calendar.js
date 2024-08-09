@@ -100,23 +100,25 @@ const Calendar = (props) =>{
 
 
   return (
-    <div className="p-4 mt-4 ml-1 mb-4  w-full lg:w-2/3 relative ">
-      <h1 className="text-2xl  border-b-2 my-2">
-        Summary: <span className={styles.summary_span}>{selectedSport}</span>
+    <div className="p-0 mt-4 mb-4  w-full lg:w-2/3 relative">
+      <h1 className="text-2xl border-b-2 my-2">
+        Summary: <span className={styles.summary_span}>{selectedSport} </span>
       </h1>
 
-      <button className={styles.daily_allSports} onClick={dailyAllHandler}>
-        daily overview
-      </button>
+      <div className={styles.buttons_div}>
+        <button className={styles.daily_allSports} onClick={dailyAllHandler}>
+          daily overview
+        </button>
 
-      <button
-        className={styles.summary_allSports}
-        onClick={summarizeAllHandler}
-      >
-        summary of all sports
-      </button>
+        <button
+          className={styles.summary_allSports}
+          onClick={summarizeAllHandler}
+        >
+          summary of all sports
+        </button>
+      </div>
 
-      <div className="absolute right-6 top-6 p-2  items-center flex">
+      <div className={styles.chooseYear_div}>
         <p className="text-xs">choose year</p>
         <select
           name="year"
@@ -132,16 +134,11 @@ const Calendar = (props) =>{
         </select>
       </div>
 
-      <div className="flex items-center mx-2 h-8">
-        <button className={"text-xl my-2 mx-1 hidden"}>
-          <FontAwesomeIcon icon={faChevronLeft} className={styles.chevron} />
-        </button>
-        <button className=" text-xl my-2 hidden">
-          <FontAwesomeIcon icon={faChevronRight} className={styles.chevron} />
-        </button>
-      </div>
 
-      <div className="my-4 p-0 grid grid-cols-3 gap-1 border-4">
+
+     
+
+      <div className="my-4 p-0 grid grid-cols-3 gap-1">
         {months.map((month) => {
           const entryCount = getEntryCountForMonth(
             month,
@@ -149,7 +146,7 @@ const Calendar = (props) =>{
             selectedSport
           );
           const monthStyle = getMonthStyle(entryCount);
-     
+
           return (
             <div
               key={month}
@@ -166,8 +163,6 @@ const Calendar = (props) =>{
           );
         })}
       </div>
-
-     
     </div>
   );
 }

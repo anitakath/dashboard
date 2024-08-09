@@ -47,40 +47,15 @@
     width: 150px;
 }
 
-.add_btn_icon{
-    color: var(--dark);
-    position: relative;
-    top: -1px;
-    opacity: 0.5;
-}
-
-.add_entry_btn:hover{
-    color: beige; 
-    background-color: var(--purpleDarkHover);
-}
 
 
-.plannedSports_btn{
-  font-size: 1.3rem;
-  margin: 20px 0px 10px 5px;
-  padding: 10px;
-  cursor: pointer;
-  transition: 0.2s ease;
-  color: var(--purpleDarkHover);
-}
-
-
-.plannedSports_btn:hover, .add_entry_btn:hover{
-    color: beige; 
-    background-color: var(--purpleDarkHover);
-}
 
 .calendar_icon{
   margin: 0px 8px;
   color: lightgrey;
 }
 
-.summary_allSports_btn{
+.allSports_btn{
     background-color: var(--purpleDarkHover);
     color: beige;
     padding: 5px 10px;
@@ -90,7 +65,7 @@
 }
 
 
-.entryField {
+.entryField{
   padding: 1rem; 
   position: relative; 
   margin-top: 1rem;
@@ -99,6 +74,7 @@
   width: 100%; 
   max-height: 50%; 
   overflow-y: scroll;
+
 }
 
 
@@ -120,4 +96,19 @@
     width: 100%; 
     height: 500px;
   }
+}
+
+@media screen and (max-width: 600px){
+
+  .entryField{
+    padding: 0;
+    margin: 0;
+  }
+
+  
+  .allSports_btn{
+    width: 100%;
+    margin: 5px 0px;
+  }
+
 }
