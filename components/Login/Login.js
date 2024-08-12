@@ -22,6 +22,7 @@ const Login = (props) =>{
 
   const dispatch = useDispatch();
 
+  console.log(loginData)
 
 
 
@@ -32,8 +33,8 @@ const Login = (props) =>{
 
   const loginHandler = async (e) => {
     e.preventDefault(); // Verhindert das Standardverhalten des Formulars
-    /*const { data: { user }, error } = await supabase.auth.signInWithPassword({
-      email: loginData.name, // Hier wird der Benutzername als E-Mail verwendet
+    const { data: { user }, error } = await supabase.auth.signInWithPassword({
+      email: loginData.email, // Hier wird der Benutzername als E-Mail verwendet
       password: loginData.password,
     });
     if (error) {
@@ -41,10 +42,17 @@ const Login = (props) =>{
     } else {
       // Redirect or update state to show logged-in content
       console.log("User logged in:", user);
+
+       dispatch(setLogin(true));
+       router.push("/");
     }
- */
-    dispatch(setLogin(true));
-    router.push("/")
+
+
+ 
+    /*
+     dispatch(setLogin(true));
+     router.push("/");*/
+   
 
 
 
@@ -108,13 +116,8 @@ const Login = (props) =>{
               LOGIN
             </button>
             {error && <p className="text-red-500">{error}</p>}
-            <p> not registered yet? </p>
-            <button
-              type="button"
-              className={styles.register_btn}
-              onClick={() => setRegister(true)}
-            >
-              register here
+            <button type="button" onClick={() => setRegister(true)}>
+              not registered yet? register here
             </button>
             {successMessage && <p> {successMessage}</p>}
           </form>

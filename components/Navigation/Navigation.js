@@ -11,6 +11,7 @@ import {
 } from "@/store/sportReducer";
 
 import SortSports from "./SortSports";
+import MobileNavigation from "./MobileNavigation";
 
 const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
@@ -66,54 +67,75 @@ const Navigation = () => {
         allSupabaseSports={allSupabaseSports}
       />
 
+      {/*-------------------  MOBILE  NAVIGATION ------------------- */}
+
+      <MobileNavigation
+        formisOpen={formIsOpen}
+        active={active}
+        uniqueSports={uniqueSports}
+        handleSportClick={handleSportClick}
+        deleteSportHandler={deleteSportHandler}
+        sportObject={sportObject}
+      />
+
+      {/*-------------------  WEB NAVIGATION ------------------- */}
+
       {!formIsOpen && (
-        <ul className="w-full h-full flex lg:flex-col overflow-scroll">
-          {uniqueSports.map((sport, index) => (
-            <div className="relative" key={index}>
-              <li key={index} className="flex">
-                <button
-                  className={`${styles.sport_btn} ${
-                    active === sport && selectedSport != "all"
-                      ? styles.active
-                      : ""
-                  }`}
-                  onClick={() => handleSportClick(sport)}
-                >
+        <div className={styles.navigation_web}>
+
+          {/* HIER EINE CSS KLASSE HINZUFÜGEN!!! */}
+          <button className={styles.showMobileSportsNav_btn}>
+
+            open sports{" "}
+          </button>
+          <ul className="w-full h-full flex lg:flex-col overflow-scroll">
+            {uniqueSports.map((sport, index) => (
+              <div className="relative" key={index}>
+                <li key={index} className="flex">
                   <button
-                    className={styles.delete_btn}
-                    onClick={() => deleteSportHandler(sport)}
+                    className={`${styles.sport_btn} ${
+                      active === sport && selectedSport != "all"
+                        ? styles.active
+                        : ""
+                    }`}
+                    onClick={() => handleSportClick(sport)}
                   >
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      className={styles.trash_icon}
-                    />
+                    <button
+                      className={styles.delete_btn}
+                      onClick={() => deleteSportHandler(sport)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className={styles.trash_icon}
+                      />
+                    </button>
+                    <span className={styles.sportBtnText}>{sport}</span>
+                    {sportObject &&
+                      sportObject.map((sportsObj, index) => {
+                        if (sportsObj.name === sport) {
+                          return (
+                            <div className={styles.circle_div} key={index}>
+                              <div
+                                className={`${styles.circle_background} ${
+                                  styles[sportsObj.color]
+                                } `}
+                              ></div>
+                              <div
+                                className={`${styles[sportsObj.color]} ${
+                                  styles.circle
+                                }`}
+                              ></div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      })}
                   </button>
-                  <span className={styles.sportBtnText}>{sport}</span>
-                  {sportObject &&
-                    sportObject.map((sportsObj, index) => {
-                      if (sportsObj.name === sport) {
-                        return (
-                          <div className={styles.circle_div} key={index}>
-                            <div
-                              className={`${styles.circle_background} ${
-                                styles[sportsObj.color]
-                              } `}
-                            ></div>
-                            <div
-                              className={`${styles[sportsObj.color]} ${
-                                styles.circle
-                              }`}
-                            ></div>
-                          </div>
-                        );
-                      }
-                      return null;
-                    })}
-                </button>
-              </li>
-            </div>
-          ))}
-        </ul>
+                </li>
+              </div>
+            ))}
+          </ul>
+        </div>
       )}
 
       {formIsOpen && (

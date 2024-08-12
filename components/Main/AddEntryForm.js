@@ -99,7 +99,6 @@ const AddEntryForm = (props) => {
         const formattedTitle = formatText(inputs.title);
         const uniqueID = uuidv4();
 
-        console.log(chosenSport);
 
         if(chosenSport === null){
           setErrorMessage('choose a sport!')
@@ -117,7 +116,6 @@ const AddEntryForm = (props) => {
           created_at: inputs.created_at,
         };
 
-        console.log(data);
 
         // Sende die Daten an die API
         try {

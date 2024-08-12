@@ -36,8 +36,7 @@
 }
 
 .today {
-    border: 2px solid var(--purpleDarkHover);
-    background: var(--purpleDarkHoverOpacity);
+    border: 4px solid var(--purpleDarkHover);
 }
 
 .day:hover{

@@ -24,7 +24,6 @@ const Profile = () => {
     const navigation = useSelector((state) => state.sport.navigation)
     const selectedSport = useSelector((state) => state.sport.selectedSport)
     const [profileSection, setProfileSection] = useState("sports")
-    const [active, setActive] = useState(false)
     const router = useRouter();
     const section = useSelector((state) => state.profile.section)
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
@@ -63,7 +62,7 @@ const Profile = () => {
           </Link>
 
           <div className="m-4 p-4 pl-14  w-full">
-            <h1 className="text-2xl my-8"> your profile... </h1>
+            <h1 className="text-2xl my-8"> hey sporty spice! </h1>
 
             <div className=" text-xl flex mt-4 mb-4 justify-evenly border-b pb-2">
               <button onClick={() => profileSectionHandler("sports")}>

@@ -170,14 +170,11 @@ export default function Home({ sportsData }) {
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">
-      {register && (
-        <Register
-          setSuccessMessage={setSuccessMessage}
-          successMessage={successMessage}
-          setRegister={setRegister}
-          register={register}
-        />
-      )}
+      {!isLoggedIn &&
+        register &&
+        {
+          /* A register component could be located here */
+        }}
       {!isLoggedIn && !register && (
         <Login
           setSuccessMessage={setSuccessMessage}

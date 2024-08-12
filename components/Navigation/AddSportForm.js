@@ -48,7 +48,6 @@ const AddSportForm = (props) => {
     (state) => state.sport.allPlannedSports
   );
 
-  console.log(allPlannedSports);
 
   const colors = [
     "fandango",

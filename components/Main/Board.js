@@ -24,8 +24,10 @@ import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
 import SearchBar from "../UI/SearchBar";
 import ResultsBar from "../UI/ResultsBar";
+import UserImage from "../UI/UserImage";
 //HOOK
 import {useSearchTerm} from '../../custom-hooks/useSearchTerm'
+
 
 const Board = (props) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -92,8 +94,8 @@ const Board = (props) => {
     };
 
   return (
-    <div className="w-full overflow-scroll h-full p-4">
-      <div className="h-20 flex p-4 flex items-center relative">
+    <div className="w-full overflow-scroll h-full p-4 ">
+      <div className={styles.header_div}>
         <div className={styles.searchBarResult_div}>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {searchTerm != "" && (
@@ -109,33 +111,33 @@ const Board = (props) => {
           )}
         </div>
 
-        <p className="mx-8 cursor-pointer">
-          <FontAwesomeIcon icon={faHouse} className="font_purple" />
-        </p>
-        <p className="mx-8 cursor-pointer">
-          <FontAwesomeIcon icon={faBars} className="font_purple" />
-        </p>
-        <Link href="/profile" className="mx-8 cursor-pointer">
-          <FontAwesomeIcon icon={faUser} className="font_purple" />
-        </Link>
-        <button className="pointer" onClick={logoutHandler}>
-          <Image
-            src="/power-off.png"
-            alt="Power Off Icon"
-            width={37}
-            height={37}
-            className={styles.logout_btn}
-            fetchpriority="eager"
-          />
-        </button>
-        <p
-          className="absolute right-14 top-2 h-20 w-20 p-4 "
-          style={{ backgroundColor: "var(--purpleDarkHover)" }}
-        ></p>
+        <div className="flex items-center">
+          <p className={styles.icons}>
+            <FontAwesomeIcon icon={faHouse} className="font_purple" />
+          </p>
+          <p className={styles.icons}>
+            <FontAwesomeIcon icon={faBars} className="font_purple" />
+          </p>
+          <Link href="/profile" className={styles.icons}>
+            <FontAwesomeIcon icon={faUser} className="font_purple" />
+          </Link>
+          <button className={styles.icons} onClick={logoutHandler}>
+            <Image
+              src="/power-off.png"
+              alt="Power Off Icon"
+              width={30}
+              height={30}
+              className={styles.logout_btn}
+              fetchpriority="eager"
+            />
+          </button>
+
+          <UserImage />
+        </div>
       </div>
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
-      <div className="flex  lg:hidden">
+      <div className="flex lg:hidden">
         <Navigation />
       </div>
 
@@ -179,6 +181,13 @@ const Board = (props) => {
                   summary of all sports
                 </button>
               )}
+
+              <Link
+                className={styles.diary_link}
+                href="/diary"
+              >
+                go to your diary
+              </Link>
 
               <TransitionGroup>
                 {formIsOpen && (

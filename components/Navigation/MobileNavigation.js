@@ -1,22 +1,79 @@
+import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import styles from './MobileNavigation.module.css'
+
+const MobileNavigation = (props) =>{
+
+    const uniqueSports = props.uniqueSports
+    const active = props.active
+    const sportObject = props.sportObject
+    const handleSportClick = props.handleSportClick
+
+    const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false)
 
 
 
 
-
-
-const MobileNavigation = () =>{
-
-
-
-    return(
-        <div className="w-full mt-4 h-20 p-2 bg-red-200 lg:hidden">
-
-            <h1> DASHBOARD </h1>
-            
-
-
-        </div>
-    )
+    return (
+      <div className="w-full mt-4 p-2 flex-col lg:hidden  overflow-scroll">
+        <button
+          onClick={() => setSportsNavIsOpen(!sportsNavIsOpen)}
+          className={styles.openNav_btn}
+        >
+          open sports
+        </button>
+        {sportsNavIsOpen && (
+          <ul className={styles.ul}>
+            {uniqueSports.map((sport, index) => (
+              <div className="relative flex-col" key={index}>
+                <li key={index} className="flex">
+                  <button
+                    className={`${styles.sport_btn} ${
+                      active === sport && selectedSport != "all"
+                        ? styles.active
+                        : ""
+                    }`}
+                    onClick={() => handleSportClick(sport)}
+                  >
+                    <button
+                      className={styles.delete_btn}
+                      onClick={() => deleteSportHandler(sport)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className={styles.trash_icon}
+                      />
+                    </button>
+                    <span className={styles.sportBtnText}>{sport}</span>
+                    {sportObject &&
+                      sportObject.map((sportsObj, index) => {
+                        if (sportsObj.name === sport) {
+                          return (
+                            <div className={styles.circle_div} key={index}>
+                              <div
+                                className={`${styles.circle_background} ${
+                                  styles[sportsObj.color]
+                                } `}
+                              ></div>
+                              <div
+                                className={`${styles[sportsObj.color]} ${
+                                  styles.circle
+                                }`}
+                              ></div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      })}
+                  </button>
+                </li>
+              </div>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
 }
 
 export default MobileNavigation;

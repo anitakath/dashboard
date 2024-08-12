@@ -20,7 +20,7 @@ const AddSportField = (props) =>{
     return (
       <div>
         {addSport && (
-          <div className="w-full flex">
+          <div className="w-full flex p-2 shadow-md shadow-gray-200 ">
             <div className="w-6/12 flex items-center h-full flex-col  ">
               <div className="flex-col w-full">
                 <h2 className="text-2xl my-2 px-2"> choose your sport </h2>

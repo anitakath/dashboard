@@ -159,7 +159,7 @@ const Plans = () =>{
   const editSportHandler = (sport) => {
     setCurrentSport(sport);
     setIsModalOpen(true);
-    console.log(sport);
+
   };
 
   const handleInputChange = (e) => {
