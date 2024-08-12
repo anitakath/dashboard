@@ -1,40 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sports Diary
 
-## Getting Started
+Welcome to your Sports Diary! This Next.js project allows you to save, track, and compare your sports activities and workouts to keep an eye on your athletic development.
 
-First, run the development server:
+## Table of Contents
 
-```bash
+- [Features](#features)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Future Developments](#future-developments)
+- [License](#license)
+
+## Features
+
+- Save sports activities and workouts
+- Track your athletic development
+- Compare entries
+- Simple user interface for data entry and display
+- Use of Supabase as a backend database
+
+## Technologies
+
+This project uses the following technologies:
+
+- **Next.js**: A React-based framework for server-side rendered applications.
+- **Supabase**: An open-source database solution that serves as the backend for storing user data.
+- **Tailwind**: Tailwind CSS is a utility-first CSS framework that provides a set of low-level utility classes to help you build custom designs directly in your markup.
+## Installation
+
+To run the project locally, follow these steps:
+
+1. Clone the repository:
+https://github.com/anitakath/dashboard.git
+
+2. Navigate to the project directory:
+cd dasboard
+
+3. Install the dependencies:
+npm install
+
+4. Start the development server:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open your browser and go to `http://localhost:3000` to see the application.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Usage
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Usage
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+In the current version, users must log in to view the sports diary in MY name and make entries. Please contact me at [anne-kathrin-96@gmx.de] to get the login details. After logging in, you can add different sports, document your training sessions and track MY progress. Please delete any entry you make at the end.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The next version will have individual user areas. 
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Future Developments
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+In future versions, we plan to implement the following features:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Individual user accounts with personal areas
+- Advanced analysis functions for evaluating your athletic development
+- Integration options for fitness devices or apps for automatic data collection
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+---
+
+Thank you for taking the time to try out our Sports Diary! We look forward to your feedback and hope you enjoy tracking your athletic progress!
