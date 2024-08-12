@@ -34,7 +34,7 @@ To run the project locally, follow these steps:
 https://github.com/anitakath/dashboard.git
 
 2. Navigate to the project directory:
-cd dasboard
+cd dashboard
 
 3. Install the dependencies:
 npm install
@@ -46,13 +46,9 @@ npm run dev
 
 ## Usage
 
-## Usage
+In the current version, users must log in to view the sports diary in MY name and make entries. Please contact me at [anne-kathrin-96@gmx.de] to get the login details. After logging in, you can add different sports, document your training sessions and track MY progress. 
 
-In the current version, users must log in to view the sports diary in MY name and make entries. Please contact me at [anne-kathrin-96@gmx.de] to get the login details. After logging in, you can add different sports, document your training sessions and track MY progress. Please delete any entry you make at the end.
-
-The next version will have individual user areas. 
-
-
+**Note:** Since this version does not yet support individual user accounts, please delete any entries you make after use. The next version will implement individual user areas to allow for personal data storage.
 
 
 
@@ -63,6 +59,10 @@ In future versions, we plan to implement the following features:
 - Individual user accounts with personal areas
 - Advanced analysis functions for evaluating your athletic development
 - Integration options for fitness devices or apps for automatic data collection
+
+## Contribution Guidelines
+
+At this time, I am not actively seeking contributions to the Sports Diary project. However, in future versions, I plan to implement individual user accounts, which will allow users to connect and share feedback more easily. If you have suggestions or ideas for improvements, feel free to reach out!
 
 ## License
 
