@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from "next/image";
 //STYLES
 import styles from './Board.module.css'
 //TRANSITION GROUP
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
-import { faChevronLeft, faChevronRight, faXmark } from "@fortawesome/free-solid-svg-icons";
+
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import AddEntryForm from "./AddEntryForm";
 //REDUX
@@ -22,11 +20,10 @@ import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
-import SearchBar from "../UI/SearchBar";
-import ResultsBar from "../UI/ResultsBar";
-import UserImage from "../UI/UserImage";
+
 //HOOK
 import {useSearchTerm} from '../../custom-hooks/useSearchTerm'
+import BoardHeader from "./BoardHeader/BoardHeader";
 
 
 const Board = (props) => {
@@ -40,8 +37,6 @@ const Board = (props) => {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
   const actualMonth = actualMonthIndex + 1;
-
-  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredByDate = filteredEntries.filter((entry) => {
   const entryDate = new Date(entry.created_at);
@@ -86,55 +81,15 @@ const Board = (props) => {
     router.push("/profile")
   }
 
-  const filteredSearchedEntries = useSearchTerm(allSupabaseSports, searchTerm)
-
     const summarizeAllHandler = (e) => {
       e.preventDefault();
       dispatch(setSelectedSport("all"));
     };
 
   return (
-    <div className="w-full overflow-scroll h-full p-4 ">
-      <div className={styles.header_div}>
-        <div className={styles.searchBarResult_div}>
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          {searchTerm != "" && (
-            <div className={styles.results_div}>
-              <ResultsBar filteredSearchedEntries={filteredSearchedEntries} />
-              <button
-                className={styles.close_resultsBar_div}
-                onClick={() => setSearchTerm("")}
-              >
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center">
-          <p className={styles.icons}>
-            <FontAwesomeIcon icon={faHouse} className="font_purple" />
-          </p>
-          <p className={styles.icons}>
-            <FontAwesomeIcon icon={faBars} className="font_purple" />
-          </p>
-          <Link href="/profile" className={styles.icons}>
-            <FontAwesomeIcon icon={faUser} className="font_purple" />
-          </Link>
-          <button className={styles.icons} onClick={logoutHandler}>
-            <Image
-              src="/power-off.png"
-              alt="Power Off Icon"
-              width={30}
-              height={30}
-              className={styles.logout_btn}
-              fetchpriority="eager"
-            />
-          </button>
-
-          <UserImage />
-        </div>
-      </div>
+    <div className="w-full overflow-scroll h-full p-2 ">
+ 
+      <BoardHeader logoutHandler={logoutHandler} />
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
       <div className="flex lg:hidden">
@@ -182,10 +137,7 @@ const Board = (props) => {
                 </button>
               )}
 
-              <Link
-                className={styles.diary_link}
-                href="/diary"
-              >
+              <Link className={styles.diary_link} href="/diary">
                 go to your diary
               </Link>
 
