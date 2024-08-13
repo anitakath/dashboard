@@ -28,3 +28,18 @@
     margin: 10px 0px;
 }
 
+@media screen and (max-width: 600px){
+    .input, .btn{
+        width: 300px;
+
+    }
+}
+
+
+@media screen and (max-width: 400px){
+    .input, .btn{
+        width: 280px;
+    }
+}
+
+

@@ -92,10 +92,10 @@ const Login = (props) =>{
 
 
     return (
-      <div className="w-full h-full p-4 ">
+      <div className="w-full h-full  p-4">
         <div className="flex justify-center w-full h-full py-2 m-0 p-0 relative border-8">
           <form
-            className=" w-1/2 flex flex-col items-center justify-center"
+            className="sm:w-full lg:w-1/2 flex flex-col items-center justify-center"
             onSubmit={loginHandler}
           >
             <input

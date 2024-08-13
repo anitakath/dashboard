@@ -42,7 +42,7 @@ npm install
 4. Start the development server:
 npm run dev
 
-5. Open your browser and go to `http://localhost:3000` to see the application.
+5. Open your browser and go to `http://localhost:3000` to see the application.g
 
 ## Usage
 
