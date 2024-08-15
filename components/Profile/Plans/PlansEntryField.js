@@ -3,7 +3,7 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
 import styles from './Plans.module.css'
-
+import colors from '../../../styles/Colors.module.css'
 //HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
 import { useEffect } from 'react';
@@ -34,7 +34,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
           <div
             key={sport.entryId}
             className={`${styles.sport_entry_div} ${
-              styles[sport.label + "_bg"]
+              colors[sport.label + "_bg"]
             }`}
           >
             <div>

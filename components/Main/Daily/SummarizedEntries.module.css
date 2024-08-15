@@ -81,26 +81,26 @@
     padding: 5px;
 }
 
-.searchEntries_div{
-    background: var(--purpleDark);
-    color: beige;
-}
 
-.title_days{    
+.search_title_days{    
     margin-bottom: 3px;
     border-bottom: 1px solid var(--purpleDark);
     font-size: 1.2rem;
     margin: 3px;
-    border-bottom: 2px solid beige;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+
 }
 
-
-.created_at{
+.search_created_at{
     position: absolute;
-    top: -45px;
+    top: -40px;
     right: 5px;
 }
+
+
+
 .expand_icon{
     margin-right:7px;
     font-size: 1.5rem;

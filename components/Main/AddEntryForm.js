@@ -346,7 +346,8 @@ const AddEntryForm = (props) => {
         )}
       </div>
 
-      <div className="flex items-center justify-evenly">
+      <h2 className=" mb-4 text-center"> enter the date and duration of your sports session </h2>
+      <div className="flex flex-col md:flex-row items-center justify-evenly items-center ">
         <div className={styles.date_div}>
           <input
             type="datetime-local"
