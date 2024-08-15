@@ -5,8 +5,8 @@ const PlansHeader = ({toggleAllEntries, areAllOpen}) =>{
 
 
     return (
-      <div className='w-full flex items-center'>
-        <p className="text-xl my-4 mb-6 mx-14"> your entries </p>
+      <div className='w-full flex-col  relative flex items-center'>
+        <p className={styles.yourEntried_p}> your entries 🐣 </p>
         <button
           onClick={toggleAllEntries}
           className={`${styles.toggleEntries_btn} ${

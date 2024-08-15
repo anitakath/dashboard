@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faCheck, faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
 import styles from './Plans.module.css'
@@ -8,7 +8,7 @@ import styles from './Plans.module.css'
 import { formatDate } from '@/custom-hooks/formatDate';
 import { useEffect } from 'react';
 //REDUX
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setAllPlannedSports } from '@/store/sportReducer';
 const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHandler, deleteSportHandler, checkSportHandler, openDetailsIds}) =>{
   
@@ -28,7 +28,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
   
 
   return (
-    <div className=" w-full ">
+    <div className={styles.field}>
       {sortedByDate &&
         sortedByDate.map((sport) => (
           <div
@@ -38,49 +38,42 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
             }`}
           >
             <div>
-              <div className="relative flex items-center">
-                <div className={styles.sport_entry_title_div}>
-                  <div
-                    className={`${styles.sport_entry_name} ${
-                      styles[sport.label]
-                    }`}
+              <div className="relative flex flex-col items-center ">
+                <button
+                  className={styles.enlarge_btn}
+                  onClick={() => enlargeWorkoutHandler(sport.entryId)}
+                >
+                  <FontAwesomeIcon
+                    icon={faUpRightAndDownLeftFromCenter}
+                    className={styles.enlarge_icon}
+                  />
+                </button>
+
+                <div className="w-full flex flex-col items-center mt-4">
+                  <h1
+                    className="text-2xl cursor-pointer"
+                    onClick={() => enlargeWorkoutHandler(sport.entryId)}
                   >
-                    <button
-                      className={styles.enlarge_btn}
-                      onClick={() => enlargeWorkoutHandler(sport.entryId)}
-                    >
-                      <FontAwesomeIcon
-                        icon={faUpRightAndDownLeftFromCenter}
-                        className={styles.enlarge_icon}
-                      />
-                    </button>
-                    <h3>{sport.name}</h3>
-                  </div>
+                    {sport.name}
+                  </h1>
+                  <h2>{formatDate(sport.created_at)}</h2>
+                  <h3>{sport.duration} min </h3>
                 </div>
 
-                <h2 className="text-xl mx-4 hidden md:block"> - {sport.title} </h2>
-
-                <h3 className={styles.sport_entry_date}>
-                  {formatDate(sport.created_at)}
-                  <span className={styles.sport_entry_duration}>
-                    {sport.duration} min
-                  </span>
-                </h3>
-              </div>
-
-              <div
-                className={`${styles.sport_entry_details} ${
-                  openDetailsIds.includes(sport.entryId)
-                    ? styles.expanded
-                    : styles.collapsed
-                }`}
-              >
-                {openDetailsIds.includes(sport.entryId) && (
-                  <>
-                    <h3 className="hidden sm:flex">- {sport.title} -</h3>
-                    <p>{sport.entry}</p>
-                  </>
-                )}
+                <div
+                  className={`${styles.sport_entry_details} ${
+                    openDetailsIds.includes(sport.entryId)
+                      ? styles.expanded
+                      : styles.collapsed
+                  }`}
+                >
+                  {openDetailsIds.includes(sport.entryId) && (
+                    <>
+                      <h3 className="hidden sm:flex">- {sport.title} -</h3>
+                      <p>{sport.entry}</p>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 
