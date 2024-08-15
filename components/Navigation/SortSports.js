@@ -2,12 +2,11 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Navigation.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSort } from "@/store/navigationReducer";
 
 const SortSports = ({ uniqueSports, setUniqueSports, allSupabaseSports }) => {
   const dispatch = useDispatch();
-  const currentSort = useSelector((state) => state.navigation.sort);
 
   const sortHandler = (criteria) => {
     let sortedSports;
@@ -52,7 +51,7 @@ const SortSports = ({ uniqueSports, setUniqueSports, allSupabaseSports }) => {
   };
 
   return (
-    <div className="flex w-full mb-4 items-center relative h-20">
+    <div className="flex w-full lg:mb-4 items-center relative lg:h-20">
       <button
         onClick={() => sortHandler("alphabetically")}
         className={styles.sort}

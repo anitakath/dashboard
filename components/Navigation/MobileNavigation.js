@@ -11,18 +11,18 @@ const MobileNavigation = (props) =>{
   const sportObject = props.sportObject
   const handleSportClick = props.handleSportClick
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-
-  const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false)
+  const mobileSportsNavIsOpen = props.mobileSportsNavIsOpen
+  const setMobileSportsNavIsOpen = props.setMobileSportsNavIsOpen;
 
   return (
     <div className="w-full mt-4 p-2 flex-col lg:hidden  overflow-scroll">
       <button
-        onClick={() => setSportsNavIsOpen(!sportsNavIsOpen)}
+        onClick={() => setMobileSportsNavIsOpen(!mobileSportsNavIsOpen)}
         className={styles.openNav_btn}
       >
           open sports
         </button>
-        {sportsNavIsOpen && (
+        {mobileSportsNavIsOpen && (
           <ul className={styles.ul}>
             {uniqueSports.map((sport, index) => (
               <div className="relative flex-col" key={index}>

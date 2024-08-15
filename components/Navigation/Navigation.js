@@ -20,6 +20,8 @@ const Navigation = () => {
   const sportObject = useSelector((state) => state.sport.currentSport && state.sport.currentSport.length > 0 ? state.sport.currentSport[0] : null);
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
   const navigation = useSelector((state) => state.sport.navigation);
+  const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
+
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
@@ -34,6 +36,7 @@ const Navigation = () => {
 
   const handleSportClick = (sport) => {
     setActive(sport);
+    setMobileSportsNavIsOpen(false)
     dispatch(setSelectedSport(sport));
   };
 
@@ -46,7 +49,6 @@ const Navigation = () => {
       // Dispatch delete action here
     }
   };
-  
 
 
   return (
@@ -69,6 +71,8 @@ const Navigation = () => {
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
         sportObject={sportObject}
+        mobileSportsNavIsOpen={mobileSportsNavIsOpen}
+        setMobileSportsNavIsOpen={setMobileSportsNavIsOpen}
         
       />
 

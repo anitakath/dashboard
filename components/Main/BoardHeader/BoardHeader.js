@@ -22,7 +22,6 @@ const BoardHeader = (props) =>{
     const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
     const [searchTerm, setSearchTerm] = useState("");
     const [openMenu, setOpenMenu] = useState(false)
-
     const filteredSearchedEntries = useSearchTerm(allSupabaseSports, searchTerm)
 
     return (

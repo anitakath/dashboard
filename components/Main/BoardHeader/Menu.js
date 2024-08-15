@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSection } from "@/store/profileReducer";
 
 
-const Menu = () => {
+const Menu = (props) => {
+  const setOpenMenu = props.setOpenMenu
   const [openSections, setOpenSections] = useState({
     yourSports: false,
     yourProfile: false,
@@ -31,6 +32,7 @@ const Menu = () => {
   return (
     <div className={styles.menu_div_backdrop}>
       <div className={styles.menu_div}>
+        <button className={styles.close_btn} onClick={()=> setOpenMenu(false)}> close menu </button>
         <h1 className={styles.title}>MENU</h1>
         <ul className={styles.table}>
           <li>
