@@ -77,7 +77,6 @@ const EditEntry = ({
             Save Changes
           </button>
           <button className={styles.cancel_button}>Cancel</button>
-          {/* Stelle sicher, dass setIsModalOpen übergeben wird */}
         </div>
       </form>
     </div>

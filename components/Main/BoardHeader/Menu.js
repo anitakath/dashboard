@@ -5,16 +5,17 @@ import Link from "next/link";
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
 import { setSection } from "@/store/profileReducer";
+import { useRouter } from "next/router";
 
-
-const Menu = (props) => {
-  const setOpenMenu = props.setOpenMenu
+const Menu = ({ setOpenMenu }) => {
+  
   const [openSections, setOpenSections] = useState({
     yourSports: false,
     yourProfile: false,
     community: false,
   });
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const toggleSection = (section) => {
     setOpenSections((prev) => ({
@@ -23,16 +24,30 @@ const Menu = (props) => {
     }));
   };
 
+   const navigateHandler = (e) => {
+     const sectionMap = {
+       allsports: "sports",
+       plans: "plans",
+       settings: "settings",
+     };
 
-  const navigateHandler = () =>{
-
-  }
+     if (sectionMap[e]) {
+       dispatch(setSection(sectionMap[e]));
+       router.push("/profile");
+       setOpenMenu(false);
+     }
+   };
 
 
   return (
-    <div className={styles.menu_div_backdrop}>
-      <div className={styles.menu_div}>
-        <button className={styles.close_btn} onClick={()=> setOpenMenu(false)}> close menu </button>
+    <div
+      className={styles.menu_div_backdrop}
+      onClick={() => setOpenMenu(false)}
+    >
+      <div className={styles.menu_div} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.close_btn} onClick={() => setOpenMenu(false)}>
+          close menu
+        </button>
         <h1 className={styles.title}>MENU</h1>
         <ul className={styles.table}>
           <li>
@@ -45,10 +60,20 @@ const Menu = (props) => {
           </li>
           {openSections.yourSports && (
             <>
-              <li className={styles.link}>Statistics</li>
-              <li className={styles.link}>All Sports</li>
-              <li className={styles.link}>Planned Sports Units</li>
+              <li
+                className={styles.link}
+                onClick={() => navigateHandler("allsports")}
+              >
+                All Sports
+              </li>
+              <li
+                className={styles.link}
+                onClick={() => navigateHandler("plans")}
+              >
+                Planned Sports Units
+              </li>
               <li className={styles.link}>Completed Sports Units</li>
+              <li className={styles.link}>*** soon: Statistics ***</li>
             </>
           )}
           <br />
@@ -63,8 +88,14 @@ const Menu = (props) => {
           {openSections.yourProfile && (
             <>
               <li className={styles.link} onClick={navigateHandler}>
-                <Link href="/profile" onClick={ () => dispatch(setSection("settings"))}> Settings</Link>
+                <Link
+                  href="/profile"
+                  onClick={() => navigateHandler("settings")}
+                >
+                  Settings
+                </Link>
               </li>
+              <li className={styles.link}> Favorites </li>
             </>
           )}
           <br />
@@ -78,11 +109,31 @@ const Menu = (props) => {
           </li>
           {openSections.community && (
             <>
+              <li className={styles.link}>Events</li>
               <li className={styles.link}>Your Friends</li>
               <li className={styles.link}>Find Friends</li>
             </>
           )}
           <br />
+
+          <li>
+            <button
+              className={styles.table_title}
+              onClick={() => toggleSection("app")}
+            >
+              About this Diary
+            </button>
+          </li>
+          {openSections.app && (
+            <>
+              <li className={styles.link}> Help / Support </li>
+              <li className={styles.link}> Feedback </li>
+              <li className={styles.link}> Notifications </li>
+              <li className={styles.link}> Privacy Policy </li>
+            </>
+          )}
+          <br />
+
           <div className={styles.anne_div}>
             <li className={styles.anne_link}>About Anne</li>
             <li className={styles.anne_link}>Contact Anne</li>
