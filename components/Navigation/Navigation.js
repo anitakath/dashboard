@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Navigation.module.css";
 import AddSportForm from "./AddSportForm";
 import {
@@ -12,6 +9,7 @@ import {
 
 import SortSports from "./SortSports";
 import MobileNavigation from "./MobileNavigation";
+import WebNavigation from "./WebNavigation";
 
 const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
@@ -22,8 +20,6 @@ const Navigation = () => {
   const sportObject = useSelector((state) => state.sport.currentSport && state.sport.currentSport.length > 0 ? state.sport.currentSport[0] : null);
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
   const navigation = useSelector((state) => state.sport.navigation);
-  const selectedSport = useSelector((state) => state.sport.selectedSport);
-
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
@@ -44,9 +40,6 @@ const Navigation = () => {
   const addSportClickHandler = () => {
     setFormIsOpen((prevState) => !prevState);
   };
-
-
-
 
   const deleteSportHandler = (sport) => {
     if (window.confirm("Are you sure you want to delete?")) {
@@ -76,67 +69,19 @@ const Navigation = () => {
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
         sportObject={sportObject}
+        
       />
 
       {/*-------------------  WEB NAVIGATION ------------------- */}
 
-      {!formIsOpen && (
-        <div className={styles.navigation_web}>
-
-          {/* HIER EINE CSS KLASSE HINZUFÜGEN!!! */}
-          <button className={styles.showMobileSportsNav_btn}>
-
-            open sports{" "}
-          </button>
-          <ul className="w-full h-full flex lg:flex-col overflow-scroll">
-            {uniqueSports.map((sport, index) => (
-              <div className="relative" key={index}>
-                <li key={index} className="flex">
-                  <button
-                    className={`${styles.sport_btn} ${
-                      active === sport && selectedSport != "all"
-                        ? styles.active
-                        : ""
-                    }`}
-                    onClick={() => handleSportClick(sport)}
-                  >
-                    <button
-                      className={styles.delete_btn}
-                      onClick={() => deleteSportHandler(sport)}
-                    >
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className={styles.trash_icon}
-                      />
-                    </button>
-                    <span className={styles.sportBtnText}>{sport}</span>
-                    {sportObject &&
-                      sportObject.map((sportsObj, index) => {
-                        if (sportsObj.name === sport) {
-                          return (
-                            <div className={styles.circle_div} key={index}>
-                              <div
-                                className={`${styles.circle_background} ${
-                                  styles[sportsObj.color]
-                                } `}
-                              ></div>
-                              <div
-                                className={`${styles[sportsObj.color]} ${
-                                  styles.circle
-                                }`}
-                              ></div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
-                  </button>
-                </li>
-              </div>
-            ))}
-          </ul>
-        </div>
-      )}
+      <WebNavigation
+        formisOpen={formIsOpen}
+        active={active}
+        uniqueSports={uniqueSports}
+        handleSportClick={handleSportClick}
+        deleteSportHandler={deleteSportHandler}
+        sportObject={sportObject}
+      />
 
       {formIsOpen && (
         <AddSportForm addSportClickHandler={addSportClickHandler} />

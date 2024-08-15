@@ -58,7 +58,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
                   </div>
                 </div>
 
-                <h2 className="text-xl mx-4"> - {sport.title}</h2>
+                <h2 className="text-xl mx-4 hidden md:block"> - {sport.title} </h2>
 
                 <h3 className={styles.sport_entry_date}>
                   {formatDate(sport.created_at)}

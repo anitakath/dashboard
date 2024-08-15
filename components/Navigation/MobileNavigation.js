@@ -2,25 +2,24 @@ import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import styles from './MobileNavigation.module.css'
+import { useSelector } from 'react-redux'
 
 const MobileNavigation = (props) =>{
+  const deleteSportHandler = props.deleteSportHandler;
+  const uniqueSports = props.uniqueSports
+  const active = props.active
+  const sportObject = props.sportObject
+  const handleSportClick = props.handleSportClick
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
 
-    const uniqueSports = props.uniqueSports
-    const active = props.active
-    const sportObject = props.sportObject
-    const handleSportClick = props.handleSportClick
+  const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false)
 
-    const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false)
-
-
-
-
-    return (
-      <div className="w-full mt-4 p-2 flex-col lg:hidden  overflow-scroll">
-        <button
-          onClick={() => setSportsNavIsOpen(!sportsNavIsOpen)}
-          className={styles.openNav_btn}
-        >
+  return (
+    <div className="w-full mt-4 p-2 flex-col lg:hidden  overflow-scroll">
+      <button
+        onClick={() => setSportsNavIsOpen(!sportsNavIsOpen)}
+        className={styles.openNav_btn}
+      >
           open sports
         </button>
         {sportsNavIsOpen && (

@@ -53,18 +53,18 @@ const Profile = () => {
     }
 
   return (
-    <div className="w-full h-screen p-4 md:p-14">
+    <div className="w-full h-screen sm:p-4 md:p-14">
       {!isLoggedIn && <Login />}
       {isLoggedIn && (
-        <div className="flex w-full h-full border-2 overflow-scroll py-2 m-0 p-0 relative">
+        <div className="flex w-full h-full border-2 overflow-scroll sm:py-2 m-0 p-0 relative ">
           <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
             <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
           </Link>
 
-          <div className="m-4 p-4 pl-14  w-full">
-            <h1 className="text-2xl my-8"> hey sporty spice! </h1>
+          <div className="sm:m-4 lg:p-4 lg:pl-14  w-full overflow-scroll">
+            <h1 className="text-xl my-12 m-8"> hey sporty spice! </h1>
 
-            <div className=" text-xl flex mt-4 mb-4 justify-evenly border-b pb-2">
+            <div className="text-xl flex sm:mt-4 mb-4 justify-evenly border-b pb-2">
               <button onClick={() => profileSectionHandler("sports")}>
                 <h2
                   className={
@@ -117,7 +117,7 @@ const Profile = () => {
 
               {profileSection === "settings" && (
                 <div className={styles.plan_div}>
-                  <Settings/>
+                  <Settings />
                 </div>
               )}
             </div>

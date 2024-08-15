@@ -253,7 +253,7 @@ const Plans = () =>{
  
 
   return (
-    <div className="flex-col justify-center  items-center">
+    <div className="flex-col justify-center items-center">
       <EditEntry
         isModalOpen={isModalOpen}
         currentSport={currentSport}
