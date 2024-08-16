@@ -1,0 +1,9 @@
+   [build]
+     publish = "out" # Der Ordner, der nach dem Build bereitgestellt wird
+     command = "npm run build" # Der Befehl zum Erstellen deiner Anwendung
+
+   [[redirects]]
+     from = "/api/*"
+     to = "/api/:splat"
+     status = 200
+     force = true

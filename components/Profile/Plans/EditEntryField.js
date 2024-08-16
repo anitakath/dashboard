@@ -8,7 +8,7 @@ const EditEntryField = ({addSportHandler, addSportBtnText}) =>{
 
     return (
       <div>
-        <div className="flex justify-center h-16 items-center relative">
+        <div className="flex  justify-center h-16 items-center relative">
           <button className={styles.addSport_btn} onClick={addSportHandler}>
             {addSportBtnText}
           </button>

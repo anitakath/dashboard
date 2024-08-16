@@ -39,6 +39,8 @@ export default async function handler(req, res) {
       return res.status(200).json({ data: deleteData });
 
     case "PUT": // Neue Methode zum Aktualisieren eines Eintrags
+      console.log("Received PUT request with body:", req.body);
+     
       const { id, ...updateFields } = req.body; // Extrahiere id und die restlichen Felder
       const { data: updateData, error: updateError } = await supabase
         .from("sports_planned")
@@ -51,7 +53,12 @@ export default async function handler(req, res) {
       return res.status(200).json({ data: updateData });
 
     default:
-      res.setHeader("Allow", ["POST", "GET", "DELETE", "PUT"]);
+    res.setHeader("Access-Control-Allow-Origin", "*"); // Erlaube alle Ursprünge (oder spezifische Domains)
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE"
+    );
+    res.setHeader("Allow", ["POST", "GET", "DELETE", "PUT"]);
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

@@ -11,5 +11,15 @@
 .yourEntried_p{
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 8px;
+}
+
+
+@media screen and (max-width: 600px){
+    .toggleEntries_btn{
+        position: relative;
+        left: 50px;
+    }
+
+    
 }
