@@ -16,6 +16,7 @@ import PlansEntryField from "./PlansEntryField";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSport, replaceSportsArray } from "@/store/profileReducer";
 //CUSTOM HOOKS
+import { useDeleteSport } from '@/custom-hooks/useSportEntries';
 
 import { supabase } from '@/services/supabaseClient';
 import { current } from '@reduxjs/toolkit';
@@ -66,39 +67,14 @@ const Plans = () =>{
     setActiveSport(currSport.name);
   };
 
-  const deleteSportHandler = async (sport) => {
-    // Show confirmation dialog
-    if (window.confirm("Are you sure you want to delete your workout?")) {
-      try {
-        // Send DELETE request to the API
-        const response = await fetch("/api/plannedSports", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
-        });
+  /* ------------ DELETE A SPORT HANDLER --------------- */
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+  const deleteSportHandler = useDeleteSport(sportsArray, setSportsArray);
 
-        // Filter the original sportsArray
-        const filteredSportsArray = sportsArray.filter(
-          (sportObj) => sportObj.entryId !== sport.entryId
-        );
 
-        // Update the state with the filtered array
-        setSportsArray(filteredSportsArray);
 
-        // Dispatch the removeSport action to the Redux Store
-        dispatch(removeSport(sport.entryId));
-      } catch (error) {
-        console.error("Error deleting sport:", error);
-      }
-    }
-  };
 
+  
   const checkSportHandler = async (sport) => {
     try {
       // 1. Insert the sports object into the 'sports' table
@@ -159,7 +135,6 @@ const Plans = () =>{
   const editSportHandler = (sport) => {
     setCurrentSport(sport);
     setIsModalOpen(true);
-
   };
 
   const handleInputChange = (e) => {
@@ -219,7 +194,6 @@ const Plans = () =>{
       console.error("An unexpected error occurred:", error);
     }
   };
-   
 
   useEffect(() => {
     setSortedSportsArray(sportsArray);
@@ -245,12 +219,9 @@ const Plans = () =>{
 
   const [formIsOpen, setFormIsOpen] = useState(false);
 
-
-   const addSportClickHandler = () => {
-     setFormIsOpen((prevState) => !prevState);
-   };
-
- 
+  const addSportClickHandler = () => {
+    setFormIsOpen((prevState) => !prevState);
+  };
 
   return (
     <div className="flex-col justify-center items-center">
@@ -269,7 +240,7 @@ const Plans = () =>{
       <div className={styles.form_container}>
         {sportsArray === null && !addSport && <p> no entries were made yet</p>}
 
-        <div className="w-full">
+        <div className="w-full border-8">
           <AddSportField
             addSport={addSport}
             currentSports={currentSports}
@@ -290,9 +261,9 @@ const Plans = () =>{
 
             <PlansEntryField
               openDetailsIds={openDetailsIds}
-              deleteSportHandler={deleteSportHandler}
               checkSportHandler={checkSportHandler}
               editSportHandler={editSportHandler}
+              deleteSportHandler={deleteSportHandler}
               sortedSportsArray={sortedSportsArray}
               enlargeWorkoutHandler={enlargeWorkoutHandler}
             />

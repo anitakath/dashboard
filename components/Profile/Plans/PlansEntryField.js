@@ -1,31 +1,35 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
-import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
-import styles from './Plans.module.css'
-import colors from '../../../styles/Colors.module.css'
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
+import styles from "./Plans.module.css";
+import colors from "../../../styles/Colors.module.css";
 //HOOKS
-import { formatDate } from '@/custom-hooks/formatDate';
-import { useEffect } from 'react';
+import { formatDate } from "@/custom-hooks/formatDate";
+
 //REDUX
-import { useDispatch } from 'react-redux';
-import { setAllPlannedSports } from '@/store/sportReducer';
-const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHandler, deleteSportHandler, checkSportHandler, openDetailsIds}) =>{
-  
-  
+import { useDispatch } from "react-redux";
+import { setAllPlannedSports } from "@/store/sportReducer";
+const PlansEntryField = ({
+  sortedSportsArray,
+  enlargeWorkoutHandler,
+  editSportHandler,
+  checkSportHandler,
+  deleteSportHandler,
+  openDetailsIds,
+}) => {
   // Create a copy of the array and sort it by created_at date (most recent first)
   const sortedByDate = [...sortedSportsArray].sort(
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
   );
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(setAllPlannedSports(sortedByDate));
+  }, [sortedByDate]);
 
-  }, [sortedByDate])
-
-  
+  console.log(sortedByDate)
 
   return (
     <div className={styles.field}>
@@ -106,6 +110,6 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler,  editSportHa
         ))}
     </div>
   );
-}
+};
 
-export default PlansEntryField; 
+export default PlansEntryField;

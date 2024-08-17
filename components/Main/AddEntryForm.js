@@ -12,10 +12,12 @@ import { setSportsArrayy } from "@/store/profileReducer";
 import { supabase } from "@/services/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 
+//HOOKS
+import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
+
 
 const AddEntryForm = (props) => {
-  const [successMessage, setSuccessMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('')
+
   const dispatch = useDispatch();
   const router = useRouter();
   const selectedSport = useSelector((state) => state.sport.selectedSport);
@@ -23,7 +25,6 @@ const AddEntryForm = (props) => {
   const setFormIsOpen = props.setFormIsOpen;
   const currentPath = router.pathname;
   const chosenSport = props.chosenSport;
-  const [durationErrorMessage, setDurationErrorMessage] = useState(false);
 
   let label = "";
 
@@ -85,126 +86,15 @@ const AddEntryForm = (props) => {
     fetchSportImages();
   }, []);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-    if (currentPath === "/profile") {
-      if (
-        validateTitle(inputs.title) &&
-        validateText(inputs.text) &&
-        validateDuration(inputs.duration) &&
-        inputs.created_at != ""
-      ) {
-        setDurationErrorMessage(false);
-        const formattedTitle = formatText(inputs.title);
-        const uniqueID = uuidv4();
 
 
-        if(chosenSport === null){
-          setErrorMessage('choose a sport!')
-          return
-        }
+  
 
-        const data = {
-          name: chosenSport.name,
-          label: chosenSport.color,
-          entryId: uniqueID,
-          title: inputs.title,
-          entry: inputs.text,
-          entryPath: formattedTitle + "-" + uniqueID,
-          duration: inputs.duration,
-          created_at: inputs.created_at,
-        };
+  /* ------------ ADD A SPORT HANDLER --------------- */
+  const { submitHandler, successMessage, durationErrorMessage, errorMessage } = useSubmitHandler(currentPath, chosenSport, inputs);
 
 
-        // Sende die Daten an die API
-        try {
-          const response = await fetch("/api/send-plannedSports", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
 
-          if (!response.ok) {
-            throw new Error("Fehler beim Senden der Daten");
-          }
-          const result = await response.json();
-
-          // Dispatch und Erfolgsmeldung setzen
-          dispatch(setSportsArrayy(result.data));
-          setSuccessMessage(true);
-        } catch (error) {
-          console.error("Fehler:", error);
-          // Hier kannst du auch eine Fehlermeldung setzen
-        }
-
-        if (data) {
-          dispatch(setSportsArrayy(data));
-          setSuccessMessage(true);
-
-        }
-      } else {
-        if (inputs.created_at === "") {
-          setDurationErrorMessage(true);
-        }
-      }
-    } else {
-      if (
-        validateTitle(inputs.title) &&
-        validateText(inputs.text) &&
-        validateDuration(inputs.duration) &&
-        inputs.created_at != ""
-      ) {
-        // Hier kannst du die Daten überprüfen und weiterverarbeiten
-        // Zum Beispiel: Speichern der Daten in einer Datenbank oder einem anderen Speicherort
-
-        const formattedTitle = formatText(inputs.title);
-        const uniqueID = uuidv4();
-
-        const data = {
-          name: inputs.name,
-          label: inputs.label,
-          entryId: uniqueID,
-          title: inputs.title,
-          entry: inputs.text,
-          entryPath: formattedTitle + "-" + uniqueID,
-          duration: inputs.duration,
-          created_at: inputs.created_at,
-        };
-
-        try {
-          const { data: newSport, error } = await supabase
-            .from("sports")
-            .insert([data]);
-
-          if (error) {
-            console.error("Failed to insert data into Supabase table:", error);
-          } else {
-            console.log(
-              "Data successfully inserted into Supabase table:",
-              newSport
-            );
-            fetchSportsData();
-          }
-        } catch (error) {
-          console.error("Error inserting data into Supabase table:", error);
-        }
-
-        setSuccessMessage(true);
-
-        setTimeout(() => {
-          setSuccessMessage(false);
-        }, 5000);
-
-        setFormIsOpen(false);
-      } else {
-        setSuccessMessage(false);
-        console.log("Validation failed. Please check your input.");
-      }
-    }
-  };
 
   const fetchSportsData = async () => {
     try {
