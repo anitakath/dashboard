@@ -240,7 +240,7 @@ const Plans = () =>{
       <div className={styles.form_container}>
         {sportsArray === null && !addSport && <p> no entries were made yet</p>}
 
-        <div className="w-full border-8">
+        <div className="w-full">
           <AddSportField
             addSport={addSport}
             currentSports={currentSports}

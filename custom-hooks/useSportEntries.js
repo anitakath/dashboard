@@ -3,6 +3,43 @@ import { removeSport, setSportsArrayy } from "@/store/profileReducer";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/supabaseClient";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
+
+
+export const useDeleteCompletedSport = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const deleteSport = async (title, id) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { data, error } = await supabase
+        .from("sports")
+        .delete()
+        .eq("title", title)
+        .eq("id", id);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      console.log("Eintrag erfolgreich gelöscht", data);
+      return { success: true };
+    } catch (err) {
+      console.error("Fehler beim Löschen des Eintrags:", err.message);
+      setError(err.message);
+      return { success: false, error: err.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { deleteSport, loading, error };
+};
+
+
 
 export const useDeleteSport = (sportsArray, setSportsArray) => {
   const dispatch = useDispatch();
@@ -44,12 +81,33 @@ export const useDeleteSport = (sportsArray, setSportsArray) => {
 };
 
 
+
+
+
+
+const fetchSportsData = async (dispatch) => {
+   try {
+     const response = await fetch("/api/sports");
+     if (!response.ok) {
+       throw new Error("Failed to fetch sports data");
+     }
+     const data = await response.json();
+     dispatch(setAllSportsFromSupabase(data.data));
+   } catch (error) {
+     console.error("Error fetching sports data:", error);
+   }
+};
+
+
+
+
+
+
 export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
   const dispatch = useDispatch();
   const [successMessage, setSuccessMessage] = useState(false);
   const [durationErrorMessage, setDurationErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
 
   const validateTitle = (title) => {
     return title.length >= 3 && title.length <= 50;
@@ -157,7 +215,10 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
               "Data successfully inserted into Supabase table:",
               newSport
             );
-            fetchSportsData(); // Stelle sicher, dass diese Funktion verfügbar ist
+
+            // Rufe fetchSportsData auf und übergebe dispatch
+            await fetchSportsData(dispatch);
+          
             setSuccessMessage(true);
             setTimeout(() => {
               setSuccessMessage(false);
@@ -175,6 +236,22 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
 
   return { submitHandler, successMessage, durationErrorMessage, errorMessage };
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

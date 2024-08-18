@@ -88,7 +88,6 @@ const Board = (props) => {
 
   return (
     <div className="w-full overflow-scroll h-full p-2 ">
- 
       <BoardHeader logoutHandler={logoutHandler} />
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
@@ -175,6 +174,7 @@ const Board = (props) => {
           {currentSport != "all" && currentSport !== "daily" && (
             <Entry
               filteredEntries={filteredEntries}
+              allSupabaseSports={allSupabaseSports}
               sportsDurationByMonth={sportsDurationByMonth}
             />
           )}

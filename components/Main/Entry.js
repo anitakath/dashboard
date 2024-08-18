@@ -1,3 +1,9 @@
+
+
+
+
+
+
 import Link from "next/link";
 //STYLES
 import styles from './Entry.module.css'
@@ -7,25 +13,21 @@ import { formatDate } from "@/custom-hooks/formatDate";
 //HOOKS
 import { getMonth } from "@/custom-hooks/formatDate";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
-import useDaysWithoutEntry from "@/custom-hooks/useDaysWithoutEntry";
 import useSortedEntriesByMonth from "@/custom-hooks/useSortedEntriesByMonth"; // Importiere die neue Hook
-import useSortedEntriesByYearAndMonth from "@/custom-hooks/useSortedEntriesByYearAndMonth";
-//COMPONENTS
-//import SportsGrafic from "./All/SportsGrafic";
 //REDUX
 import { setSortedEntriesByMonth } from "@/store/sportReducer";
 //COMPONENTS
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
-const Entry = (props) => {
+
+
+
+
+const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
-  const filteredByDate = props.filteredByDate;
-  const filteredEntries = props.filteredEntries;
-  const sportsDurationByMonth = props.sportsDurationByMonth;
   const [openMonths, setOpenMonths] = useState({});
   const [entriesByMonth, setEntriesByMonth] = useState({});
-  const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null)
-  const [showGrafic, setShowGrafic] = useState(null)
+  const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const Entry = (props) => {
           updatedEntriesByDay[dayMonthYear] = [];
         }
         updatedEntriesByDay[dayMonthYear].push(entry);
-      })
+      });
 
       const sortedEntries = {};
 
@@ -76,29 +78,24 @@ const Entry = (props) => {
 
       // Umwandeln des Objekts in das gewünschte Array-Format
       // Umwandeln des Objekts in das gewünschte Array-Format
-     const finalSortedArray = Object.keys(sortedEntries)
-       .filter((year) => year !== "1014") // Filtere das Jahr 1014 heraus
-       .sort((a, b) => b - a) // Sortiere die Jahre in absteigender Reihenfolge
-       .map((year) => ({
-         [year]: Object.keys(sortedEntries[year]).map((month) => ({
-           [month]: sortedEntries[year][month],
-         })),
-       }));
+      const finalSortedArray = Object.keys(sortedEntries)
+        .filter((year) => year !== "1014") // Filtere das Jahr 1014 heraus
+        .sort((a, b) => b - a) // Sortiere die Jahre in absteigender Reihenfolge
+        .map((year) => ({
+          [year]: Object.keys(sortedEntries[year]).map((month) => ({
+            [month]: sortedEntries[year][month],
+          })),
+        }));
 
-     setEntriesByYearAndMonth(finalSortedArray);
-     // const final = useSortedEntriesByYearAndMonth(updatedEntriesByDay)
+      setEntriesByYearAndMonth(finalSortedArray);
+      // const final = useSortedEntriesByYearAndMonth(updatedEntriesByDay)
       //console.log(final)
 
       setEntriesByMonth(updatedEntriesByMonth);
     }
-  }, []);
-  
-
-
+  }, [filteredByDate]);
 
   const sortedEntriesByMonth = useSortedEntriesByMonth(entriesByMonth);
-
-  
 
   const sumDurationsByMonth = {};
   for (const month in entriesByMonth) {
@@ -134,17 +131,9 @@ const Entry = (props) => {
     filteredEntriesByMonth[month] = filteredEntries;
   }
 
-  const dateData = useDaysWithoutEntry(filteredEntriesByMonth);
-
-  const [restDays, setRestDays] = useState(null);
-
-  useEffect(() => {
-    setRestDays(dateData.restDaysPerMonth);
-  }, [dateData]);
-
   // always sort sortedEntriesByMonth by date of creation of the respective entries.
 
-  if(sortedEntriesByMonth){
+  if (sortedEntriesByMonth) {
     for (const month in sortedEntriesByMonth) {
       sortedEntriesByMonth[month].sort((a, b) => {
         return new Date(b.created_at) - new Date(a.created_at);
@@ -152,18 +141,17 @@ const Entry = (props) => {
     }
   }
 
-
   // create a copy of filteredEntries, so filteredEntries is not mutated
-  const sortedEntries = Array.isArray(filteredEntries) ? [...filteredEntries] : [];
+  const sortedEntries = Array.isArray(filteredEntries)
+    ? [...filteredEntries]
+    : [];
 
   //sort the entries by .created_at
   sortedEntries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    useEffect(() => {
-      dispatch(setSortedEntriesByMonth(entriesByMonth));
-    }, []);
-
- 
+  useEffect(() => {
+    dispatch(setSortedEntriesByMonth(entriesByMonth));
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -196,22 +184,110 @@ const Entry = (props) => {
           </div>
         ))}
 
-
-     
-     <EntriesByYearAndMonth 
-      entriesByYearAndMonth={entriesByYearAndMonth} 
-      currentSport={currentSport} 
-      toggleMonthEntries={toggleMonthEntries} 
-      openMonths={openMonths} 
-      /> 
-
-    
-      
-         
+      <EntriesByYearAndMonth
+        entriesByYearAndMonth={entriesByYearAndMonth}
+        currentSport={currentSport}
+        toggleMonthEntries={toggleMonthEntries}
+        openMonths={openMonths}
+      />
     </div>
   );
 };
 
 export default Entry;
+
+
+
+
+/*
+
+const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
+    const currentSport = useSelector((state) => state.sport.selectedSport);
+    const dispatch = useDispatch();
+
+    const [entriesByMonth, setEntriesByMonth] = useState({});
+    const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
+    const [openMonths, setOpenMonths] = useState({});
+
+    useEffect(() => {
+        if (filteredByDate) {
+            const updatedEntries = {};
+            filteredByDate.forEach(entry => {
+                const monthYear = `${getMonth(entry.created_at)} `;
+                if (!updatedEntries[monthYear]) updatedEntries[monthYear] = [];
+                updatedEntries[monthYear].push(entry);
+            });
+            setEntriesByMonth(updatedEntries);
+            setEntriesByYearAndMonth(sortEntries(updatedEntries));
+        }
+    }, [filteredByDate]);
+
+  const sortEntries = (entries) => {
+    const sorted = {};
+
+    Object.keys(entries).forEach(month => {
+        entries[month].forEach(entry => {
+            const year = new Date(entry.created_at).getFullYear();
+            const monthName = getMonth(entry.created_at);
+
+            if (!sorted[year]) {
+                sorted[year] = {};
+            }
+            if (!sorted[year][monthName]) {
+                sorted[year][monthName] = [];
+            }
+            sorted[year][monthName].push(entry);
+        });
+    });
+
+    return Object.keys(sorted).map(year => ({
+        year,
+        months: Object.keys(sorted[year]).map(month => ({
+            month,
+            entries: sorted[year][month]
+        }))
+    }));
+};
+
+    const toggleMonthEntries = (monthYear) => {
+        setOpenMonths(prev => ({ ...prev, [monthYear]: !prev[monthYear] }));
+    };
+
+    useEffect(() => {
+        dispatch(setSortedEntriesByMonth(entriesByMonth));
+    }, [entriesByMonth]);
+
+    return (
+        <div className={styles.container}>
+            {currentSport !== "all" && (
+                <h1>
+                    Total hours of being a sporty spice so far: <span>{sportsDurationByMonth}</span>
+                </h1>
+            )}
+            {filteredEntries && filteredEntries.map((entry, index) => (
+                <div key={index} className={styles.entry} style={{ background: getComputedStyle(document.documentElement).getPropertyValue(`--${entry.label}`) }}>
+                    <Link href={`/details/${entry.entryPath}`}>
+                        <div className={styles.link}>
+                            <p className="my-2 px-2 text-xs absolute right-4">{formatDate(entry.created_at)}</p>
+                            <h2 className="text-2xl mb-4 mt-6 px-2 h-18">{entry.title}</h2>
+                            <p className="px-2 mb-4">{entry.entry}</p>
+                        </div>
+                    </Link>
+                </div>
+            ))}
+            <EntriesByYearAndMonth 
+                entriesByYearAndMonth={entriesByYearAndMonth} 
+                currentSport={currentSport} 
+                toggleMonthEntries={toggleMonthEntries} 
+                openMonths={openMonths} 
+            />
+        </div>
+    );
+};
+
+export default Entry;
+
+*/
+
 
 
