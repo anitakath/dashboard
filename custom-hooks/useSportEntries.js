@@ -6,6 +6,8 @@ import { supabase } from "@/services/supabaseClient";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 
+/* DELETE COMPLETED  SPORT */
+
 export const useDeleteCompletedSport = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -39,8 +41,7 @@ export const useDeleteCompletedSport = () => {
   return { deleteSport, loading, error };
 };
 
-
-
+/* DELETE PLANNED SPORT */
 export const useDeleteSport = (sportsArray, setSportsArray) => {
   const dispatch = useDispatch();
 

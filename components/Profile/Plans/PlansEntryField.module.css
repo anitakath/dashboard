@@ -1,91 +1,143 @@
-.form_container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    width: 100%;
+.layout_btn{
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
+
+.layout_btn:hover{
+    color: var(--purpleDark)
+}
+
+.field{
+    width: 100%;
+    position: relative;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 0px; 
+    padding: 16px; 
+}
+
+.sport_entry_div{
+    background: var(--purpleDarkHoverOpacity);
+    width: 95%;
+    margin: 10px 5px;
+    padding: 5px; 
+    background: linear-gradient(to right, var(--purpleDarkHoverOpacity), transparent);
+}
+
+.enlarge_btn{
+    width: 40px;
+    position: absolute;
+    right: 3px;
+    top: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: lightgrey;
+}
+.enlarge_btn:hover{
+    color: black;
+}
+
+.enlarge_icon{
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
 
 .duration_h3{
     display: block;
 }
 
+.sport_entry_details {
+    overflow: hidden;
+    transition: max-height 1s ease; 
+    padding: 10px 20px;
+    width:100%;
+}
 
-.container{
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.sport_entry_details.collapsed {
+    max-height: 0; 
 }
 
 
-.addSport_btn{
-    color: var(--purpleDarkHover);
-    font-size: 1.5rem;
+.sport_entry_details.expanded {
+    max-height: 500px; 
 }
-
-.home_link{
-    position: absolute;
-    left:10px;
-    color: lightgrey;
-    font-size: 1.2rem;
-}
-
-
-.sport_buttons{
-    width: 100%;
-    margin: 5px 0px;
+.action_btns{
+    width: 40px;
     height: 40px;
-    cursor: pointer;
+    margin: 0px 10px;
+    font-size: 1.2rem;
+    background: rgba(255,255,255, 0.3);
     transition: 0.2s ease;
-    font-size: 1.3rem;
-    
-}
-
-.sport_buttons:hover{
-    box-shadow: 0px 0px 10px grey;
+    border-radius: 50%;
 }
 
 
-.active{
-    border-radius: 5px;
-    transform: scale(1.02);
-    margin: 8px 0px;
-    border-bottom: 4px solid var(--purpleDarkHover);
+.action_btns:hover{
+    background: rgba(255,255,255, 0.7);
+}
+
+.delete_icon{
+    color: red;
 }
 
 
-
-.addNewSport_btn{
-    background: var(--purpleDarkHoverOpacity);
-    padding: 10px;
-    width: 50%;
-    transition: 0.2s ease;
-    cursor: pointer;
-}
-
-
-.addNewSport_btn:hover{
-    background: var(--purpleDark);
-    color: beige;
+.check_icon{
+    color: green;
 }
 
 
 
-@media screen and (max-width: 1200px){
-    .container{
-        width: 100%;
+
+
+@media screen and (max-width: 1000px){
+    .grid {
+        grid-template-columns: repeat(2, 1fr); 
+
     }
 }
 
 
 @media screen and (max-width: 600px){
 
-    .duration_h3{
-        display: none;
+    .grid {
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 5px;
     }
+
+    
+  
+    .enlarge_btn{
+        width: 20px;
+        top: 0;
+        right: 2px;
+        font-size: 0.5rem;
+    }
+
+    .sport_entry_div_grid{
+       /* height: 100px;*/
+        margin: 0px 10px;
+        padding: 0;
+        text-align: center;
+    }
+/*
+     .created_at_h2{
+        text-align: center;
+
+    }
+
+      .duration_h3{
+        display: none;
+    }*/
+
 }
+
 
 .fandango_bg{
     background: linear-gradient(to right, transparent, var(--fandango));
@@ -149,6 +201,17 @@
 
 .mossGreen_bg{
     background: linear-gradient(to right, transparent, var(--mossGreen));
+}
+
+.expanded_grid{
+    width: 100%;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0px;
+    margin: 0px;
+    background: var(--purpleDark);
+    height: 200px;
 }
 
 
@@ -219,24 +282,4 @@
 
 .mossGreen{
     background: var(--mossGreen);
-}
-
-
-@media screen and (max-width: 600px){
-
-    .form_container{
-        padding: 0;
-    }
-    .sport_entry_div{
-        width: 100%;
-        margin: 10px 0px;
-    }
-
-    
-
-    .fandango, .egplant, .mossGreen, .frenchGrey, .jasmine, .mustard, .brown, .mandarine, .aquamarine, .mauve .spaceCadet, .wenge, .lightOrange, .sinopia, .celeste, .sprinGreen{
-        background: transparent;
-
-    }
-
 }
