@@ -119,7 +119,16 @@ const PlansEntryField = ({
               </div>
               {(openDetailsIds.includes(sport.entryId) ||
                 enlargedEntryId === sport.entryId) && (
-                <div className="flex justify-center m-2 p-1">
+                <div
+                  className={`flex justify-center m-2 p-1${
+                    enlargedEntryId !== sport.entryId ? "" : "relative"
+                  }`}
+                  style={
+                    enlargedEntryId !== sport.entryId
+                      ? {}
+                      : { position: "relative", top: "200px" }
+                  }
+                >
                   <button className={styles.action_btns}>
                     <FontAwesomeIcon
                       icon={faXmark}
