@@ -24,7 +24,7 @@
 }
 
 .menu_div{
-    background-color: var(--purpleDark);
+    background-color: white;
     z-index: 10000;
     padding: 10px;
     height: 90vh;
@@ -34,7 +34,8 @@
     align-items: center;
     position: relative;
     box-shadow: 0px 2px 10px black;
-}
+    color: var(--purpleDarkHover)
+;}
 
 .close_btn{
     position: absolute;
@@ -59,10 +60,10 @@
 
 .table_title{
     font-size: 1.2rem;
-    background-color: rgba(255,255,255, 0.3);
+    background-color: var(--purpleDarkHoverOpacity);
     width: 500px;
     padding: 10px;
-    margin: 5px 0px;
+    margin: 0px;
     display: flex;
     
     
@@ -78,19 +79,22 @@
 }
 
 .link:hover, .anne_link:hover{
-    color: rgba(255,255,255, 0.5);
-
+    color:var(--purpleDark);
 }
+
+
 .anne_div{
     display: flex;
     margin: 10px 0px;
+
 }
 
 .anne_link{
     width: 250px;
-    margin: 5px;
+    background-color: var(--purpleDarkHoverOpacity);
+    margin: 0px 5px;
     padding: 10px;
-    color: rgba(255,255,255, 0.4);
+   color: black;
     border-top: 0.5px solid  rgba(255,255,255, 0.3);
 }
 
