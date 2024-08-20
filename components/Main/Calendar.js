@@ -101,7 +101,7 @@ const Calendar = (props) =>{
 
   return (
     <div className="p-0 mt-4 mb-4  w-full lg:w-2/3 relative">
-      <h1 className="text-2xl border-b-2 my-2">
+      <h1 className="text-2xl my-2">
         Summary: <span className={styles.summary_span}>{selectedSport} </span>
       </h1>
 

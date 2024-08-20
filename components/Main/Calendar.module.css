@@ -33,7 +33,7 @@
 
 .chooseYear_div{
     position: absolute;
-    top: 0;
+    top: 5px;
     right: 0;
     width: 200px;
     display: flex;
@@ -41,11 +41,27 @@
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
+    padding: 0px;
+    transition: 0.2s ease;
 }
+
+
 
 .year_input{
     border: none;
     margin: 0px 5px;
+    margin-left: 5px;
+    padding: 0px; 
+    color: var(--purpleDark);
+    cursor: pointer;
+}
+
+.year_input:hover {
+    color: var(--purpleDarkHover); 
+}
+
+.year_input:focus{
+    outline: none;
 }
 
 .chevron{

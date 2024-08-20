@@ -1,35 +1,42 @@
+import { useState } from 'react';
 import Link from 'next/link';
 //import styles from './EntriesByYearAndMonth.module.css'
 import styles from '../Entry.module.css'
 //CUSTOM HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
+import { formatDuration } from '@/custom-hooks/formatDate';
 
 
-const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport, toggleMonthEntries, openMonths }) =>{
+const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
 
-  console.log(entriesByYearAndMonth)
-    return (
-      <div className=''>
+   const [openMonths, setOpenMonths] = useState({});
+   const toggleMonthEntries = (monthName, year) => {
+     // Erstelle einen Schlüssel, der sowohl den Monat als auch das Jahr kombiniert
+     const monthYearKey = `${monthName}-${year}`;
+
+     setOpenMonths((prevState) => ({
+       ...prevState,
+       [monthYearKey]: !prevState[monthYearKey], // Toggle den Zustand für diesen spezifischen Monat und Jahr
+     }));
+   };
+
+
+  return (
+    <div className=''>
        
-        {entriesByYearAndMonth &&
+      {entriesByYearAndMonth &&
           entriesByYearAndMonth.map((yearEntry) => {
-            const year = Object.keys(yearEntry)[0]; // Holen des Jahres
-            const months = yearEntry[year]; // Holen der Monate für dieses Jahr
+            const year = Object.keys(yearEntry)[0]; 
+            const months = yearEntry[year]; 
 
             return (
               <div key={year}>
                 <h2 className={styles.yearHeader}>{year} </h2>
                 {months.map((monthEntry) => {
-                  const monthName = Object.keys(monthEntry)[0]; // Holen des Monatsnamens
-                  const entries = monthEntry[monthName]; // Holen der Einträge für diesen Monat
+                  const monthName = Object.keys(monthEntry)[0]; 
+                  const entries = monthEntry[monthName];
                   const totalDuration = entries.reduce((acc, entry) => acc + entry.duration, 0);
                   
-                  // Funktion zur Umwandlung von Minuten in Stunden und Minuten
-                  const formatDuration = (totalMinutes) => {
-                    const hours = Math.floor(totalMinutes / 60);
-                    const minutes = totalMinutes % 60;
-                    return `${hours}h ${minutes}min`;
-                  };
 
                   return (
                     <div key={monthName}>

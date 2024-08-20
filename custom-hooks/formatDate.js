@@ -34,3 +34,10 @@ export function getMonth(created_at) {
 
   return months[monthIndex];
 }
+
+ export const formatDuration = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h ${minutes}min`;
+  };
+

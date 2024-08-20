@@ -1,9 +1,4 @@
 
-
-
-
-
-
 import Link from "next/link";
 //STYLES
 import styles from './Entry.module.css'
@@ -20,12 +15,8 @@ import { setSortedEntriesByMonth } from "@/store/sportReducer";
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
 
-
-
-
 const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
-  const [openMonths, setOpenMonths] = useState({});
   const [entriesByMonth, setEntriesByMonth] = useState({});
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
   const dispatch = useDispatch();
@@ -76,8 +67,7 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
         sortedEntries[year][monthName].push(...entries);
       }
 
-      // Umwandeln des Objekts in das gewünschte Array-Format
-      // Umwandeln des Objekts in das gewünschte Array-Format
+ 
       const finalSortedArray = Object.keys(sortedEntries)
         .filter((year) => year !== "1014") // Filtere das Jahr 1014 heraus
         .sort((a, b) => b - a) // Sortiere die Jahre in absteigender Reihenfolge
@@ -88,8 +78,6 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
         }));
 
       setEntriesByYearAndMonth(finalSortedArray);
-      // const final = useSortedEntriesByYearAndMonth(updatedEntriesByDay)
-      //console.log(final)
 
       setEntriesByMonth(updatedEntriesByMonth);
     }
@@ -107,29 +95,6 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
     const totalDurationInHours = convertMinutesToHours(totalDurationInMinutes);
     sumDurationsByMonth[month] = totalDurationInHours;
   }
-
-  /*
-  const toggleMonthEntries = (monthYear, year) => {
-    console.log(monthYear)
-    console.log(year)
-    setOpenMonths((prevState) => ({
-      ...prevState,
-      [monthYear]: !prevState[monthYear],
-    }));
-  };*/
-  const toggleMonthEntries = (monthName, year) => {
-    console.log(monthName);
-    console.log(year);
-
-    // Erstelle einen Schlüssel, der sowohl den Monat als auch das Jahr kombiniert
-    const monthYearKey = `${monthName}-${year}`;
-
-    setOpenMonths((prevState) => ({
-      ...prevState,
-      [monthYearKey]: !prevState[monthYearKey], // Toggle den Zustand für diesen spezifischen Monat und Jahr
-    }));
-  };
-
 
   const filteredEntriesByMonth = {};
 
@@ -169,6 +134,8 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
     dispatch(setSortedEntriesByMonth(entriesByMonth));
   }, []);
 
+
+
   return (
     <div className={styles.container}>
       {currentSport != "all" && (
@@ -203,107 +170,11 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
       <EntriesByYearAndMonth
         entriesByYearAndMonth={entriesByYearAndMonth}
         currentSport={currentSport}
-        toggleMonthEntries={toggleMonthEntries}
-        openMonths={openMonths}
       />
     </div>
   );
 };
 
 export default Entry;
-
-
-
-
-/*
-
-const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
-    const currentSport = useSelector((state) => state.sport.selectedSport);
-    const dispatch = useDispatch();
-
-    const [entriesByMonth, setEntriesByMonth] = useState({});
-    const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
-    const [openMonths, setOpenMonths] = useState({});
-
-    useEffect(() => {
-        if (filteredByDate) {
-            const updatedEntries = {};
-            filteredByDate.forEach(entry => {
-                const monthYear = `${getMonth(entry.created_at)} `;
-                if (!updatedEntries[monthYear]) updatedEntries[monthYear] = [];
-                updatedEntries[monthYear].push(entry);
-            });
-            setEntriesByMonth(updatedEntries);
-            setEntriesByYearAndMonth(sortEntries(updatedEntries));
-        }
-    }, [filteredByDate]);
-
-  const sortEntries = (entries) => {
-    const sorted = {};
-
-    Object.keys(entries).forEach(month => {
-        entries[month].forEach(entry => {
-            const year = new Date(entry.created_at).getFullYear();
-            const monthName = getMonth(entry.created_at);
-
-            if (!sorted[year]) {
-                sorted[year] = {};
-            }
-            if (!sorted[year][monthName]) {
-                sorted[year][monthName] = [];
-            }
-            sorted[year][monthName].push(entry);
-        });
-    });
-
-    return Object.keys(sorted).map(year => ({
-        year,
-        months: Object.keys(sorted[year]).map(month => ({
-            month,
-            entries: sorted[year][month]
-        }))
-    }));
-};
-
-    const toggleMonthEntries = (monthYear) => {
-        setOpenMonths(prev => ({ ...prev, [monthYear]: !prev[monthYear] }));
-    };
-
-    useEffect(() => {
-        dispatch(setSortedEntriesByMonth(entriesByMonth));
-    }, [entriesByMonth]);
-
-    return (
-        <div className={styles.container}>
-            {currentSport !== "all" && (
-                <h1>
-                    Total hours of being a sporty spice so far: <span>{sportsDurationByMonth}</span>
-                </h1>
-            )}
-            {filteredEntries && filteredEntries.map((entry, index) => (
-                <div key={index} className={styles.entry} style={{ background: getComputedStyle(document.documentElement).getPropertyValue(`--${entry.label}`) }}>
-                    <Link href={`/details/${entry.entryPath}`}>
-                        <div className={styles.link}>
-                            <p className="my-2 px-2 text-xs absolute right-4">{formatDate(entry.created_at)}</p>
-                            <h2 className="text-2xl mb-4 mt-6 px-2 h-18">{entry.title}</h2>
-                            <p className="px-2 mb-4">{entry.entry}</p>
-                        </div>
-                    </Link>
-                </div>
-            ))}
-            <EntriesByYearAndMonth 
-                entriesByYearAndMonth={entriesByYearAndMonth} 
-                currentSport={currentSport} 
-                toggleMonthEntries={toggleMonthEntries} 
-                openMonths={openMonths} 
-            />
-        </div>
-    );
-};
-
-export default Entry;
-
-*/
-
 
 
