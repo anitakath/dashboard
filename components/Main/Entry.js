@@ -108,12 +108,28 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
     sumDurationsByMonth[month] = totalDurationInHours;
   }
 
-  const toggleMonthEntries = (monthYear) => {
+  /*
+  const toggleMonthEntries = (monthYear, year) => {
+    console.log(monthYear)
+    console.log(year)
     setOpenMonths((prevState) => ({
       ...prevState,
       [monthYear]: !prevState[monthYear],
     }));
+  };*/
+  const toggleMonthEntries = (monthName, year) => {
+    console.log(monthName);
+    console.log(year);
+
+    // Erstelle einen Schlüssel, der sowohl den Monat als auch das Jahr kombiniert
+    const monthYearKey = `${monthName}-${year}`;
+
+    setOpenMonths((prevState) => ({
+      ...prevState,
+      [monthYearKey]: !prevState[monthYearKey], // Toggle den Zustand für diesen spezifischen Monat und Jahr
+    }));
   };
+
 
   const filteredEntriesByMonth = {};
 

@@ -6,6 +6,8 @@ import { formatDate } from '@/custom-hooks/formatDate';
 
 
 const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport, toggleMonthEntries, openMonths }) =>{
+
+  console.log(entriesByYearAndMonth)
     return (
       <div className=''>
        
@@ -20,9 +22,8 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport, toggleMont
                 {months.map((monthEntry) => {
                   const monthName = Object.keys(monthEntry)[0]; // Holen des Monatsnamens
                   const entries = monthEntry[monthName]; // Holen der Einträge für diesen Monat
-
-              
                   const totalDuration = entries.reduce((acc, entry) => acc + entry.duration, 0);
+                  
                   // Funktion zur Umwandlung von Minuten in Stunden und Minuten
                   const formatDuration = (totalMinutes) => {
                     const hours = Math.floor(totalMinutes / 60);
@@ -35,13 +36,13 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport, toggleMont
                       {currentSport === "all" && (
                         <button
                           className={styles.monthYear_header}
-                          onClick={() => toggleMonthEntries(monthName)}
+                          onClick={() => toggleMonthEntries(monthName, year)}
                         >
                           <p className={styles.monthYear_header_p}>{monthName}</p>
                           <p className={styles.monthYear_header_span}>(total hours of sport:<span className={styles.totalDuration}> {formatDuration(totalDuration)}</span>)</p>
                         </button>
                       )}
-                      {openMonths[monthName] &&
+                      {openMonths[`${monthName}-${year}`] &&
                         entries
                           .sort(
                             (a, b) =>
