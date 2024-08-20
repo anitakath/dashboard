@@ -5,7 +5,7 @@ const PlansHeader = ({toggleAllEntries, areAllOpen}) =>{
 
 
     return (
-      <div className='w-full flex-col  relative flex items-center'>
+      <div className='w-full flex-col relative flex items-center'>
   
         <button
           onClick={toggleAllEntries}

@@ -8,12 +8,3 @@
     font-size: 1rem;
 }
 
-
-@media screen and (max-width: 600px){
-    .toggleEntries_btn{
-        position: relative;
-        left: 50px;
-    }
-
-    
-}

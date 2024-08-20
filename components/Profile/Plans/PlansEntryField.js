@@ -50,9 +50,11 @@ const PlansEntryField = ({
     <div className="w-full">
       <button onClick={toggleLayout} className={styles.layout_btn}>
         <FontAwesomeIcon
-          icon={layoutMode === "list" ? faBars : faGripHorizontal}
+          className="hidden ssm:flex ml-2" icon={layoutMode === "list" ? faBars : faGripHorizontal}
         />
       </button>
+
+
       <div
         className={`${styles.field} ${
           layoutMode === "grid" ? styles.grid : styles.list
