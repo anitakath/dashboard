@@ -9,7 +9,7 @@
 }
 
 
-.inputs{
+.inputs, .inputs_textarea{
   border-bottom: 1px solid var(--purpleDark);
   height: 40px;
   margin: 5px 0px;
@@ -19,6 +19,15 @@
   width: 100%;
 
 }
+
+.inputs_textarea{
+  height: 200px;
+}
+
+.inputs_textarea:focus{
+  outline: none;
+}
+
 
 .inputs::placeholder{
   color: lightgrey;

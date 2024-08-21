@@ -37,15 +37,12 @@ const Board = (props) => {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const actualMonthIndex = monthNames.findIndex(month => month === actualDate.month);
   const actualMonth = actualMonthIndex + 1;
-
   const filteredByDate = filteredEntries.filter((entry) => {
   const entryDate = new Date(entry.created_at);
   const entryYear = entryDate.getFullYear();
   const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
-
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
-
   const router = useRouter()
   const dispatch = useDispatch();
 
@@ -64,16 +61,12 @@ const Board = (props) => {
   };
 
   useEffect(()=> {
-
-       if(navigation.includes(currentSport)){
-         //console.log(`${currentSport} exists`)
-       } else{
-        // console.log(`${currentSport} does not exist`);
-         dispatch(setSelectedSport(navigation[0]))
-       }
-
-
-     }, [navigation])
+    if(navigation.includes(currentSport)){
+      //console.log(`${currentSport} exists`)
+    } else{
+      dispatch(setSelectedSport(navigation[0]))
+    }
+  }, [navigation])
 
 
   const navigateToSportPlanHandler = () =>{
@@ -87,7 +80,7 @@ const Board = (props) => {
     };
 
   return (
-    <div className="w-full overflow-scroll  flex flex-col items-center h-full p-2 ">
+    <div className="w-full overflow-scroll flex flex-col items-center h-full p-2 ">
       <h1 className="title title_mini"> DASHBOARD </h1>
 
       <BoardHeader logoutHandler={logoutHandler} />
@@ -99,9 +92,7 @@ const Board = (props) => {
 
       <div className="flex justify-center lg:flex-row flex-col  sm:w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
-       
           <h2 className="subtitle flex items-center"> {currentSport} </h2>
-      
 
           {currentSport === null && (
             <p className=" my-10 text-2xl text-center">
@@ -140,21 +131,12 @@ const Board = (props) => {
                 go to your diary
               </Link>
 
-              <TransitionGroup>
-                {formIsOpen && (
-                  <CSSTransition
-                    classNames={{
-                      enter: "slide-enter",
-                      enterActive: "slide-enter-active",
-                      exit: "slide-exit",
-                      exitActive: "slide-exit-active",
-                    }}
-                    timeout={300}
-                  >
-                    <AddEntryForm setFormIsOpen={setFormIsOpen} />
-                  </CSSTransition>
-                )}
-              </TransitionGroup>
+
+
+
+              {formIsOpen && <AddEntryForm setFormIsOpen={setFormIsOpen} />}
+
+           
             </div>
           )}
 

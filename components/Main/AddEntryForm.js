@@ -195,7 +195,7 @@ const AddEntryForm = (props) => {
 
 
   return (
-    <form className="my-2 p-2 flex flex-col" onSubmit={submitHandler}>
+    <form className="my-2 p-2 flex flex-col w-full" onSubmit={submitHandler}>
       <label className={styles.labels}> Title </label>
       <input
         type="text"
@@ -217,16 +217,15 @@ const AddEntryForm = (props) => {
       </div>
 
       <label className={styles.labels}> Text </label>
-      <input
-        type="text"
+      <textarea
         name="text"
         placeholder="text"
-        className={`${styles.inputs} ${
+        className={`${styles.inputs_textarea} ${
           isTouched.text && !validateText(inputs.text) ? styles.error : ""
         }`}
         onBlur={() => blurHandler("text")}
         onChange={changeHandler}
-      ></input>
+      ></textarea>
 
       <div className="h-8">
         {isTouched.text && !validateText(inputs.text) && (
@@ -236,7 +235,10 @@ const AddEntryForm = (props) => {
         )}
       </div>
 
-      <h2 className=" mb-4 text-center"> enter the date and duration of your sports session </h2>
+      <h2 className=" mb-4 text-center">
+        {" "}
+        enter the date and duration of your sports session{" "}
+      </h2>
       <div className="flex flex-col md:flex-row items-center justify-evenly items-center ">
         <div className={styles.date_div}>
           <input
