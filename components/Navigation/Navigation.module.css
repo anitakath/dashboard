@@ -83,12 +83,13 @@
     color: var(--purpleDark);
     transition: 0.2s ease;
     margin: 10px 0px;
-    font-size: 2rem;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    font-size: 3rem;
+    position: relative;
+    left: 75px;
 }
 
 .addSport_btn:hover{
@@ -131,6 +132,7 @@
     z-index: 100000;
     max-width: 150px;
 }
+
 
 
 .circle_div{
@@ -230,11 +232,7 @@
     }
 
     .addSport_btn{
-        height: 50px;
-        width: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: none;
     }
 
 
@@ -248,6 +246,7 @@
         font-size: 0.9rem;
 
     }
+
 }
 
 

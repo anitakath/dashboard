@@ -1,6 +1,6 @@
 
 
-.ul {
+.ul{
   width: 100%;
   height: 100%;
   display: grid; 
@@ -115,6 +115,42 @@
     content: '';
     width: 100%;
     background: red;
+}
+
+
+.addSport_btn{
+    height: 60px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    color: var(--purpleDark);
+    transition: 0.2s ease;
+    margin: 10px 0px;
+    font-size: 3rem;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+.addSport_btn:hover{
+    color: black;
+    cursor: pointer;
+    font-size: 3rem;
+}
+
+@media screen and (max-width: 1300px){
+     .addSport_btn{
+        height: 50px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 

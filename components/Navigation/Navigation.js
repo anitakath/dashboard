@@ -40,6 +40,7 @@ const Navigation = () => {
     dispatch(setSelectedSport(sport));
   };
 
+  
   const addSportClickHandler = () => {
     setFormIsOpen((prevState) => !prevState);
   };
@@ -68,7 +69,8 @@ const Navigation = () => {
       {/*-------------------  MOBILE  NAVIGATION ------------------- */}
 
       <MobileNavigation
-        formisOpen={formIsOpen}
+        formIsOpen={formIsOpen}
+        setFormIsOpen={setFormIsOpen}
         active={active}
         uniqueSports={uniqueSports}
         handleSportClick={handleSportClick}
@@ -78,12 +80,16 @@ const Navigation = () => {
         setMobileSportsNavIsOpen={setMobileSportsNavIsOpen}
         setUniqueSports={setUniqueSports}
         allSupabaseSports={allSupabaseSports}
+        addSportClickHandler={addSportClickHandler}
+        
       />
 
       {/*-------------------  WEB NAVIGATION ------------------- */}
 
       <WebNavigation
         formisOpen={formIsOpen}
+        setFormIsOpen={setFormIsOpen}
+        addSportClickHandler={addSportClickHandler}
         active={active}
         uniqueSports={uniqueSports}
         handleSportClick={handleSportClick}
@@ -95,9 +101,10 @@ const Navigation = () => {
         <AddSportForm addSportClickHandler={addSportClickHandler} />
       )}
 
+{/*
       <button className={styles.addSport_btn} onClick={addSportClickHandler}>
         {formIsOpen ? "-" : "+"}
-      </button>
+      </button>*/}
     </div>
   );
 };

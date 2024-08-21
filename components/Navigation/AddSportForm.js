@@ -1,5 +1,5 @@
 
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import Link from "next/link";
 //REDUX
 import { setNavigation, setSelectedSport, setCurrentSport } from "@/store/sportReducer";
@@ -37,17 +37,14 @@ const reducer = (state, action) => {
   }
 };
 
-const AddSportForm = (props) => {
+const AddSportForm = ({addSportClickHandler}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
-
   const navigation = useSelector((state) => state.sport.navigation);
   const sports = useSelector((state) => state.sport.currentSport[0]);
-
   const allPlannedSports = useSelector(
     (state) => state.sport.allPlannedSports
   );
-
 
   const colors = [
     "fandango",
@@ -68,44 +65,25 @@ const AddSportForm = (props) => {
     "mossGreen",
   ];
 
-  //const usedColors = new Set(sports.map((sport) => sport.color));
   const usedColors = new Set([
-    ...sports.map((sport) => sport.color),
-    ...allPlannedSports.map((sport) => sport.label), // Hier fügen wir die Labels hinzu
+    ...(sports ? sports.map((sport) => sport.color) : []),
+    ...(allPlannedSports ? allPlannedSports.map((sport) => sport.label) : []),
   ]);
+
+  const setError = (error, message) => {
+   dispatch({ type: "SET_ERROR", payload: { error, message } });
+  };
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!state.name) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: { error: true, message: "please enter a type of sport!" },
-      });
-      return;
-    }
+    if (!state.name) return setError(true, "please enter a type of sport!");
+    if (state.color === null || usedColors.has(state.color)) return setError(true, "Color is already in use - please choose another one");
+    if (navigation.includes(state.name)) return setError(true, "You have already added this sport to your diary.");
 
-    if (state.color === null || usedColors.has(state.color)) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: {
-          error: true,
-          message: "Color is already in use - please choose another one",
-        },
-      });
-      return;
-    }
-
-    if (navigation.includes(state.name)) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: {
-          error: true,
-          message: "You have already added this sport to your diary.",
-        },
-      });
-      return;
-    }
 
     const data = { name: state.name, color: state.color };
 
@@ -113,7 +91,7 @@ const AddSportForm = (props) => {
     reduxDispatch(setSelectedSport(data.name));
     reduxDispatch(setCurrentSport([...sports, data]));
 
-    props.addSportClickHandler();
+    addSportClickHandler();
 
     // Reset the form
     dispatch({ type: "SET_NAME", payload: "" });
@@ -122,19 +100,15 @@ const AddSportForm = (props) => {
 
   const colorLabelHandler = (selectedColor) => {
     if (usedColors.has(selectedColor)) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: {
-          error: true,
-          message: "Color is already in use - please choose another one",
-        },
-      });
+      setError(true, "Color is already in use - please choose another one");
+
     } else {
       dispatch({
         type: "SET_COLOR",
         payload: { color: selectedColor, style: selectedColor },
       });
-      dispatch({ type: "SET_ERROR", payload: { error: false, message: "" } });
+      setError(false, "");
+    
     }
   };
 
@@ -147,7 +121,7 @@ const AddSportForm = (props) => {
         onChange={(e) =>
           dispatch({ type: "SET_NAME", payload: e.target.value })
         }
-        placeholder="type of sport..."
+        placeholder="enter type of sport..."
         className={styles.input}
       />
 
@@ -168,7 +142,6 @@ const AddSportForm = (props) => {
       </div>
 
       <p className="my-6">{state.errorMessage}</p>
-
       <Link href="/profile" className={styles.link}>
         go to your profile
       </Link>

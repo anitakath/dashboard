@@ -15,6 +15,13 @@ const MobileNavigation = (props) =>{
   const setMobileSportsNavIsOpen = props.setMobileSportsNavIsOpen;
   const setUniqueSports = props.setUniqueSports;
   const allSupabaseSports = props.allSupabaseSports
+  const setFormIsOpen = props.setFormIsOpen
+  const formIsOpen = props.formIsOpen
+
+  const addSportClickHandler = props.addSportClickHandler;
+
+
+  let btn_text = mobileSportsNavIsOpen ? "close" : "open";
 
   return (
     <div className="w-full p-2 flex-col lg:hidden  overflow-scroll">
@@ -22,7 +29,7 @@ const MobileNavigation = (props) =>{
         onClick={() => setMobileSportsNavIsOpen(!mobileSportsNavIsOpen)}
         className="primary_button"
       >
-        open sports
+        {btn_text} sports
       </button>
       {mobileSportsNavIsOpen && (
         <SortSports
@@ -78,6 +85,15 @@ const MobileNavigation = (props) =>{
               </li>
             </div>
           ))}
+          <li className="flex relative items-center">
+            <button
+              className={styles.addSport_btn}
+              onClick={addSportClickHandler}
+            >
+              {formIsOpen ? "-" : "+"}
+            </button>
+            <span className='relative top-0.5 mx-1 text-zinc-400'> add a new sport </span>
+          </li>
         </ul>
       )}
     </div>

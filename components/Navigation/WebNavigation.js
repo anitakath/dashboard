@@ -17,21 +17,18 @@ const WebNavigation = (props) =>{
   const handleSportClick = props.handleSportClick;
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const formIsOpen = props.formIsOpen;
+  const setFormIsOpen = props.setFormIsOpen;
+  const addSportClickHandler = props.addSportClickHandler
 
   const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false);
-
-
-
 
   return (
     <div>
       {!formIsOpen && (
         <div className={styles.navigation_web}>
-        
           <ul className="w-full h-full flex lg:flex-col overflow-scroll">
             {uniqueSports.map((sport, index) => (
               <div className="relative" key={index}>
-              
                 <li key={index} className="flex">
                   <button
                     className={`${styles.sport_btn} ${
@@ -44,10 +41,10 @@ const WebNavigation = (props) =>{
                     <button
                       className={styles.delete_btn}
                       onClick={() => deleteSportHandler(sport)}
-                    > 
+                    >
                       <FontAwesomeIcon
                         icon={faTrash}
-                        className={styles.trash_icon} 
+                        className={styles.trash_icon}
                       />
                     </button>
                     <span className={styles.sportBtnText}>{sport}</span>
@@ -78,6 +75,9 @@ const WebNavigation = (props) =>{
           </ul>
         </div>
       )}
+      <button className={styles.addSport_btn} onClick={addSportClickHandler}>
+        {formIsOpen ? "-" : "+"}
+      </button>
     </div>
   );
 }
