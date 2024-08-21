@@ -11,21 +11,6 @@
   box-shadow: 0px 0px 5px lightgrey;
 }
 
-.openNav_btn {
-  margin: 10px 0;
-  padding: 10px 20px;
-  font-size: 1.3rem;
-  background: var(--purpleDarkHoverOpacity);
-  transition: 0.2s ease;
-  width: 100%;
-}
-
-.openNav_btn:hover {
-  background: var(--purpleDarkHover);
-  color: beige;
-}
-
-
 
 .sport_btn{
     width: 100%;

@@ -87,17 +87,21 @@ const Board = (props) => {
     };
 
   return (
-    <div className="w-full overflow-scroll h-full p-2 ">
+    <div className="w-full overflow-scroll  flex flex-col items-center h-full p-2 ">
+      <h1 className="title title_mini"> DASHBOARD </h1>
+
       <BoardHeader logoutHandler={logoutHandler} />
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
-      <div className="flex lg:hidden">
+      <div className="flex w-full lg:hidden">
         <Navigation />
       </div>
 
-      <div className="flex justify-center lg:flex-row flex-col  sm:w-full lg:max-h-screen  overflow-y-scroll">
+      <div className="flex justify-center lg:flex-row flex-col  sm:w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
-          <h1 className="text-2xl border-b-2 my-2 "> {currentSport} </h1>
+       
+          <h2 className="subtitle flex items-center"> {currentSport} </h2>
+      
 
           {currentSport === null && (
             <p className=" my-10 text-2xl text-center">
@@ -106,19 +110,16 @@ const Board = (props) => {
           )}
 
           {currentSport != null && (
-            <div className="mb-2">
+            <div className="mb-2 flex flex-wrap justify-center">
               {currentSport != "all" && (
-                <button
-                  className={styles.allSports_btn}
-                  onClick={addEntryHandler}
-                >
+                <button className="secondary_button" onClick={addEntryHandler}>
                   <span className={styles.add_btn_icon}> + </span>{" "}
                   {addEntryText}
                 </button>
               )}
 
               <button
-                className={styles.allSports_btn}
+                className="secondary_button"
                 onClick={navigateToSportPlanHandler}
               >
                 <FontAwesomeIcon
@@ -135,8 +136,7 @@ const Board = (props) => {
                   summary of all sports
                 </button>
               )}
-
-              <Link className={styles.diary_link} href="/diary">
+              <Link className="primary_link" href="/diary">
                 go to your diary
               </Link>
 

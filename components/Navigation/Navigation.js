@@ -52,15 +52,18 @@ const Navigation = () => {
 
 
   return (
-    <div className="w-full p-0 flex flex-col items-center shadow-section">
-      <h1 className={styles.title}>DASHBOARD</h1>
-      <h2 className={styles.subtitle}>Your sports</h2>
+    <div className="w-full  my-4 p-0 flex flex-col items-center shadow-section">
+      <h1 className="title title_maxi">DASHBOARD</h1>
 
-      <SortSports
-        uniqueSports={uniqueSports}
-        setUniqueSports={setUniqueSports}
-        allSupabaseSports={allSupabaseSports}
-      />
+      <h2 className="subtitle">Your sports</h2>
+
+      <div className="hidden lg:inline">
+        <SortSports
+          uniqueSports={uniqueSports}
+          setUniqueSports={setUniqueSports}
+          allSupabaseSports={allSupabaseSports}
+        />
+      </div>
 
       {/*-------------------  MOBILE  NAVIGATION ------------------- */}
 
@@ -73,7 +76,8 @@ const Navigation = () => {
         sportObject={sportObject}
         mobileSportsNavIsOpen={mobileSportsNavIsOpen}
         setMobileSportsNavIsOpen={setMobileSportsNavIsOpen}
-        
+        setUniqueSports={setUniqueSports}
+        allSupabaseSports={allSupabaseSports}
       />
 
       {/*-------------------  WEB NAVIGATION ------------------- */}

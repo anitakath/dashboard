@@ -27,7 +27,9 @@ const BoardHeader = (props) =>{
     return (
       <div className={styles.headerDiv}>
         {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}
+       
         <div className={styles.searchBarResult_div}>
+         
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {searchTerm != "" && (
             <div className={styles.results_div}>

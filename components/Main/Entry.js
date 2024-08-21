@@ -1,4 +1,5 @@
 
+
 import Link from "next/link";
 //STYLES
 import styles from './Entry.module.css'
@@ -13,6 +14,9 @@ import useSortedEntriesByMonth from "@/custom-hooks/useSortedEntriesByMonth"; //
 import { setSortedEntriesByMonth } from "@/store/sportReducer";
 //COMPONENTS
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
+
+
+
 
 
 const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
@@ -133,8 +137,6 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
   useEffect(() => {
     dispatch(setSortedEntriesByMonth(entriesByMonth));
   }, []);
-
-
 
   return (
     <div className={styles.container}>

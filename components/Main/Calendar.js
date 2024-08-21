@@ -106,12 +106,12 @@ const Calendar = (props) =>{
       </h1>
 
       <div className={styles.buttons_div}>
-        <button className={styles.daily_allSports} onClick={dailyAllHandler}>
+        <button className="secondary_button" onClick={dailyAllHandler}>
           daily overview
         </button>
 
         <button
-          className={styles.summary_allSports}
+          className="secondary_button"
           onClick={summarizeAllHandler}
         >
           summary of all sports

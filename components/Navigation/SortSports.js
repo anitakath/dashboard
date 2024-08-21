@@ -51,7 +51,7 @@ const SortSports = ({ uniqueSports, setUniqueSports, allSupabaseSports }) => {
   };
 
   return (
-    <div className="flex w-full lg:mb-4 items-center relative lg:h-20">
+    <div className="flex lg:mb-4 items-center relative lg:h-14 ">
       <button
         onClick={() => sortHandler("alphabetically")}
         className={styles.sort}

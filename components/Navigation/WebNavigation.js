@@ -25,16 +25,13 @@ const WebNavigation = (props) =>{
 
   return (
     <div>
-      {" "}
       {!formIsOpen && (
         <div className={styles.navigation_web}>
-          {/* HIER EINE CSS KLASSE HINZUFÜGEN!!! */}
-          <button className={styles.showMobileSportsNav_btn}>
-            open sports{" "}
-          </button>
+        
           <ul className="w-full h-full flex lg:flex-col overflow-scroll">
             {uniqueSports.map((sport, index) => (
               <div className="relative" key={index}>
+              
                 <li key={index} className="flex">
                   <button
                     className={`${styles.sport_btn} ${
@@ -47,10 +44,10 @@ const WebNavigation = (props) =>{
                     <button
                       className={styles.delete_btn}
                       onClick={() => deleteSportHandler(sport)}
-                    >
+                    > 
                       <FontAwesomeIcon
                         icon={faTrash}
-                        className={styles.trash_icon}
+                        className={styles.trash_icon} 
                       />
                     </button>
                     <span className={styles.sportBtnText}>{sport}</span>
