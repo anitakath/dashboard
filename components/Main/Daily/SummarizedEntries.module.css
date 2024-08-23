@@ -1,7 +1,9 @@
 .calendar_div {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
-    gap: 16px; 
+    gap: 16px;
+    width: 100%;
+  
 }
 
 
@@ -29,9 +31,8 @@
     text-align: center; 
     display: flex;
     flex-direction: column;
-    height: 50px;
+    height: 45px;
     position: relative;
-    width: 50px;
     overflow: scroll;
 }
 
@@ -139,7 +140,7 @@
     margin: 10px;
     padding: 7px;
     transition: 0.4s ease;
-    font-siez: 1.2rem;
+    font-size: 1.2rem;
     background:  var(--purpleDarkHover);
     
 }

@@ -109,6 +109,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [durationErrorMessage, setDurationErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+   const [submitting, setSubmitting] = useState(false);
 
   const validateTitle = (title) => {
     return title.length >= 3 && title.length <= 50;
@@ -131,6 +132,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setSubmitting(true)
 
     if (currentPath === "/profile") {
       if (
@@ -170,17 +172,21 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
 
           if (!response.ok) {
             throw new Error("Fehler beim Senden der Daten");
+            setSubmitting(false)
           }
 
           const result = await response.json();
           dispatch(setSportsArrayy(result.data));
           setSuccessMessage(true);
+          setSubmitting(false);
         } catch (error) {
           console.error("Fehler:", error);
+          setSubmitting(false);
         }
       } else {
         if (inputs.created_at === "") {
           setDurationErrorMessage(true);
+          setSubmitting(false);
         }
       }
     } else {
@@ -211,6 +217,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
 
           if (error) {
             console.error("Failed to insert data into Supabase table:", error);
+            setSubmitting(false);
           } else {
             console.log(
               "Data successfully inserted into Supabase table:",
@@ -219,6 +226,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
 
             // Rufe fetchSportsData auf und übergebe dispatch
             await fetchSportsData(dispatch);
+            setSubmitting(false);
           
             setSuccessMessage(true);
             setTimeout(() => {
@@ -228,14 +236,16 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
           }
         } catch (error) {
           console.error("Error inserting data into Supabase table:", error);
+          setSubmitting(false);
         }
       } else {
         console.log("Validation failed. Please check your input.");
+        setSubmitting(false);
       }
     }
   };
 
-  return { submitHandler, successMessage, durationErrorMessage, errorMessage };
+  return { submitHandler, successMessage, durationErrorMessage, errorMessage, submitting};
 };
 
 

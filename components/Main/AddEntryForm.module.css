@@ -1,6 +1,7 @@
 
 
 
+
 .labels{
   margin-top: 10px;
   font-size: 1rem;
@@ -17,11 +18,10 @@
   color: black;
   padding-left: 10px;
   width: 100%;
-
 }
 
 .inputs_textarea{
-  height: 200px;
+  min-height: 100px;
 }
 
 .inputs_textarea:focus{
