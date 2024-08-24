@@ -15,6 +15,7 @@ import { useSelector, useDispatch} from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";
 import { setSection } from "@/store/profileReducer";
 import { setLogout } from "@/store/authReducer";
+
 //COMPONENTS
 import Calendar from "./Calendar";
 import Entry from "./Entry";
@@ -79,8 +80,12 @@ const Board = (props) => {
       dispatch(setSelectedSport("all"));
     };
 
+  const dailyAllHandler = () => {
+    dispatch(setSelectedSport("daily"));
+  };
+
   return (
-    <div className="w-full overflow-scroll flex flex-col items-center h-full p-2 ">
+    <div className="w-full  overflow-scroll flex flex-col items-center h-full p-2 ">
       <h1 className="title title_mini"> DASHBOARD </h1>
 
       <BoardHeader logoutHandler={logoutHandler} />
@@ -90,7 +95,7 @@ const Board = (props) => {
         <Navigation />
       </div>
 
-      <div className="flex justify-center lg:flex-row flex-col  sm:w-full lg:max-h-screen  ">
+      <div className="flex justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
           <h2 className="subtitle flex items-center"> {currentSport} </h2>
 
@@ -102,13 +107,12 @@ const Board = (props) => {
 
           {currentSport != null && (
             <div className="mb-2 flex flex-wrap justify-center">
-              {currentSport != "all" && (
+              {currentSport !== "all" && currentSport !== "daily" && (
                 <button className="secondary_button" onClick={addEntryHandler}>
                   <span className={styles.add_btn_icon}> + </span>{" "}
                   {addEntryText}
                 </button>
               )}
-
               <button
                 className="secondary_button"
                 onClick={navigateToSportPlanHandler}
@@ -121,22 +125,22 @@ const Board = (props) => {
               </button>
               {currentSport === "daily" && (
                 <button
-                  className={styles.allSports_btn}
+                  className="secondary_button"
                   onClick={summarizeAllHandler}
                 >
                   summary of all sports
+                </button>
+              )}
+              {currentSport === "all" && (
+                <button className="secondary_button" onClick={dailyAllHandler}>
+                  daily overview
                 </button>
               )}
               <Link className="primary_link" href="/diary">
                 go to your diary
               </Link>
 
-
-
-
               {formIsOpen && <AddEntryForm setFormIsOpen={setFormIsOpen} />}
-
-           
             </div>
           )}
 
