@@ -18,6 +18,7 @@ import {
 } from "@/custom-hooks/validation/validation";
 //COMPONENTS
 import Spinner from "../UI/Spinner";
+import { current } from "@reduxjs/toolkit";
 
 const AddEntryForm = (props) => {
   const router = useRouter();
@@ -39,6 +40,7 @@ const AddEntryForm = (props) => {
     img: "",
   });
 
+  console.log(inputs)
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {
     submitHandler,
@@ -122,25 +124,27 @@ const AddEntryForm = (props) => {
 
 
 
-  useEffect(() => {
-    if (
-      Array.isArray(currentSport) &&
-      currentSport.length > 0 &&
-      selectedSport
-    ) {
-      const foundSport = currentSport.find((obj) => obj.name === selectedSport);
+ useEffect(() => {
+   if (
+     Array.isArray(currentSport) &&
+     currentSport.length > 0 &&
+     selectedSport
+   ) {
+     // Zugriff auf das erste Element des äußeren Arrays
+     const innerArray = currentSport[0]; // Hier wird angenommen, dass es nur ein inneres Array gibt
+     const foundSport = innerArray.find((obj) => obj.name === selectedSport);
 
-      if (foundSport) {
-        setInputs((prevInputs) => ({
-          ...prevInputs,
-          label: foundSport.color, // Hier kannst du weitere Werte von foundSport setzen
-        }));
-      }
-    } else {
-      console.warn("currentSport is not an array or is empty");
-      console.log(currentSport);
-    }
-  }, [currentSport, selectedSport]);
+     if (foundSport) {
+       setInputs((prevInputs) => ({
+         ...prevInputs,
+         label: foundSport.color,
+         // Hier kannst du weitere Werte von foundSport setzen
+       }));
+     }
+   } else {
+     console.warn("currentSport is not an array or is empty");
+   }
+ }, [currentSport, selectedSport]);
 
 
 
