@@ -25,6 +25,7 @@ import SummarizedEntries from "./Daily/SummarizedEntries";
 //HOOK
 import {useSearchTerm} from '../../custom-hooks/useSearchTerm'
 import BoardHeader from "./BoardHeader/BoardHeader";
+import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 
 
 const Board = (props) => {
@@ -48,14 +49,6 @@ const Board = (props) => {
   const dispatch = useDispatch();
 
 
-  const addEntryHandler = (e) => {
-    e.preventDefault();
-    setFormIsOpen((prevFormIsOpen) => !prevFormIsOpen);
-  };
-
-  let addEntryText = formIsOpen ? "close form" : "add entry";
-
-
 
   const logoutHandler = () => {
     dispatch(setLogout(false));
@@ -70,22 +63,14 @@ const Board = (props) => {
   }, [navigation])
 
 
-  const navigateToSportPlanHandler = () =>{
-    dispatch(setSection("plans"));
-    router.push("/profile")
-  }
 
-    const summarizeAllHandler = (e) => {
-      e.preventDefault();
-      dispatch(setSelectedSport("all"));
-    };
 
   const dailyAllHandler = () => {
     dispatch(setSelectedSport("daily"));
   };
 
   return (
-    <div className="w-full  overflow-scroll flex flex-col items-center h-full p-2 ">
+    <div className="w-full overflow-scroll flex flex-col items-center h-full p-2 ">
       <h1 className="title title_mini"> DASHBOARD </h1>
 
       <BoardHeader logoutHandler={logoutHandler} />
@@ -106,42 +91,10 @@ const Board = (props) => {
           )}
 
           {currentSport != null && (
-            <div className="mb-2 flex flex-wrap justify-center">
-              {currentSport !== "all" && currentSport !== "daily" && (
-                <button className="secondary_button" onClick={addEntryHandler}>
-                  <span className={styles.add_btn_icon}> + </span>{" "}
-                  {addEntryText}
-                </button>
-              )}
-              <button
-                className="secondary_button"
-                onClick={navigateToSportPlanHandler}
-              >
-                <FontAwesomeIcon
-                  icon={faCalendar}
-                  className={styles.calendar_icon}
-                />
-                planned sports units
-              </button>
-              {currentSport === "daily" && (
-                <button
-                  className="secondary_button"
-                  onClick={summarizeAllHandler}
-                >
-                  summary of all sports
-                </button>
-              )}
-              {currentSport === "all" && (
-                <button className="secondary_button" onClick={dailyAllHandler}>
-                  daily overview
-                </button>
-              )}
-              <Link className="primary_link" href="/diary">
-                go to your diary
-              </Link>
-
-              {formIsOpen && <AddEntryForm setFormIsOpen={setFormIsOpen} />}
-            </div>
+            <BoarderSubHeader
+              currentSport={currentSport}
+              dailyAllHandler={dailyAllHandler}
+            />
           )}
 
           {/* --------------------------  THE ENTRIES -------------------------- */}

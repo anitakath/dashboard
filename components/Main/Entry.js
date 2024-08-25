@@ -26,7 +26,6 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
   const dispatch = useDispatch();
 
 
-  console.log(filteredByDate)
 
   useEffect(() => {
     if (filteredByDate) {
