@@ -25,6 +25,9 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
   const dispatch = useDispatch();
 
+
+  console.log(filteredByDate)
+
   useEffect(() => {
     if (filteredByDate) {
       const updatedEntriesByMonth = {};
@@ -140,10 +143,12 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
 
   return (
     <div className={styles.container}>
+     
       {currentSport != "all" && (
         <h1>
           total hours of being a sporty spice so far:
           <span> {sportsDurationByMonth}</span>
+          
         </h1>
       )}
       {currentSport !== "all" &&
@@ -157,6 +162,7 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
               ).getPropertyValue(`--${entry.label}`),
             }}
           >
+      
             <Link href={`/details/${entry.entryPath}`}>
               <div className={styles.link}>
                 <p className="my-2 px-2 text-xs absolute right-4">

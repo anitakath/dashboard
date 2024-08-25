@@ -45,8 +45,17 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
                           className={styles.monthYear_header}
                           onClick={() => toggleMonthEntries(monthName, year)}
                         >
-                          <p className={styles.monthYear_header_p}>{monthName}</p>
-                          <p className={styles.monthYear_header_span}>(total hours of sport:<span className={styles.totalDuration}> {formatDuration(totalDuration)}</span>)</p>
+                          <p className={styles.monthYear_header_p}>
+                            {monthName}
+                          </p>
+                          <p className={styles.monthYear_header_span}>
+                            (total hours of sport:
+                            <span className={styles.totalDuration}>
+                              {" "}
+                              {formatDuration(totalDuration)}
+                            </span>
+                            )
+                          </p>
                         </button>
                       )}
                       {openMonths[`${monthName}-${year}`] &&
@@ -69,10 +78,13 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
                               <Link href={`/details/${entry.entryPath}`}>
                                 <div className={styles.link}>
                                   <p className="my-2 px-2 text-xs absolute right-4">
-                                    {formatDate(entry.created_at)}
+                                    {formatDate(entry.created_at)} 
+                                  </p>
+                                  <p className="my-2 px-2 text-xs absolute right-4 top-6">
+                                    {formatDuration(entry.duration)}
                                   </p>
                                   <h2 className="text-2xl mb-4 mt-2 px-2">
-                                    {entry.title} 
+                                    {entry.title}
                                   </h2>
                                   <p className="px-2 mb-4">{entry.entry}</p>
                                 </div>

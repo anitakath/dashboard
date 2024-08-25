@@ -58,6 +58,7 @@
     cursor: pointer;
     transition: 0.2s ease;
     padding: 5px;
+    position: relative;
 }
 
 .link:hover{

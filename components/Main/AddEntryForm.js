@@ -52,6 +52,9 @@ const AddEntryForm = (props) => {
 
 
 
+
+
+
   
   if (selectedSport) {
     const foundSport = allSupabaseSports.find(
@@ -148,6 +151,7 @@ const AddEntryForm = (props) => {
 
 
 
+
   return (
     <div className="my-2 p-2 flex flex-col w-full overflow-scroll flex items-center justify-center">
       {submitting && <Spinner />}
@@ -170,10 +174,10 @@ const AddEntryForm = (props) => {
             onChange={changeHandler}
           ></input>
 
-          <div className="h-8">
+          <div className="h-8 h-20 md:h-12">
             {isTouched.title && !validateTitle(inputs.title) && (
               <p className={styles.errorText}>
-                Title must be between 3 and 50 characters
+                The title must be between 3 and 50 characters long
               </p>
             )}
           </div>
@@ -189,10 +193,10 @@ const AddEntryForm = (props) => {
             onChange={changeHandler}
           ></textarea>
 
-          <div className="h-8">
+          <div className="h-8 h-20 md:h-12 ">
             {isTouched.text && !validateText(inputs.text) && (
               <p className={styles.errorText}>
-                Text must be between 5 and 400 characters
+                The text must be between 5 and 1000 characters long.
               </p>
             )}
           </div>
@@ -227,9 +231,11 @@ const AddEntryForm = (props) => {
             ></input>
           </div>
 
-          <div className="h-14">
+          <div className="h-14 h-20 md:h-12">
             {isTouched.duration && !validateDuration(inputs.duration) && (
-              <p className={styles.errorText}>Please set a duration</p>
+              <p className={styles.errorText}>
+                The duration must be a positive number.
+              </p>
             )}
 
             {durationErrorMessage && (
@@ -240,12 +246,14 @@ const AddEntryForm = (props) => {
           <button type="submit" className={styles.submit_btn}>
             submit
           </button>
-          <p className={styles.errorMessage_p}> {errorMessage} </p>
+
           {successMessage && (
             <p className={styles.successMessage_p}>
               entry successfully created
             </p>
           )}
+
+          <p>{errorMessage}</p>
         </form>
       )}
     </div>

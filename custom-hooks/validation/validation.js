@@ -17,3 +17,7 @@ export const formatText = (text) => {
   return text.toLowerCase().replace(/\s+/g, "-");
 };
 
+export const validateName = (name) => {
+  return name.trim() !== ""; // Überprüfen, ob der Name nicht leer ist
+};
+

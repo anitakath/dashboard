@@ -109,7 +109,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [durationErrorMessage, setDurationErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-   const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const validateTitle = (title) => {
     return title.length >= 3 && title.length <= 50;
@@ -130,122 +130,163 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
     return text.toLowerCase().replace(/\s+/g, "-");
   };
 
+ const validateName = (name) => {
+  return name.trim() !== ""; // Überprüfen, ob der Name nicht leer ist
+};
+
+
+/*
   const submitHandler = async (e) => {
+    console.log("submitting...");
     e.preventDefault();
-    setSubmitting(true)
+    setSubmitting(true);
 
-    if (currentPath === "/profile") {
-      if (
-        validateTitle(inputs.title) &&
-        validateText(inputs.text) &&
-        validateDuration(inputs.duration) &&
-        inputs.created_at !== ""
-      ) {
-        setDurationErrorMessage(false);
-        const formattedTitle = formatText(inputs.title);
-        const uniqueID = uuidv4();
+    try {
+      const response = await fetch("/api/form-validation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(inputs),
+        query: { path: currentPath }, // Optional, um den Pfad zu übergeben
+      });
 
-        if (chosenSport === null) {
-          setErrorMessage("choose a sport!");
-          return;
-        }
+      const result = await response.json();
 
-        const data = {
-          name: chosenSport.name,
-          label: chosenSport.color,
-          entryId: uniqueID,
-          title: inputs.title,
-          entry: inputs.text,
-          entryPath: `${formattedTitle}-${uniqueID}`,
-          duration: inputs.duration,
-          created_at: inputs.created_at,
-        };
+   if (!result.success) {
+     // Setze die Fehlernachricht als Array von Strings
+     const errorMessages = Object.values(result.errors).map((error) => error);
+     setErrorMessage(errorMessages); // Setze die Fehlernachricht
+     setSubmitting(false);
+     return;
+   }
 
-        try {
-          const response = await fetch("/api/send-plannedSports", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
+      // Wenn alles gut geht, hier weiter mit dem Erfolgshandling...
+    } catch (error) {
+      console.error("Fehler:", error);
+    } finally {
+      setSubmitting(false);
+    }
+  };*/
 
-          if (!response.ok) {
-            throw new Error("Fehler beim Senden der Daten");
-            setSubmitting(false)
+
+  const submitHandler = async (e) => {
+    console.log("submitting...");
+    e.preventDefault();
+    setSubmitting(true);
+
+    // Input validation
+    const isTitleValid = validateTitle(inputs.title);
+    const isTextValid = validateText(inputs.text);
+    const isDurationValid = validateDuration(inputs.duration);
+    const isNameValid = validateName(inputs.name);
+
+    // Set error messages based on validation
+    if (!isTitleValid) {
+      setErrorMessage("The title must be between 3 and 50 characters long.");
+      setSubmitting(false);
+      return;
+    }
+
+    if (!isTextValid) {
+      setErrorMessage("The text must be between 5 and 1000 characters long.");
+      setSubmitting(false);
+      return;
+    }
+
+    if (!isDurationValid) {
+      setErrorMessage("The duration must be a positive number.");
+      setSubmitting(false);
+      return;
+    }
+
+    if (!isNameValid) {
+      setErrorMessage("The name cannot be empty.");
+      setSubmitting(false);
+      return;
+    }
+
+    if (inputs.created_at === "") {
+      setErrorMessage("The creation date cannot be empty.");
+      setSubmitting(false);
+      return;
+    }
+
+    setErrorMessage("")
+
+    const formattedTitle = formatText(inputs.title);
+    const uniqueID = uuidv4();
+
+    const data =
+      currentPath === "/profile"
+        ? {
+            name: chosenSport?.name,
+            label: chosenSport?.color,
+            entryId: uniqueID,
+            title: inputs.title,
+            entry: inputs.text,
+            entryPath: `${formattedTitle}-${uniqueID}`,
+            duration: inputs.duration,
+            created_at: inputs.created_at,
           }
+        : {
+            name: inputs.name,
+            label: inputs.label,
+            entryId: uniqueID,
+            title: inputs.title,
+            entry: inputs.text,
+            entryPath: `${formattedTitle}-${uniqueID}`,
+            duration: inputs.duration,
+            created_at: inputs.created_at,
+          };
 
-          const result = await response.json();
-          dispatch(setSportsArrayy(result.data));
-          setSuccessMessage(true);
-          setSubmitting(false);
-        } catch (error) {
-          console.error("Fehler:", error);
-          setSubmitting(false);
-        }
+    if (currentPath === "/profile" && !chosenSport) {
+      setErrorMessage("Please choose a sport!");
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      let response;
+
+      if (currentPath === "/profile") {
+        response = await fetch("/api/send-plannedSports", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error("Error sending the data");
+        const result = await response.json();
+        dispatch(setSportsArrayy(result.data));
       } else {
-        if (inputs.created_at === "") {
-          setDurationErrorMessage(true);
-          setSubmitting(false);
-        }
+        const { data: newSport, error } = await supabase
+          .from("sports")
+          .insert([data]);
+        if (error) throw new Error("Failed to insert data into Supabase table");
+        console.log(
+          "Data successfully inserted into Supabase table:",
+          newSport
+        );
+        await fetchSportsData(dispatch);
+        setTimeout(() => setSuccessMessage(false), 5000);
       }
-    } else {
-      if (
-        validateTitle(inputs.title) &&
-        validateText(inputs.text) &&
-        validateDuration(inputs.duration) &&
-        inputs.created_at !== ""
-      ) {
-        const formattedTitle = formatText(inputs.title);
-        const uniqueID = uuidv4();
 
-        const data = {
-          name: inputs.name,
-          label: inputs.label,
-          entryId: uniqueID,
-          title: inputs.title,
-          entry: inputs.text,
-          entryPath: `${formattedTitle}-${uniqueID}`,
-          duration: inputs.duration,
-          created_at: inputs.created_at,
-        };
-
-        try {
-          const { data: newSport, error } = await supabase
-            .from("sports")
-            .insert([data]);
-
-          if (error) {
-            console.error("Failed to insert data into Supabase table:", error);
-            setSubmitting(false);
-          } else {
-            console.log(
-              "Data successfully inserted into Supabase table:",
-              newSport
-            );
-
-            // Rufe fetchSportsData auf und übergebe dispatch
-            await fetchSportsData(dispatch);
-            setSubmitting(false);
-          
-            setSuccessMessage(true);
-            setTimeout(() => {
-              setSuccessMessage(false);
-            }, 5000);
-            // Schließe das Formular oder führe andere Aktionen aus
-          }
-        } catch (error) {
-          console.error("Error inserting data into Supabase table:", error);
-          setSubmitting(false);
-        }
-      } else {
-        console.log("Validation failed. Please check your input.");
-        setSubmitting(false);
-      }
+      setSuccessMessage(true);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
+  
 
-  return { submitHandler, successMessage, durationErrorMessage, errorMessage, submitting};
+
+    return {
+      submitHandler,
+      successMessage,
+      durationErrorMessage,
+      errorMessage,
+      submitting,
+    };
+
 };
 
 
