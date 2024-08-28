@@ -102,7 +102,7 @@ const fetchSportsData = async (dispatch) => {
 
 
 
-
+/* ADDENTRYFORM */
 
 export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
   const dispatch = useDispatch();
@@ -110,6 +110,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
   const [durationErrorMessage, setDurationErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [formIsOpen, setFormIsOpen] = useState(true)
 
   const validateTitle = (title) => {
     return title.length >= 3 && title.length <= 50;
@@ -130,43 +131,9 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
     return text.toLowerCase().replace(/\s+/g, "-");
   };
 
- const validateName = (name) => {
-  return name.trim() !== ""; // Überprüfen, ob der Name nicht leer ist
-};
-
-
-/*
-  const submitHandler = async (e) => {
-    console.log("submitting...");
-    e.preventDefault();
-    setSubmitting(true);
-
-    try {
-      const response = await fetch("/api/form-validation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(inputs),
-        query: { path: currentPath }, // Optional, um den Pfad zu übergeben
-      });
-
-      const result = await response.json();
-
-   if (!result.success) {
-     // Setze die Fehlernachricht als Array von Strings
-     const errorMessages = Object.values(result.errors).map((error) => error);
-     setErrorMessage(errorMessages); // Setze die Fehlernachricht
-     setSubmitting(false);
-     return;
-   }
-
-      // Wenn alles gut geht, hier weiter mit dem Erfolgshandling...
-    } catch (error) {
-      console.error("Fehler:", error);
-    } finally {
-      setSubmitting(false);
-    }
-  };*/
-
+  const validateName = (name) => {
+    return name.trim() !== ""; // Überprüfen, ob der Name nicht leer ist
+  };
 
   const submitHandler = async (e) => {
     console.log("submitting...");
@@ -269,6 +236,10 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
         setTimeout(() => setSuccessMessage(false), 5000);
       }
 
+      setTimeout(() => {
+        setFormIsOpen(false);
+      }, 2000);
+
       setSuccessMessage(true);
     } catch (error) {
       console.error("Error:", error);
@@ -285,11 +256,34 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
       durationErrorMessage,
       errorMessage,
       submitting,
+      formIsOpen,
     };
 
 };
 
+// ADDENTRYFORM
 
+export const useChangeHandler = (inputs, setInputs, validateTitle, validateText, validateDuration) => (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+
+    // Hier kannst du auch die Validierung aufrufen und den Zustand entsprechend setzen
+    if (name === "title") {
+        if (!validateTitle(value)) {
+            console.log("Titel ist ungültig");
+        }
+    }
+    if (name === "text") {
+        if (!validateText(value)) {
+            console.log("Text ist ungültig");
+        }
+    }
+    if (name === "duration") {
+        if (!validateDuration(value)) {
+            console.log("Dauer ist ungültig");
+        }
+    }
+};
 
 
 

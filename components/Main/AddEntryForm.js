@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { supabase } from "@/services/supabaseClient";
 //CUSTOM HOOKS
 import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
+import { useChangeHandler } from "@/custom-hooks/useSportEntries";
 import useFormValidation from "@/custom-hooks/validation/useFormValidation";
 
 import {
@@ -18,10 +19,11 @@ import {
 } from "@/custom-hooks/validation/validation";
 //COMPONENTS
 import Spinner from "../UI/Spinner";
-import { current } from "@reduxjs/toolkit";
+
 
 const AddEntryForm = (props) => {
   const router = useRouter();
+  const setFormIsOpen = props.setFormIsOpen;
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const currentSport = useSelector((state) => state.sport.currentSport);
   const currentPath = router.pathname;
@@ -30,7 +32,6 @@ const AddEntryForm = (props) => {
   let label = "";
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
   const [inputs, setInputs] = useState({
-    //index: currentSport,
     name: selectedSport,
     title: "",
     text: "",
@@ -39,8 +40,7 @@ const AddEntryForm = (props) => {
     label: label,
     img: "",
   });
-
-  console.log(inputs)
+  
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {
     submitHandler,
@@ -48,12 +48,15 @@ const AddEntryForm = (props) => {
     durationErrorMessage,
     errorMessage,
     submitting,
+    formIsOpen,
   } = useSubmitHandler(currentPath, chosenSport, inputs);
 
 
-
-
-
+  useEffect(()=>{
+    if (!formIsOpen && currentPath != "/profile") {
+      setFormIsOpen(false);
+    }
+  }, [formIsOpen])
 
   
   if (selectedSport) {
@@ -90,6 +93,8 @@ const AddEntryForm = (props) => {
       }
     }
   };
+
+  
 
 
 
@@ -155,7 +160,7 @@ const AddEntryForm = (props) => {
   return (
     <div className="my-2 p-2 flex flex-col w-full overflow-scroll flex items-center justify-center">
       {submitting && <Spinner />}
-      {!submitting && (
+      {!submitting && formIsOpen && (
         <form
           className="my-2  p-2 flex flex-col w-full"
           onSubmit={submitHandler}
@@ -253,7 +258,7 @@ const AddEntryForm = (props) => {
             </p>
           )}
 
-          <p>{errorMessage}</p>
+          <p className={styles.errorText}>{errorMessage}</p>
         </form>
       )}
     </div>
