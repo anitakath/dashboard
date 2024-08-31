@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faUpRightAndDownLeftFromCenter,
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./Details.module.css";
 import { useSelector } from "react-redux";
+
 
 const DailyDetails = () => {
   const allSupabaseSports = useSelector(
@@ -61,10 +65,13 @@ const DailyDetails = () => {
       })} ${targetDate.getFullYear()}`
     : "";
 
+
+    console.log(filteredEntries)
+
   return (
-    <div className="w-full h-screen  m-0 md:p-14 ">
+    <div className="w-full h-screen m-0 md:p-14">
       <div className="flex w-full border-2 h-full overflow-scroll py-2 m-0 p-0 relative z-20">
-        <div className=" absolute w-full h-full m-0  z-0 top-0">
+        <div className=" absolute w-full h-full m-0 z-0 top-0">
           {/* future image div*/}
         </div>
         <div className="absolute w-full h-full z-10 top-0">
@@ -73,22 +80,31 @@ const DailyDetails = () => {
           </Link>
         </div>
 
-        <div className="m-4 p-4 pl-14  w-full ">
-          <h1 className="text-xl m-4 "> details - {formattedDate} </h1>
+        <div className="w-full">
+          <h1 className="text-xl flex justify-center my-6  w-full relative left-0 top-8">
+            details - {formattedDate}
+          </h1>
 
-          <div className="my-10">
+          <div className="my-10 pt-1">
             {filteredEntries &&
               filteredEntries.map((entry, idx) => (
-                <div key={entry.id} className={styles.entry_div}>
+                <div
+                  key={entry.id}
+                  className={`${styles.entry_div} ${
+                    entry.label ? styles[entry.label] : ""
+                  }`}
+                >
                   <h1>{entry.title}</h1>
-                  <p> {entry.entry}</p>
+                  <p>{entry.entry}</p>
+                  <div className={styles.enlarge_div}>
+                    <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
+                  </div>
                 </div>
               ))}
           </div>
-
           <div className="my-4  flex-col">
-            <h1 className="text-xl m-4 "> a 5 year story</h1>
-            <div className="flex justify-evenly">
+            <h1 className="text-xl m-4 pb-1 flex justify-center"> a 5 year story</h1>
+            <div className="flex flex-col pb-10 items-center justify-evenly ">
               <div className={styles.historical_entry_div}>
                 <h2>2019</h2>
                 <p>*coming soon*</p>
