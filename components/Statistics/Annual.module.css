@@ -2,36 +2,16 @@
 
 
 
-.grid_div{
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 5px;
-}
-
-.sport_div{
-    height: 40px;
-    width: 100%;
+.fav_sports_div{
+    height: 60px;
+    margin: 10px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.3rem;
+
 }
 
-.selected_span{
-    font-weight: bolder;
-    color: var(--purpleDarkHover);
-    margin: 0px 4px;
-}
-
-
-
-
-
-
-@media screen and (max-width: 800px){
-    .grid_div{
-         grid-template-columns: repeat(5, 1fr);
-    }
-}
 
 
 .fandango{

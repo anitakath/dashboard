@@ -10,9 +10,10 @@ import { useRouter } from "next/router";
 const Menu = ({ setOpenMenu }) => {
   
   const [openSections, setOpenSections] = useState({
-    yourSports: false,
-    yourProfile: false,
-    community: false,
+    yourSports: true,
+    yourProfile: true,
+    community: true,
+    app: true,
   });
   const dispatch = useDispatch();
   const router = useRouter();
@@ -23,6 +24,8 @@ const Menu = ({ setOpenMenu }) => {
       [section]: !prev[section],
     }));
   };
+
+  console.log(openSections);
 
    const navigateHandler = (e) => {
      const sectionMap = {
