@@ -25,7 +25,7 @@ const SelectTimePeriod = () =>{
 
 
     return (
-      <div className='flex items-center relative w-full '>
+      <div className="flex flex-col lg:flex-row h-60 md:h-40 justify-center items-center relative w-full ">
         <button
           className="secondary_button"
           onClick={() => setIsYearModalOpen(true)}
@@ -40,7 +40,7 @@ const SelectTimePeriod = () =>{
         </button>
         <p className="mx-4 my-4 lg:my-0">
           <span className={styles.selected_span}>currently selected:</span>
-          current year && all months
+          {selectedYear},   {selectedMonth}
         </p>
 
         {/* Year Modal */}
@@ -78,6 +78,7 @@ const SelectTimePeriod = () =>{
                   setSelectedMonth(month);
                   setIsMonthModalOpen(false);
                 }}
+                className={styles.month}
               >
                 {month}
               </button>

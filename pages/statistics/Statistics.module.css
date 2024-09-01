@@ -14,6 +14,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid var(--purpleDarkHover);
+    border-radius: 3px;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.sport_div:hover{
+    background: var(--purpleDarkHoverOpacity);
 }
 
 .selected_span{
@@ -35,65 +43,65 @@
 
 
 .fandango{
-    background: var(--fandango_opaque);
+    color: var(--fandango_opaque);
 }
 
 .celeste{
-    background: var(--celeste_opaque);
+    color: var(--celeste_opaque);
 }
 
 .springGreen{
-    background: var(--springGreen_opaque);
+   color: var(--springGreen_opaque);
 }
 
 .sinopia{
-    background: var(--sinopia_opaque);
+    color: var(--sinopia_opaque);
 }
 
 .lightOrange{
-    background: var(--lightOrange_opaque);
+    color: var(--lightOrange_opaque);
 }
 
 .wenge{
-    background: var(--wenge_opaque);
+    color: var(--wenge_opaque);
 }
 .spaceCadet{
-    background: var(--spaceCadet_opaque);
+    color: var(--spaceCadet_opaque);
 }
 
 .mauve{
-    background: var(--mauve_opaque);
+    color: var(--mauve_opaque);
 }
 
 .aquamarine{
-    background: var(--aquamarine_opaque);
+    color: var(--aquamarine_opaque);
   
 }
 
 .mandarine{
-    background: var(--mandarine_opaque)
+    color: var(--mandarine_opaque)
 }
 
 .brown{
-    background: var(--brown_opaque)
+    color: var(--brown_opaque)
 }
 
 .mustard{
-    background: var(--mustard_opaque);
+    color: var(--mustard_opaque);
 }
 
 .jasmine{
-    background: var(--jasmine_opaque)
+    color: var(--jasmine_opaque)
 }
 
 .frenchGrey{
-    background:var(--frenchGrey_opaque);
+    color:var(--frenchGrey_opaque);
 }
 
 .eggplant{
-    background: var(--eggplant_opaque);
+    color: var(--eggplant_opaque);
 }
 
 .mossGreen{
-    background: var(--mossGreen_opaque);
+    color: var(--mossGreen_opaque);
 }

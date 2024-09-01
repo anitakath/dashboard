@@ -25,7 +25,7 @@ const Statistics = () =>{
                 key={sport.id}
                 className={`${styles.sport_div} ${styles[sport.color]}`}
               >
-                <button className="text-xs text-center hover:font-bold">
+                <button className="text-m md:text-xl text-center hover:font-bold">
                   {sport.name}
                 </button>
               </div>
