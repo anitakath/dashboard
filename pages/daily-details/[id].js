@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,7 +16,8 @@ const DailyDetails = () => {
   );
   const router = useRouter();
   const { id } = router.query;
-
+  const [isEnlarged, setIsEnlarged] = useState(false)
+  const [enlargedEntryId, setEnlargedEntryId] = useState(null);
   // Function for filtering entries by date
   const filterEntriesByDate = (dateString) => {
     // Conversion of the date string into a date object
@@ -66,7 +68,7 @@ const DailyDetails = () => {
     : "";
 
 
-    console.log(filteredEntries)
+    console.log(isEnlarged)
 
   return (
     <div className="w-full h-screen m-0 md:p-14">
@@ -90,20 +92,24 @@ const DailyDetails = () => {
               filteredEntries.map((entry, idx) => (
                 <div
                   key={entry.id}
-                  className={`${styles.entry_div} ${
-                    entry.label ? styles[entry.label] : ""
-                  }`}
+                  className={`${enlargedEntryId === entry.id ? styles.entry_div_enlarged : styles.entry_div} ${entry.label ? styles[entry.label] : ""}`}
                 >
                   <h1>{entry.title}</h1>
                   <p>{entry.entry}</p>
-                  <div className={styles.enlarge_div}>
+                  <button
+                    className={styles.enlarge_div}
+                    onClick={() => setEnlargedEntryId(enlargedEntryId === entry.id ? null : entry.id)}
+                  >
                     <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
-                  </div>
+                  </button>
                 </div>
               ))}
           </div>
+
           <div className="my-4  flex-col">
-            <h1 className="text-xl m-4 pb-1 flex justify-center"> a 5 year story</h1>
+            <h1 className="text-xl m-4 pb-1 flex justify-center">
+              a 5 year story
+            </h1>
             <div className="flex flex-col pb-10 items-center justify-evenly ">
               <div className={styles.historical_entry_div}>
                 <h2>2019</h2>

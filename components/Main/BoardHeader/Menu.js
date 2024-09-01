@@ -73,7 +73,7 @@ const Menu = ({ setOpenMenu }) => {
                 Planned Sports Units
               </li>
               <li className={styles.link}>Completed Sports Units</li>
-              <li className={styles.link}>*** soon: Statistics ***</li>
+              <Link className={styles.link} href="/statistics"> Statistics </Link>
             </>
           )}
           <br />

@@ -1,0 +1,91 @@
+
+.grid_div{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+}
+
+.sport_div{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected_span{
+    font-weight: bolder;
+    color: var(--purpleDarkHover);
+}
+
+
+@media screen and (max-width: 800px){
+    .grid_div{
+         grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+
+.fandango{
+    background: var(--fandango_opaque);
+}
+
+.celeste{
+    background: var(--celeste_opaque);
+}
+
+.springGreen{
+    background: var(--springGreen_opaque);
+}
+
+.sinopia{
+    background: var(--sinopia_opaque);
+}
+
+.lightOrange{
+    background: var(--lightOrange_opaque);
+}
+
+.wenge{
+    background: var(--wenge_opaque);
+}
+.spaceCadet{
+    background: var(--spaceCadet_opaque);
+}
+
+.mauve{
+    background: var(--mauve_opaque);
+}
+
+.aquamarine{
+    background: var(--aquamarine_opaque);
+  
+}
+
+.mandarine{
+    background: var(--mandarine_opaque)
+}
+
+.brown{
+    background: var(--brown_opaque)
+}
+
+.mustard{
+    background: var(--mustard_opaque);
+}
+
+.jasmine{
+    background: var(--jasmine_opaque)
+}
+
+.frenchGrey{
+    background:var(--frenchGrey_opaque);
+}
+
+.eggplant{
+    background: var(--eggplant_opaque);
+}
+
+.mossGreen{
+    background: var(--mossGreen_opaque);
+}
