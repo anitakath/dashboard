@@ -12,6 +12,15 @@
 
 }
 
+.error_p{
+    color: var(--purpleDark);
+}
+
+
+
+
+
+
 
 
 .fandango{
@@ -77,3 +86,75 @@
 .mossGreen{
     background: var(--mossGreen_opaque);
 }
+
+
+
+
+
+
+
+
+.fandango_font{
+    color: var(--fandango_opaque);
+}
+
+.celeste_font{
+    color: var(--celeste_opaque);
+}
+
+.springGreen_font{
+   color: var(--springGreen_opaque);
+}
+
+.sinopia_font{
+   color: var(--sinopia_opaque);
+}
+
+.lightOrange_font{
+   color: var(--lightOrange_opaque);
+}
+
+.wenge_font{
+    color: var(--wenge_opaque);
+}
+
+.spaceCadet_font{
+    color: var(--spaceCadet_opaque);
+}
+
+.mauve_font{
+    color: var(--mauve_opaque);
+}
+
+.aquamarine_font{
+    color: var(--aquamarine_opaque);
+}
+
+.mandarine_font{
+    color: var(--mandarine_opaque)
+}
+
+.brown_font{
+    color: var(--brown_opaque)
+}
+
+.mustard_font{
+    color: var(--mustard_opaque);
+}
+
+.jasmine_font{
+    color: var(--jasmine_opaque)
+}
+
+.frenchGrey_font{
+    color:var(--frenchGrey_opaque);
+}
+
+.eggplant_font{
+    color: var(--eggplant_opaque);
+}
+
+.mossGreen_font{
+    color: var(--mossGreen_opaque);
+}
+

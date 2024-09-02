@@ -8,9 +8,16 @@ import styles from './Statistics.module.css'
 import Annual from "@/components/Statistics/Annual";
 import SelectTimePeriod from "@/components/Statistics/SelectTimePeriod";
 
+
+
 const Statistics = () =>{
   const currentSport = useSelector((state) => state.sport.currentSport[0]);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().toLocaleString("default", { month: "long" });
+
+  // Zustand für das Datum in der übergeordneten Komponente
+  const [date, setDate] = useState({ year: currentYear, month: "All" });
 
 
   return (
@@ -18,7 +25,7 @@ const Statistics = () =>{
       <div className="flex flex-col w-full border-2 h-full overflow-scroll p-2 m-0 p-0 relative z-20">
         <BoardHeader allSupabaseSports={allSupabaseSports} />
         <h1 className="text-2xl mb-2"> Statistics </h1>
-        <div className={styles.grid_div}>
+        <div className={styles.container_div}>
           {currentSport &&
             currentSport.map((sport) => (
               <div
@@ -33,16 +40,14 @@ const Statistics = () =>{
         </div>
 
         <div className="flex relative flex-col lg:flex-row my-4 md:mx-2">
-
-          <SelectTimePeriod />
-       
+          <SelectTimePeriod date={date} setDate={setDate} />
         </div>
 
         <div>
-          <h1 className="text-2xl border-b-2"> Annual overview </h1>
+          <h1 className="text-2xl border-b-2"> Annual overview for <span style={{ color: 'var(--purpleDark)', margin: "0px 2px" }}>{date.year}</span> 🫶🏼 </h1>
         </div>
 
-        <Annual allSupabaseSports={allSupabaseSports} />
+        <Annual allSupabaseSports={allSupabaseSports} date={date} />
 
         <div>
           <h1 className="text-2xl border-b-2"> monatliche Übersicht </h1>

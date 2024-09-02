@@ -113,3 +113,19 @@ export const useGetMonthStyle = () => {
     "Dec",
   ];
 
+  export const completeMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    "All",
+  ];
+

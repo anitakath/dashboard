@@ -1,30 +1,31 @@
 
 import { useState } from 'react';
-
 import styles from './SelectTimePeriod.module.css'
 
+//CUSTOM HOOKS
+import { useHandleYearChange,  useHandleMonthChange } from '@/custom-hooks/useDate';
+import { completeMonths } from '@/custom-hooks/useCalendar';
 
-const SelectTimePeriod = () =>{
+const SelectTimePeriod = ({date, setDate}) =>{
 
-     const currentYear = new Date().getFullYear();
-     const currentMonth = new Date().toLocaleString("default", {
-       month: "long",
-     });
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().toLocaleString("default", { month: "long" });
 
-     const [selectedYear, setSelectedYear] = useState(currentYear);
-     const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-     const [isYearModalOpen, setIsYearModalOpen] = useState(false);
-     const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
+  const [isYearModalOpen, setIsYearModalOpen] = useState(false);
+  const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
 
+  // Verwende die Custom Hooks
+  const [selectedYear, handleYearChange] = useHandleYearChange(currentYear);
+  const [selectedMonth, handleMonthChange] = useHandleMonthChange(currentMonth);
 
-    const years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) => 2020 + i);
-    const months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
+  const years = Array.from(
+    { length: currentYear - 2020 + 1 },
+    (_, i) => 2020 + i
+  );
 
+  console.log(date);
 
-    return (
+  return (
       <div className="flex flex-col lg:flex-row h-60 md:h-40 justify-center items-center relative w-full ">
         <button
           className="secondary_button"
@@ -40,20 +41,16 @@ const SelectTimePeriod = () =>{
         </button>
         <p className="mx-4 my-4 lg:my-0">
           <span className={styles.selected_span}>currently selected:</span>
-          {selectedYear},   {selectedMonth}
+          {selectedYear}, {selectedMonth}
         </p>
 
         {/* Year Modal */}
         {isYearModalOpen && (
-          <div className={styles.modal}>
-            <h2>Select a Year</h2>
+          <div className={styles.year_modal}>
             {years.map((year) => (
               <button
                 key={year}
-                onClick={() => {
-                  setSelectedYear(year);
-                  setIsYearModalOpen(false);
-                }}
+                onClick={() => handleYearChange(year, setIsYearModalOpen, setDate)}
                 className={styles.year}
               >
                 {year}
@@ -69,26 +66,22 @@ const SelectTimePeriod = () =>{
         )}
         {/* Month Modal */}
         {isMonthModalOpen && (
-          <div className={styles.modal}>
-            <h2>Select a Month</h2>
-            {months.map((month) => (
-              <button
-                key={month}
-                onClick={() => {
-                  setSelectedMonth(month);
-                  setIsMonthModalOpen(false);
-                }}
-                className={styles.month}
-              >
-                {month}
-              </button>
-            ))}
+          <div className={styles.month_modal}>
             <button
               onClick={() => setIsMonthModalOpen(false)}
               className={styles.close_btn}
             >
               Close
             </button>
+            {completeMonths.map((month) => (
+              <button
+                key={month}
+                onClick={() =>handleMonthChange(month, setIsMonthModalOpen, setDate)}
+                className={styles.month}
+              >
+                {month}
+              </button>
+            ))}
           </div>
         )}
       </div>

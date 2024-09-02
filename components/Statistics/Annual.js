@@ -1,55 +1,81 @@
 
 import styles from './Annual.module.css'
+//CUSTOM HOOKS
+import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 
 
-const Annual = ({ allSupabaseSports }) => {
+const Annual = ({ allSupabaseSports, date}) => {
 
 
-  // Schritt 1: Zähle die Vorkommen jeder Sportart und speichere das Label
-  const sportCount = allSupabaseSports.reduce((acc, sport) => {
-    if (!acc[sport.name]) {
-      acc[sport.name] = { count: 0, label: sport.label }; // Speichere das Label beim ersten Auftreten
-    }
-    acc[sport.name].count += 1; // Zähle die Vorkommen
-    return acc;
-  }, {});
-
-  // Schritt 2: Sortiere die Sportarten nach der Häufigkeit
-  const sortedSports = Object.entries(sportCount)
-    .sort((a, b) => b[1].count - a[1].count) // Sortiere absteigend nach der Anzahl
-    .slice(0, 3); // Nimm nur die Top 3
-
+  const { sortedSportsByCount, resultArray } = useStatistics(
+    allSupabaseSports,
+    date
+  );
 
   return (
     <div>
-      <div className="flex my-2">
+      <div className="flex my-4">
         <h1 className="text-2xl w-full flex justify-center items-center ">
-          your favourite sports in ... ( NOCH NICHT JÄHRLICH!!!! allsupabasesports nimmt auch die Objekte aus 2023 und Co auf!)
+          your favourite sports
         </h1>
         <div className="w-full">
-          {sortedSports.map(([name, { count, label }], index) => (
-            <div
-              key={name}
-              className={`${styles[label]} ${styles.fav_sports_div}`}
-            >
-              {index + 1}. {name}, {count}x {label}
+          {sortedSportsByCount.length > 0 ? (
+            sortedSportsByCount.map(([name, { count, label }], index) => (
+              <div
+                key={name}
+                className={`${styles[label]} ${styles.fav_sports_div}`}
+              >
+                {index + 1}. {name}, {count}x {label}
+              </div>
+            ))
+          ) : (
+            <div className="text-center flex justify-center items-center h-full">
+              <p className={styles.error_p}>
+                No entries were created for this period.
+              </p>
             </div>
-          ))}
+          )}
         </div>
       </div>
 
-      <div className="border-2 flex my-2 overflow-scroll">
-        <h1 className="text-center w-full">Total hours per sport ...</h1>
-        <div className="h-20 bg-red-200 w-full">
-          -Show the total number of hours spent on each sport per year / per
-          month
-          <br /> <br />
-          -Calculate the average duration of training sessions for each sport
-          and in total.
+      <div className="border-t-2  my-4 relative flex my-2 overflow-scroll">
+        <h1 className="text-2xl w-full flex justify-center items-center">
+          Total hours per sport ...
+        </h1>
+
+        <div className="w-full ">
+          {resultArray.length > 0 ? (
+            resultArray.map(
+              ({ name, label, totalDurationFormatted }, index) => (
+                <div key={index} className="p-0">
+                  <p className=" h-16  flex items-center ">
+                    <span
+                      style={{
+                        textAlign: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontWeight: "bolder",
+                        margin: "0px 4px",
+                        width: "170px",
+                        height: "40px",
+                      }}
+                      className={`${styles[label + "_font"]}`}
+                    >
+                      {name}:
+                    </span>
+                    {totalDurationFormatted}
+                  </p>
+                </div>
+              )
+            )
+          ) : (
+            <p>No data available.</p>
+          )}
         </div>
       </div>
 
-      <div className="border-2 flex my-2 ">
+      <div className="border-8 my-4 flex ">
         <h1 className="text-center w-full">Rest days ... </h1>
         <div className="h-20 bg-red-200 w-full">
           Show the total number of hours rest days ... active (sauna) passive

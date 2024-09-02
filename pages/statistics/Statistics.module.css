@@ -2,10 +2,10 @@
 
 
 
-.grid_div{
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
+.container_div{
+    display: flex;
     gap: 5px;
+
 }
 
 .sport_div{
@@ -32,14 +32,19 @@
 
 
 
+@media screen and (max-width: 1350px){
+    .container_div{
+        flex-wrap: wrap;
+        justify-content: center;
 
+    }
 
-
-@media screen and (max-width: 800px){
-    .grid_div{
-         grid-template-columns: repeat(5, 1fr);
+    .sport_div{
+        width: 150px;
     }
 }
+
+
 
 
 .fandango{
