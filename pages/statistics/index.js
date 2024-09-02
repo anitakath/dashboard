@@ -15,8 +15,6 @@ const Statistics = () =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
-
-  // Zustand für das Datum in der übergeordneten Komponente
   const [date, setDate] = useState({ year: currentYear, month: "All" });
 
 

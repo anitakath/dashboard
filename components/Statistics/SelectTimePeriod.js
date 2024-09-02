@@ -7,14 +7,10 @@ import { useHandleYearChange,  useHandleMonthChange } from '@/custom-hooks/useDa
 import { completeMonths } from '@/custom-hooks/useCalendar';
 
 const SelectTimePeriod = ({date, setDate}) =>{
-
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
-
   const [isYearModalOpen, setIsYearModalOpen] = useState(false);
   const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
-
-  // Verwende die Custom Hooks
   const [selectedYear, handleYearChange] = useHandleYearChange(currentYear);
   const [selectedMonth, handleMonthChange] = useHandleMonthChange(currentMonth);
 
@@ -22,8 +18,6 @@ const SelectTimePeriod = ({date, setDate}) =>{
     { length: currentYear - 2020 + 1 },
     (_, i) => 2020 + i
   );
-
-  console.log(date);
 
   return (
       <div className="flex flex-col lg:flex-row h-60 md:h-40 justify-center items-center relative w-full ">

@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 import styles from './Annual.module.css'
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
@@ -6,6 +6,11 @@ import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 
 const Annual = ({ allSupabaseSports, date}) => {
 
+  const [showFiveYearHistory, setShowFiveYearHistory] = useState({
+    favourites: false,
+    totalHours: false,
+    restDays: false,
+  })
 
   const { sortedSportsByCount, resultArray } = useStatistics(
     allSupabaseSports,
@@ -43,36 +48,49 @@ const Annual = ({ allSupabaseSports, date}) => {
           Total hours per sport ...
         </h1>
 
-        <div className="w-full ">
-          {resultArray.length > 0 ? (
-            resultArray.map(
-              ({ name, label, totalDurationFormatted }, index) => (
-                <div key={index} className="p-0">
-                  <p className=" h-16  flex items-center ">
-                    <span
-                      style={{
-                        textAlign: "center",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontWeight: "bolder",
-                        margin: "0px 4px",
-                        width: "170px",
-                        height: "40px",
-                      }}
-                      className={`${styles[label + "_font"]}`}
-                    >
-                      {name}:
-                    </span>
-                    {totalDurationFormatted}
-                  </p>
-                </div>
+        <button
+          className="absolute m-2 border-b-2 px-2 hover:text-red-200"
+          onClick={() =>
+            setShowFiveYearHistory((prevState) => ({
+              ...prevState,
+              totalHours: !prevState.totalHours,
+            }))
+          }
+        >
+          5 year history
+        </button>
+
+        {showFiveYearHistory.totalHours && (
+          <div className={styles.history_div}>
+            <p> history div </p>
+          </div>
+        )}
+
+        {showFiveYearHistory.totalHours === false && (
+          <div className="w-full ">
+            {resultArray.length > 0 ? (
+              resultArray.map(
+                ({ name, label, totalDurationFormatted }, index) => (
+                  <div key={index} className="p-0">
+                    <p className=" h-16  flex items-center ">
+                      <span
+                      
+                        className={`${styles[label + "_font"]} ${styles.centered_span} `}
+                      >
+                        {name}:
+                      </span>
+                      {totalDurationFormatted}
+                    </p>
+                  </div>
+                )
               )
-            )
-          ) : (
-            <p>No data available.</p>
-          )}
-        </div>
+            ) : (
+              <div className="text-center flex justify-center items-center h-full">
+                <p className={styles.error_p}>No data available.</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="border-8 my-4 flex ">
