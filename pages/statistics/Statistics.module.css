@@ -31,8 +31,9 @@
 }
 
 .icon{
-    margin: 0px 15px;
-    height: 20px;
+    margin: 0px;
+    margin-bottom: 2px;
+    height: 18px;
 }
 
 .icon:hover{
