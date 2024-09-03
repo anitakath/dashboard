@@ -25,7 +25,7 @@ const Annual = ({ allSupabaseSports, date}) => {
       {/* TOP 3 SPORTS */}
 
       <div className={styles.container}>
-        <h1 className="text-2xl w-full flex justify-center mb-4 items-center ">
+        <h1 className="text-2xl w-full flex  justify-center mb-4 items-center ">
           your favourite sports
         </h1>
         <div className="w-full">
@@ -35,7 +35,9 @@ const Annual = ({ allSupabaseSports, date}) => {
                 key={name}
                 className={`${styles[label]} ${styles.fav_sports_div}`}
               >
-                {index + 1}. {name}, {count}x {label}
+                <p>
+                  {index + 1}. {name}, {count}x {label}
+                </p>
               </div>
             ))
           ) : (
@@ -56,7 +58,7 @@ const Annual = ({ allSupabaseSports, date}) => {
         </h1>
 
         <button
-          className="absolute m-2 border-b-2 top-0 px-2 hover:text-red-200"
+          className="absolute m-1 mx-2  border-b-2 top-0 px-2 hover:text-red-200"
           onClick={() =>
             setShowFiveYearHistory((prevState) => ({
               ...prevState,
@@ -67,7 +69,7 @@ const Annual = ({ allSupabaseSports, date}) => {
           5 year history
         </button>
 
-        <div className="flex mt-2">
+        <div className="flex flex-col lg:flex-row mt-2">
           {showFiveYearHistory.totalHours && (
             <div className={styles.history_div}>
               <p> history div </p>
@@ -75,7 +77,7 @@ const Annual = ({ allSupabaseSports, date}) => {
           )}
 
           {showFiveYearHistory.totalHours === false && (
-            <div className="w-full ">
+            <div className="w-full my-4 lg:m-0 ">
               {resultArray.length > 0 ? (
                 resultArray.map(
                   ({ name, label, totalDurationFormatted }, index) => (
@@ -103,8 +105,14 @@ const Annual = ({ allSupabaseSports, date}) => {
               )}
             </div>
           )}
-          <div className={styles.images_div}>  
-            <RandomSportImagesGrid/>
+
+          <div className="flex flex-col w-full">
+            <h1 className="text-2xl w-full flex  justify-center my-4 items-center ">
+              your memories
+            </h1>
+            <div className={styles.images_div}>
+              <RandomSportImagesGrid />
+            </div>
           </div>
         </div>
       </div>
