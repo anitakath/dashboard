@@ -27,9 +27,8 @@ const BoardHeader = (props) =>{
     return (
       <div className={styles.headerDiv}>
         {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}
-       
+
         <div className={styles.searchBarResult_div}>
-         
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {searchTerm != "" && (
             <div className={styles.results_div}>
@@ -44,9 +43,11 @@ const BoardHeader = (props) =>{
           )}
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <p className={styles.icons}>
-            <FontAwesomeIcon icon={faHouse} className="font_purple" />
+            <Link href="/" className={styles.backToHomepage_link}>
+              <FontAwesomeIcon icon={faHouse} className="font_purple" />
+            </Link>
           </p>
           <p className={styles.icons}>
             <FontAwesomeIcon

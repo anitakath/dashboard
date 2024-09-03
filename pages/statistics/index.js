@@ -12,7 +12,7 @@ import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons"
 import { faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartLine } from "@fortawesome/free-solid-svg-icons";
-
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 const Statistics = () =>{
   const currentSport = useSelector((state) => state.sport.currentSport[0]);
@@ -29,6 +29,7 @@ const Statistics = () =>{
     <div className="w-full h-screen m-0 md:p-14">
       <div className="flex flex-col w-full border-2 h-full overflow-scroll p-2 m-0 p-0 relative z-20">
         <BoardHeader allSupabaseSports={allSupabaseSports} />
+
         <h1 className="text-2xl mb-2"> Statistics </h1>
         <div className={styles.container_div}>
           {currentSport &&
@@ -72,29 +73,32 @@ const Statistics = () =>{
             </span>
           </h1>
         </div>
+        <Link href="/" className={styles.backToHomepage_link}>
+          <FontAwesomeIcon icon={faHouse} />
+        </Link>
 
         <div className={styles.playground}>
           <FontAwesomeIcon icon={faChartLine} />
         </div>
 
         <p>
-          - Top 3 Sportarten pro Monat 
-          <br/>
-          <br/>
-          - Sportart X : Stundenanzahl und Einheiten im (gewählten) Monat ( +  Trend zum Vormonat durch Pfeil oder = )
+          - Top 3 Sportarten pro Monat
+          <br />
+          <br />
+          - Sportart X : Stundenanzahl und Einheiten im (gewählten) Monat ( +
+          Trend zum Vormonat durch Pfeil oder = )
           <br />
           <br />
           - Einheiten insgesamt
           <br />
           <br />
-          - Anzahl der Stunden pro Sportarten pro Monat und im Zeitverlauf. GRAFISHCE DARSTELLUNG!
-          <br />
-          <br /> 
-          - Verletzungen / Behinderungen 
+          - Anzahl der Stunden pro Sportarten pro Monat und im Zeitverlauf.
+          GRAFISHCE DARSTELLUNG!
           <br />
           <br />
-          - random Bildergalerie 
-      
+          - Verletzungen / Behinderungen
+          <br />
+          <br />- random Bildergalerie
         </p>
       </div>
     </div>

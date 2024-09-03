@@ -90,6 +90,7 @@ const Board = (props) => {
             </p>
           )}
 
+
           {currentSport != null && (
             <BoarderSubHeader
               currentSport={currentSport}

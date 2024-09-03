@@ -1,11 +1,24 @@
 
 
+.backToHomepage_link{
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+    margin: 5px 0px 10px 0px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s ease;
+}
 
+.backToHomepage_link:hover{
+    color: var(--purpleDark);
 
+}
 .container_div{
     display: flex;
     gap: 5px;
-
 }
 
 .sport_div{

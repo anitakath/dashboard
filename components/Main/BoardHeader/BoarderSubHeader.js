@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 //COMPONENTS
 import AddEntryForm from '../AddEntryForm';
 import { useDispatch } from 'react-redux';
@@ -41,6 +42,9 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
 
   }
 
+
+  let icon = miniMenu ? faXmark : faBars 
+
   return (
     <div className="mb-2 flex flex-wrap justify-center relative bottom-2">
       <div className="relative w-full h-8">
@@ -48,7 +52,7 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
           className="absolute top-2 left-2 lg:hidden"
           onClick={closeMiniMenuHandler}
         >
-          <FontAwesomeIcon icon={faXmark} />
+          <FontAwesomeIcon icon={icon} className="text-xl" />
         </button>
       </div>
 
@@ -77,10 +81,6 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
             className="secondary_button"
             onClick={navigateToSportPlanHandler}
           >
-            <FontAwesomeIcon
-              icon={faCalendar}
-              className={styles.calendar_icon}
-            />
             planned sports units
           </button>
           {currentSport === "daily" && (
@@ -94,7 +94,10 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
             </button>
           )}
           <Link className="primary_link" href="/diary">
-            go to your diary
+            your diary
+          </Link>
+          <Link className="primary_link" href="/statistics">
+            your statistics
           </Link>
         </div>
       )}
