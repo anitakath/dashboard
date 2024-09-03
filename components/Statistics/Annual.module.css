@@ -1,5 +1,13 @@
 
-
+.container{
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: scroll;
+    position: relative;
+    overflow: scroll;
+}
 
 
 .fav_sports_div{
@@ -10,6 +18,27 @@
     align-items: center;
     font-size: 1.3rem;
 
+}
+
+
+
+/*--------------------------------------Total number of sports lessons in the year / last 5 years*-------------------------------------- */
+
+
+
+.totalHours_sports_div{
+    /*background: linear-gradient(to right, white, var(--purpleDarkHoverOpacity));*/
+    background: linear-gradient(to left, white, var(--purpleDarkHoverOpacity));
+    /*border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;*/
+    margin: 4px 0px;
+}
+
+
+.images_div{
+    background: var(--purpleDarkHoverOpacity);
+    padding: 1px;
+    width: 100%;
 }
 
 .centered_span {
@@ -32,14 +61,20 @@
 }
 
 
+
+
+
 .history_div{
-    min-height: 200px;
+    min-height: 500px;
     padding: 3px;
     width: 100%;
 }
 
 
 
+
+
+/*-------------------------------------- REST DAYS -------------------------------------- */
 
 
 
@@ -107,7 +142,6 @@
 .mossGreen{
     background: var(--mossGreen_opaque);
 }
-
 
 
 

@@ -30,6 +30,16 @@
     margin: 0px 4px;
 }
 
+.icon{
+    margin: 0px 15px;
+    height: 20px;
+}
+
+.icon:hover{
+    color: var(--purpleDarkHover);
+    cursor: pointer;
+}
+
 
 
 @media screen and (max-width: 1350px){

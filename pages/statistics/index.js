@@ -7,8 +7,9 @@ import styles from './Statistics.module.css'
 //COMPONENTS
 import Annual from "@/components/Statistics/Annual";
 import SelectTimePeriod from "@/components/Statistics/SelectTimePeriod";
-
-
+import { faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
+import { faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Statistics = () =>{
   const currentSport = useSelector((state) => state.sport.currentSport[0]);
@@ -16,7 +17,10 @@ const Statistics = () =>{
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
   const [date, setDate] = useState({ year: currentYear, month: "All" });
+  const [isAnnualOpen, setIsAnnualOpen] = useState(true)
 
+
+  let annualBtn = isAnnualOpen ? faDownLeftAndUpRightToCenter :  faUpRightAndDownLeftFromCenter;
 
   return (
     <div className="w-full h-screen m-0 md:p-14">
@@ -41,14 +45,31 @@ const Statistics = () =>{
           <SelectTimePeriod date={date} setDate={setDate} />
         </div>
 
-        <div>
-          <h1 className="text-2xl border-b-2"> Annual overview for <span style={{ color: 'var(--purpleDark)', margin: "0px 2px" }}>{date.year}</span> 🫶🏼 </h1>
+        <div className="flex  h-10 items-center">
+          <h1 className="text-2xl w-full border-b-2 my-4 p-2">
+            Annual overview for
+            <span style={{ color: "var(--purpleDark)", margin: "0px 10px" }}>
+              {date.year}
+            </span>
+            🫶🏼
+            <button onClick={() => setIsAnnualOpen((prevState) => !prevState)}>
+              <FontAwesomeIcon icon={annualBtn} className={styles.icon} />
+            </button>
+          </h1>
         </div>
 
-        <Annual allSupabaseSports={allSupabaseSports} date={date} />
+        {isAnnualOpen && (
+          <Annual allSupabaseSports={allSupabaseSports} date={date} />
+        )}
 
         <div>
-          <h1 className="text-2xl border-b-2"> monatliche Übersicht </h1>
+          <h1 className="text-2xl border-b-2 my-4 p-2">
+
+            monthly overview
+            <span style={{ color: "var(--purpleDark)", margin: "0px 10px" }}>
+              {date.month}
+            </span>
+          </h1>
         </div>
 
         <div className={styles.playground}></div>

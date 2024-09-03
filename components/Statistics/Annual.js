@@ -2,7 +2,10 @@ import { useState } from 'react';
 import styles from './Annual.module.css'
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
-
+import { months } from '@/custom-hooks/useCalendar';
+//COMPONENTS
+import RestDaysCalendar from './RestDaysCalendar';
+import RandomSportImagesGrid from './RandomSportImagesGrid';
 
 const Annual = ({ allSupabaseSports, date}) => {
 
@@ -19,8 +22,10 @@ const Annual = ({ allSupabaseSports, date}) => {
 
   return (
     <div>
-      <div className="flex my-4">
-        <h1 className="text-2xl w-full flex justify-center items-center ">
+      {/* TOP 3 SPORTS */}
+
+      <div className={styles.container}>
+        <h1 className="text-2xl w-full flex justify-center mb-4 items-center ">
           your favourite sports
         </h1>
         <div className="w-full">
@@ -43,13 +48,15 @@ const Annual = ({ allSupabaseSports, date}) => {
         </div>
       </div>
 
-      <div className="border-t-2  my-4 relative flex my-2 overflow-scroll">
-        <h1 className="text-2xl w-full flex justify-center items-center">
+      {/* TOTAL HOURS OF SPORT  */}
+
+      <div className={styles.container}>
+        <h1 className="text-2xl w-full flex justify-center items-center ">
           Total hours per sport ...
         </h1>
 
         <button
-          className="absolute m-2 border-b-2 px-2 hover:text-red-200"
+          className="absolute m-2 border-b-2 top-0 px-2 hover:text-red-200"
           onClick={() =>
             setShowFiveYearHistory((prevState) => ({
               ...prevState,
@@ -60,45 +67,56 @@ const Annual = ({ allSupabaseSports, date}) => {
           5 year history
         </button>
 
-        {showFiveYearHistory.totalHours && (
-          <div className={styles.history_div}>
-            <p> history div </p>
-          </div>
-        )}
+        <div className="flex mt-2">
+          {showFiveYearHistory.totalHours && (
+            <div className={styles.history_div}>
+              <p> history div </p>
+            </div>
+          )}
 
-        {showFiveYearHistory.totalHours === false && (
-          <div className="w-full ">
-            {resultArray.length > 0 ? (
-              resultArray.map(
-                ({ name, label, totalDurationFormatted }, index) => (
-                  <div key={index} className="p-0">
-                    <p className=" h-16  flex items-center ">
-                      <span
-                      
-                        className={`${styles[label + "_font"]} ${styles.centered_span} `}
-                      >
-                        {name}:
-                      </span>
-                      {totalDurationFormatted}
-                    </p>
-                  </div>
+          {showFiveYearHistory.totalHours === false && (
+            <div className="w-full ">
+              {resultArray.length > 0 ? (
+                resultArray.map(
+                  ({ name, label, totalDurationFormatted }, index) => (
+                    <div
+                      key={index}
+                      className={`${styles.totalHours_sports_div} ${styles.linearGradient_bg}`}
+                    >
+                      <p className=" h-16 flex items-center">
+                        <span
+                          className={`${styles[label + "_font"]} ${
+                            styles.centered_span
+                          } `}
+                        >
+                          {name}:
+                        </span>
+                        {totalDurationFormatted}
+                      </p>
+                    </div>
+                  )
                 )
-              )
-            ) : (
-              <div className="text-center flex justify-center items-center h-full">
-                <p className={styles.error_p}>No data available.</p>
-              </div>
-            )}
+              ) : (
+                <div className="text-center flex justify-center items-center h-full">
+                  <p className={styles.error_p}>No data available.</p>
+                </div>
+              )}
+            </div>
+          )}
+          <div className={styles.images_div}>  
+            <RandomSportImagesGrid/>
           </div>
-        )}
+        </div>
       </div>
 
-      <div className="border-8 my-4 flex ">
-        <h1 className="text-center w-full">Rest days ... </h1>
-        <div className="h-20 bg-red-200 w-full">
-          Show the total number of hours rest days ... active (sauna) passive
-          (no entries)
-        </div>
+      {/* REST DAYS */}
+
+      <div className={styles.container}>
+        <h1 className="text-2xl w-full flex justify-center my-4 items-center ">
+          Rest days ...
+        </h1>
+
+        <RestDaysCalendar allSupabaseSports={allSupabaseSports} date={date} />
       </div>
     </div>
   );
