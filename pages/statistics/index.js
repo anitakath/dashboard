@@ -82,6 +82,11 @@ const Statistics = () =>{
         </div>
 
         <p>
+          - am Anfang des Monats wird pro Sport ein Ziel festgelegt, wie oft dieser trainiert werden soll. 
+          <br/>
+          - SOLL wird dann mit dem IST abgeglichen. zB Poledance 3x die Woche = 12x im Monat als Ziel / Xx IST dynamisch auf grundlage der Objekte im Monat X erstellt.
+          <br/>
+          <br/>
           - Top 3 Sportarten pro Monat
           <br />
           <br />

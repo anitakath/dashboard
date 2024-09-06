@@ -36,6 +36,7 @@
     justify-content: center;
     align-items: center;
     font-size: 1.3rem;
+    
 
 }
 
@@ -68,8 +69,8 @@
   font-weight: bolder;
   font-size: 1.1rem;
   margin: 0px 4px;
-  width: 170px;
-  height: 40px;
+  min-width: 160px;
+  height: 80%;
 }
 
 .error_p{
@@ -169,59 +170,59 @@
 
 
 .fandango_font{
-    color: var(--fandango_opaque);
+    border-bottom: 2px solid var(--fandango_opaque);
 }
 
 .celeste_font{
-    color: var(--celeste_opaque);
+    border-bottom: 2px solid var(--celeste_opaque);
 }
 
 .springGreen_font{
-   color: var(--springGreen_opaque);
+   border-bottom: 2px solid var(--springGreen_opaque);
 }
 
 .sinopia_font{
-   color: var(--sinopia_opaque);
+   border-bottom: 2px solid var(--sinopia_opaque);
 }
 
 .lightOrange_font{
-   color: var(--lightOrange_opaque);
+   border-bottom: 2px solid var(--lightOrange_opaque);
 }
 
 .wenge_font{
-    color: var(--wenge_opaque);
+    border-bottom: 2px solid var(--wenge_opaque);
 }
 
 .spaceCadet_font{
-    color: var(--spaceCadet_opaque);
+    border-bottom: 2px solid var(--spaceCadet_opaque);
 }
 
 .mauve_font{
-    color: var(--mauve_opaque);
+    border-bottom: 2px solid var(--mauve_opaque);
 }
 
 .aquamarine_font{
-    color: var(--aquamarine_opaque);
+    border-bottom: 2px solid var(--aquamarine_opaque);
 }
 
 .mandarine_font{
-    color: var(--mandarine_opaque)
+    border-bottom: 2px solid var(--mandarine_opaque)
 }
 
 .brown_font{
-    color: var(--brown_opaque)
+    border-bottom: 2px solid var(--brown_opaque)
 }
 
 .mustard_font{
-    color: var(--mustard_opaque);
+    border-bottom: 2px solid var(--mustard_opaque);
 }
 
 .jasmine_font{
-    color: var(--jasmine_opaque)
+    border-bottom: 2px solid var(--jasmine_opaque)
 }
 
 .frenchGrey_font{
-    color:var(--frenchGrey_opaque);
+    border-bottom: 2px solid var(--frenchGrey_opaque);
 }
 
 .eggplant_font{

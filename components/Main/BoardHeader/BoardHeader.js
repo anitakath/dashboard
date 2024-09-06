@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faBars, faUser, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faBars, faUser, faHouse, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 //COMPONENTS
 import UserImage from "@/components/UI/UserImage";
@@ -58,6 +58,9 @@ const BoardHeader = (props) =>{
           </p>
           <Link href="/profile" className={styles.icons}>
             <FontAwesomeIcon icon={faUser} className="font_purple" />
+          </Link>
+          <Link href="/community" className={styles.icons}>
+            <FontAwesomeIcon icon={faUsers} className="font_purple" />
           </Link>
           <button className={styles.icons} onClick={logoutHandler}>
             <Image

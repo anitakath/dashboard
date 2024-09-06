@@ -112,3 +112,37 @@ const useStatistics = (allSupabaseSports, date) => {
 };
 
 export default useStatistics;
+
+
+export const useTopSportsByDuration = (allSupabaseSports, date) => {
+  const filteredSports = useMemo(() => {
+    return allSupabaseSports.filter((sport) => {
+      const sportYear = new Date(sport.created_at).getFullYear();
+      return sportYear === date.year;
+    });
+  }, [allSupabaseSports, date]);
+
+  const durationSums = useMemo(() => {
+    return filteredSports.reduce((acc, sport) => {
+      if (!acc[sport.name]) {
+        acc[sport.name] = { totalDuration: 0, label: sport.label };
+      }
+      acc[sport.name].totalDuration += sport.duration;
+      return acc;
+    }, {});
+  }, [filteredSports]);
+
+  const topSportsByDuration = useMemo(() => {
+    return Object.entries(durationSums)
+      .sort((a, b) => b[1].totalDuration - a[1].totalDuration)
+      .slice(0, 3)
+      .map(([name, { totalDuration, label }]) => ({
+        name,
+        totalDuration,
+        label,
+        totalDurationFormatted: convertMinutesToHours(totalDuration), // Optional: Formatierung hinzufügen
+      }));
+  }, [durationSums]);
+
+  return topSportsByDuration;
+};

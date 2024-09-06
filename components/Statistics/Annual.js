@@ -3,6 +3,8 @@ import styles from './Annual.module.css'
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 import { months } from '@/custom-hooks/useCalendar';
+import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
+import { convertMinutesToHours } from '@/custom-hooks/minutesToHours';
 //COMPONENTS
 import RestDaysCalendar from './RestDaysCalendar';
 import RandomSportImagesGrid from './RandomSportImagesGrid';
@@ -19,6 +21,9 @@ const Annual = ({ allSupabaseSports, date}) => {
     allSupabaseSports,
     date
   );
+  const topSportsByDuration = useTopSportsByDuration(allSupabaseSports, date);
+
+  console.log(topSportsByDuration)
 
   return (
     <div>
@@ -26,9 +31,10 @@ const Annual = ({ allSupabaseSports, date}) => {
 
       <div className={styles.container}>
         <h1 className="text-2xl w-full flex  justify-center mb-4 items-center ">
-          your favourite sports
+          your favourite sports in {date.year} ...
         </h1>
         <div className="w-full">
+          <h1> ... referred to the number of units.</h1>
           {sortedSportsByCount.length > 0 ? (
             sortedSportsByCount.map(([name, { count, label }], index) => (
               <div
@@ -47,6 +53,25 @@ const Annual = ({ allSupabaseSports, date}) => {
               </p>
             </div>
           )}
+          <h1>
+            {" "}
+            ...referred to the number of hours of sport completed in the
+            individual units.
+          </h1>
+          <div className="border-2 mb-4 h-60">
+            {topSportsByDuration.map(
+              ({ name, totalDurationFormatted, label }, index) => (
+                <div
+                  key={name}
+                  className={`${styles[label]} ${styles.fav_sports_div}`}
+                >
+                  <p>
+                    {index + 1}. {name}: {totalDurationFormatted} 
+                  </p>
+                </div>
+              )
+            )}
+          </div>
         </div>
       </div>
 
@@ -54,7 +79,7 @@ const Annual = ({ allSupabaseSports, date}) => {
 
       <div className={styles.container}>
         <h1 className="text-2xl w-full flex justify-center items-center ">
-          Total hours per sport ...
+          Total hours per sport and your memories in {date.year} ...
         </h1>
 
         <button
@@ -68,7 +93,6 @@ const Annual = ({ allSupabaseSports, date}) => {
         >
           5 year history
         </button>
-
         <div className="flex flex-col lg:flex-row mt-2">
           {showFiveYearHistory.totalHours && (
             <div className={styles.history_div}>
@@ -103,13 +127,17 @@ const Annual = ({ allSupabaseSports, date}) => {
                   <p className={styles.error_p}>No data available.</p>
                 </div>
               )}
+
+              <div className="border-t-2 border-b-  h-80 m-0 my-2 mr-2 p-2 overflow-scroll">
+                <h1>
+                  put a diagram here that shows the number of hours spent on the
+                  individual sports in relation to the total hours of a year
+                  (8766).
+                </h1>
+              </div>
             </div>
           )}
-
           <div className="flex flex-col w-full">
-            <h1 className="text-2xl w-full flex  justify-center my-4 items-center ">
-              your memories
-            </h1>
             <div className={styles.images_div}>
               <RandomSportImagesGrid />
             </div>
@@ -121,9 +149,8 @@ const Annual = ({ allSupabaseSports, date}) => {
 
       <div className={styles.container}>
         <h1 className="text-2xl w-full flex justify-center my-4 items-center ">
-          Rest days ...
+          Rest days in {date.year} ...
         </h1>
-
         <RestDaysCalendar allSupabaseSports={allSupabaseSports} date={date} />
       </div>
     </div>
