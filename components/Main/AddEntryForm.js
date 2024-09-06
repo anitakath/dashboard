@@ -22,6 +22,8 @@ import Spinner from "../UI/Spinner";
 
 
 const AddEntryForm = (props) => {
+
+  const userId = useSelector((state) => state.auth.userId)
   const router = useRouter();
   const setFormIsOpen = props.setFormIsOpen;
   const selectedSport = useSelector((state) => state.sport.selectedSport);
@@ -38,8 +40,11 @@ const AddEntryForm = (props) => {
     created_at: "",
     duration: "",
     label: label,
+    userId: userId,
     img: "",
   });
+
+  console.log(inputs)
   
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {

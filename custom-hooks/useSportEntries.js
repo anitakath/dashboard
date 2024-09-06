@@ -190,6 +190,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
             entryId: uniqueID,
             title: inputs.title,
             entry: inputs.text,
+            userId: inputs.userId,
             entryPath: `${formattedTitle}-${uniqueID}`,
             duration: inputs.duration,
             created_at: inputs.created_at,
@@ -203,6 +204,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
             entryPath: `${formattedTitle}-${uniqueID}`,
             duration: inputs.duration,
             created_at: inputs.created_at,
+            userId: inputs.userId,
           };
 
     if (currentPath === "/profile" && !chosenSport) {

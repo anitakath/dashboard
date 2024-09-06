@@ -12,7 +12,9 @@ import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Login/Register";
 //REDUX
+
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
+import { setUserId } from "@/store/authReducer";
 
 export async function ggetServerSideProps() {
   const currentDate = new Date();
@@ -56,6 +58,33 @@ export async function ggetServerSideProps() {
 
 export default function Home({ sportsData }) {
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+
+      if (error) {
+        console.error("Error fetching session:", error);
+      } else if (session) {
+        //console.log("User session:", session);
+        //console.log("User data:", session.user); // Hier sind die Benutzerdaten
+        //console.log(session.user.id);
+        dispatch(setUserId(session.user.id))
+
+      } else {
+        console.log("No user is logged in");
+      }
+    };
+
+    
+
+    fetchUserData();
+  }, []);
+
     const router = useRouter();
 
     /*IMPLEMENT AUTH!!!!  */
@@ -75,7 +104,7 @@ export default function Home({ sportsData }) {
 
 
   //console.log(sportsData); => allSupabaseSports initial state???
-  const dispatch = useDispatch();
+ 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [register, setRegister] = useState(false)
   const currentSport = useSelector((state) => state.sport.currentSport);
