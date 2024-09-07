@@ -12,9 +12,9 @@ import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Login/Register";
 //REDUX
-
+import { setShowAlert } from "@/store/sportReducer";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-import { setUserId } from "@/store/authReducer";
+import { setUserId, setUser } from "@/store/authReducer";
 
 export async function ggetServerSideProps() {
   const currentDate = new Date();
@@ -59,6 +59,15 @@ export async function ggetServerSideProps() {
 export default function Home({ sportsData }) {
 
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const [register, setRegister] = useState(false);
+  const currentSport = useSelector((state) => state.sport.currentSport);
+  const allSupabaseSports = useSelector(
+    (state) => state.sport.allSupabaseSports
+  );
+  const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState(null);
+  const userId = useSelector((state) => state.auth.userId)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -70,10 +79,11 @@ export default function Home({ sportsData }) {
       if (error) {
         console.error("Error fetching session:", error);
       } else if (session) {
-        //console.log("User session:", session);
-        //console.log("User data:", session.user); // Hier sind die Benutzerdaten
-        //console.log(session.user.id);
         dispatch(setUserId(session.user.id))
+        dispatch(setUser(session))
+
+        console.log(session.user.id)
+       
 
       } else {
         console.log("No user is logged in");
@@ -85,46 +95,43 @@ export default function Home({ sportsData }) {
     fetchUserData();
   }, []);
 
-    const router = useRouter();
+  console.log(allSupabaseSports);
 
-    /*IMPLEMENT AUTH!!!!  */
-    /*useEffect(() => {
-      const checkUserSession = async () => {
-        const {
-          data: { session },
-          error,
-        } = await supabase.auth.getSession();
-        if (!session) {
-          router.push("/login");
-        }
-      };
-
-      checkUserSession();
-    }, [router]);*/
-
-
-  //console.log(sportsData); => allSupabaseSports initial state???
  
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [register, setRegister] = useState(false)
-  const currentSport = useSelector((state) => state.sport.currentSport);
-  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  const [successMessage, setSuccessMessage] = useState(null);
-
-    const fetchSportsData = async () => {
+  const fetchSportsData = async () => {
       try {
         const response = await fetch("/api/sports");
         if (!response.ok) {
           throw new Error("Failed to fetch sports data");
         }
         const data = await response.json();
-        dispatch(setAllSportsFromSupabase(data.data));
+        
+        if(data){
+           const filteredEntriesByUserId = data.data.filter(
+             (entry) => entry.userId === userId
+           );
+
+           console.log(userId)
+           console.log(data)
+           console.log(filteredEntriesByUserId)
+
+          
+           await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
+
+           if(filteredEntriesByUserId.length === 0){
+             dispatch(setShowAlert(true));
+           } else{
+             dispatch(setShowAlert(false));
+           }
+        }
+
       } catch (error) {
         console.error("Error fetching sports data:", error);
       }
     };
 
     useEffect(() => {
+      
       dispatch(setAllSportsFromSupabase([])); // Initial empty array
       fetchSportsData();
     }, []);

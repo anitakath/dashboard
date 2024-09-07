@@ -116,9 +116,9 @@ const Login = (props) =>{
               LOGIN
             </button>
             {error && <p className="text-red-500">{error}</p>}
-            {/*<button type="button" onClick={() => setRegister(true)}>
+            <Link  href="/register" className="relative top-2 text-xl">
               not registered yet? register here
-            </button> */}
+            </Link> 
             {successMessage && <p> {successMessage}</p>}
           </form>
         </div>

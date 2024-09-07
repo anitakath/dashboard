@@ -16,16 +16,18 @@ const sportSlice = createSlice({
     //array with strings (name of sport)
     navigation: [],
     label: [],
+
+    //user has no sports added, show an "alert" inside the Navigation.js
+    showAlert: false,
   },
   reducers: {
     setSelectedSport(state, action) {
       state.selectedSport = action.payload;
     },
-    
-    setCurrentSport(state, action){
-      state.currentSport = [action.payload]; 
+    setCurrentSport(state, action) {
+      state.currentSport = [action.payload];
     },
-    setAllPlannedSports(state, action){
+    setAllPlannedSports(state, action) {
       state.allPlannedSports = action.payload;
     },
     setAllSports(state, action) {
@@ -40,8 +42,11 @@ const sportSlice = createSlice({
     setNavigation(state, action) {
       state.navigation = action.payload;
     },
-    setLabel(state, action){
+    setLabel(state, action) {
       state.label = action.payload;
+    },
+    setShowAlert(state, action){
+      state.showAlert = action.payload;
     },
     deleteSport(state, action) {
       const sportNameToDelete = action.payload;
@@ -83,6 +88,7 @@ export const {
   setNavigation,
   setLabel,
   deleteSport,
+  setShowAlert,
 } = sportSlice.actions;
 
 export default sportSlice.reducer;

@@ -23,7 +23,7 @@ const WebNavigation = (props) =>{
   const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false);
 
   return (
-    <div>
+    <div className="w-full">
       {!formIsOpen && (
         <div className={styles.navigation_web}>
           <ul className="w-full h-full flex lg:flex-col overflow-scroll">

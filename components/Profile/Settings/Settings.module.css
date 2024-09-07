@@ -7,6 +7,7 @@
     align-items: center;
     height: 100vh;
     overflow: scroll;
+
 }
 
 .title{
@@ -19,6 +20,7 @@
     left:10px;
     color: lightgrey;
     font-size: 1.2rem;
+    
 }
 
 .settingsField{
@@ -26,4 +28,36 @@
     width: 100%;
     height: 100vh;
     overflow: scroll;
+
+}
+
+.formGroup{
+    border-bottom: 1px solid var(--purpleDarkHover);
+    padding: 4px;
+}
+
+.label{
+    color: var(--purpleDarkHover);
+    font-size: 1.2rem;
+}
+
+.input{
+    width: 100%;
+    height: 50px;
+    transition: 0.2s ease;
+    cursor: pointer;
+    padding: 0px 5px;
+}
+
+.input:focus{
+    outline: none;
+}
+
+.input:hover{
+    background:var(--purpleDarkHoverOpacity);
+    color: var(--purpleDark)
+}
+
+.submitButton{
+    border: 2px solid red;
 }

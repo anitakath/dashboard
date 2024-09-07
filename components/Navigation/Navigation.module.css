@@ -44,6 +44,7 @@
 .navigation_web{
     width: 100%;
     margin: 5px;
+    
 }
 
 
@@ -89,7 +90,7 @@
     align-items: center;
     font-size: 3rem;
     position: relative;
-    left: 75px;
+    left: 0px;
 }
 
 .addSport_btn:hover{

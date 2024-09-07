@@ -10,6 +10,7 @@ import {
 import SortSports from "./SortSports";
 import MobileNavigation from "./MobileNavigation";
 import WebNavigation from "./WebNavigation";
+import AddSportAlert from "../UI/AddSportAlert";
 
 const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
@@ -21,6 +22,8 @@ const Navigation = () => {
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
   const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
+  const showAlert = useSelector((state) => state.sport.showAlert)
+
 
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const Navigation = () => {
   useEffect(()=>{
     setUniqueSports(navigation)
 
-  }, [navigation])
+  }, [navigation, allSupabaseSports])
 
 
   const handleSportClick = (sport) => {
@@ -81,11 +84,11 @@ const Navigation = () => {
         setUniqueSports={setUniqueSports}
         allSupabaseSports={allSupabaseSports}
         addSportClickHandler={addSportClickHandler}
-        
       />
 
       {/*-------------------  WEB NAVIGATION ------------------- */}
 
+      {showAlert && <AddSportAlert />}
       <WebNavigation
         formisOpen={formIsOpen}
         setFormIsOpen={setFormIsOpen}
@@ -101,7 +104,7 @@ const Navigation = () => {
         <AddSportForm addSportClickHandler={addSportClickHandler} />
       )}
 
-{/*
+      {/*
       <button className={styles.addSport_btn} onClick={addSportClickHandler}>
         {formIsOpen ? "-" : "+"}
       </button>*/}

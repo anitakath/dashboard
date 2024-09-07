@@ -6,6 +6,7 @@ import { supabase } from "@/services/supabaseClient";
 const initialState = {
   isLoggedIn: false,
   userId: null,
+  user: null,
 };
 
 const authSlice = createSlice({
@@ -20,10 +21,13 @@ const authSlice = createSlice({
     },
     setUserId(state, action){
       state.userId = action.payload;
+    },
+    setUser(state, action){
+      state.user = action.payload;
     }
   },
 });
 
 
 export default authSlice.reducer;
-export const { setLogin, setLogout, setUserId } = authSlice.actions;
+export const { setLogin, setLogout, setUserId, setUser} = authSlice.actions;

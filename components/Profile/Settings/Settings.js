@@ -4,13 +4,18 @@ import styles from './Settings.module.css'
 //FONT AWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse} from "@fortawesome/free-solid-svg-icons";
+//REDUX
+import { useSelector } from 'react-redux';
 
 const Settings = () =>{
+  const user = useSelector((state) => state.auth.user);
+  const [name, setName] = useState(user.user.user_metadata.name);
+  const [email, setEmail] = useState(user.user.user_metadata.email);
+  const [password, setPassword] = useState("**********");
+  const [message, setMessage] = useState("moin");
+      
 
-      const [name, setName] = useState("Anne-Kathrin");
-      const [email, setEmail] = useState("annekathring@beispiel.de");
-      const [password, setPassword] = useState("**********");
-      const [message, setMessage] = useState("moin");
+  console.log(user.user.user_metadata.email);
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,7 +36,9 @@ const Settings = () =>{
           <div className={styles.settingsField}>
             <form onSubmit={handleSubmit}>
               <div className={styles.formGroup}>
-                <label htmlFor="name">Name:</label>
+                <label htmlFor="name" className={styles.label}>
+                  Name:
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -42,7 +49,9 @@ const Settings = () =>{
                 />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="email">E-Mail:</label>
+                <label htmlFor="email" className={styles.label}>
+                  E-Mail:
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -53,7 +62,9 @@ const Settings = () =>{
                 />
               </div>{" "}
               <div className={styles.formGroup}>
-                <label htmlFor="password">Passwort:</label>
+                <label htmlFor="password" className={styles.label}>
+                  Password:
+                </label>
                 <input
                   type="password"
                   id="password"
@@ -63,7 +74,7 @@ const Settings = () =>{
                   className={styles.input}
                 />
               </div>
-              <button type="submit" className={styles.submitButton}>
+              <button type="submit" className="primary_button">
                 Speichern
               </button>
             </form>
