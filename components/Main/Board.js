@@ -24,6 +24,7 @@ import SummarizedEntries from "./Daily/SummarizedEntries";
 
 //HOOK
 import {useSearchTerm} from '../../custom-hooks/useSearchTerm'
+import useAuth from "@/custom-hooks/auth/useAuth";
 import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 
@@ -50,13 +51,10 @@ const Board = (props) => {
 
 
 
-  const logoutHandler = () => {
-    dispatch(setLogout(false));
-  };
+  const { logoutHandler } = useAuth();
 
   useEffect(()=> {
     if(navigation.includes(currentSport)){
-      //console.log(`${currentSport} exists`)
     } else{
       dispatch(setSelectedSport(navigation[0]))
     }

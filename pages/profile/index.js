@@ -18,6 +18,8 @@ import styles from "../../styles/Profile.module.css";
 import Plans from "@/components/Profile/Plans/Plans";
 import Login from "@/components/Login/Login";
 import Settings from "@/components/Profile/Settings/Settings";
+//CUSTOM HOOKS
+import useAuth from "@/custom-hooks/auth/useAuth";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -35,6 +37,7 @@ const Profile = () => {
 
     }, [section])
     
+    const { logoutHandler } = useAuth();
 
 
     const chooseSportHandler = (index) => {
@@ -48,9 +51,7 @@ const Profile = () => {
 
     }
 
-    const logoutHandler = () =>{
-      dispatch(setLogout(false))
-    }
+  
 
   return (
     <div className="w-full h-screen sm:p-4 md:p-14">
