@@ -17,30 +17,27 @@ const Login = (props) =>{
 
   const { loginHandler } = useAuth();
 
-  console.log(loginData)
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); 
+     const handleSubmit = async (e) => {
+       e.preventDefault();
+       try {
+         await loginHandler(loginData);
+         // Warten bis der Zustand aktualisiert ist
+         router.push("/");
+       } catch (err) {
+         setError(err.message);
+       }
+     };
 
-    try {
-      await loginHandler(loginData); 
-      router.push("/"); 
-    } catch (err) {
-      setError(err.message); 
-    }
-  };
+ 
 
 
-
-
-
-    return (
+  return (
       <div className="w-full h-full  p-4">
         <div className="flex justify-center w-full h-full py-2 m-0 p-0 relative border-8">
           <form

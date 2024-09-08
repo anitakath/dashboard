@@ -5,11 +5,14 @@ import Navigation from '../Navigation/Navigation';
 import Board from '../Main/Board'
 //HOOKS
 import { convertMinutesToHours } from '@/custom-hooks/minutesToHours';
+import useAuth from '@/custom-hooks/auth/useAuth';
 //REDUX
 import { useSelector } from "react-redux";
 
+
 const Dashboard = () =>{
-  
+  const userId = useSelector((state) => state.auth.userId);
+  const {fetchSportsData} = useAuth(userId)
   const [filteredEntries, setFilteredEntries] = useState([])
   const currentDate = useSelector((state) => state.calendar);
   const currentSport = useSelector((state) => state.sport.selectedSport);
@@ -19,17 +22,24 @@ const Dashboard = () =>{
     : [];
 
   const [sportsDurationByMonth, setSportsDurationByMonth] = useState(null)
-  
-    useEffect(() => {
-      if (entries) {
-        const filterEntries = entries.filter((entry) => {
-          const entryDate = new Date(entry.created_at);
-          return (
-            entryDate.getFullYear() === currentDate.year &&
-            entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
-          );
-        });
 
+
+  useEffect(() => {
+    const getFilteredSportsData = async () => {
+      const filteredData = await fetchSportsData(userId);
+      console.log(filteredData); // Hier hast du dein gefiltertes Array
+      if(filteredData){
+          
+       const entries = filteredData.filter((sport) => sport.name === currentSport);
+       console.log(entries)
+
+       const filterEntries = entries.filter((entry) => {
+         const entryDate = new Date(entry.created_at);
+         return (
+           entryDate.getFullYear() === currentDate.year &&
+           entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
+         );
+       });
         const totalDurationInMinutes = filterEntries.reduce(
           (total, entry) => total + entry.duration,
           0
@@ -38,17 +48,19 @@ const Dashboard = () =>{
           totalDurationInMinutes
         );
         setSportsDurationByMonth(totalDurationInHours);
-
         setFilteredEntries(filterEntries);
       }
-    }, [allSupabaseSports, currentDate, currentSport]);
+    };
+    if (userId) {
+      getFilteredSportsData();
+    }
+  }, [ userId, currentDate, currentSport]);
+  
 
     const getMonthNumber = (month) => {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return months.indexOf(month) + 1;
     };
-
-
 
 
 

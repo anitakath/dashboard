@@ -6,6 +6,11 @@ import { useRouter } from "next/router";
 import styles from "./Login.module.css"; // Erstelle eine CSS-Datei für das Styling
 import { supabase } from "@/services/supabaseClient"; // Importiere Supabase
 import { useCallback } from "react";
+
+//CUSTOM HOOKS
+import useAuth from "@/custom-hooks/auth/useAuth";
+
+
 const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
   const [registerData, setRegisterData] = useState({
     name: "",
@@ -34,6 +39,10 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
   };
 
 
+  //const { registerHandler } = useAuth();
+
+
+  
   const registerHandler = useCallback(
     async (e) => {
       e.preventDefault();
@@ -74,8 +83,12 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
 
       // Überprüfen, ob das Benutzerobjekt existiert
       if (!user) {
-        setError("Fehler bei der Registrierung des Benutzers.");
+        setError(
+          "User successfully registered. Please check your emails and activate your account."
+        );
         return;
+      } else{
+        setError("Registration failed");
       }
 
       // Zusätzliche Benutzerdaten speichern
@@ -101,6 +114,7 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
     [registerData]
   );
 
+  
  
   return (
     <div className="w-full h-full p-4">

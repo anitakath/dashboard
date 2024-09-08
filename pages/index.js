@@ -5,8 +5,6 @@ import { supabase } from "@/services/supabaseClient";
 import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 import { setCurrentSport } from "@/store/sportReducer";
-import { useRouter } from "next/router";
-
 //COMPONENTS
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
@@ -14,7 +12,8 @@ import Register from "@/components/Login/Register";
 //REDUX
 import { setShowAlert } from "@/store/sportReducer";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-import { setUserId, setUser } from "@/store/authReducer";
+//CUSTOM HOOKS
+import useAuth from "@/custom-hooks/auth/useAuth";
 
 export async function ggetServerSideProps() {
   const currentDate = new Date();
@@ -57,7 +56,6 @@ export async function ggetServerSideProps() {
 
 
 export default function Home({ sportsData }) {
-
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [register, setRegister] = useState(false);
@@ -65,37 +63,22 @@ export default function Home({ sportsData }) {
   const allSupabaseSports = useSelector(
     (state) => state.sport.allSupabaseSports
   );
-  const router = useRouter();
   const [successMessage, setSuccessMessage] = useState(null);
   const userId = useSelector((state) => state.auth.userId)
+  const { fetchUserSession } = useAuth();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession();
 
-      if (error) {
-        console.error("Error fetching session:", error);
-      } else if (session) {
-        dispatch(setUserId(session.user.id))
-        dispatch(setUser(session))
+ useEffect(() => {
+   const getUserSession = async () => {
+     try {
+       await fetchUserSession();
+     } catch (error) {
+       console.error("Error fetching user session:", error);
+     }
+   };
 
-        console.log(session.user.id)
-       
-
-      } else {
-        console.log("No user is logged in");
-      }
-    };
-
-    
-
-    fetchUserData();
-  }, []);
-
-  console.log(allSupabaseSports);
+   getUserSession();
+ }, [fetchUserSession]);
 
  
   const fetchSportsData = async () => {
@@ -128,13 +111,13 @@ export default function Home({ sportsData }) {
       } catch (error) {
         console.error("Error fetching sports data:", error);
       }
-    };
+  };
 
-    useEffect(() => {
-      
-      dispatch(setAllSportsFromSupabase([])); // Initial empty array
+  useEffect(() => {
+    if (isLoggedIn) {
       fetchSportsData();
-    }, []);
+    }
+  }, [isLoggedIn]);
 
 
 
@@ -142,13 +125,13 @@ export default function Home({ sportsData }) {
     dispatch(setCurrentSport(arr));
   };
 
-
+/*
   useEffect(() => {
     if (currentSport && currentSport.length > 1) {
       const shortenedArray = [currentSport[0]];
-      console.log(shortenedArray);
+     
     }
-  }, [currentSport]);
+  }, [currentSport]);*/
 
   // Speichere die Sports-Daten im Redux-Store
   useEffect(() => {
@@ -159,9 +142,11 @@ export default function Home({ sportsData }) {
         color: obj.label,
       }));
 
+      console.log(allSportsArray);
+
       dispatch(setAllSportsFromSupabase(allSportsArray)); // Speichere im Redux-Store
     }
-  }, [sportsData, dispatch]);
+  }, [sportsData, dispatch, allSupabaseSports]);
 
   
 
@@ -201,7 +186,7 @@ export default function Home({ sportsData }) {
   
   useEffect(() => {
     processSportsData();
-  }, [allSupabaseSports]);
+  }, [allSupabaseSports, allSupabaseSports]);
 
 
   return (

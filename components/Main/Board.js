@@ -49,6 +49,7 @@ const Board = (props) => {
   const router = useRouter()
   const dispatch = useDispatch();
 
+  //console.log(allSupabaseSports);
 
 
   const { logoutHandler } = useAuth();
@@ -59,6 +60,18 @@ const Board = (props) => {
       dispatch(setSelectedSport(navigation[0]))
     }
   }, [navigation])
+
+
+    useEffect(() => {
+      if (allSupabaseSports.length > 0) {
+        // Hier kannst du Logik hinzufügen, die ausgeführt werden soll,
+        // wenn allSupabaseSports aktualisiert wird.
+        console.log("allSu  pabaseSports wurde aktualisiert:", allSupabaseSports);
+
+        // Optional: Du könntest hier auch eine Funktion aufrufen,
+        // um den Zustand oder andere Logik zu aktualisieren.
+      }
+    }, [allSupabaseSports]);
 
 
 

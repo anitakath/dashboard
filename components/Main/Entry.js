@@ -19,12 +19,11 @@ import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
 
 
-const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth }) => {
+const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth, allSupabaseSports }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const [entriesByMonth, setEntriesByMonth] = useState({});
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
   const dispatch = useDispatch();
-
 
 
   useEffect(() => {
