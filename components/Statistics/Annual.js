@@ -2,9 +2,7 @@ import { useState } from 'react';
 import styles from './Annual.module.css'
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
-import { months } from '@/custom-hooks/useCalendar';
 import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
-import { convertMinutesToHours } from '@/custom-hooks/minutesToHours';
 //COMPONENTS
 import RestDaysCalendar from './RestDaysCalendar';
 import RandomSportImagesGrid from './RandomSportImagesGrid';
@@ -23,7 +21,6 @@ const Annual = ({ allSupabaseSports, date}) => {
   );
   const topSportsByDuration = useTopSportsByDuration(allSupabaseSports, date);
 
-  console.log(topSportsByDuration)
 
   return (
     <div>

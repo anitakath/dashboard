@@ -227,3 +227,15 @@
 .jasmine_opaque{
     background: var(--jasmine_opaque)
 }
+
+.frenchGrey_opaque{
+    background: var(--frenchGrey_opaque)
+}
+
+.eggplant_opaque{
+    background: var(--eggplant_opaque)
+}
+
+.mossGreen_opaque{
+    background:var(--mossGreen_opaque)
+}

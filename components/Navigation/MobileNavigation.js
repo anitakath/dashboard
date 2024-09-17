@@ -4,11 +4,13 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import styles from './MobileNavigation.module.css'
 import { useSelector } from 'react-redux'
 import SortSports from './SortSports'
+
+
 const MobileNavigation = (props) =>{
   const deleteSportHandler = props.deleteSportHandler;
   const uniqueSports = props.uniqueSports
   const active = props.active
-  const sportObject = props.sportObject
+  const navigationArr = props.navigationArr;
   const handleSportClick = props.handleSportClick
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const mobileSportsNavIsOpen = props.mobileSportsNavIsOpen
@@ -61,8 +63,8 @@ const MobileNavigation = (props) =>{
                     />
                   </button>
                   <span className={styles.sportBtnText}>{sport}</span>
-                  {sportObject &&
-                    sportObject.map((sportsObj, index) => {
+                  {navigationArr &&
+                    navigationArr.map((sportsObj, index) => {
                       if (sportsObj.name === sport) {
                         return (
                           <div className={styles.circle_div} key={index}>
@@ -92,7 +94,10 @@ const MobileNavigation = (props) =>{
             >
               {formIsOpen ? "-" : "+"}
             </button>
-            <span className='relative top-0.5 mx-1 text-zinc-400'> add a new sport </span>
+            <span className="relative top-0.5 mx-1 text-zinc-400">
+              {" "}
+              add a new sport{" "}
+            </span>
           </li>
         </ul>
       )}

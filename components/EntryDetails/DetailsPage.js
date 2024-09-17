@@ -67,12 +67,17 @@ const DetailsPage = () => {
 
           <div className="m-4 p-4 pl-14  w-full ">
             <h1 className="text-2xl border-b-2 my-2"> Details page </h1>
+           
             {filteredEntry.length > 0 && (
               <div className="my-4 py-2">
                 <h2 className={styles.title}> {filteredEntry[0].title}</h2>
                 <p className={styles.entry}>{filteredEntry[0].entry}</p>
+
+              
               </div>
             )}
+
+            {loading && <p className="text-2xl flex justify-center text-red-500"> deleting ...</p>}
           </div>
         </div>
       </div>

@@ -9,9 +9,7 @@ const RestDaysCalendar = ({ allSupabaseSports, date }) => {
   const { restDaysPerMonth } = useStatistics(allSupabaseSports, date);
   const currentDate = new Date();
   const currentMonthIndex = currentDate.getMonth();
-
   const { completeMonths }  = useCalendar()
-  console.log(completeMonths);
   const currentMonth = completeMonths[currentMonthIndex]; 
   let adjustedRestDays = {};
 

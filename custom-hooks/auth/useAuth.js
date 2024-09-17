@@ -81,13 +81,11 @@ const fetchUserSession = async () => {
        const data = await response.json();
 
        if (data) {
-
-        console.log(data)
          const filteredEntriesByUserId = data.data.filter(
            (entry) => entry.userId === userId
          );
 
-         console.log(filteredEntriesByUserId);
+       
          //return filtered array
          return filteredEntriesByUserId;
 

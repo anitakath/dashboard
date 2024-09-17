@@ -26,6 +26,8 @@ export const useDeleteCompletedSport = () => {
       if (error) {
         throw new Error(error.message);
       }
+
+      await fetchSportsData()
       return { success: true };
     } catch (err) {
       console.error("Error deleting entry:", err.message);

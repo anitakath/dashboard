@@ -6,54 +6,119 @@ import {
   setSelectedSport,
   setNavigation,
 } from "@/store/sportReducer";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 import SortSports from "./SortSports";
 import MobileNavigation from "./MobileNavigation";
 import WebNavigation from "./WebNavigation";
 import AddSportAlert from "../UI/AddSportAlert";
+import { supabase } from "@/services/supabaseClient";
+//CUSTOM HOOKS
+
 
 const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [active, setActive] = useState(null);
   const dispatch = useDispatch();
-  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  const alphabetic = allSupabaseSports ? Array.from(new Set(allSupabaseSports.map((sport) => sport.name))).sort((a, b) => a.localeCompare(b)): [];
-  const sportObject = useSelector((state) => state.sport.currentSport && state.sport.currentSport.length > 0 ? state.sport.currentSport[0] : null);
+  const allSupabaseSports = useSelector(
+    (state) => state.sport.allSupabaseSports
+  );
+  const userId = useSelector((state) => state.auth.userId);
+  // Erstelle navigationArr basierend auf allSupabaseSports
+  const navigationArr = allSupabaseSports
+    ? allSupabaseSports
+        .filter((sport) => sport.userId === userId) // Filtere nach userId
+        .map((sport) => ({
+          name: sport.name,
+          color: sport.label, // Hier wird angenommen, dass 'label' die Farbe ist
+        }))
+        .reduce((accumulator, current) => {
+          // Überprüfe, ob der Name bereits im Akkumulator vorhanden ist
+          if (!accumulator.some((item) => item.name === current.name)) {
+            accumulator.push(current); // Füge das aktuelle Element hinzu
+          }
+          return accumulator;
+        }, [])
+  : [];
+
+  const alphabetic = allSupabaseSports
+    ? Array.from(new Set(navigationArr.map((sport) => sport.name))).sort(
+        (a, b) => a.localeCompare(b)
+      )
+  : [];
+
+
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
   const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
-  const showAlert = useSelector((state) => state.sport.showAlert)
-
-
+  const showAlert = useSelector((state) => state.sport.showAlert);
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
   }, [uniqueSports]);
 
-
-  useEffect(()=>{
-    setUniqueSports(navigation)
-
-  }, [navigation, allSupabaseSports])
-
+  useEffect(() => {
+    setUniqueSports(navigation);
+  }, [navigation, allSupabaseSports]);
 
   const handleSportClick = (sport) => {
     setActive(sport);
-    setMobileSportsNavIsOpen(false)
+    setMobileSportsNavIsOpen(false);
     dispatch(setSelectedSport(sport));
   };
 
-  
   const addSportClickHandler = () => {
     setFormIsOpen((prevState) => !prevState);
   };
 
+
   const deleteSportHandler = (sport) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      // Dispatch delete action here
+    // Zeige das Bestätigungsfenster an
+    if (window.confirm(`Are you sure you want to delete “${sport}”? All entries will be lost`)) {
+      // Remove the sports object from navigationArr
+      const updatedNavigationArr = navigationArr.filter(
+        (item) => item.name !== sport
+      );
+
+      console.log(updatedNavigationArr);
+      const uniqueSports = updatedNavigationArr
+        ? Array.from(
+            new Set(updatedNavigationArr.map((sport) => sport.name))
+          ).sort((a, b) => a.localeCompare(b))
+        : [];
+
+      console.log(uniqueSports);
+      dispatch(setNavigation(uniqueSports));
+      // Hier solltest du deine Supabase-Logik zum Löschen implementieren
+      const deleteSportsFromSupabase = async () => {
+        try {
+          const { data, error } = await supabase
+            .from("sports")
+            .delete()
+            .match({ name: sport, userId: userId });
+
+          if (error) throw error;
+
+          console.log(`Erfolgreich gelöscht: ${data}`);
+
+          // Aktualisiere allSupabaseSports im Redux-Store
+          const updatedAllSupabaseSports = allSupabaseSports.filter(
+            (item) => !(item.name === sport && item.userId === userId)
+          );
+
+          console.log(updatedAllSupabaseSports);
+
+          dispatch(setAllSportsFromSupabase(updatedAllSupabaseSports));
+        } catch (error) {
+          console.error("Fehler beim Löschen:", error);
+        }
+      };
+
+      deleteSportsFromSupabase();
     }
   };
 
+  
 
   return (
     <div className="w-full  my-4 p-0 flex flex-col items-center shadow-section">
@@ -78,7 +143,7 @@ const Navigation = () => {
         uniqueSports={uniqueSports}
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
-        sportObject={sportObject}
+        navigationArr={navigationArr}
         mobileSportsNavIsOpen={mobileSportsNavIsOpen}
         setMobileSportsNavIsOpen={setMobileSportsNavIsOpen}
         setUniqueSports={setUniqueSports}
@@ -97,7 +162,7 @@ const Navigation = () => {
         uniqueSports={uniqueSports}
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
-        sportObject={sportObject}
+        navigationArr={navigationArr}
       />
 
       {formIsOpen && (

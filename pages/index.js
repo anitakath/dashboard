@@ -15,7 +15,7 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 //CUSTOM HOOKS
 import useAuth from "@/custom-hooks/auth/useAuth";
 /*
-export async function ggetServerSideProps() {
+export async function getServerSideProps() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth(); // 0-basiert (0 = Januar)
@@ -64,87 +64,19 @@ export default function Home() {
     (state) => state.sport.allSupabaseSports
   );
   const [successMessage, setSuccessMessage] = useState(null);
-  const { fetchUserSession } = useAuth();
 
-  useEffect(() => {
-    const getUserSession = async () => {
-      try {
-        await fetchUserSession();
-      } catch (error) {
-        console.error("Error fetching user session:", error);
-      }
-    };
 
-    getUserSession();
-  }, [fetchUserSession]);
 
-  /*
-  const fetchSportsData = async () => {
-      try {
-        const response = await fetch("/api/sports");
-        if (!response.ok) {
-          throw new Error("Failed to fetch sports data");
-        }
-        const data = await response.json();
-        
-        if(data){
-           const filteredEntriesByUserId = data.data.filter(
-             (entry) => entry.userId === userId
-           );
+  const tennisSport = allSupabaseSports.find(
+    (sport) => sport.name === "Tennis"
+  );
 
-           //console.log(userId)
-           //console.log(data)
-           //console.log(filteredEntriesByUserId)
 
-          
-           await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
-
-           if(filteredEntriesByUserId.length === 0){
-             dispatch(setShowAlert(true));
-           } else{
-             dispatch(setShowAlert(false));
-           }
-        }
-
-      } catch (error) {
-        console.error("Error fetching sports data:", error);
-      }
-  };
-  
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchSportsData();
-    }
-  }, [isLoggedIn]);
-*/
-
+ 
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));
   };
 
-  /*
-  useEffect(() => {
-    if (currentSport && currentSport.length > 1) {
-      const shortenedArray = [currentSport[0]];
-     
-    }
-  }, [currentSport]);*/
-
-  // Speichere die Sports-Daten im Redux-Store
-  /*
-  useEffect(() => {
-    if (sportsData && sportsData.length > 0) {
-      // Erstelle ein Array mit den gewünschten Eigenschaften für allSupabaseSports
-      const allSportsArray = sportsData.map((obj) => ({
-        name: obj.name,
-        color: obj.label,
-      }));
-
-      console.log(allSportsArray);
-
-      dispatch(setAllSportsFromSupabase(allSportsArray)); // Speichere im Redux-Store
-    }
-  }, [ sportsData, dispatch, allSupabaseSports]);*/
 
   const processSportsData = () => {
     if (currentSport?.length > 1) {

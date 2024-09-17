@@ -13,7 +13,7 @@ const WebNavigation = (props) =>{
   const deleteSportHandler = props.deleteSportHandler;
   const uniqueSports = props.uniqueSports;
   const active = props.active;
-  const sportObject = props.sportObject;
+  const navigationArr = props.navigationArr;
   const handleSportClick = props.handleSportClick;
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const formIsOpen = props.formIsOpen;
@@ -48,8 +48,8 @@ const WebNavigation = (props) =>{
                       />
                     </button>
                     <span className={styles.sportBtnText}>{sport}</span>
-                    {sportObject &&
-                      sportObject.map((sportsObj, index) => {
+                    {navigationArr &&
+                      navigationArr.map((sportsObj, index) => {
                         if (sportsObj.name === sport) {
                           return (
                             <div className={styles.circle_div} key={index}>
