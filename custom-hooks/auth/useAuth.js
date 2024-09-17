@@ -38,11 +38,7 @@ const useAuth = (userId) => {
     }
 
     console.log("User logged in:", user);
-    // after signIn getSession for user data
-    // extract and set user data and userId to redux store
-    // only load the entries from the supabase table “sports” whose .userId is identical to the extracted userId from getSession()
-    //if all entries have been loaded, then dispatche setLogin(true)
-    await fetchUserSession();
+  
     const session = await fetchUserSession();
 
     if (session) {
@@ -85,10 +81,13 @@ const fetchUserSession = async () => {
        const data = await response.json();
 
        if (data) {
+
+        console.log(data)
          const filteredEntriesByUserId = data.data.filter(
            (entry) => entry.userId === userId
          );
 
+         console.log(filteredEntriesByUserId);
          //return filtered array
          return filteredEntriesByUserId;
 
@@ -101,7 +100,6 @@ const fetchUserSession = async () => {
      } catch (error) {
        console.error("Error fetching sports data:", error);
      }
-     // If no data was found, return an empty array
      return [];
    };
 

@@ -27,11 +27,10 @@ const Dashboard = () =>{
   useEffect(() => {
     const getFilteredSportsData = async () => {
       const filteredData = await fetchSportsData(userId);
-      console.log(filteredData); // Hier hast du dein gefiltertes Array
+  
       if(filteredData){
           
        const entries = filteredData.filter((sport) => sport.name === currentSport);
-       console.log(entries)
 
        const filterEntries = entries.filter((entry) => {
          const entryDate = new Date(entry.created_at);
@@ -54,7 +53,7 @@ const Dashboard = () =>{
     if (userId) {
       getFilteredSportsData();
     }
-  }, [ userId, currentDate, currentSport]);
+  }, [ userId, currentDate, currentSport, allSupabaseSports]);
   
 
     const getMonthNumber = (month) => {

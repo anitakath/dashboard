@@ -26,11 +26,9 @@ export const useDeleteCompletedSport = () => {
       if (error) {
         throw new Error(error.message);
       }
-
-      console.log("Eintrag erfolgreich gelöscht", data);
       return { success: true };
     } catch (err) {
-      console.error("Fehler beim Löschen des Eintrags:", err.message);
+      console.error("Error deleting entry:", err.message);
       setError(err.message);
       return { success: false, error: err.message };
     } finally {

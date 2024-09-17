@@ -1,16 +1,21 @@
 
 import styles from './RestDaysCalendar.module.css'
 //CUSTOM HOOKS
-import { completeMonths } from '@/custom-hooks/useCalendar';
+import useCalendar from "@/custom-hooks/useCalendar";
+
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 
 const RestDaysCalendar = ({ allSupabaseSports, date }) => {
   const { restDaysPerMonth } = useStatistics(allSupabaseSports, date);
   const currentDate = new Date();
   const currentMonthIndex = currentDate.getMonth();
+
+  const { completeMonths }  = useCalendar()
+  console.log(completeMonths);
   const currentMonth = completeMonths[currentMonthIndex]; 
   let adjustedRestDays = {};
 
+  
   completeMonths.forEach((month, index) => {
     if (index < currentMonthIndex) {
       adjustedRestDays[month] = restDaysPerMonth[month];
@@ -21,21 +26,25 @@ const RestDaysCalendar = ({ allSupabaseSports, date }) => {
     }
   });
 
+
   return (
     <div className={styles.container}>
-      {completeMonths &&
-        completeMonths.map((month) => (
-          <ul className={styles.table}>
-            <li
-              className={`${styles.listItem} ${
-                month === currentMonth ? styles.active : ""
-              }`}
-            >
-              <p className="mt-2">{month}</p>
-              <span className="mb-7 text-xl">{adjustedRestDays[month]}</span>
-            </li>
-          </ul>
-        ))}
+      
+  {
+    completeMonths &&
+      completeMonths.map((month) => (
+        <ul className={styles.table}>
+          <li
+            className={`${styles.listItem} ${
+              month === currentMonth ? styles.active : ""
+            }`}
+          >
+            <p className="mt-2">{month}</p>
+            <span className="mb-7 text-xl">{adjustedRestDays[month]}</span>
+          </li>
+        </ul>
+      ))
+  }
     </div>
   );
 };

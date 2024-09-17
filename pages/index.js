@@ -14,7 +14,7 @@ import { setShowAlert } from "@/store/sportReducer";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 //CUSTOM HOOKS
 import useAuth from "@/custom-hooks/auth/useAuth";
-
+/*
 export async function ggetServerSideProps() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -51,11 +51,11 @@ export async function ggetServerSideProps() {
     };
   }
 }
+*/
 
 
 
-
-export default function Home({ sportsData }) {
+export default function Home() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [register, setRegister] = useState(false);
@@ -64,23 +64,21 @@ export default function Home({ sportsData }) {
     (state) => state.sport.allSupabaseSports
   );
   const [successMessage, setSuccessMessage] = useState(null);
-  const userId = useSelector((state) => state.auth.userId)
   const { fetchUserSession } = useAuth();
 
+  useEffect(() => {
+    const getUserSession = async () => {
+      try {
+        await fetchUserSession();
+      } catch (error) {
+        console.error("Error fetching user session:", error);
+      }
+    };
 
- useEffect(() => {
-   const getUserSession = async () => {
-     try {
-       await fetchUserSession();
-     } catch (error) {
-       console.error("Error fetching user session:", error);
-     }
-   };
+    getUserSession();
+  }, [fetchUserSession]);
 
-   getUserSession();
- }, [fetchUserSession]);
-
- 
+  /*
   const fetchSportsData = async () => {
       try {
         const response = await fetch("/api/sports");
@@ -94,9 +92,9 @@ export default function Home({ sportsData }) {
              (entry) => entry.userId === userId
            );
 
-           console.log(userId)
-           console.log(data)
-           console.log(filteredEntriesByUserId)
+           //console.log(userId)
+           //console.log(data)
+           //console.log(filteredEntriesByUserId)
 
           
            await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
@@ -112,20 +110,19 @@ export default function Home({ sportsData }) {
         console.error("Error fetching sports data:", error);
       }
   };
-
+  
   useEffect(() => {
     if (isLoggedIn) {
       fetchSportsData();
     }
   }, [isLoggedIn]);
-
-
+*/
 
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));
   };
 
-/*
+  /*
   useEffect(() => {
     if (currentSport && currentSport.length > 1) {
       const shortenedArray = [currentSport[0]];
@@ -134,6 +131,7 @@ export default function Home({ sportsData }) {
   }, [currentSport]);*/
 
   // Speichere die Sports-Daten im Redux-Store
+  /*
   useEffect(() => {
     if (sportsData && sportsData.length > 0) {
       // Erstelle ein Array mit den gewünschten Eigenschaften für allSupabaseSports
@@ -146,9 +144,7 @@ export default function Home({ sportsData }) {
 
       dispatch(setAllSportsFromSupabase(allSportsArray)); // Speichere im Redux-Store
     }
-  }, [sportsData, dispatch, allSupabaseSports]);
-
-  
+  }, [ sportsData, dispatch, allSupabaseSports]);*/
 
   const processSportsData = () => {
     if (currentSport?.length > 1) {
@@ -182,12 +178,9 @@ export default function Home({ sportsData }) {
     }
   };
 
-  
-  
   useEffect(() => {
     processSportsData();
   }, [allSupabaseSports, allSupabaseSports]);
-
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">
