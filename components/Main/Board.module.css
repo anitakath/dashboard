@@ -1,17 +1,4 @@
 
-/*
-.add_entry_btn{
-    color: var(--purpleDarkHover);
-    font-size: 1.3rem;
-    margin: 20px 5px 10px 0px;
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.2s ease;
-    width: 150px;
-
-    
-}
-*/
 
 .diary_link{
   color: var(--purpleDarkHoverOpacity);
@@ -45,7 +32,8 @@
   margin-right: 0.25rem; 
   margin-bottom: 1rem; 
   width: 100%; 
-  height: 1000px;
+  min-height: 600px;
+  max-height: 1000px;
   overflow-y: scroll;
 }
 

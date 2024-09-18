@@ -11,7 +11,10 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 export const useDeleteCompletedSport = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
+
+  
   const deleteSport = async (title, id) => {
     setLoading(true);
     setError(null);
@@ -26,11 +29,10 @@ export const useDeleteCompletedSport = () => {
       if (error) {
         throw new Error(error.message);
       }
-
-      await fetchSportsData()
+      await reFetchSportsData(dispatch);
       return { success: true };
     } catch (err) {
-      console.error("Error deleting entry:", err.message);
+      console.error("Error when deleting the entry:", err.message);
       setError(err.message);
       return { success: false, error: err.message };
     } finally {
@@ -82,7 +84,18 @@ export const useDeleteSport = (sportsArray, setSportsArray) => {
 };
 
 
-
+const reFetchSportsData = async (dispatch, userId) => {
+  try {
+    const response = await fetch(`/api/sports?userId=${userId}`); // Pass userId als Query-Parameter
+    if (!response.ok) {
+      throw new Error("Failed to fetch sports data");
+    }
+    const data = await response.json();
+    dispatch(setAllSportsFromSupabase(data.data));
+  } catch (error) {
+    console.error("Error fetching sports data:", error);
+  }
+};
 
 
 

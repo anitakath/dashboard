@@ -53,7 +53,7 @@ const Board = (props) => {
   };
 
   return (
-    <div className="w-full overflow-scroll flex flex-col items-center h-full p-2 ">
+    <div className="w-full  overflow-scroll flex flex-col items-center h-full p-2 ">
       <h1 className="title title_mini"> DASHBOARD </h1>
 
       <BoardHeader logoutHandler={logoutHandler} />

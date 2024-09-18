@@ -7,6 +7,8 @@ import { updateDate } from "@/store/CalendarReducer";
 //HOOKS
 import useCalendar from "@/custom-hooks/useCalendar";
 import { setSelectedSport } from "@/store/sportReducer";
+import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -47,9 +49,22 @@ const Calendar = () => {
   const dailyAllHandler = () => {
     dispatch(setSelectedSport("daily"));
   };
+/*
+function scrollToTop() {
+  console.log("scrolling");
 
+  if (window.scrollTo) {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  } else {
+    // Fallback für ältere Browser
+    window.scrollTo(0, 0);
+  }
+}*/
   return (
-    <div className="p-0 mt-4 mb-4 w-full lg:w-2/3 relative">
+    <div className="p-0 mt-4 mb-4 w-full lg:w-2/3 relative" id="calendar">
       <h1 className="text-2xl my-2">
         Summary: <span className={styles.summary_span}>{selectedSport}</span>
       </h1>
@@ -100,6 +115,19 @@ const Calendar = () => {
           );
         })}
       </div>
+
+{/*
+      <button
+        className="absolute top-2 right-5 border-2 lg:hidden"
+        onClick={scrollToTop}
+        style={{ zIndex: 9999 }} // Höchster z-index
+      >
+        <FontAwesomeIcon
+          icon={faCaretUp}
+          className="text-2xl hover:text-red-300"
+        />
+      </button>
+*/}
     </div>
   );
 };

@@ -2,10 +2,9 @@
 
 .ul{
   width: 100%;
-  height: 100%;
   display: grid; 
   grid-template-columns: repeat(3, 1fr); 
-  gap: 10px; 
+  gap: 0px; 
   overflow: auto;
   padding:  10px;
   box-shadow: 0px 0px 5px lightgrey;
@@ -27,6 +26,7 @@
     overflow: hidden;
     height: 50px;
     border: 2px solid var(--purpleDarkHoverOpacity);
+    margin: 2px;
 }
 
 .sport_btn:hover{ 
@@ -128,7 +128,6 @@
     transition: 0.2s ease;
     margin: 10px 0px;
     font-size: 3rem;
-   
     display: flex;
     justify-content: center;
     align-items: center;

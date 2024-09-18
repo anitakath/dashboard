@@ -3,8 +3,8 @@ import styles from '../Board.module.css'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faBars, faCalendar } from "@fortawesome/free-solid-svg-icons";
+
 //COMPONENTS
 import AddEntryForm from '../AddEntryForm';
 import { useDispatch } from 'react-redux';
@@ -44,6 +44,14 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
 
   let icon = miniMenu ? faXmark : faBars 
 
+    
+  const scrollToCalendar = () => {
+    const calendarElement = document.getElementById("calendar");
+    if (calendarElement) {
+      calendarElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="mb-2 flex flex-wrap justify-center relative bottom-2">
       <div className="relative w-full h-8">
@@ -51,7 +59,16 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
           className="absolute top-2 left-2 lg:hidden"
           onClick={closeMiniMenuHandler}
         >
-          <FontAwesomeIcon icon={icon} className="text-xl" />
+          <FontAwesomeIcon icon={icon} className="text-xl hover:text-red-300" />
+        </button>
+        <button
+          className="absolute top-2 left-10 lg:hidden"
+          onClick={scrollToCalendar}
+        >
+          <FontAwesomeIcon
+            icon={faCalendar}
+            className="text-xl hover:text-red-300"
+          />
         </button>
       </div>
 

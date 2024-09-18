@@ -18,11 +18,12 @@ const DetailsPage = () => {
   const pathParts = router.asPath.split("/");
   const lastPathPart = pathParts[pathParts.length - 1];
   const allSports = useSelector((state) => state.sport.allSupabaseSports);
-
+  const userId = useSelector((state) => state.auth.userId)
   //filter out the object from allSports whose entryId is identical to the last part of the URL
   
   const filteredEntry = allSports.filter((sport) => sport.entryPath === lastPathPart);
   const { deleteSport, loading, error } = useDeleteCompletedSport();
+  
 
   const deleteEntryHandler = async (e) => {
     e.preventDefault();
