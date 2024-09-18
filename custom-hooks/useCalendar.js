@@ -1,7 +1,7 @@
 // useCalendar.js
 
 import { useSelector } from "react-redux";
-import styles from "../components/Main/calendar.module.css"; // Stelle sicher, dass der Pfad zu deinen Styles korrekt ist
+import styles from "../components/Main/Calendar.module.css"; // Stelle sicher, dass der Pfad zu deinen Styles korrekt ist
 
 const useCalendar = () => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);

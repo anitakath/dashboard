@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faBars, faCalendar } from "@fortawesome/free-solid-svg-icons";
-
 //COMPONENTS
 import AddEntryForm from '../AddEntryForm';
 import { useDispatch } from 'react-redux';
@@ -40,7 +39,6 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
     setMinimenu(!miniMenu)
 
   }
-
 
   let icon = miniMenu ? faXmark : faBars 
 
