@@ -15,8 +15,6 @@ const Settings = () =>{
   const [message, setMessage] = useState("moin");
       
 
-  console.log(user.user.user_metadata.email);
-
       const handleSubmit = (e) => {
         e.preventDefault();
         // Hier können Sie die Logik zum Speichern der Daten hinzufügen
@@ -75,7 +73,7 @@ const Settings = () =>{
                 />
               </div>
               <button type="submit" className="primary_button">
-                Speichern
+                Save
               </button>
             </form>
           </div>

@@ -24,7 +24,10 @@
 }
 
 .menu_div{
-    background-color: white;
+
+    /*********/
+    background-color:white;
+    /*********/
     z-index: 10000;
     padding: 10px;
     height: 90vh;
@@ -61,7 +64,9 @@
 
 .table_title{
     font-size: 1.2rem;
-    background-color: var(--purpleDarkHoverOpacity);
+    color: var(--purpleDark);
+    font-weight: bolder;
+    border-bottom: 1px solid var(--purpleDark);
     width: 500px;
     padding: 10px;
     margin: 0px;
@@ -100,8 +105,8 @@
 
 @media screen and (max-width: 1000px){
     .close_btn{
-        top: 20px;
-        font-size: 1rem;
+        top: 10px;
+    
     }
 
   
@@ -118,7 +123,7 @@
     .close_btn{
         top: 7px;
         right: -10px;
-        font-size: 1rem;
+   
     }
 
     .table_title, .link{

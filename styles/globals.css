@@ -128,7 +128,7 @@
 /* H1 */
 
 .title{
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .title_maxi{
@@ -140,23 +140,6 @@
   display: none;
 }
 
-
-@media screen and (max-width: 1300px){
-  .title_mini{
-    display: inline;
-  }
-
- .title_maxi{
-    display: none;
-  }
-}
-
-
-@media screen and (min-width: 1300px){
- .title_maxi{
-   display: inline;
- }
-}
 
 
 
@@ -222,8 +205,30 @@
     color: beige;
 }
 
+
+
 @media screen and (max-width: 1300px){
-  .secondary_button, .primary_link{
+  .title_mini{
+    display: inline;
+  }
+
+ .title_maxi{
+    display: none;
+  }
+
+   .secondary_button, .primary_link{
     width: 100%;
+  }
+}
+
+@media screen and (min-width: 1300px){
+ .title_maxi{
+   display: inline;
+ }
+}
+
+@media screen and (max-width: 800px){
+  .title{
+    font-size: 1.2rem;
   }
 }

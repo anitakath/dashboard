@@ -43,7 +43,7 @@ const BoardHeader = (props) =>{
           )}
         </div>
 
-        <div className="flex items-center ">
+        <div className="flex items-center w-full justify-center ">
           <p className={styles.icons}>
             <Link href="/" className={styles.backToHomepage_link}>
               <FontAwesomeIcon icon={faHouse} className="font_purple" />

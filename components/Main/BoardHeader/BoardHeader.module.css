@@ -1,55 +1,67 @@
 
-.headerDiv{
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+
+.headerDiv {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+
+}
+
+.searchBarResult_div {
+    height: auto;
+    position: relative;
+    width: 100%;
+
 }
 
 
-.searchBarResult_div{
-  height: 100px;
-  position: relative;
-  width: 100%;
-}
 
-.results_div{
+.results_div {
   height: 50vh;
   width: 100%;
+  overflow-y: auto; 
   overflow: scroll;
+  padding: 10px;
   padding: 5px;
   background-color: white;
-  border-bottom: 2px solid var(--purpleDark);
-  padding: 10px;
-  padding-right: 40px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 8px; 
   z-index: 1000000000;
   position: absolute;
-  box-shadow: 2px 2px 10px grey;
   
 }
 
-.close_resultsBar_div{
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 0;
-  right: 0px;
-  font-size: 1.3rem;
-  transition: 0.2s ease;
+
+
+
+
+
+.close_resultsBar_div {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    transition: color 0.2s ease;
 }
 
-.close_resultsBar_div:hover{
-  color: var(--purpleDark);
+.close_resultsBar_div:hover {
+    color: var(--purpleDark);
 }
 
-.icons{
-  margin: 20px;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.icons {
+    margin: 0 15px; 
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+
 
 
 @media screen and (max-width: 1300px) {
@@ -69,9 +81,24 @@
 
 
 @media screen and (max-width: 800px){
-  .icons{
-    margin: 10px;
+
+
+  .headerDiv {
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 10px 0px;
   }
+
+  .icons {
+    margin-bottom: 10px; 
+  }
+
+  .results_div {
+   height: 80vh;
+   margin: 0;
+   padding: 0;
+  }
+
 
   .diary_link{
     margin-left: 10px;
@@ -88,7 +115,7 @@
   }
 
   .icons{
-    margin: 10px;
+    margin: 10px 13px;
   }
 
   .entryField{

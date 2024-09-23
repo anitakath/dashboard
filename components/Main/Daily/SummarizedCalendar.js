@@ -8,11 +8,10 @@ const SummarizedCalendar = (props) =>{
     const filteredAndGroupedEntries = props.filteredAndGroupedEntries;
 
 
-
  const renderCalendar = () => {
    const monthsInYear = [
      { name: "JANUARY", days: 31 },
-     { name: "FEBRUARY", days: 29 }, // Schaltjahre nicht berücksichtigt für Einfachheit
+     { name: "FEBRUARY", days: 29 }, //  Leap years not taken into account for simplicity
      { name: "MARCH", days: 31 },
      { name: "APRIL", days: 30 },
      { name: "MAY", days: 31 },
@@ -43,7 +42,10 @@ const SummarizedCalendar = (props) =>{
                 const isToday = new Date().toISOString().split("T")[0] === dateString;
 
                return (
-                <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ''}`}>
+                 <div
+                   key={dayNumber}
+                   className={`${styles.day} ${isToday ? styles.today : ""}`}
+                 >
                    <Link
                      className={styles.day_date}
                      href={`/daily-details/${dayNumber}${month.name}`}
@@ -54,14 +56,21 @@ const SummarizedCalendar = (props) =>{
                    <div className={styles.sport_subsection}>
                      {(filteredAndGroupedEntries[dateString] || []).map(
                        (entry) => {
-                         // Hier wird die Klasse dynamisch basierend auf entry.label hinzugefügt
+                         //  Calculation of the amount based on the duration
+                         const height =
+                           entry.duration < 20
+                             ? "3px"
+                             : `${Math.floor(entry.duration / 20) * 5}px`;
+                         // Here the class is added dynamically based on entry.label
                          const entryClass =
                            styles[`${entry.label}_opaque`] ||
-                           styles.defaultLabel; // Fallback-Klasse falls label nicht existiert
+                           styles.defaultLabel;
+
                          return (
                            <div
                              key={entry.entryId}
                              className={`${styles.sport_subsectionLabel} ${entryClass}`}
+                             style={{ height }} // Dynamische Höhe hier anwenden
                            ></div>
                          );
                        }

@@ -4,7 +4,7 @@
 }
 
 .entry{
-    border: 1px solid var( --purpleDark);
+    box-shadow:0px 0px 10px rgba(0,0,0, 0.4);
     margin: 10px 0px;
     padding: 0px;
     max-height: 300px;
