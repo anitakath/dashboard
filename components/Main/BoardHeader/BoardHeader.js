@@ -15,7 +15,8 @@ import styles from './BoardHeader.module.css'
 //HOOK
 import { useSearchTerm } from "@/custom-hooks/useSearchTerm";
 //REDUX 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedSport } from "@/store/sportReducer";
 
 const BoardHeader = (props) =>{
     const logoutHandler = props.logoutHandler;
@@ -23,9 +24,12 @@ const BoardHeader = (props) =>{
     const [searchTerm, setSearchTerm] = useState("");
     const [openMenu, setOpenMenu] = useState(false)
     const filteredSearchedEntries = useSearchTerm(allSupabaseSports, searchTerm)
+    const dispatch = useDispatch();
+
 
     return (
       <div className={styles.headerDiv}>
+      
         {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}
 
         <div className={styles.searchBarResult_div}>

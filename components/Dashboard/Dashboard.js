@@ -7,7 +7,8 @@ import Board from '../Main/Board'
 import { convertMinutesToHours } from '@/custom-hooks/minutesToHours';
 import useAuth from '@/custom-hooks/auth/useAuth';
 //REDUX
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedSport } from '@/store/sportReducer';
 
 
 const Dashboard = () =>{
@@ -22,6 +23,7 @@ const Dashboard = () =>{
     : [];
 
   const [sportsDurationByMonth, setSportsDurationByMonth] = useState(null)
+  const dispatch= useDispatch();
 
 
   useEffect(() => {
@@ -69,6 +71,13 @@ const Dashboard = () =>{
         <div className="border-r w-1/5 p-0 flex flex-col overflow-scroll items-center shadow-section hidden lg:flex">
           <Navigation />
         </div>
+
+        <button
+          onClick={() => dispatch(setSelectedSport("start"))}
+          className="absolute text-xl left-2 top-1 hover:text-red-500"
+        >
+          ?
+        </button>
 
         <Board
           filteredEntries={filteredEntries}

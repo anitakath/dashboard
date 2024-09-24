@@ -2,6 +2,7 @@
 import { useDispatch } from "react-redux";
 import { persistor } from "@/store";
 import { setLogin, setLogout, setUserId, setUser } from "@/store/authReducer";
+import { setSelectedSport } from "@/store/sportReducer";
 import { supabase } from "@/services/supabaseClient";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
@@ -47,6 +48,7 @@ const useAuth = (userId) => {
        dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
        dispatch(setLogin(true)); 
        dispatch(setFilteredEntries(filteredEntriesByUserId))
+       dispatch(setSelectedSport("statistics"));
     }
    
     return user;

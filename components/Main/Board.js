@@ -7,6 +7,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useSelector, useDispatch} from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";
 //COMPONENTS
+import HowToUseThisApp from "./HowToUseThisApp.js/HowToUseThisApp";
 import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
@@ -19,7 +20,7 @@ import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import useCalendar from "@/custom-hooks/useCalendar";
 
 const Board = (props) => {
-  const currentSport = useSelector((state) => state.sport.selectedSport);
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state => state.sport.navigation))
   const filteredEntries = props.filteredEntries;
   const sportsDurationByMonth = props.sportsDurationByMonth;
@@ -42,11 +43,12 @@ const Board = (props) => {
   
 
   useEffect(()=> {
-    if(navigation.includes(currentSport)){
-    } else{
-      dispatch(setSelectedSport(navigation[0]))
+    if (navigation.includes(selectedSport)) {
+    } else {
+      //dispatch(setSelectedSport(navigation[0]))
+      dispatch(setSelectedSport("start"));
     }
-  }, [navigation])
+  }, [])
 
 
   const dailyAllHandler = () => {
@@ -55,9 +57,10 @@ const Board = (props) => {
 
   return (
     <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">
+   
       <h1 className="title title_mini"> DASHBOARD </h1>
 
-      <UserImageMobile/>
+      <UserImageMobile />
 
       <BoardHeader logoutHandler={logoutHandler} />
 
@@ -68,18 +71,22 @@ const Board = (props) => {
 
       <div className="flex justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
-          <h2 className="subtitle flex items-center"> {currentSport} </h2>
+          { selectedSport != "start" && (<h2 className="subtitle flex items-center"> {selectedSport} </h2>)}
 
-          {currentSport === null && (
+          {selectedSport === "start" && (
+            
+            <HowToUseThisApp/>
+          )}
+
+          {selectedSport === null && (
             <p className=" my-10 text-2xl text-center">
               select your sport from the navigation bar
             </p>
           )}
 
-
-          {currentSport != null && (
+          {selectedSport != null && selectedSport != "start" && (
             <BoarderSubHeader
-              currentSport={currentSport}
+              currentSport={selectedSport}
               dailyAllHandler={dailyAllHandler}
             />
           )}
@@ -87,28 +94,31 @@ const Board = (props) => {
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
           {filteredByDate.length === 0 &&
-            currentSport != "all" &&
-            currentSport !== "daily" && (
+            selectedSport != "all" &&
+            selectedSport !== "daily" &&
+            selectedSport != "start" && (
               <p className="m-2 text-xl"> no entries were made </p>
             )}
-          {currentSport === "daily" && (
+          {selectedSport === "daily" && selectedSport != "start" && (
             <SummarizedEntries filteredEntries={filteredEntries} />
           )}
-          {currentSport === "all" && (
+          {selectedSport === "all" && selectedSport != "start" && (
             <Entry filteredByDate={allSupabaseSports} />
           )}
-          {currentSport != "all" && currentSport !== "daily" && (
-            <Entry
-              filteredEntries={filteredEntries}
-              allSupabaseSports={allSupabaseSports}
-              sportsDurationByMonth={sportsDurationByMonth}
-            />
-          )}
+          {selectedSport != "all" &&
+            selectedSport !== "daily" &&
+            selectedSport != "start" && (
+              <Entry
+                filteredEntries={filteredEntries}
+                allSupabaseSports={allSupabaseSports}
+                sportsDurationByMonth={sportsDurationByMonth}
+              />
+            )}
         </div>
 
         {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
 
-        {currentSport != "daily" && (
+        {selectedSport != "daily" && selectedSport != "start" && (
           <Calendar filteredByDate={filteredByDate} />
         )}
       </div>

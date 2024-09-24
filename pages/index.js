@@ -65,8 +65,11 @@ export default function Home() {
   );
   const [successMessage, setSuccessMessage] = useState(null);
   const  sportsArray = useSelector((state) => state.profile.sportsArray)
+  const selectedSport = useSelector((state) =>  state.sport.selectedSport)
 
-  console.log(sportsArray)
+  console.log(selectedSport)
+
+  console.log(currentSport);
 
 
 
