@@ -64,6 +64,9 @@ export default function Home() {
     (state) => state.sport.allSupabaseSports
   );
   const [successMessage, setSuccessMessage] = useState(null);
+  const  sportsArray = useSelector((state) => state.profile.sportsArray)
+
+  console.log(sportsArray)
 
 
 

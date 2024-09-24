@@ -1,10 +1,11 @@
 
 import styles from './UserImage.module.css'
-const UserImage = () =>{
+
+const UserImageMobile = () =>{
 
 
     return (
-      <div className='hidden lg:flex'>
+      <div className="absolute left-2 top-0 flex lg:hidden">
         <p
           className={styles.user_image}
           style={{ backgroundColor: "var(--purpleDarkHover)" }}
@@ -13,5 +14,4 @@ const UserImage = () =>{
     );
 }
 
-export default UserImage
-
+export default UserImageMobile

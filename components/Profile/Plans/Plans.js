@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeSport, replaceSportsArray } from "@/store/profileReducer";
 //CUSTOM HOOKS
 import { useDeleteSport } from '@/custom-hooks/useSportEntries';
-
+import { reFetchSportsData } from '@/custom-hooks/useSportEntries';
 import { supabase } from '@/services/supabaseClient';
 import { current } from '@reduxjs/toolkit';
 
@@ -38,6 +38,7 @@ const Plans = () =>{
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSport, setCurrentSport] = useState(null);
   const [activeSport, setActiveSport] = useState(null);
+  const userId = useSelector((state)=> state.auth.userId)
 
   useEffect(() => {
     const fetchPlannedSports = async () => {
@@ -87,6 +88,7 @@ const Plans = () =>{
             title: sport.title,
             entry: sport.entry,
             label: sport.label,
+            userId: sport.userId,
             entryPath: sport.entryPath,
             duration: sport.duration,
             created_at: new Date().toISOString(), // Current date as creation date
@@ -124,6 +126,7 @@ const Plans = () =>{
       );
 
       setSportsArray(filteredSportsArray);
+      await reFetchSportsData(dispatch, userId)
 
       // Dispatch die removeSport Action an den Redux Store
       dispatch(removeSport(sport.entryId));

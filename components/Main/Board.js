@@ -11,6 +11,7 @@ import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
+import UserImageMobile from "../UI/UserImageMobile";
 //HOOK
 import useAuth from "@/custom-hooks/auth/useAuth";
 import BoardHeader from "./BoardHeader/BoardHeader";
@@ -53,8 +54,10 @@ const Board = (props) => {
   };
 
   return (
-    <div className="w-full  overflow-scroll flex flex-col items-center h-full p-2 ">
+    <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">
       <h1 className="title title_mini"> DASHBOARD </h1>
+
+      <UserImageMobile/>
 
       <BoardHeader logoutHandler={logoutHandler} />
 

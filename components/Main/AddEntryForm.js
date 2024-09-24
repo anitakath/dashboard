@@ -44,7 +44,6 @@ const AddEntryForm = (props) => {
     img: "",
   });
 
-  console.log(inputs)
   
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {

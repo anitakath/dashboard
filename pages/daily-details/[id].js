@@ -83,7 +83,7 @@ const DailyDetails = () => {
         </div>
 
         <div className="w-full">
-          <h1 className="text-xl flex justify-center my-6  w-full relative left-0 top-8">
+          <h1 className="text-xl flex justify-center my-6 w-full relative left-0 top-8">
             details - {formattedDate}
           </h1>
 

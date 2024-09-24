@@ -84,7 +84,7 @@ export const useDeleteSport = (sportsArray, setSportsArray) => {
 };
 
 
-const reFetchSportsData = async (dispatch, userId) => {
+export const reFetchSportsData = async (dispatch, userId) => {
   try {
     const response = await fetch(`/api/sports?userId=${userId}`); // Pass userId als Query-Parameter
     if (!response.ok) {
@@ -195,6 +195,9 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
     const formattedTitle = formatText(inputs.title);
     const uniqueID = uuidv4();
 
+
+    console.log(inputs)
+
     const data =
       currentPath === "/profile"
         ? {
@@ -272,6 +275,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
       errorMessage,
       submitting,
       formIsOpen,
+     
     };
 
 };
