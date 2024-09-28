@@ -53,7 +53,7 @@ const AddEntryForm = (props) => {
     errorMessage,
     submitting,
     formIsOpen,
-  } = useSubmitHandler(currentPath, chosenSport, inputs);
+  } = useSubmitHandler(currentPath, chosenSport, inputs, userId);
 
 
   useEffect(()=>{

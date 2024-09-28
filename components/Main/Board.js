@@ -41,14 +41,13 @@ const Board = (props) => {
 
 
   
-
+/*
   useEffect(()=> {
     if (navigation.includes(selectedSport)) {
     } else {
       //dispatch(setSelectedSport(navigation[0]))
-      dispatch(setSelectedSport("start"));
     }
-  }, [])
+  }, []) */
 
 
   const dailyAllHandler = () => {

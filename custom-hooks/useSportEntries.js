@@ -8,7 +8,7 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 /* DELETE COMPLETED  SPORT */
 
-export const useDeleteCompletedSport = () => {
+export const useDeleteCompletedSport = (userId) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export const useDeleteCompletedSport = () => {
       if (error) {
         throw new Error(error.message);
       }
-      await reFetchSportsData(dispatch);
+      await reFetchSportsData(dispatch, userId);
       return { success: true };
     } catch (err) {
       console.error("Error when deleting the entry:", err.message);
@@ -44,7 +44,7 @@ export const useDeleteCompletedSport = () => {
 };
 
 /* DELETE PLANNED SPORT */
-export const useDeleteSport = (sportsArray, setSportsArray) => {
+export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
   const dispatch = useDispatch();
 
   const deleteSportHandler = async (sport) => {
@@ -84,7 +84,7 @@ export const useDeleteSport = (sportsArray, setSportsArray) => {
 };
 
 
-export const reFetchSportsData = async (dispatch, userId) => {
+const reFetchSportsData = async (dispatch, userId) => {
   try {
     const response = await fetch(`/api/sports?userId=${userId}`); // Pass userId als Query-Parameter
     if (!response.ok) {
@@ -98,18 +98,17 @@ export const reFetchSportsData = async (dispatch, userId) => {
 };
 
 
-
-const fetchSportsData = async (dispatch) => {
-   try {
-     const response = await fetch("/api/sports");
-     if (!response.ok) {
-       throw new Error("Failed to fetch sports data");
-     }
-     const data = await response.json();
-     dispatch(setAllSportsFromSupabase(data.data));
-   } catch (error) {
-     console.error("Error fetching sports data:", error);
-   }
+const fetchSportsData = async (dispatch, userId) => {
+  try {
+    const response = await fetch(`/api/sports?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch sports data");
+    }
+    const data = await response.json();
+    dispatch(setAllSportsFromSupabase(data.data));
+  } catch (error) {
+    console.error("Error fetching sports data:", error);
+  }
 };
 
 
@@ -117,13 +116,14 @@ const fetchSportsData = async (dispatch) => {
 
 /* ADDENTRYFORM */
 
-export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
+export const useSubmitHandler = (currentPath, chosenSport, inputs, userId) => {
   const dispatch = useDispatch();
   const [successMessage, setSuccessMessage] = useState(false);
   const [durationErrorMessage, setDurationErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [formIsOpen, setFormIsOpen] = useState(true)
+
 
   const validateTitle = (title) => {
     return title.length >= 3 && title.length <= 50;
@@ -149,7 +149,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
   };
 
   const submitHandler = async (e) => {
-    console.log("submitting...");
+
     e.preventDefault();
     setSubmitting(true);
 
@@ -194,9 +194,6 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
 
     const formattedTitle = formatText(inputs.title);
     const uniqueID = uuidv4();
-
-
-    console.log(inputs)
 
     const data =
       currentPath === "/profile"
@@ -246,11 +243,11 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
           .from("sports")
           .insert([data]);
         if (error) throw new Error("Failed to insert data into Supabase table");
-        console.log(
+        /*console.log(
           "Data successfully inserted into Supabase table:",
           newSport
-        );
-        await fetchSportsData(dispatch);
+        );*/
+        await fetchSportsData(dispatch, userId);
         setTimeout(() => setSuccessMessage(false), 5000);
       }
 
@@ -275,7 +272,6 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs) => {
       errorMessage,
       submitting,
       formIsOpen,
-     
     };
 
 };

@@ -67,10 +67,6 @@ export default function Home() {
   const  sportsArray = useSelector((state) => state.profile.sportsArray)
   const selectedSport = useSelector((state) =>  state.sport.selectedSport)
 
-  console.log(selectedSport)
-
-  console.log(currentSport);
-
 
 
   const tennisSport = allSupabaseSports.find(

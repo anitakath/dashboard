@@ -13,13 +13,14 @@ import { useDeleteCompletedSport } from "@/custom-hooks/useSportEntries";
 
 const DetailsPage = () => {
   const router = useRouter();
+  const userId = useSelector((state) => state.auth.userId)
   // Extract the last part of the path to “/details/”
   const pathParts = router.asPath.split("/");
   const lastPathPart = pathParts[pathParts.length - 1];
   const allSports = useSelector((state) => state.sport.allSupabaseSports);
   //filter out the object from allSports whose entryId is identical to the last part of the URL
   const filteredEntry = allSports.filter((sport) => sport.entryPath === lastPathPart);
-  const { deleteSport, loading, error } = useDeleteCompletedSport();
+  const { deleteSport, loading, error } = useDeleteCompletedSport(userId);
   
 
   const deleteEntryHandler = async (e) => {
