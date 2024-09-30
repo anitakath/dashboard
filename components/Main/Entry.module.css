@@ -59,13 +59,14 @@
     transition: 0.2s ease;
     padding: 5px;
     position: relative;
-    margin: 10px 0px;
+    padding: 10px 0px;
     
 }
 
 .link:hover{
     color: beige;
     background-color: var(--purpleDarkHover);
+
 }
 
 .totalHours_p{

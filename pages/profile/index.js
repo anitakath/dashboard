@@ -4,9 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 //FONT AWeSOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faArrowLeft, faCamera } from "@fortawesome/free-solid-svg-icons";
-
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";

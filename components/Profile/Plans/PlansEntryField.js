@@ -47,13 +47,13 @@ const PlansEntryField = ({
   };
 
   return (
-    <div className="w-full ">
+    <div className="w-full  ">
       <button onClick={toggleLayout} className={styles.layout_btn}>
         <FontAwesomeIcon
-          className="hidden ssm:flex ml-2" icon={layoutMode === "list" ? faBars : faGripHorizontal}
+          className="hidden ssm:flex ml-2"
+          icon={layoutMode === "list" ? faBars : faGripHorizontal}
         />
       </button>
-
 
       <div
         className={`${styles.field} ${

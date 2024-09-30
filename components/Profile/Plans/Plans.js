@@ -233,7 +233,7 @@ const Plans = () =>{
         currentSport={currentSport}
         saveChanges={saveChanges}
         handleInputChange={handleInputChange}
-        addSportBtnText={addSportBtnText}
+     
       />
 
       <EditEntryField
@@ -253,8 +253,7 @@ const Plans = () =>{
             formIsOpen={formIsOpen}
             chosenSport={chosenSport}
             chooseSportHandler={chooseSportHandler}
-            addSportBtnText={addSportBtnText}
-            addSportHandler={addSportHandler}
+       
           />
         </div>
 
