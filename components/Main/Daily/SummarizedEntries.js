@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./SummarizedEntries.module.css";
 //HOOKS
-import { formatDate } from "@/custom-hooks/formatDate";
+import { updateDate } from "@/store/CalendarReducer";
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter} from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
 import SearchBar from "../../UI/SearchBar"
@@ -14,13 +14,14 @@ import CurrentMonthEntries from "./CurrentMonthEntries";
 import FilteredMonthEntries from "./FilteredMonthsEntries";
 
 const SummarizedEntries = (props) => {
-  const allSupabaseSports = useSelector(
-    (state) => state.sport.allSupabaseSports
-  );
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [isExpanded, setIsExpanded] = useState(false);
   const currentDate = new Date();
   const [showAllThisYear, setShowAllThisYear] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const year = useSelector((state) => state.calendar.year)
+  const month = useSelector((state) => state.calendar.month);
+  const dispatch = useDispatch();
 
   const groupAndSortEntries = (entries) => {
     const groupedEntries = {};
@@ -34,8 +35,6 @@ const SummarizedEntries = (props) => {
     });
     return groupedEntries;
   };
-
-
   const filteredAndGroupedEntries = groupAndSortEntries(allSupabaseSports);
 
   const filterCurrentMonthEntries = (entries) => {
@@ -67,13 +66,7 @@ const SummarizedEntries = (props) => {
     filterCurrentMonthEntries(allSupabaseSports)
   );
 
-  // Zustand für das Anzeigen von Einträgen des letzten Monats
-  const [showLastMonth, setShowLastMonth] = useState(false);
 
-  // Gefilterte und gruppierte/sortierte Einträge für den letzten Monat (wenn angezeigt)
-  const lastMonthEntries = showLastMonth
-    ? groupAndSortEntries(filterLastMonthEntries(allSupabaseSports))
-    : {};
 
   // Funktion zum Filtern der Einträge des aktuellen Jahres, die nicht im aktuellen Monat sind
   const filterAllThisYearNotInCurrentMonthEntries = (entries) => {
@@ -102,7 +95,6 @@ const SummarizedEntries = (props) => {
   };
 
 
-
   // Filter all entries based on the search term
   const filterBySearchTerm = (entries) => {;
     if (!searchTerm){
@@ -123,25 +115,45 @@ const SummarizedEntries = (props) => {
 
   const filteredCurrentMonthEntries = filterBySearchTerm(allSupabaseSports);
 
+  const changeYear = (e) =>{
+    if(e === "up"){
+      dispatch(updateDate({year: year + 1, month}))
+    } else if (e === "down"){
+      dispatch(updateDate({year: year - 1, month}))
+    }
+  }
+
+
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
-      <button
-        className={styles.expand_btn}
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        {!isExpanded && (
-          <FontAwesomeIcon
-            icon={faUpRightAndDownLeftFromCenter}
-            className={styles.expand_icon}
-          />
-        )}
-        {isExpanded && (
-          <FontAwesomeIcon
-            icon={faDownLeftAndUpRightToCenter}
-            className={styles.expand_icon}
-          />
-        )}
-      </button>
+      <div className="flex items-center">
+        <button
+          className={styles.expand_btn}
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          {!isExpanded && (
+            <FontAwesomeIcon
+              icon={faUpRightAndDownLeftFromCenter}
+              className={styles.expand_icon}
+            />
+          )}
+          {isExpanded && (
+            <FontAwesomeIcon
+              icon={faDownLeftAndUpRightToCenter}
+              className={styles.expand_icon}
+            />
+          )}
+        </button>
+        <div className="flex"> 
+          <button className={styles.calendar_btn} onClick={()=> changeYear("down")}> 
+            <FontAwesomeIcon icon={faCaretLeft} /> 
+          </button>
+          <p className={styles.calendar_year}>{year} </p>
+          <button className={styles.calendar_btn} onClick={()=> changeYear("up")}> 
+            <FontAwesomeIcon icon={faCaretRight} /> 
+          </button>
+        </div>
+      </div>
 
       <SummarizedCalendar
         filteredAndGroupedEntries={filteredAndGroupedEntries}
@@ -149,7 +161,7 @@ const SummarizedEntries = (props) => {
       />
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      
+
       {/* the sports units filtered according to the search term */}
       <FilteredMonthEntries
         filteredCurrentMonthEntries={filteredCurrentMonthEntries}

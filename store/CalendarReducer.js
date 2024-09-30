@@ -20,6 +20,7 @@ const calendarSlice = createSlice({
     setRestDays(state,action){
       state.restDaysPerMonth = action.payload
     },
+  
   },
 });
 

@@ -138,6 +138,7 @@ const useCalendar = () => {
     "All",
   ];
 
+
   return { getMonthStyle, months, completeMonths, useEntryCountForMonth };
 };
 

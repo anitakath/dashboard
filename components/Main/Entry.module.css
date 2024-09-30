@@ -37,6 +37,7 @@
     width: 150px;
     color: black;
     display: flex;
+   
 }
 
 .monthYear_header_span{
@@ -58,6 +59,7 @@
     transition: 0.2s ease;
     padding: 5px;
     position: relative;
+    margin: 10px 0px;
     
 }
 
