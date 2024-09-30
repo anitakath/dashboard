@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-
 import { useRouter } from "next/router";
 import Link from "next/link";
-
 //FONT AWeSOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
+import { faArrowLeft, faCamera } from "@fortawesome/free-solid-svg-icons";
 
 //REDUX
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";
-import { setLogout } from "@/store/authReducer";
 import { setSection } from "@/store/profileReducer";
 import styles from "../../styles/Profile.module.css";
 //COMPONENTS
@@ -51,7 +49,26 @@ const Profile = () => {
 
     }
 
-  
+    // Funktion zum Hochladen eines Bildes
+    const handleImageUpload = async (sport) => {
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+
+      fileInput.onchange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          try {
+            await uploadImageToSupabase(file, sport); // Hier wird die Upload-Funktion aufgerufen
+            alert("Bild erfolgreich hochgeladen!");
+          } catch (error) {
+            console.error("Fehler beim Hochladen des Bildes:", error);
+          }
+        }
+      };
+      fileInput.click();
+    };
+
 
   return (
     <div className="w-full h-screen sm:p-4 md:p-14">
@@ -107,6 +124,15 @@ const Profile = () => {
                     onClick={() => chooseSportHandler(index)}
                   >
                     <p className={styles.p}>{sport}</p>
+                    {/* Kamera-Symbol hinzufügen */}
+                    <FontAwesomeIcon
+                      icon={faCamera}
+                      className={styles.camera}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleImageUpload(sport);
+                      }}
+                    />
                   </div>
                 ))}
 

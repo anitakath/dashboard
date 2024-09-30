@@ -29,7 +29,14 @@ const BoardHeader = (props) =>{
 
     return (
       <div className={styles.headerDiv}>
-      
+        <p className={styles.icons_mobile}>
+          <FontAwesomeIcon
+            icon={faBars}
+            className="font_purple hover:pointer"
+            onClick={() => setOpenMenu(true)}
+          />
+        </p>
+
         {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}
 
         <div className={styles.searchBarResult_div}>
@@ -47,7 +54,7 @@ const BoardHeader = (props) =>{
           )}
         </div>
 
-        <div className="flex items-center w-full justify-center lg:justify-end ">
+        <div className=" hidden md:flex items-center w-full justify-center lg:justify-end ">
           <p className={styles.icons}>
             <Link href="/" className={styles.backToHomepage_link}>
               <FontAwesomeIcon icon={faHouse} className="font_purple" />

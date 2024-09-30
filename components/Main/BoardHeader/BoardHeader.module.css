@@ -7,6 +7,7 @@
     align-items: center;
     padding: 10px 20px;
     position: relative;
+  
 }
 
 .searchBarResult_div {
@@ -63,6 +64,14 @@
 }
 
 
+.icons_mobile{
+  display: none;
+}
+
+.icons:hover, .icons_mobile{
+  cursor: pointer;
+}
+
 
 
 @media screen and (max-width: 1300px) {
@@ -104,8 +113,19 @@
     margin-left: 10px;
     font-size: 1.3rem;
   }   
-
  
+}
+
+@media screen and (max-width: 770px){
+
+
+    
+  .icons_mobile{
+    display: inline-block;
+    position: absolute;
+    top: -30px;
+    font-size: 1.3rem;
+  }
 }
 
 @media screen and (max-width: 600px){
@@ -123,12 +143,13 @@
     padding: 0;
     margin: 0;
   }
-
   
   .allSports_btn{
     width: 100%;
     margin: 5px 0px;
   }
+
+  
 
 }
 

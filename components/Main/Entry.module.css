@@ -58,6 +58,7 @@
     transition: 0.2s ease;
     padding: 5px;
     position: relative;
+    
 }
 
 .link:hover{
@@ -71,6 +72,7 @@
     align-items: center;
     color: var(--purpleDark);
     font-size: 1.4rem;
+    
 }
 
 .totalHours_span{

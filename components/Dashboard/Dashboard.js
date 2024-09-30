@@ -72,13 +72,6 @@ const Dashboard = () =>{
           <Navigation />
         </div>
 
-        <button
-          onClick={() => dispatch(setSelectedSport("start"))}
-          className="absolute text-xl left-2 top-1 hover:text-red-500"
-        >
-          ?
-        </button>
-
         <Board
           filteredEntries={filteredEntries}
           sportsDurationByMonth={sportsDurationByMonth}

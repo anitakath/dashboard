@@ -251,9 +251,10 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId) => {
         setTimeout(() => setSuccessMessage(false), 5000);
       }
 
+      /*
       setTimeout(() => {
         setFormIsOpen(false);
-      }, 2000);
+      }, 2000);*/
 
       setSuccessMessage(true);
     } catch (error) {

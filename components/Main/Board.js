@@ -19,19 +19,21 @@ import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import useCalendar from "@/custom-hooks/useCalendar";
 
-const Board = (props) => {
+const Board = ({ filteredEntries, sportsDurationByMonth }) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-  const navigation = useSelector((state => state.sport.navigation))
-  const filteredEntries = props.filteredEntries;
-  const sportsDurationByMonth = props.sportsDurationByMonth;
-  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
+  const navigation = useSelector((state) => state.sport.navigation);
+  const allSupabaseSports = useSelector(
+    (state) => state.sport.allSupabaseSports
+  );
   const actualDate = useSelector((state) => state.calendar);
   const { months } = useCalendar();
-  const actualMonthIndex = months.findIndex(month => month === actualDate.month);
+  const actualMonthIndex = months.findIndex(
+    (month) => month === actualDate.month
+  );
   const actualMonth = actualMonthIndex + 1;
   const dispatch = useDispatch();
-  const { logoutHandler } = useAuth();  
-  
+  const { logoutHandler } = useAuth();
+
   const filteredByDate = filteredEntries.filter((entry) => {
     const entryDate = new Date(entry.created_at);
     const entryYear = entryDate.getFullYear();
@@ -39,16 +41,12 @@ const Board = (props) => {
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
 
-
-  
-/*
-  useEffect(()=> {
+  useEffect(() => {
     if (navigation.includes(selectedSport)) {
     } else {
-      //dispatch(setSelectedSport(navigation[0]))
+      dispatch(setSelectedSport(navigation[0]));
     }
-  }, []) */
-
+  }, []);
 
   const dailyAllHandler = () => {
     dispatch(setSelectedSport("daily"));
@@ -56,7 +54,6 @@ const Board = (props) => {
 
   return (
     <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">
-   
       <h1 className="title title_mini"> DASHBOARD </h1>
 
       <UserImageMobile />
@@ -70,12 +67,11 @@ const Board = (props) => {
 
       <div className="flex justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
-          { selectedSport != "start" && (<h2 className="subtitle flex items-center"> {selectedSport} </h2>)}
-
-          {selectedSport === "start" && (
-            
-            <HowToUseThisApp/>
+          {selectedSport != "start" && (
+            <h2 className="subtitle flex items-center"> {selectedSport} </h2>
           )}
+
+          {selectedSport === "start" && <HowToUseThisApp />}
 
           {selectedSport === null && (
             <p className=" my-10 text-2xl text-center">

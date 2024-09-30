@@ -77,14 +77,14 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
                             >
                               <Link href={`/details/${entry.entryPath}`}>
                                 <div className={styles.link}>
-                                  <p className="my-2 px-2 text-xs absolute right-4">
+                                  <p className="my-2  text-xs absolute right-2">
                                     {formatDate(entry.created_at)} 
                                   </p>
                                   <p className="my-2 px-2 text-xs absolute right-4 top-6">
                                     {formatDuration(entry.duration)}
                                   </p>
-                                  <h2 className="text-2xl mb-4 mt-2 px-2">
-                                    {entry.title}
+                                  <h2 className="text-2xl mb-4 mt-0 w-8/12 px-2">
+                                    {entry.title} 
                                   </h2>
                                   <p className="px-2 mb-4">{entry.entry}</p>
                                 </div>

@@ -62,11 +62,11 @@
 
 
 .submit_btn{
-  font-size: 1.1rem;
+  font-size: 1.7rem;
   margin: 10px 0px;
-  padding: 5px 0px;
+  padding: 10px 0px;
   color:var(--purpleDark);
-  height: 50px;
+  height: 80px;
   transition: 0.2s ease;
   border-top: 1px solid var(--purpleDark);
 

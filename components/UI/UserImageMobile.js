@@ -5,7 +5,7 @@ const UserImageMobile = () =>{
 
 
     return (
-      <div className="absolute left-2 top-0 flex lg:hidden">
+      <div className="absolute right-2 top-0 flex lg:hidden">
         <p
           className={styles.user_image}
           style={{ backgroundColor: "var(--purpleDarkHover)" }}

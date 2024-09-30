@@ -49,7 +49,7 @@ const Menu = ({ setOpenMenu }) => {
     >
       <div className={styles.menu_div} onClick={(e) => e.stopPropagation()}>
         <button className={styles.close_btn} onClick={() => setOpenMenu(false)}>
-          close menu
+          X 
         </button>
         <h1 className={styles.title}>MENU</h1>
         <ul className={styles.table}>
@@ -76,7 +76,10 @@ const Menu = ({ setOpenMenu }) => {
                 Planned Sports Units
               </li>
               <li className={styles.link}>Completed Sports Units</li>
-              <Link className={styles.link} href="/statistics"> Statistics </Link>
+              <Link className={styles.link} href="/statistics">
+                {" "}
+                Statistics{" "}
+              </Link>
             </>
           )}
           <br />
@@ -129,6 +132,7 @@ const Menu = ({ setOpenMenu }) => {
           </li>
           {openSections.app && (
             <>
+              <li className={styles.link}> How to use this app </li>
               <li className={styles.link}> Help / Support </li>
               <li className={styles.link}> Feedback </li>
               <li className={styles.link}> Notifications </li>
@@ -148,3 +152,10 @@ const Menu = ({ setOpenMenu }) => {
 };
 
 export default Menu;
+
+/*    <button
+          onClick={() => dispatch(setSelectedSport("start"))}
+          className="absolute text-xl left-2 top-1 hover:text-red-500"
+        >
+          ?
+        </button>*/
