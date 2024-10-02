@@ -22,7 +22,6 @@ import Spinner from "../UI/Spinner";
 
 
 const AddEntryForm = (props) => {
-
   const userId = useSelector((state) => state.auth.userId)
   const router = useRouter();
   const setFormIsOpen = props.setFormIsOpen;
@@ -44,6 +43,8 @@ const AddEntryForm = (props) => {
     img: "",
   });
 
+  //console.log(currentSport)
+  //console.log(inputs)
   
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {
@@ -53,7 +54,7 @@ const AddEntryForm = (props) => {
     errorMessage,
     submitting,
     formIsOpen,
-  } = useSubmitHandler(currentPath, chosenSport, inputs, userId);
+  } = useSubmitHandler(currentPath, chosenSport, inputs, userId, currentSport);
 
 
   useEffect(()=>{
@@ -159,6 +160,7 @@ const AddEntryForm = (props) => {
  }, [currentSport, selectedSport]);
 
 
+ //console.log(currentSport)
 
 
   return (

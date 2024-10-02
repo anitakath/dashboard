@@ -80,6 +80,7 @@ export default function Home() {
   };
 
 
+  
   const processSportsData = () => {
     if (currentSport?.length > 1) {
       console.log("Es gibt bereits ein Sport-Array");
@@ -104,6 +105,7 @@ export default function Home() {
       const sportsArray = uniqueSportsArray.map((obj) => ({
         name: obj.name,
         color: obj.label,
+        icon: obj.icon,
       }));
 
       addSportsToReduxStore(sportsArray);
@@ -115,6 +117,9 @@ export default function Home() {
   useEffect(() => {
     processSportsData();
   }, [allSupabaseSports, allSupabaseSports]);
+
+
+  //console.log(currentSport)
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">

@@ -40,6 +40,29 @@
     
 }
 
+.icons_div{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: lightgrey;
+}
+
+
+.icon_button{
+    max-width: 50px;
+    margin: 3px;
+    height: 45px;
+    transition: 0.2s ease;
+    border-radius: 50%;
+}
+
+.icon_button:hover{
+    background: var(--purpleDarkHoverOpacity);
+    color: var(--purpleDark);
+}
+
+.selectedIcon {
+    color: var(--purpleDark)
+}
 
 .fandango{
     background: var(--fandango);

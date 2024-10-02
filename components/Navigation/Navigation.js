@@ -31,6 +31,7 @@ const Navigation = () => {
         .map((sport) => ({
           name: sport.name,
           color: sport.label, // Hier wird angenommen, dass 'label' die Farbe ist
+          icon: sport.icon
         }))
         .reduce((accumulator, current) => {
           // Überprüfe, ob der Name bereits im Akkumulator vorhanden ist
@@ -52,6 +53,8 @@ const Navigation = () => {
   const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
   const showAlert = useSelector((state) => state.sport.showAlert);
+  const currentSport = useSelector((state) => state.sport.currentSport)
+
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
@@ -80,14 +83,14 @@ const Navigation = () => {
         (item) => item.name !== sport
       );
 
-      console.log(updatedNavigationArr);
+      //console.log(updatedNavigationArr);
       const uniqueSports = updatedNavigationArr
         ? Array.from(
             new Set(updatedNavigationArr.map((sport) => sport.name))
           ).sort((a, b) => a.localeCompare(b))
         : [];
 
-      console.log(uniqueSports);
+      //console.log(uniqueSports);
       dispatch(setNavigation(uniqueSports));
       // Hier solltest du deine Supabase-Logik zum Löschen implementieren
       const deleteSportsFromSupabase = async () => {
@@ -106,7 +109,7 @@ const Navigation = () => {
             (item) => !(item.name === sport && item.userId === userId)
           );
 
-          console.log(updatedAllSupabaseSports);
+          //console.log(updatedAllSupabaseSports);
 
           dispatch(setAllSportsFromSupabase(updatedAllSupabaseSports));
         } catch (error) {
@@ -117,6 +120,9 @@ const Navigation = () => {
       deleteSportsFromSupabase();
     }
   };
+
+  //console.log(currentSport);
+  //console.log(navigationArr)
 
   
 

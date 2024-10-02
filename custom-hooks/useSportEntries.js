@@ -116,7 +116,7 @@ const fetchSportsData = async (dispatch, userId) => {
 
 /* ADDENTRYFORM */
 
-export const useSubmitHandler = (currentPath, chosenSport, inputs, userId) => {
+export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, currentSport) => {
   const dispatch = useDispatch();
   const [successMessage, setSuccessMessage] = useState(false);
   const [durationErrorMessage, setDurationErrorMessage] = useState(false);
@@ -148,8 +148,10 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId) => {
     return name.trim() !== ""; // Überprüfen, ob der Name nicht leer ist
   };
 
-  const submitHandler = async (e) => {
 
+
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
@@ -190,10 +192,22 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId) => {
       return;
     }
 
-    setErrorMessage("")
+    setErrorMessage("");
 
     const formattedTitle = formatText(inputs.title);
     const uniqueID = uuidv4();
+
+    // Überprüfen, ob ein Sport mit dem gleichen Namen und einem Icon existiert
+    const existingSport = currentSport.find(
+      (sport) => sport.name === inputs.name && sport.icon !== null
+    );
+
+    let iconData = null;
+
+    if (existingSport) {
+       iconData = existingSport.icon; // Das Icon des bestehenden Sports speichern
+    }
+
 
     const data =
       currentPath === "/profile"
@@ -207,6 +221,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId) => {
             entryPath: `${formattedTitle}-${uniqueID}`,
             duration: inputs.duration,
             created_at: inputs.created_at,
+            icon: iconData,
           }
         : {
             name: inputs.name,
@@ -218,6 +233,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId) => {
             duration: inputs.duration,
             created_at: inputs.created_at,
             userId: inputs.userId,
+            icon: iconData,
           };
 
     if (currentPath === "/profile" && !chosenSport) {
