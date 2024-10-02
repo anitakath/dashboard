@@ -33,6 +33,15 @@ const useCalendar = () => {
           if (entryMonth === "Mai") {
             entryMonth = "May";
           }
+          if (entryMonth === "Okt") {
+            entryMonth = "Oct";
+          }
+
+          if (entryMonth === "Dez") {
+            entryMonth = "Dec";
+          }
+
+        
 
           // Check whether the year and month match
           if (entryMonth === monthAbbreviation && entryYear === selectedYear) {
@@ -65,6 +74,13 @@ const useCalendar = () => {
           if (entryMonth === "Mai") {
             entryMonth = "May";
           }
+             if (entryMonth === "Okt") {
+               entryMonth = "Oct";
+             }
+
+             if (entryMonth === "Dez") {
+               entryMonth = "Dec";
+             }
 
           return (
             entryMonth === monthAbbreviation &&
