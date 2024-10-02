@@ -114,7 +114,9 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
         {/*  -------------------------- SUMMARY SECTION  -------------------------- */}
 
         {selectedSport != "daily" && selectedSport != "start" && (
-          <Calendar filteredByDate={filteredByDate} />
+          <div className="w-full lg:w-6/12">
+            <Calendar filteredByDate={filteredByDate} />
+          </div>
         )}
       </div>
     </div>

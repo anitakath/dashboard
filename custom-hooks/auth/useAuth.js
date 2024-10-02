@@ -38,7 +38,6 @@ const useAuth = (userId) => {
       throw new Error(error.message);
     }
 
-    console.log("User logged in:", user);
   
     const session = await fetchUserSession();
 
@@ -64,7 +63,7 @@ const fetchUserSession = async () => {
   } else if (session) {
     dispatch(setUserId(session.user.id));
     dispatch(setUser(session));
-    console.log(session.user.id);
+
     return session; 
   } else {
     console.log("No user is logged in");

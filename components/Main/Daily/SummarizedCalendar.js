@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from './SummarizedEntries.module.css'
-
+import Calendar from "../Calendar";
 
 const SummarizedCalendar = (props) =>{
 
@@ -27,6 +27,9 @@ const SummarizedCalendar = (props) =>{
 
    return (
      <div className={styles.calendar_div}>
+     
+         <Calendar />
+      
        {monthsInYear.map((month, monthIndex) => (
          <div key={month.name} className={styles.month}>
            <h3 className={styles.title}>{month.name}</h3>
@@ -39,7 +42,8 @@ const SummarizedCalendar = (props) =>{
                    .split("T")[0]
                }`;
 
-                const isToday = new Date().toISOString().split("T")[0] === dateString;
+               const isToday =
+                 new Date().toISOString().split("T")[0] === dateString;
 
                return (
                  <div

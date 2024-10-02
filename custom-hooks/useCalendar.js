@@ -12,7 +12,7 @@ const useCalendar = () => {
         return 0;
       }
 
-      if (selectedSport === "all") {
+      if (selectedSport === "all" || selectedSport === "daily") {
         // Create an object to group the entries by year and month
         const groupedEntries = {};
 
@@ -40,8 +40,6 @@ const useCalendar = () => {
           if (entryMonth === "Dez") {
             entryMonth = "Dec";
           }
-
-        
 
           // Check whether the year and month match
           if (entryMonth === monthAbbreviation && entryYear === selectedYear) {
@@ -74,13 +72,13 @@ const useCalendar = () => {
           if (entryMonth === "Mai") {
             entryMonth = "May";
           }
-             if (entryMonth === "Okt") {
-               entryMonth = "Oct";
-             }
+          if (entryMonth === "Okt") {
+            entryMonth = "Oct";
+          }
 
-             if (entryMonth === "Dez") {
-               entryMonth = "Dec";
-             }
+          if (entryMonth === "Dez") {
+            entryMonth = "Dec";
+          }
 
           return (
             entryMonth === monthAbbreviation &&
@@ -95,7 +93,7 @@ const useCalendar = () => {
   };
 
   const getMonthStyle = (entryCount) => {
-    if (selectedSport === "all") {
+    if (selectedSport === "all" || selectedSport === "daily") {
       if (entryCount > 100) {
         return styles.maxixl;
       } else if (entryCount > 80) {

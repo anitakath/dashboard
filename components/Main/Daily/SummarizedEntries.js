@@ -126,6 +126,7 @@ const SummarizedEntries = (props) => {
 
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
+
       <div className="flex items-center">
         <button
           className={styles.expand_btn}

@@ -58,7 +58,7 @@ const Calendar = () => {
 
 
   return (
-    <div className="w-full lg:w-2/3">
+    <div className="w-full">
       <div className={styles.calendar_div} id="calendar">
         <h1 className={styles.calendar_header}>
           Overview: <span className={styles.summary_span}>{selectedSport}</span>
