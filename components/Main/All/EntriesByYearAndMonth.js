@@ -20,23 +20,44 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
      }));
    };
 
+  const monthOrder = [
+      'December', 'November', 'October', 'September', 
+      'August', 'July', 'June', 'May', 
+      'April', 'March', 'February', 'January'
+  ];
+
+  function sortMonths(entries) {
+    return entries.sort((a, b) => {
+      const monthA = Object.keys(a)[0];
+      const monthB = Object.keys(b)[0];
+
+      return monthOrder.indexOf(monthA) - monthOrder.indexOf(monthB);
+    });
+  }
+
+   console.log(entriesByYearAndMonth)
 
   return (
     <div className=''>
        
       {entriesByYearAndMonth &&
           entriesByYearAndMonth.map((yearEntry) => {
-            const year = Object.keys(yearEntry)[0]; 
-            const months = yearEntry[year]; 
+            const year = Object.keys(yearEntry)[0];
+            let months = yearEntry[year];
+
+            // Sortiere die Monate hier
+            months = sortMonths(months);
 
             return (
               <div key={year}>
                 <h2 className={styles.yearHeader}>{year} </h2>
                 {months.map((monthEntry) => {
-                  const monthName = Object.keys(monthEntry)[0]; 
+                  const monthName = Object.keys(monthEntry)[0];
                   const entries = monthEntry[monthName];
-                  const totalDuration = entries.reduce((acc, entry) => acc + entry.duration, 0);
-                  
+                  const totalDuration = entries.reduce(
+                    (acc, entry) => acc + entry.duration,
+                    0
+                  );
 
                   return (
                     <div key={monthName}>
@@ -78,13 +99,13 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
                               <Link href={`/details/${entry.entryPath}`}>
                                 <div className={styles.link}>
                                   <p className="my-2  text-xs absolute right-2">
-                                    {formatDate(entry.created_at)} 
+                                    {formatDate(entry.created_at)}
                                   </p>
                                   <p className="my-2 px-2 text-xs absolute right-4 top-6">
                                     {formatDuration(entry.duration)}
                                   </p>
                                   <h2 className="text-2xl mb-4 mt-0 w-8/12 px-2">
-                                    {entry.title} 
+                                    {entry.title}
                                   </h2>
                                   <p className="px-2 mb-4">{entry.entry}</p>
                                 </div>
