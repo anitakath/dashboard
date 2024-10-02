@@ -35,7 +35,6 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
     });
   }
 
-   console.log(entriesByYearAndMonth)
 
   return (
     <div className=''>

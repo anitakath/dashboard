@@ -19,7 +19,7 @@
 .monthYear_header{
     color: var(--purpleDark);
     font-size: 1.5rem;
-    margin: 40px 0px;
+    margin: 10px 0px;
     background-color: var(--purpleDarkHoverOpacity);
     padding: 10px 5px;
     text-align: center;
@@ -37,7 +37,6 @@
     width: 150px;
     color: black;
     display: flex;
-   
 }
 
 .monthYear_header_span{
