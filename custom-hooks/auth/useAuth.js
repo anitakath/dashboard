@@ -25,7 +25,9 @@ const useAuth = (userId) => {
       });
   };
 
+
   const loginHandler = async (loginData) => {
+
     const {
       data: { user },
       error,
@@ -52,7 +54,8 @@ const useAuth = (userId) => {
    
     return user;
   };
-  
+
+
 
 const fetchUserSession = async () => {
   const { data: { session }, error } = await supabase.auth.getSession();

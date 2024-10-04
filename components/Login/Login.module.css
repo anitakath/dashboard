@@ -28,6 +28,15 @@
     margin: 10px 0px;
 }
 
+
+.error_input{
+    background: var(--purpleDarkHover);
+}
+
+.register{
+    color: var(--purpleDark);
+}
+
 @media screen and (max-width: 600px){
     .input, .btn{
         width: 300px;
