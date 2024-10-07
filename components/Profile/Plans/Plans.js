@@ -15,12 +15,13 @@ import PlansEntryField from "./PlansEntryField";
 //REDUX 
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSport, replaceSportsArray } from "@/store/profileReducer";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
 //CUSTOM HOOKS
 import { useDeleteSport } from '@/custom-hooks/useSportEntries';
-import { reFetchSportsData } from '@/custom-hooks/useSportEntries';
+//import { fetchSportsData } from "@/custom-hooks/useSportEntries";
 import { supabase } from '@/services/supabaseClient';
 import { current } from '@reduxjs/toolkit';
-
+import useAuth from '@/custom-hooks/auth/useAuth';
 
 const Plans = () =>{
   const [openDetailsIds, setOpenDetailsIds] = useState([]); // Zustand für mehrere geöffnete IDs
@@ -39,6 +40,8 @@ const Plans = () =>{
   const [currentSport, setCurrentSport] = useState(null);
   const [activeSport, setActiveSport] = useState(null);
   const userId = useSelector((state)=> state.auth.userId)
+  const { fetchSportsData } = useAuth();
+
 
   useEffect(() => {
     const fetchPlannedSports = async () => {
@@ -74,66 +77,69 @@ const Plans = () =>{
 
 
 
-
-  
-  const checkSportHandler = async (sport) => {
-    try {
-      // 1. Insert the sports object into the 'sports' table
-      const { data: insertData, error: insertError } = await supabase
-        .from("sports")
-        .insert([
-          {
-            entryId: sport.entryId,
-            name: sport.name,
-            title: sport.title,
-            entry: sport.entry,
-            label: sport.label,
-            userId: sport.userId,
-            entryPath: sport.entryPath,
-            duration: sport.duration,
-            created_at: new Date().toISOString(), // Current date as creation date
-          },
-        ]);
-
-      if (insertError) {
-        console.error("Error inserting data:", insertError);
-        return; // Exit the function if an error occurs
-      }
-
-      console.log("Data inserted successfully:", insertData);
-
-      // 2. Delete the sports object from the 'sports_planned' table via the API
-      const response = await fetch("/api/plannedSports", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
+const checkSportHandler = async (sport) => {
+  try {
+    // 1. Insert the sports object into the 'sports' table
+    const { data: insertData, error: insertError } = await supabase
+      .from("sports")
+      .insert([
+        {
+          entryId: sport.entryId,
+          name: sport.name,
+          title: sport.title,
+          entry: sport.entry,
+          label: sport.label,
+          userId: sport.userId,
+          entryPath: sport.entryPath,
+          duration: sport.duration,
+          icon: sport.icon,
+          created_at: new Date().toISOString(), // Current date as creation date
         },
-        body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
-      });
+      ]);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error deleting planned sport:", errorData.error);
-        return; // Exit the function if an error occurs
-      }
-
-      const deleteData = await response.json();
-      console.log("Planned sport deleted successfully:", deleteData);
-
-      // 3. Update the state and remove the deleted sport object from the array
-      const filteredSportsArray = sportsArray.filter(
-        (sportObj) => sportObj.entryId !== sport.entryId
-      );
-
-      setSportsArray(filteredSportsArray);
-      await reFetchSportsData(dispatch, userId)
-
-      // Dispatch die removeSport Action an den Redux Store
-      dispatch(removeSport(sport.entryId));
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
+    if (insertError) {
+      console.error("Error inserting data:", insertError);
+      return; // Exit the function if an error occurs
     }
-  };
+
+    //console.log("Data inserted successfully:", insertData);
+
+    // 2. Delete the sports object from the 'sports_planned' table via the API
+    const response = await fetch("/api/plannedSports", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error deleting planned sport:", errorData.error);
+      return; // Exit the function if an error occurs
+    }
+
+    const deleteData = await response.json();
+    //console.log("Planned sport deleted successfully:", deleteData);
+
+    // 3. Update the state and remove the deleted sport object from the array
+    const filteredSportsArray = sportsArray.filter(
+      (sportObj) => sportObj.entryId !== sport.entryId
+    );
+
+    setSportsArray(filteredSportsArray);
+    const data = await fetchSportsData(userId);
+
+    if(data){
+      dispatch(setAllSportsFromSupabase(data));
+    }
+    // Dispatch die removeSport Action an den Redux Store
+    dispatch(removeSport(sport.entryId));
+  } catch (error) {
+    console.error("An unexpected error occurred:", error);
+  }
+};
+
 
   const editSportHandler = (sport) => {
     setCurrentSport(sport);

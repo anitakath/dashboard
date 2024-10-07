@@ -149,7 +149,6 @@ const AddSportForm = ({addSportClickHandler}) => {
      setError(false, ""); // Reset any previous errors related to icon selection
    };
 
-  console.log(state)
 
   return (
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>

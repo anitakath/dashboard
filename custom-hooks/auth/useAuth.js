@@ -118,10 +118,12 @@ const fetchUserSession = async () => {
 
           const data = await response.json();
 
+
+
           if (data) {
             // Da wir bereits in der API gefiltert haben, können wir hier einfach die Daten zurückgeben
             const filteredEntriesByUserId = data.data; // Die API gibt bereits gefilterte Daten zurück
-
+             
             // Überprüfen, ob es Einträge gibt und entsprechende Aktionen ausführen
             /*
             if (filteredEntriesByUserId.length === 0) {
