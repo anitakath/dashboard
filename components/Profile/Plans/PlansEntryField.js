@@ -47,7 +47,7 @@ const PlansEntryField = ({
   };
 
   return (
-    <div className="w-full  ">
+    <div className="w-full ">
       <button onClick={toggleLayout} className={styles.layout_btn}>
         <FontAwesomeIcon
           className="hidden ssm:flex ml-2"

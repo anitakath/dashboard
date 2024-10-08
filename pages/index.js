@@ -64,16 +64,6 @@ export default function Home() {
     (state) => state.sport.allSupabaseSports
   );
   const [successMessage, setSuccessMessage] = useState(null);
-  const  sportsArray = useSelector((state) => state.profile.sportsArray)
-  const selectedSport = useSelector((state) =>  state.sport.selectedSport)
-
-
-
-  const tennisSport = allSupabaseSports.find(
-    (sport) => sport.name === "Tennis"
-  );
-
-
  
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));

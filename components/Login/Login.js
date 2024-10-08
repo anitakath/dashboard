@@ -6,8 +6,7 @@ import styles from './Login.module.css'
 import useAuth from "@/custom-hooks/auth/useAuth";
 
 
-const Login = (props) => {
-  const successMessage = props.successMessage;
+const Login = ({ successMessage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const [inputErrors, setInputErrors] = useState({
@@ -31,21 +30,20 @@ const Login = (props) => {
       router.push("/");
     } catch (err) {
       setError(err.message);
-      setInputErrors({email: true, password: true})
+      setInputErrors({ email: true, password: true });
       // Set input errors based on the error message
     }
   };
 
-   const handleBlur = (e) => {
-     const { name, value } = e.target;
-     if (!value) {
-       setInputErrors((prevErrors) => ({ ...prevErrors, [name]: true }));
-     }
-     if(value){
-       setInputErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
-     }
-   };
-
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (!value) {
+      setInputErrors((prevErrors) => ({ ...prevErrors, [name]: true }));
+    }
+    if (value) {
+      setInputErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
+    }
+  };
 
   return (
     <div className="w-full h-full p-4">
@@ -80,7 +78,8 @@ const Login = (props) => {
           </button>
           {error && <p className="text-red-500">{error}</p>}
           <Link href="/register" className="relative top-2 text-xl">
-            not registered yet? <span className={styles.register}>register here</span>
+            not registered yet?{" "}
+            <span className={styles.register}>register here</span>
           </Link>
           {successMessage && <p>{successMessage}</p>}
         </form>
