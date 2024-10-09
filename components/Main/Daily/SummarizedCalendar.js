@@ -28,10 +28,10 @@ const SummarizedCalendar = (props) =>{
    return (
      <div className={styles.calendar_div}>
      
-         <Calendar />
+      <Calendar />
       
-       {monthsInYear.map((month, monthIndex) => (
-         <div key={month.name} className={styles.month}>
+      {monthsInYear.map((month, monthIndex) => (
+        <div key={month.name} className={styles.month} id={month.name}>
            <h3 className={styles.title}>{month.name}</h3>
            <div className={styles.days}>
              {[...Array(month.days)].map((_, dayIndex) => {
