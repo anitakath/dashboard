@@ -19,12 +19,10 @@ import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
 const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth, allSupabaseSports }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
-  //const [entriesByMonth, setEntriesByMonth] = useState({});
-  // const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
   const dispatch = useDispatch();
 
   // SORTED OBJECTS AND ARRAYS FOR ENTRIESBYYEARANDMONTH; SELECTEDSPORT === "ALL"
-  const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate);
+  const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate, allSupabaseSports);
   const sortedEntriesByMonth = useSortedEntriesByMonth(entriesByMonth);
 
   // always sort sortedEntriesByMonth by date of creation of the respective entries.

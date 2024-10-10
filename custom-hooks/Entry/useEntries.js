@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSortedEntriesByMonth } from "@/store/sportReducer";
 import { getMonth } from "@/utils/helpers";
-const useEntries = (filteredByDate) => {
+const useEntries = (filteredByDate, allSupabaseSports) => {
   const [entriesByMonth, setEntriesByMonth] = useState({});
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const useEntries = (filteredByDate) => {
 
       setEntriesByMonth(updatedEntriesByMonth);
     }
-  }, [filteredByDate]);
+  }, [filteredByDate, allSupabaseSports]);
 
   return { entriesByMonth, entriesByYearAndMonth };
 };
