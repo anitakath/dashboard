@@ -65,7 +65,7 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
         <Navigation />
       </div>
 
-      <div className="flex justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
+      <div className="flex justify-center  lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
           {selectedSport != "start" && (
             <h2 className="subtitle flex items-center"> {selectedSport} </h2>

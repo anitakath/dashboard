@@ -127,10 +127,8 @@ const Navigation = () => {
   
 
   return (
-    <div className="w-full relative my-4 p-0 flex flex-col items-center shadow-section">
+    <div className="w-full relative  lg:my-4 p-0 flex flex-col items-center shadow-section">
       <h1 className="title title_maxi">DASHBOARD</h1>
-
-      <h2 className="subtitle">Your sports</h2>
 
       <div className="hidden lg:inline">
         <SortSports
