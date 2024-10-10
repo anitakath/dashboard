@@ -64,6 +64,7 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
                         <button
                           className={styles.monthYear_header}
                           onClick={() => toggleMonthEntries(monthName, year)}
+
                         >
                           <p className={styles.monthYear_header_p}>
                             {monthName}

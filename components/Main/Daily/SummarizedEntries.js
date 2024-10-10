@@ -13,7 +13,7 @@ import SummarizedCalendar from "./SummarizedCalendar";
 import CurrentMonthEntries from "./CurrentMonthEntries";
 import FilteredMonthEntries from "./FilteredMonthsEntries";
 
-const SummarizedEntries = (props) => {
+const SummarizedEntries = () => {
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [isExpanded, setIsExpanded] = useState(false);
   const currentDate = new Date();
