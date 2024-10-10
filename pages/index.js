@@ -14,6 +14,9 @@ import { setShowAlert } from "@/store/sportReducer";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 //CUSTOM HOOKS
 import useAuth from "@/custom-hooks/auth/useAuth";
+import { fetchSportsData } from "@/custom-hooks/useSportEntries";
+
+
 /*
 export async function getServerSideProps() {
   const currentDate = new Date();
@@ -63,7 +66,14 @@ export default function Home() {
   const allSupabaseSports = useSelector(
     (state) => state.sport.allSupabaseSports
   );
+  const userId = useSelector((state) => state.auth.userId);
   const [successMessage, setSuccessMessage] = useState(null);
+
+
+  useEffect(()=>{
+    console.log('FETCH DATA')
+    fetchSportsData(dispatch, userId)
+  }, [])
  
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));

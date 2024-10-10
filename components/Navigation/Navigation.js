@@ -53,8 +53,6 @@ const Navigation = () => {
   const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
   const showAlert = useSelector((state) => state.sport.showAlert);
-  const currentSport = useSelector((state) => state.sport.currentSport)
-
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));

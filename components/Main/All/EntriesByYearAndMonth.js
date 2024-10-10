@@ -7,7 +7,7 @@ import { formatDate } from '@/custom-hooks/formatDate';
 import { formatDuration } from '@/custom-hooks/formatDate';
 
 
-const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
+const EntriesByYearAndMonth = ({ allSupabaseSports, entriesByYearAndMonth, filteredEntries, currentSport }) =>{
 
    const [openMonths, setOpenMonths] = useState({});
    const toggleMonthEntries = (monthName, year) => {
@@ -34,6 +34,7 @@ const EntriesByYearAndMonth = ({ entriesByYearAndMonth, currentSport }) =>{
       return monthOrder.indexOf(monthA) - monthOrder.indexOf(monthB);
     });
   }
+
 
 
   return (

@@ -52,6 +52,7 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
     dispatch(setSelectedSport("daily"));
   };
 
+
   return (
     <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">
       <h1 className="title title_mini"> DASHBOARD </h1>
@@ -98,7 +99,10 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
             <SummarizedEntries filteredEntries={filteredEntries} />
           )}
           {selectedSport === "all" && selectedSport != "start" && (
-            <Entry filteredByDate={allSupabaseSports} />
+            <Entry
+              filteredByDate={allSupabaseSports}
+              filteredEntries={filteredEntries}
+            />
           )}
           {selectedSport != "all" &&
             selectedSport !== "daily" &&

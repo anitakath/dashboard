@@ -93,12 +93,12 @@ const reFetchSportsData = async (dispatch, userId) => {
     const data = await response.json();
     dispatch(setAllSportsFromSupabase(data.data));
   } catch (error) {
-    console.error("Error fetching sports data:", error);
+    console.error("Error fetching sports data:", error)
   }
 };
 
 
-const fetchSportsData = async (dispatch, userId) => {
+export const fetchSportsData = async (dispatch, userId) => {
   try {
     const response = await fetch(`/api/sports?userId=${userId}`);
     if (!response.ok) {

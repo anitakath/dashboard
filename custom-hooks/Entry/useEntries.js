@@ -67,7 +67,7 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
 
       setEntriesByMonth(updatedEntriesByMonth);
     }
-  }, [filteredByDate, allSupabaseSports]);
+  }, [/*filteredByDate, allSupabaseSports*/]);
 
   return { entriesByMonth, entriesByYearAndMonth };
 };
