@@ -42,10 +42,11 @@
 
 
 .monthYear_header_p{
-    margin: 0px 20px;
+    margin: 0px 5px;
     width: 150px;
     color: black;
     display: flex;
+
 }
 
 .monthYear_header_span{
@@ -54,7 +55,6 @@
     position: absolute;
     right: 15px;
     top: 20px;
-
 }
 
 .totalDuration{
@@ -119,5 +119,14 @@
 @media screen and (max-width: 600px){
     .container{
         width: 100%
+    }
+
+    .monthYear_header_span{
+        right: 5px;
+        top: 17px;
+    }
+
+    .monthYear_header_p{
+        margin: 0px;
     }
 }
