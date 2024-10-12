@@ -75,7 +75,6 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth, allSupa
   //sort the entries by .created_at
   sortedEntries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-  console.log(sortedEntries)
 
   return (
     <div className={styles.container}>
