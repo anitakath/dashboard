@@ -1,10 +1,10 @@
 
 import { useDispatch } from "react-redux";
-import { persistor } from "@/store";
-import { setLogin, setLogout, setUserId, setUser } from "@/store/authReducer";
-import { setSelectedSport } from "@/store/sportReducer";
-import { supabase } from "@/services/supabaseClient";
-import { setAllSportsFromSupabase } from "@/store/sportReducer";
+import { persistor } from "../../store";
+import { setLogin, setLogout, setUserId, setUser } from "../../store/authReducer";
+import { setSelectedSport, setAllSportsFromSupabase  } from "../../store/sportReducer";
+import { supabase } from "../../services/supabaseClient";
+
 
 const useAuth = (userId) => {
   const dispatch = useDispatch();

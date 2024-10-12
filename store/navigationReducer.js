@@ -2,7 +2,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-
 const navigationSlice = createSlice({
   name: "navigation",
   initialState: {
@@ -12,8 +11,6 @@ const navigationSlice = createSlice({
     setSort(state, action) {
       state.sort = action.payload;
     },
-   
-    
   },
 });
 

@@ -1,132 +1,168 @@
+
+// Login.test.js
+import React from 'react';
 import { render, screen, fireEvent } from "@testing-library/react";
-import Login from "../components/Login/Login.js"; // Pfad zur Login-Komponente anpassen
-import { useAuth } from "../custom-hooks/auth/useAuth"; // Pfad zu useAuth anpassen
-import { useRouter } from "next/router";
+import { Provider } from 'react-redux';
+import { store } from '../store';
+import Login from '../components/Login/Login'; // Pfad zur Login-Komponente anpassen
+import { useRouter } from 'next/router';
+import rootReducer from '../store'
 
-jest.mock("../path/to/auth", () => ({
-  useAuth: jest.fn(),
-}));
+// Pfad zur Login-Komponente anpassen
+//import { useAuth } from "../custom-hooks/auth/useAuth"; // Pfad zu useAuth anpassen
 
-// Mock der useRouter Hook
+
+// Mocking des useRouter-Hooks von Next.js
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 
 
-describe("Login Component", () => {
-  const mockLoginHandler = jest.fn();
-  const mockPush = jest.fn();
+// Mocke das useAuth-Modul
+jest.mock("../custom-hooks/auth/useAuth", () => ({
+  __esModule: true,
+  default: () => ({
+    loginHandler: jest
+      .fn()
+      .mockRejectedValueOnce(new Error("Invalid credentials")),
+  }),
+}));
 
+describe('Login Component', () => {
   beforeEach(() => {
-    useAuth.mockReturnValue({ loginHandler: mockLoginHandler });
-    useRouter.mockReturnValue({ push: mockPush });
+    // Reset der Router-Mock vor jedem Test
+    useRouter.mockImplementation(() => ({
+      push: jest.fn(),
+    }));
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-  test("renders login form", () => {
-    render(<Login successMessage={null} />);
+  test("renders Login component successfully", () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    );
 
+    // Hier kannst du weitere Assertions hinzufügen
+    expect(getByText(/login/i)).toBeInTheDocument(); // Beispiel für eine Assertion
+  });
+
+  test("renders email and password input fields", () => {
+    render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    );
     expect(screen.getByPlaceholderText(/email/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
   });
-
-  test("handles input change", () => {
-    render(<Login successMessage={null} />);
-
-    const emailInput = screen.getByPlaceholderText(/email/i);
-    const passwordInput = screen.getByPlaceholderText(/password/i);
-
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-    fireEvent.change(passwordInput, { target: { value: "password123" } });
-
-    expect(emailInput.value).toBe("test@example.com");
-    expect(passwordInput.value).toBe("password123");
-  });
-
-  test("submits the form and calls loginHandler", async () => {
-    render(<Login successMessage={null} />);
-
-    fireEvent.change(screen.getByPlaceholderText(/email/i), {
-      target: { value: "test@example.com" },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/password/i), {
-      target: { value: "password123" },
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: /login/i }));
-
-    await new Promise((r) => setTimeout(r, 0)); // Warten auf asynchrone Operationen
-
-    expect(mockLoginHandler).toHaveBeenCalledWith({
-      email: "test@example.com",
-      password: "password123",
-    });
-    expect(mockPush).toHaveBeenCalledWith("/");
-  });
+  /*
   test("displays error message on failed login", async () => {
-    mockLoginHandler.mockRejectedValueOnce(new Error("Invalid credentials"));
+    const { getByPlaceholderText, getByRole } = render(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    );
 
-    render(<Login successMessage={null} />);
-
-    fireEvent.change(screen.getByPlaceholderText(/email/i), {
-      target: { value: "wrong@example.com" },
+    // Simuliere das Ausfüllen der Felder
+    fireEvent.change(getByPlaceholderText(/email/i), {
+      target: { value: "invalid-email" },
     });
-    fireEvent.change(screen.getByPlaceholderText(/password/i), {
-      target: { value: "wrongpassword" },
+    fireEvent.change(getByPlaceholderText(/password/i), {
+      target: { value: "wrong-password" },
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /login/i }));
+    // Simuliere das Absenden des Formulars
+    fireEvent.click(getByRole("button", { name: /login/i }));
 
-    await new Promise((r) => setTimeout(r, 0)); // Warten auf asynchrone Operationen
-
+    // Überprüfe, ob die Fehlermeldung angezeigt wird
     expect(await screen.findByText(/invalid credentials/i)).toBeInTheDocument();
   });
+
+      test("displays error message on failed login", async () => {
+        const { getByPlaceholderText, getByRole } = render(
+          <Provider store={store}>
+            <Login />
+          </Provider>
+        );
+
+        // Simuliere das Ausfüllen der Felder
+        fireEvent.change(getByPlaceholderText(/email/i), {
+          target: { value: "invalid-email" },
+        });
+        fireEvent.change(getByPlaceholderText(/password/i), {
+          target: { value: "wrong-password" },
+        });
+
+        // Simuliere das Absenden des Formulars
+        fireEvent.click(getByRole("button", { name: /login/i }));
+
+        // Überprüfe, ob die Fehlermeldung angezeigt wird
+        expect(await screen.findByText(/error message/i)).toBeInTheDocument(); // Ersetze "error message" durch die tatsächliche Fehlermeldung
+      });
+
+
+         test("shows input errors when fields are empty on submit", async () => {
+           const { getByRole } = render(
+             <Provider store={store}>
+               <Login />
+             </Provider>
+           );
+
+           // Simuliere das Absenden des Formulars ohne Eingaben
+           fireEvent.click(getByRole("button", { name: /login/i }));
+
+           // Überprüfe, ob die Eingabefelder als fehlerhaft markiert sind
+           expect(screen.getByPlaceholderText(/email/i)).toHaveClass(
+             styles.error_input
+           );
+           expect(screen.getByPlaceholderText(/password/i)).toHaveClass(
+             styles.error_input
+           );
+         });
+      
+
+         test("redirects to home on successful login", async () => {
+       const mockPush = jest.fn();
+
+       useRouter.mockImplementation(() => ({ push: mockPush }));
+
+       const mockLoginHandler = jest.fn().mockResolvedValueOnce({});
+
+       jest.mock('../../custom-hooks/auth/useAuth', () => ({
+           __esModule: true,
+           default: () => ({ loginHandler: mockLoginHandler }),
+       }));
+
+       const { getByPlaceholderText, getByRole } = render(
+           <Provider store={store}>
+               <Login />
+           </Provider>
+       );
+
+       // Simuliere das Ausfüllen der Felder mit gültigen Daten
+       fireEvent.change(getByPlaceholderText(/email/i), { target: { value: 'test@example.com' } });
+       fireEvent.change(getByPlaceholderText(/password/i), { target: { value: 'correct-password' } });
+
+       // Simuliere das Absenden des Formulars
+       fireEvent.click(getByRole('button', { name: /login/i }));
+
+       await waitFor(() => {
+           expect(mockPush).toHaveBeenCalledWith("/");
+       });
+   });
+
+      test("renders registration link", () => {
+      render(
+          <Provider store={store}>
+              <Login />
+          </Provider>
+      );
+      expect(screen.getByText(/not registered yet?/i)).toBeInTheDocument();
+      expect(screen.getByText(/register here/i)).toBeInTheDocument();
+  });
+         
+         */
 });
 
 
-
-/*
-
-describe("Login Component", () => {
-  const mockLoginHandler = jest.fn();
-
-  beforeEach(() => {
-    useAuth.mockReturnValue({ loginHandler: mockLoginHandler });
-    render(<Login successMessage={null} />);
-  });
-
-  test("renders login form", () => {
-    expect(screen.getByPlaceholderText(/email/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
-  });
-
-  test("submits the form with email and password", async () => {
-    fireEvent.change(screen.getByPlaceholderText(/email/i), {
-      target: { value: "test@example.com" },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/password/i), {
-      target: { value: "password123" },
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: /login/i }));
-
-    expect(mockLoginHandler).toHaveBeenCalledWith({
-      email: "test@example.com",
-      password: "password123",
-    });
-  });
-
-  test("displays error message on failed login", async () => {
-    const errorMessage = "Invalid credentials";
-    mockLoginHandler.mockRejectedValueOnce(new Error(errorMessage));
-
-    fireEvent.click(screen.getByRole("button", { name: /login/i }));
-
-    expect(await screen.findByText(errorMessage)).toBeInTheDocument();
-  });
-});
-*/

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import styles from './Login.module.css'
 //CUSTOM HOOKS
-import useAuth from "@/custom-hooks/auth/useAuth";
+import useAuth from "../../custom-hooks/auth/useAuth";
 
 
 const Login = ({ successMessage }) => {
@@ -73,12 +73,11 @@ const Login = ({ successMessage }) => {
             onChange={handleChange}
           />
           <button type="submit" className={styles.btn}>
-            {" "}
-            LOGIN{" "}
+            LOGIN
           </button>
           {error && <p className="text-red-500">{error}</p>}
           <Link href="/register" className="relative top-2 text-xl">
-            not registered yet?{" "}
+            not registered yet?
             <span className={styles.register}>register here</span>
           </Link>
           {successMessage && <p>{successMessage}</p>}

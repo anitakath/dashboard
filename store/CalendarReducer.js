@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { supabase } from "@/services/supabaseClient";
+import { supabase } from "../services/supabaseClient";
 
 
 const initialState = {

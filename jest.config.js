@@ -1,20 +1,20 @@
-/*module.exports = {
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-  moduleNameMapper: {
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-  },
-};
-*/
-/*
-module.exports = {
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
-};*/
-module.exports = {
+/**
+ * For a detailed explanation regarding each configuration property, visit:
+ * https://jestjs.io/docs/configuration
+ */
+
+
+const config = {
+  clearMocks: true,
+  collectCoverage: true,
+  coverageDirectory: "coverage",
+  coverageProvider: "v8",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"], // Füge dies hinzu
   testEnvironment: "jsdom",
   moduleNameMapper: {
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "\\.(css|less|scss)$": "identity-obj-proxy",
+    //"^@/(.*)$": "<rootDir>/src/$1", // Passe den Pfad entsprechend an
   },
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 };
+
+ module.exports = config;
