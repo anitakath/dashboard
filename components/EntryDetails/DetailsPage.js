@@ -44,14 +44,14 @@ const DetailsPage = () => {
   }
 
   return (
-    <div className="w-full h-screen  m-0 md:p-14">
+    <div className="w-full h-screen m-0 md:p-14">
       <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative z-20">
         <div className=" absolute w-full h-full m-0  z-0 top-0">
           {/* future image div*/}
         </div>
         <div className="absolute w-full h-full z-10 top-0">
-          <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
-            <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
+          <Link href="/" className=" absolute mt-2 p-2 cursor-pointer">
+            <FontAwesomeIcon icon={faArrowLeft} className={styles.goback_link}/>
           </Link>
 
           <div className={styles.buttons_div}>
@@ -64,19 +64,21 @@ const DetailsPage = () => {
             </button>
           </div>
 
-          <div className="m-4 p-4 pl-14  w-full ">
-            <h1 className="text-2xl border-b-2 my-2"> Details page </h1>
-           
+          <div className=" mt-4 w-full ">
+         
             {filteredEntry.length > 0 && (
-              <div className="my-4 py-2">
+              <div className="mt-10 py-2">
                 <h2 className={styles.title}> {filteredEntry[0].title}</h2>
                 <p className={styles.entry}>{filteredEntry[0].entry}</p>
-
-              
               </div>
             )}
 
-            {loading && <p className="text-2xl flex justify-center text-red-500"> deleting ...</p>}
+            {loading && (
+              <p className="text-2xl flex justify-center text-red-500">
+                {" "}
+                deleting ...
+              </p>
+            )}
           </div>
         </div>
       </div>

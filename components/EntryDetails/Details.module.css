@@ -5,6 +5,7 @@
     font-size: 2rem;
     color: var(--purpleDarkHover);
     margin: 5px 0px;
+    padding: 0px 5px;
 }
 
 
@@ -12,26 +13,45 @@
     font-size: 1.2rem;
     margin: 10px 0px;
     color: var(--purpleDark);
-
+    padding: 0px 5px;
 }
 
 
 .buttons_div{
     position: absolute;
     right: 10px;
-    top: 10px;
+}
+
+.goback_link{
+    font-size: 1.2rem;
 }
 
 .delete_btn, .edit_btn{
     width: 60px;
     height: 60px;
     margin: 0px 10px;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     cursor: pointer;
     padding: 5px;
     transition: 0.2s ease;
 }
 
-.delete_btn:hover{
+.delete_btn:hover, .goback_link:hover{
     color: var(--purpleDark);
+}
+
+@media screen and (max-width: 600px){
+
+    .goback_link{
+        position: relative;
+        top: 4px;
+    }
+    .delete_btn, .edit_btn{
+        width: 35px;
+        height: 35px;
+        margin: 0px 5px;
+        font-size: 1rem;
+        position: relative;
+        top: 12px;
+    }
 }

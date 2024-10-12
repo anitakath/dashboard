@@ -46,8 +46,10 @@ const PlansEntryField = ({
     }
   };
 
+  console.log(sortedByDate);
+
   return (
-    <div className="w-full ">
+    <div className="w-full border-8 ">
       <button onClick={toggleLayout} className={styles.layout_btn}>
         <FontAwesomeIcon
           className="hidden ssm:flex ml-2"
