@@ -25,7 +25,6 @@ const Menu = ({ setOpenMenu }) => {
     }));
   };
 
-  console.log(openSections);
 
    const navigateHandler = (e) => {
      const sectionMap = {

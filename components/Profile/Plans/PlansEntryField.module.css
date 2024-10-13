@@ -22,6 +22,14 @@
     padding: 16px; 
 }
 
+.date_title{
+    margin-top: 30px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
 .sport_entry_div{
     background: var(--purpleDarkHoverOpacity);
     width: 95%;
@@ -108,6 +116,11 @@
     .grid {
         grid-template-columns: repeat(2, 1fr); 
         gap: 5px;
+    }
+
+    .date_title{
+        padding: 0px 10px;
+        margin-top: 15px;
     }
 
   
