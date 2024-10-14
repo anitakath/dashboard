@@ -22,12 +22,20 @@
     padding: 16px; 
 }
 
+.sportItem{
+    margin: 2px;
+    max-height: 400px;
+    overflow: scroll;
+}
+
+
 .date_title{
     margin-top: 30px;
     height: 50px;
     display: flex;
     align-items: center;
     font-size: 1.3rem;
+    padding: 0px 5px;
 }
 
 .sport_entry_div{
@@ -75,7 +83,10 @@
 
 .sport_entry_details.expanded {
     max-height: 500px; 
+   
 }
+
+
 .action_btns{
     width: 40px;
     height: 40px;
@@ -121,32 +132,47 @@
     .date_title{
         padding: 0px 10px;
         margin-top: 15px;
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
     }
+
+    .created_at_h2,  .duration_h3{
+        font-size: 0.8rem;
+    }
+
+    .field{
+        padding: 0;
+        border: 2px solid blue;
+    }
+
+
+    .sport_entry_div{
+        margin: 5px 0px;
+        width: 100%;
+    }
+
 
   
     .enlarge_btn{
         width: 20px;
-        top: 7px;
-        right: 8px;
+        top: 4px;
+        right: 2px;
         font-size: 0.5rem;
     }
+    
+    .enlarge_icon{
+        font-size: 1rem;
+    }
+
 
     .sport_entry_div_grid{
-       /* height: 100px;*/
         margin: 0px 10px;
         padding: 0;
         text-align: center;
-        border: 2px solid green;
-    }
-/*
-     .created_at_h2{
-        text-align: center;
 
     }
 
-      .duration_h3{
-        display: none;
-    }*/
 
 }
 
@@ -218,7 +244,7 @@
 .expanded_grid{
     width: 100%;
     position: absolute;
-    z-index: 100;
+    z-index: 1000;
     left: 0;
     top: 0px;
     margin: 0px;

@@ -78,6 +78,9 @@ function groupByDate(entries) {
 
 const groupedEntries = groupByDate(sortedByDate);
 
+
+console.log(enlargedEntryId);
+
   return (
     <div className="w-full">
       <button onClick={toggleLayout} className={styles.layout_btn}>
@@ -97,8 +100,10 @@ const groupedEntries = groupByDate(sortedByDate);
             .slice()
             .reverse()
             .map((group) => (
-              <div key={group.dateTitle}>
-                <h2 className={styles.date_title}>{group.dateTitle}</h2>
+              <div key={group.dateTitle} className={styles.sportItem}>
+                {enlargedEntryId === null &&
+                  <h2 className={styles.date_title}>{group.dateTitle}</h2>
+                }
                 {group.entries.map((sport) => (
                   <div
                     key={sport.entryId}
@@ -132,7 +137,7 @@ const groupedEntries = groupByDate(sortedByDate);
                         </button>
                         <div className="w-full flex flex-col items-center mt-4">
                           <h1
-                            className="md:text-2xl cursor-pointer"
+                            className=" text-s md:text-2xl cursor-pointer"
                             onClick={() => enlargeWorkoutHandler(sport.entryId)}
                           >
                             {sport.name}

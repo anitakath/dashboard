@@ -29,9 +29,13 @@ const Entry = ({ filteredByDate, filteredEntries, sportsDurationByMonth, allSupa
 
   if (sortedEntriesByMonth) {
     for (const month in sortedEntriesByMonth) {
-      sortedEntriesByMonth[month].sort((a, b) => {
-        return new Date(b.created_at) - new Date(a.created_at);
-      });
+      if (Array.isArray(sortedEntriesByMonth[month])) {
+        const entriesCopy = [...sortedEntriesByMonth[month]];
+        entriesCopy.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+        sortedEntriesByMonth[month] = entriesCopy;
+      }
     }
   }
 
