@@ -31,11 +31,11 @@
 
 .date_title{
     margin-top: 30px;
-    height: 50px;
+    height: 40px;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 1.3rem;
-    padding: 0px 5px;
 }
 
 .sport_entry_div{
@@ -160,7 +160,7 @@
         right: 2px;
         font-size: 0.5rem;
     }
-    
+
     .enlarge_icon{
         font-size: 1rem;
     }
