@@ -120,7 +120,7 @@ export default function Home() {
 
 
   //console.log(currentSport)
-  console.log('test')
+  //console.log('test')
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">

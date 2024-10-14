@@ -16,7 +16,7 @@ const DailyDetails = () => {
   );
   const router = useRouter();
   const { id } = router.query;
-  const [isEnlarged, setIsEnlarged] = useState(false)
+  const [isEnlarged, setIsEnlarged] = useState(false);
   const [enlargedEntryId, setEnlargedEntryId] = useState(null);
   // Function for filtering entries by date
   const filterEntriesByDate = (dateString) => {
@@ -32,7 +32,7 @@ const DailyDetails = () => {
       JULY: 6,
       AUGUST: 7,
       SEPTEMBER: 8,
-      OKTOBER: 9,
+      OCTOBER: 9,
       NOVEMBER: 10,
       DECEMBER: 11,
     };
@@ -42,7 +42,6 @@ const DailyDetails = () => {
       monthMap[month.toUpperCase()],
       parseInt(day)
     );
-
     return {
       targetDate,
       entries: allSupabaseSports.filter((entry) => {
@@ -67,8 +66,27 @@ const DailyDetails = () => {
       })} ${targetDate.getFullYear()}`
     : "";
 
+  // Function to get historical entries for the last five years
+  const getHistoricalEntries = () => {
+    if (!targetDate) return [];
 
-    console.log(isEnlarged)
+    return Array.from({ length: 5 }, (_, index) => {
+      const yearToCheck = targetDate.getFullYear() - (index + 1);
+      return allSupabaseSports.filter((entry) => {
+        const entryDate = new Date(entry.created_at);
+        return (
+          entryDate.getFullYear() === yearToCheck &&
+          entryDate.getMonth() === targetDate.getMonth() &&
+          entryDate.getDate() === targetDate.getDate()
+        );
+      });
+    });
+  };
+
+  // Get historical entries
+  const historicalEntries = getHistoricalEntries();
+
+
 
   return (
     <div className="w-full h-screen m-0 md:p-14">
@@ -84,7 +102,7 @@ const DailyDetails = () => {
 
         <div className="w-full">
           <h1 className="text-xl flex justify-center my-6 w-full relative left-0 top-8">
-            details - {formattedDate}
+            details - {formattedDate} MOINCITO
           </h1>
 
           <div className="my-10 pt-1">
@@ -92,13 +110,22 @@ const DailyDetails = () => {
               filteredEntries.map((entry, idx) => (
                 <div
                   key={entry.id}
-                  className={`${enlargedEntryId === entry.id ? styles.entry_div_enlarged : styles.entry_div} ${entry.label ? styles[entry.label] : ""}`}
+                  className={`${
+                    enlargedEntryId === entry.id
+                      ? styles.entry_div_enlarged
+                      : styles.entry_div
+                  } ${entry.label ? styles[entry.label] : ""}`}
                 >
                   <h1>{entry.title}</h1>
                   <p>{entry.entry}</p>
+
                   <button
                     className={styles.enlarge_div}
-                    onClick={() => setEnlargedEntryId(enlargedEntryId === entry.id ? null : entry.id)}
+                    onClick={() =>
+                      setEnlargedEntryId(
+                        enlargedEntryId === entry.id ? null : entry.id
+                      )
+                    }
                   >
                     <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
                   </button>
@@ -106,31 +133,43 @@ const DailyDetails = () => {
               ))}
           </div>
 
-          <div className="my-4  flex-col">
+          <div className="my-4 flex-col">
             <h1 className="text-xl m-4 pb-1 flex justify-center">
               a 5 year story
             </h1>
-            <div className="flex flex-col pb-10 items-center justify-evenly ">
-              <div className={styles.historical_entry_div}>
-                <h2>2019</h2>
-                <p>*coming soon*</p>
-              </div>
-              <div className={styles.historical_entry_div}>
-                <h2>2020</h2>
-                <p>*coming soon*</p>
-              </div>
-              <div className={styles.historical_entry_div}>
-                <h2>2021</h2>
-                <p>*coming soon*</p>
-              </div>
-              <div className={styles.historical_entry_div}>
-                <h2>2022</h2>
-                <p>*coming soon*</p>
-              </div>
-              <div className={styles.historical_entry_div}>
-                <h2>2023</h2>
-                <p>*coming soon*</p>
-              </div>
+            <div className="flex pb-10 items-center justify-evenly">
+              {historicalEntries.map((yearEntries, index) => {
+                const yearToDisplay = targetDate
+                  ? targetDate.getFullYear() - (index + 1)
+                  : "";
+                if (yearEntries.length > 0) {
+                  return (
+                    <div key={index} className={styles.historical_entry_div}>
+                      <h2 className="text-xl my-2">{yearToDisplay}</h2>
+                      {yearEntries.map((entry) => (
+                        <div className={styles.historical_entry}>
+                          <p key={entry.id}>
+                            {entry.title}: {entry.entry}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                } else {
+                  // Format the date string for display
+                  const noEntryMessage = `On ${targetDate.getDate()}.${
+                    targetDate.getMonth() + 1
+                  }.${yearToDisplay}, no entry was created.`;
+                  return (
+                    <div key={index} className={styles.historical_entry_div}>
+                      <h2 className="text-xl my-2">{yearToDisplay}</h2>
+                      <div className={styles.historical_noentry}>
+                        <p>{noEntryMessage}</p>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
             </div>
           </div>
         </div>

@@ -164,11 +164,11 @@ const AddEntryForm = (props) => {
 
 
   return (
-    <div className="my-2 p-2 flex flex-col w-full overflow-scroll flex items-center justify-center">
+    <div className="my-2 p-2 flex flex-col justify-center w-full overflow-scroll flex items-center justify-center">
       {submitting && <Spinner />}
       {!submitting && formIsOpen && (
         <form
-          className="my-2  p-2 flex flex-col w-full"
+          className="my-2  p-2 flex flex-col flex flex-col items-center w-full"
           onSubmit={submitHandler}
         >
           <label className={styles.labels}> Title </label>
@@ -204,7 +204,7 @@ const AddEntryForm = (props) => {
             onChange={changeHandler}
           ></textarea>
 
-          <div className="h-8 h-20 md:h-12 ">
+          <div className=" h-20 md:h-12 ">
             {isTouched.text && !validateText(inputs.text) && (
               <p className={styles.errorText}>
                 The text must be between 5 and 1000 characters long.
@@ -215,7 +215,7 @@ const AddEntryForm = (props) => {
           <h2 className=" mb-4 text-center">
             enter the date and duration of your sports sessions
           </h2>
-          <div className="flex flex-col md:flex-row items-center justify-evenly items-center ">
+          <div className="flex border-b-2 border-red-700 w-6/12 flex-col md:flex-row items-center justify-evenly items-center ">
             <div className={styles.date_div}>
               <input
                 type="datetime-local"
@@ -232,7 +232,7 @@ const AddEntryForm = (props) => {
               type="number"
               name="duration"
               placeholder="60 min"
-              className={`${styles.inputs} ${
+              className={`${styles.duration} ${
                 isTouched.duration && !validateDuration(inputs.duration)
                   ? styles.error
                   : ""
