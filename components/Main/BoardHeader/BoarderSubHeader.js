@@ -50,8 +50,6 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
     }
   };
 
-  console.log(currentSport)
-
   return (
     <div className="mb-2 flex flex-wrap justify-center relative bottom-2">
       <div className="relative w-full h-8">

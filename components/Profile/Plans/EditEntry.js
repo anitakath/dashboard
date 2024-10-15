@@ -1,16 +1,77 @@
 import { current } from "@reduxjs/toolkit";
 import React from "react";
 import styles from "./EditEntry.module.css"; // Importiere die CSS-Moduldatei
-
+import { useSelector } from "react-redux";
 const EditEntry = ({
   isModalOpen,
   currentSport,
-  saveChanges,
-  handleInputChange,
+  setCurrentSport,
   setIsModalOpen,
 }) => {
   // Füge setIsModalOpen als Prop hinzu
+  const currentSports = useSelector((state) => state.sport.currentSport[0]);
   if (!isModalOpen) return null;
+
+   const handleInputChange = (e) => {
+     const { name, value } = e.target;
+
+     setCurrentSport((prev) => {
+       // look for an object in currentSports (name & color)whose .name matches the input.name property
+       const matchingSport = currentSports.find(
+         (sport) => sport.name === value
+       );
+
+       //If there is an object whose name property matches the name of the input, the colour of the object is used as the label property.
+       return {
+         ...prev,
+         [name]: value,
+         label: matchingSport ? matchingSport.color : prev.label,
+       };
+     });
+   };
+
+    const saveChanges = async () => {
+      if (!currentSport) return; //Check whether currentSport is set
+
+      try {
+        // 1. Send the edited sports object to the API for updating
+        const response = await fetch("/api/plannedSports", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(currentSport), // Send the entire current sports object
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error updating planned sport:", errorData.error);
+          return; // Exit the function if an error occurs
+        }
+
+        const updateData = await response.json();
+        console.log("Planned sport updated successfully:", updateData);
+
+        // 2. replace the object in the local array
+        const replaceObjectInArray = (array, currentSport) => {
+          return array
+            .map((item) => {
+              if (item.entryId === currentSport.entryId) {
+                return currentSport; // Replace the object with currentSport
+              }
+              return item; //stay with the original object
+            })
+            .filter((item) => item !== null); // Filter out any zero values
+        };
+
+        setSportsArray((prevArray) =>
+          replaceObjectInArray(prevArray, currentSport)
+        );
+      } catch (error) {
+        console.error("An unexpected error occurred:", error);
+      }
+    };
+
 
 
 

@@ -78,6 +78,8 @@ const Plans = () =>{
 
 
 const checkSportHandler = async (sport) => {
+
+  console.log(sport)
   try {
     // 1. Insert the sports object into the 'sports' table
     const { data: insertData, error: insertError } = await supabase
@@ -93,7 +95,7 @@ const checkSportHandler = async (sport) => {
           entryPath: sport.entryPath,
           duration: sport.duration,
           icon: sport.icon,
-          created_at: new Date().toISOString(), // Current date as creation date
+          created_at: sport.created_at
         },
       ]);
 
@@ -142,67 +144,10 @@ const checkSportHandler = async (sport) => {
 
 
   const editSportHandler = (sport) => {
+    console.log(sport)
     setCurrentSport(sport);
     setIsModalOpen(true);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    setCurrentSport((prev) => {
-      // look for an object in currentSports (name & color)whose .name matches the input.name property
-      const matchingSport = currentSports.find((sport) => sport.name === value);
-
-      //If there is an object whose name property matches the name of the input, the colour of the object is used as the label property.
-      return {
-        ...prev,
-        [name]: value,
-        label: matchingSport ? matchingSport.color : prev.label,
-      };
-    });
-  };
-
-  const saveChanges = async () => {
-    if (!currentSport) return; //Check whether currentSport is set
-
-    try {
-      // 1. Send the edited sports object to the API for updating
-      const response = await fetch("/api/plannedSports", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(currentSport), // Send the entire current sports object
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error updating planned sport:", errorData.error);
-        return; // Exit the function if an error occurs
-      }
-
-      const updateData = await response.json();
-      console.log("Planned sport updated successfully:", updateData);
-
-      // 2. replace the object in the local array
-      const replaceObjectInArray = (array, currentSport) => {
-        return array
-          .map((item) => {
-            if (item.entryId === currentSport.entryId) {
-              return currentSport; // Replace the object with currentSport
-            }
-            return item; //stay with the original object
-          })
-          .filter((item) => item !== null); // Filter out any zero values
-      };
-
-      setSportsArray((prevArray) =>
-        replaceObjectInArray(prevArray, currentSport)
-      );
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
-    }
-  };
+  }; 
 
   useEffect(() => {
     setSortedSportsArray(sportsArray);
@@ -237,8 +182,7 @@ const checkSportHandler = async (sport) => {
       <EditEntry
         isModalOpen={isModalOpen}
         currentSport={currentSport}
-        saveChanges={saveChanges}
-        handleInputChange={handleInputChange}
+        setCurrentSport={setCurrentSport}
      
       />
 

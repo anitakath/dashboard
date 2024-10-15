@@ -76,10 +76,8 @@ function groupByDate(entries) {
   );
 }
 
-const groupedEntries = groupByDate(sortedByDate);
+  const groupedEntries = groupByDate(sortedByDate);
 
-
-console.log(enlargedEntryId);
 
   return (
     <div className="w-full">
