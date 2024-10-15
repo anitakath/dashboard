@@ -12,7 +12,12 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />{" "}
-        {/* Füge hier dein Favicon hinzu */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />{" "}
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="theme-color" content="#ffffff" />{" "}
       </Head>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
