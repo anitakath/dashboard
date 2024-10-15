@@ -78,12 +78,13 @@
   height: 40px;
   transition: 0.2s ease;
   border-bottom: 2px solid var(--purpleDarkHoverOpacity);
+   background: var(--purpleDarkHoverOpacity);
   width: 200px;
 }
 
 
 .submit_btn:hover{
-  background: var(--purpleDarkHover);
+  background: var(--purpleDark);
   color: beige;
 }
 

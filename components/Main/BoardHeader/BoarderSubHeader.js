@@ -50,6 +50,8 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
     }
   };
 
+  console.log(currentSport)
+
   return (
     <div className="mb-2 flex flex-wrap justify-center relative bottom-2">
       <div className="relative w-full h-8">
@@ -116,7 +118,7 @@ const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
         </div>
       )}
 
-      {formIsOpen && <AddEntryForm setFormIsOpen={setFormIsOpen} />}
+      {formIsOpen && currentSport != "all" && currentSport != "daily" && <AddEntryForm setFormIsOpen={setFormIsOpen} />}
     </div>
   );
 };
