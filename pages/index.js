@@ -121,9 +121,37 @@ export default function Home() {
 
   //console.log(currentSport)
   //console.log('test')
+const iconToSupabase = async () => {
+  try {
+    // Fetch alle Einträge aus der Tabelle "sports"
+    const { data: sports, error: fetchError } = await supabase
+      .from("sports")
+      .select("*");
+
+    if (fetchError) throw fetchError;
+
+    // Filtere die Einträge nach dem Namen "Gym"
+    const gymSports = sports.filter((sport) => sport.name === "Gym");
+
+    // Aktualisiere jeden Eintrag mit dem Icon "dumbbell"
+    for (const sport of gymSports) {
+      const { error: updateError } = await supabase
+        .from("sports")
+        .update({ icon: "dumbbell" })
+        .eq("id", sport.id); // Angenommen, es gibt eine ID-Spalte
+      if (updateError) throw updateError;
+    }
+
+    console.log("Icons erfolgreich aktualisiert!");
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren der Icons:", error.message);
+  }
+};
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">
+
+      <button className="border-2" onClick={iconToSupabase}> gym </button>
       {!isLoggedIn &&
         register &&
         {

@@ -4,26 +4,30 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import styles from './MobileNavigation.module.css'
 import { useSelector } from 'react-redux'
 import SortSports from './SortSports'
+//CUSTOM HOOKS
+import { useFontAwesomeIcons } from '@/custom-hooks/FontAwesome/useFontAwesomeIcons'
 
+const MobileNavigation = ({
+  deleteSportHandler,
+  uniqueSports,
+  active,
+  navigationArr,
+  handleSportClick,
+  selectedSport,
+  mobileSportsNavIsOpen,
+  setMobileSportsNavIsOpen,
+  setUniqueSports,
+  allSupabaseSports, 
+  setFormIsOpen, 
+  formIsOpen,
+  addSportClickHandler
+}) => {
 
-const MobileNavigation = (props) =>{
-  const deleteSportHandler = props.deleteSportHandler;
-  const uniqueSports = props.uniqueSports
-  const active = props.active
-  const navigationArr = props.navigationArr;
-  const handleSportClick = props.handleSportClick
-  const selectedSport = useSelector((state) => state.sport.selectedSport);
-  const mobileSportsNavIsOpen = props.mobileSportsNavIsOpen
-  const setMobileSportsNavIsOpen = props.setMobileSportsNavIsOpen;
-  const setUniqueSports = props.setUniqueSports;
-  const allSupabaseSports = props.allSupabaseSports
-  const setFormIsOpen = props.setFormIsOpen
-  const formIsOpen = props.formIsOpen
-
-  const addSportClickHandler = props.addSportClickHandler;
 
 
   let btn_text = mobileSportsNavIsOpen ? "close" : "open";
+
+    const fontAwesomeIcons = useFontAwesomeIcons();
 
   return (
     <div className="w-full p-2 flex-col lg:hidden  overflow-scroll">
@@ -67,17 +71,27 @@ const MobileNavigation = (props) =>{
                     navigationArr.map((sportsObj, index) => {
                       if (sportsObj.name === sport) {
                         return (
-                          <div className={styles.circle_div} key={index}>
+                          <div
+                            className={styles.circle_div}
+                            key={sportsObj.name}
+                          >
                             <div
                               className={`${styles.circle_background} ${
                                 styles[sportsObj.color]
-                              } `}
+                              }`}
                             ></div>
                             <div
                               className={`${styles[sportsObj.color]} ${
                                 styles.circle
                               }`}
-                            ></div>
+                            >
+                              {sportsObj.icon &&
+                                fontAwesomeIcons[sportsObj.icon] && (
+                                  <FontAwesomeIcon
+                                    icon={fontAwesomeIcons[sportsObj.icon]}
+                                  />
+                                )}
+                            </div>
                           </div>
                         );
                       }
@@ -103,6 +117,6 @@ const MobileNavigation = (props) =>{
       )}
     </div>
   );
-}
+};
 
 export default MobileNavigation;

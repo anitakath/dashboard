@@ -147,6 +147,7 @@
     align-items: center;
     z-index: 10;
     transition: transform 0.2s ease;
+    
 
     
 }
@@ -164,12 +165,20 @@
     border-radius: 50%;
     bottom: 27.5px;
     box-shadow: 0px 0px 60px white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon{
+    position: relative;
+    left: 12px;
+    font-size: 1.5rem;
 }
 
 .circle::after{
     content: '';
     width: 100%;
-    background: red;
 }
 
 .showMobileSportsNav_btn{

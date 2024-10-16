@@ -8,6 +8,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
 import AddSportForm from "./AddSportForm";
 import SortSports from "./SortSports";
+//CUSTOM HOOKS
+import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
 
 const WebNavigation = (props) =>{
   const deleteSportHandler = props.deleteSportHandler;
@@ -18,9 +20,13 @@ const WebNavigation = (props) =>{
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const formIsOpen = props.formIsOpen;
   const setFormIsOpen = props.setFormIsOpen;
-  const addSportClickHandler = props.addSportClickHandler
+  const addSportClickHandler = props.addSportClickHandler;
 
   const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false);
+
+  // Verwenden des Hooks, um die Icons zu erhalten
+  const fontAwesomeIcons = useFontAwesomeIcons();
+
 
   return (
     <div className="w-full">
@@ -62,7 +68,18 @@ const WebNavigation = (props) =>{
                                 className={`${styles[sportsObj.color]} ${
                                   styles.circle
                                 }`}
-                              ></div>
+                              >
+                                {/* Hier wird das Icon gerendert */}
+                                {sportsObj.icon &&
+                                  fontAwesomeIcons[sportsObj.icon] && (
+                                    <FontAwesomeIcon
+                                      icon={fontAwesomeIcons[sportsObj.icon]}
+                                      className={styles.icon}
+                                      
+                                    />
+                                  )}
+                           
+                              </div>
                             </div>
                           );
                         }

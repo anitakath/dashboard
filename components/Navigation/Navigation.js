@@ -121,7 +121,7 @@ const Navigation = () => {
 
   //console.log(currentSport);
   //console.log(navigationArr)
-
+  //console.log(navigation);
   
 
   return (

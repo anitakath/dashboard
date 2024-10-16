@@ -31,6 +31,7 @@ const AddEntryForm = (props) => {
   const chosenSport = props.chosenSport;
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   let label = "";
+  let icon ="";
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
   const [inputs, setInputs] = useState({
     name: selectedSport,
@@ -41,7 +42,10 @@ const AddEntryForm = (props) => {
     label: label,
     userId: userId,
     img: "",
+    icon: icon,
   });
+
+  const navigation = useSelector((state) => state.sport.navigation)
 
   //console.log(currentSport)
   //console.log(inputs)
@@ -70,9 +74,11 @@ const AddEntryForm = (props) => {
     );
     if (foundSport) {
       label = foundSport.label;
+      icon = foundSport.icon;
     } else {
       //console.log(`Kein Sport mit dem Namen ${selectedSport} gefunden`);
     }
+
   }
 
 
@@ -110,48 +116,26 @@ const AddEntryForm = (props) => {
 
 
 
-  useEffect(() => {
-     async function fetchSportImages() {
-       try {
-         const { data, error } = await supabase.storage
-           .from("sport_images")
-           .list();
-
-         if (error) {
-           console.error(error.message);
-           return;
-         }
-
-         if (data) {
-           data.forEach((image) => {
-             console.log(image.name); // Hier kannst du die Namen der Bilder ausgeben oder weitere Aktionen durchführen
-           });
-         }
-       } catch (error) {
-         console.error(error.message);
-       }
-     }
-     fetchSportImages();
-   }, []);
-
-
-
 
  useEffect(() => {
+
+  console.log(currentSport)
+  console.log(selectedSport)
    if (
      Array.isArray(currentSport) &&
      currentSport.length > 0 &&
      selectedSport
    ) {
      // Zugriff auf das erste Element des äußeren Arrays
-     const innerArray = currentSport[0]; // Hier wird angenommen, dass es nur ein inneres Array gibt
-     const foundSport = innerArray.find((obj) => obj.name === selectedSport);
+
+     const foundSport = currentSport.find((obj) => obj.name === selectedSport);
 
      if (foundSport) {
        setInputs((prevInputs) => ({
          ...prevInputs,
          label: foundSport.color,
-         // Hier kannst du weitere Werte von foundSport setzen
+         icon: foundSport.icon,
+
        }));
      }
    } else {
@@ -160,7 +144,8 @@ const AddEntryForm = (props) => {
  }, [currentSport, selectedSport]);
 
 
- //console.log(currentSport)
+ console.log(currentSport)
+ console.log(navigation);
 
 
   return (

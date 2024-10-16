@@ -25,7 +25,7 @@ const sportSlice = createSlice({
       state.selectedSport = action.payload;
     },
     setCurrentSport(state, action) {
-      state.currentSport = [action.payload];
+      state.currentSport = action.payload;
     },
     setAllPlannedSports(state, action) {
       state.allPlannedSports = action.payload;

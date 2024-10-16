@@ -9,7 +9,8 @@ import styles from './AddSportForm.module.css'
 //FONTAWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBasketballBall, faFootballBall, faBaseballBall, faTennisBall, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
-
+//CUSTOM HOOKS
+import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
 
 
 const initialState = {
@@ -51,8 +52,10 @@ const AddSportForm = ({addSportClickHandler}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
   const navigation = useSelector((state) => state.sport.navigation);
-  const sports = useSelector((state) => state.sport.currentSport[0]);
+  const sports = useSelector((state) => state.sport.currentSport);
   const allPlannedSports = useSelector((state) => state.sport.allPlannedSports);
+  const fontAwesomeIcons = useFontAwesomeIcons();
+
 
   const colors = [
     "fandango",
@@ -98,9 +101,9 @@ const AddSportForm = ({addSportClickHandler}) => {
     const data = {
       name: state.name,
       color: state.color,
-      icon: state.selectedIcon,
+      icon: state.selectedIcon.iconName,
     };
-    //console.log(data)
+    console.log(data)
 
     reduxDispatch(setNavigation([...navigation, data.name]));
     reduxDispatch(setSelectedSport(data.name));
@@ -126,24 +129,7 @@ const AddSportForm = ({addSportClickHandler}) => {
     }
   };
 
-  // Liste der Sport-Icons// Liste der Sport-Icons
-  const sportsIcons = [
-    { icon: faBasketballBall },
-    { icon: faFootballBall },
-    { icon: faBaseballBall },
-    { icon: faTennisBall },
-    { icon: faVolleyballBall },
-    // Füge hier weitere Icons hinzu...
-  ];
-  /*
-  const sportsIcons = [
-    { icon: faBasketballBall, label: "Basketball" },
-    { icon: faFootballBall, label: "Football" },
-    { icon: faBaseballBall, label: "Baseball" },
-    { icon: faTennisBall, label: "Tennis" },
-    { icon: faVolleyballBall, label: "Volleyball" },
-    // Füge hier weitere Icons hinzu...
-  ];*/
+
    const selectIconHandler = (icon) => {
      dispatch({ type: "SET_ICON", payload: icon });
      setError(false, ""); // Reset any previous errors related to icon selection
@@ -179,12 +165,12 @@ const AddSportForm = ({addSportClickHandler}) => {
       </div>
 
       <label>
-        <em>soon available:</em> <br/> give it an icon
+       give it an icon
       </label>
       <div className={styles.icons_div}>
-        {sportsIcons.map(({ icon }, index) => (
+        {Object.entries(fontAwesomeIcons).map(([key, icon]) => (
           <button
-            key={index}
+            key={key}
             type="button"
             className={`${styles.icon_button} ${
               state.selectedIcon === icon ? styles.selectedIcon : ""

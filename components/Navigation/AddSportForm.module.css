@@ -21,6 +21,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 10px; 
   padding: 5px;
+  margin-bottom: 30px;
 }
 
 .colors {
@@ -42,8 +43,7 @@
 
 .icons_div{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    background: lightgrey;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 
@@ -172,5 +172,12 @@
 @media screen and (max-width: 900px){
     .colors_div{
          grid-template-columns: repeat(8, 1fr);
+    }
+ 
+}
+
+@media screen and (max-width: 600px){
+       .icons_div{
+        grid-template-columns: repeat(6, 1fr);
     }
 }
