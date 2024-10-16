@@ -200,7 +200,7 @@ const AddEntryForm = (props) => {
           <h2 className=" mb-4 text-center">
             enter the date and duration of your sports sessions
           </h2>
-          <div className="flex border-b-2 border-red-700 w-6/12 flex-col md:flex-row items-center justify-evenly items-center ">
+          <div className="flex pb-2 lg:p-0 w-full lg:w-6/12 border-b-2 border-red-700 w-6/12 flex-col md:flex-row items-center justify-evenly items-center ">
             <div className={styles.date_div}>
               <input
                 type="datetime-local"
@@ -227,7 +227,7 @@ const AddEntryForm = (props) => {
             ></input>
           </div>
 
-          <div className="h-14 h-20 md:h-12">
+          <div className="h-14 h-18 lg:h-20 md:h-12">
             {isTouched.duration && !validateDuration(inputs.duration) && (
               <p className={styles.errorText}>
                 The duration must be a positive number.

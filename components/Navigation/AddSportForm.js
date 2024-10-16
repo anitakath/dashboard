@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from './AddSportForm.module.css'
 //FONTAWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBasketballBall, faFootballBall, faBaseballBall, faTennisBall, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
 
@@ -132,7 +131,7 @@ const AddSportForm = ({addSportClickHandler}) => {
 
    const selectIconHandler = (icon) => {
      dispatch({ type: "SET_ICON", payload: icon });
-     setError(false, ""); // Reset any previous errors related to icon selection
+     setError(false); // Reset any previous errors related to icon selection
    };
 
 

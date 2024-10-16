@@ -23,10 +23,11 @@
 
 .duration{
   height: 40px;
-  margin: 5px 0px;
   font-size: 1.2rem;
   color: black;
   background: transparent;
+  width: 150px;
+  margin: 5px;
 }
 
 .duration:focus{
@@ -63,6 +64,7 @@
   width: 150px;
   background: transparent;
   pointer-events: auto; 
+  margin: 5px;
 }
 
 
@@ -78,7 +80,7 @@
   height: 40px;
   transition: 0.2s ease;
   border-bottom: 2px solid var(--purpleDarkHoverOpacity);
-   background: var(--purpleDarkHoverOpacity);
+  background: var(--purpleDarkHoverOpacity);
   width: 200px;
 }
 
@@ -143,7 +145,5 @@
 
 @media screen and (max-width: 600px){
 
-  .date_picker{
-    border-bottom: 1px solid var(--purpleDark);
-  }
+
 }

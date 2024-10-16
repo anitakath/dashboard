@@ -69,18 +69,15 @@ export default function Home() {
   const userId = useSelector((state) => state.auth.userId);
   const [successMessage, setSuccessMessage] = useState(null);
 
+  useEffect(() => {
+    console.log("FETCH DATA");
+    fetchSportsData(dispatch, userId);
+  }, []);
 
-  useEffect(()=>{
-    console.log('FETCH DATA')
-    fetchSportsData(dispatch, userId)
-  }, [])
- 
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));
   };
 
-
-  
   const processSportsData = () => {
     if (currentSport?.length > 1) {
       console.log("Es gibt bereits ein Sport-Array");
@@ -118,9 +115,10 @@ export default function Home() {
     processSportsData();
   }, [allSupabaseSports, allSupabaseSports]);
 
-
   //console.log(currentSport)
   //console.log('test')
+
+  /*   CREATE A BUTTON FOR THIS FUNCTION SO THAT YOU CAN ASSIGN ICONS TO SPORTS THAT DO NOT YET HAVE ONE.
 const iconToSupabase = async () => {
   try {
     // Fetch alle Einträge aus der Tabelle "sports"
@@ -131,13 +129,13 @@ const iconToSupabase = async () => {
     if (fetchError) throw fetchError;
 
     // Filtere die Einträge nach dem Namen "Gym"
-    const gymSports = sports.filter((sport) => sport.name === "Gym");
+    const gymSports = sports.filter((sport) => sport.name === "Spa");
 
     // Aktualisiere jeden Eintrag mit dem Icon "dumbbell"
     for (const sport of gymSports) {
       const { error: updateError } = await supabase
         .from("sports")
-        .update({ icon: "dumbbell" })
+        .update({ icon: "spa" })
         .eq("id", sport.id); // Angenommen, es gibt eine ID-Spalte
       if (updateError) throw updateError;
     }
@@ -146,12 +144,10 @@ const iconToSupabase = async () => {
   } catch (error) {
     console.error("Fehler beim Aktualisieren der Icons:", error.message);
   }
-};
+};*/
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">
-
-      <button className="border-2" onClick={iconToSupabase}> gym </button>
       {!isLoggedIn &&
         register &&
         {
