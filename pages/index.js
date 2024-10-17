@@ -25,9 +25,7 @@ export default function Home() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [register, setRegister] = useState(false);
   const currentSport = useSelector((state) => state.sport.currentSport);
-  const allSupabaseSports = useSelector(
-    (state) => state.sport.allSupabaseSports
-  );
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const userId = useSelector((state) => state.auth.userId);
   const [successMessage, setSuccessMessage] = useState(null);
 
