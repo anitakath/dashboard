@@ -83,8 +83,9 @@ function groupByDate(entries) {
     <div className="w-full">
       <button onClick={toggleLayout} className={styles.layout_btn}>
         <FontAwesomeIcon
-          className="hidden ssm:flex ml-2"
+          className={`hidden ssm:flex ml-2 ${styles.icon}`}
           icon={layoutMode === "list" ? faBars : faGripHorizontal}
+
         />
       </button>
 
@@ -99,9 +100,9 @@ function groupByDate(entries) {
             .reverse()
             .map((group) => (
               <div key={group.dateTitle} className={styles.sportItem}>
-                {enlargedEntryId === null &&
+                {enlargedEntryId === null && (
                   <h2 className={styles.date_title}>{group.dateTitle}</h2>
-                }
+                )}
                 {group.entries.map((sport) => (
                   <div
                     key={sport.entryId}
@@ -219,8 +220,6 @@ function groupByDate(entries) {
                 ))}
               </div>
             ))}
-
-      
       </div>
     </div>
   );

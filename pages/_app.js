@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-
+import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor} from "@/store";
@@ -7,6 +7,10 @@ import Head from "next/head";
 import "font-awesome/css/font-awesome.min.css";
 
 export default function App({ Component, pageProps }) {
+
+   useEffect(() => {
+     require("font-awesome/css/font-awesome.min.css");
+   }, []);
 
   return (
     <>
