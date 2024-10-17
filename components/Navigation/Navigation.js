@@ -31,7 +31,6 @@ const Navigation = () => {
         .map((sport) => ({
           name: sport.name,
           color: sport.label, // Hier wird angenommen, dass 'label' die Farbe ist
-          icon: sport.icon
         }))
         .reduce((accumulator, current) => {
           // Überprüfe, ob der Name bereits im Akkumulator vorhanden ist

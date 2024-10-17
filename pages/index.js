@@ -9,53 +9,10 @@ import { setCurrentSport } from "@/store/sportReducer";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Login/Register";
-//REDUX
-import { setShowAlert } from "@/store/sportReducer";
-import { setAllSportsFromSupabase } from "@/store/sportReducer";
+ 
 //CUSTOM HOOKS
 import useAuth from "@/custom-hooks/auth/useAuth";
 import { fetchSportsData } from "@/custom-hooks/useSportEntries";
-
-
-/*
-export async function getServerSideProps() {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth(); // 0-basiert (0 = Januar)
-
-  // Erster und letzter Tag des aktuellen Monats
-  const startOfMonth = new Date(year, month, 1);
-  const endOfMonth = new Date(year, month + 1, 0); // Letzter Tag des Monats
-
-  try {
-    const { data, error } = await supabase
-      .from("sports")
-      .select("*")
-      .gte("created_at", startOfMonth.toISOString())
-      .lte("created_at", endOfMonth.toISOString())
-      .order("id", { ascending: false });
-
-    if (error) {
-      console.error(error);
-      return {
-        notFound: true,
-      };
-    }
-
-    return {
-      props: {
-        sportsData: data || [],
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching sports data:", error);
-    return {
-      notFound: true,
-    };
-  }
-}
-*/
-
 
 
 export default function Home() {

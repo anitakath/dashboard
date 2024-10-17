@@ -18,7 +18,6 @@ const initialState = {
   errorMessage: "",
   color: null,
   selectedSportStyle: "",
-  selectedIcon: null
 };
 
 const reducer = (state, action) => {
@@ -37,11 +36,7 @@ const reducer = (state, action) => {
         error: action.payload.error,
         errorMessage: action.payload.message,
       };
-    case "SET_ICON":
-      return {
-        ...state,
-        selectedIcon: action.payload,
-      };
+    
     default:
       return state;
   }
@@ -100,7 +95,6 @@ const AddSportForm = ({addSportClickHandler}) => {
     const data = {
       name: state.name,
       color: state.color,
-      icon: state.selectedIcon.iconName,
     };
     console.log(data)
 
@@ -113,7 +107,6 @@ const AddSportForm = ({addSportClickHandler}) => {
     // Reset the form
     dispatch({ type: "SET_NAME", payload: "" });
     dispatch({ type: "SET_COLOR", payload: { color: null, style: "" } });
-    dispatch({ type: "SET_ICON", payload: null }); // Reset selected icon
   };
 
   const colorLabelHandler = (selectedColor) => {
@@ -127,12 +120,6 @@ const AddSportForm = ({addSportClickHandler}) => {
       setError(false, "");
     }
   };
-
-
-   const selectIconHandler = (icon) => {
-     dispatch({ type: "SET_ICON", payload: icon });
-     setError(false); // Reset any previous errors related to icon selection
-   };
 
 
   return (
@@ -163,23 +150,7 @@ const AddSportForm = ({addSportClickHandler}) => {
         ))}
       </div>
 
-      <label>
-       give it an icon
-      </label>
-      <div className={styles.icons_div}>
-        {Object.entries(fontAwesomeIcons).map(([key, icon]) => (
-          <button
-            key={key}
-            type="button"
-            className={`${styles.icon_button} ${
-              state.selectedIcon === icon ? styles.selectedIcon : ""
-            }`}
-            onClick={() => selectIconHandler(icon)}
-          >
-            <FontAwesomeIcon icon={icon} size="2x" />
-          </button>
-        ))}
-      </div>
+      
 
       <p className="my-6">{state.errorMessage}</p>
       <Link href="/profile" className={styles.link}>
