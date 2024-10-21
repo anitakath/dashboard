@@ -19,6 +19,7 @@ import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import useCalendar from "@/custom-hooks/useCalendar";
 
+
 const Board = ({ filteredEntries, sportsDurationByMonth }) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
@@ -33,13 +34,13 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
   const actualMonth = actualMonthIndex + 1;
   const dispatch = useDispatch();
   const { logoutHandler } = useAuth();
-
   const filteredByDate = filteredEntries.filter((entry) => {
     const entryDate = new Date(entry.created_at);
     const entryYear = entryDate.getFullYear();
     const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
+   const { filterEntriesByCurrentSport } = useAuth();
 
   useEffect(() => {
     if (navigation.includes(selectedSport)) {
@@ -52,6 +53,9 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
     dispatch(setSelectedSport("daily"));
   };
 
+  useEffect(()=>{
+    filterEntriesByCurrentSport(allSupabaseSports, selectedSport)
+  }, [selectedSport])
 
 
   return (

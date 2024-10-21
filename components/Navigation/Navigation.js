@@ -7,7 +7,6 @@ import {
   setNavigation,
 } from "@/store/sportReducer";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-
 import SortSports from "./SortSports";
 import MobileNavigation from "./MobileNavigation";
 import WebNavigation from "./WebNavigation";
