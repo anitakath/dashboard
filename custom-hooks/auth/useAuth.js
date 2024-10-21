@@ -28,8 +28,6 @@ const useAuth = (userId) => {
 
   const loginHandler = async (loginData, currentSport) => {
 
-    console.log(currentSport)
-
     const {
       data: { user },
       error,
@@ -54,7 +52,6 @@ const useAuth = (userId) => {
         restDaysPerMonth: null,
       };
       const filteredEntriesByUserId = await fetchSportsData(userId);
-      console.log(filteredEntriesByUserId)
 
   
       const entries = await filteredEntriesByUserId.filter(
@@ -85,18 +82,71 @@ const useAuth = (userId) => {
        const totalDurationInHours = convertMinutesToHours(
          totalDurationInMinutes
        );
-      console.log(totalDurationInHours)
-      console.log(filterEntries);
-      console.log(entries)
+
       dispatch(setFilteredEntriesByCurrentSport(filterEntries));
 
-      await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId, currentSport));
+      await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
       await dispatch(setLogin(true)); 
-      await dispatch(setSelectedSport("statistics"));
+      await dispatch(setSelectedSport("all"));
     }
    
     return user;
   };
+
+
+
+
+
+  const filterEntriesByCurrentSport = async (
+    filteredEntriesByUserId,
+    currentSport
+  ) => {
+    const currentDate = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
+      restDaysPerMonth: null,
+    };
+
+    const entries = await filteredEntriesByUserId.filter(
+      (sport) => sport.name === currentSport
+    );
+
+    const getMonthNumber = (month) => {
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      return months.indexOf(month) + 1;
+    };
+
+    const filterEntries = await entries.filter((entry) => {
+      const entryDate = new Date(entry.created_at);
+      return (
+        entryDate.getFullYear() === currentDate.year &&
+        entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
+      );
+    });
+
+    const totalDurationInMinutes = await filterEntries.reduce(
+      (total, entry) => total + entry.duration,
+      0
+    );
+
+    const totalDurationInHours = convertMinutesToHours(totalDurationInMinutes);
+
+    dispatch(setFilteredEntriesByCurrentSport(filterEntries));
+  };
+
 
 
 
@@ -290,7 +340,8 @@ const useAuth = (userId) => {
     getUserData,
     updateProfileHandler,
     fetchSportsData,
-  };
+    filterEntriesByCurrentSport,
+  };s
 };
 
 export default useAuth;

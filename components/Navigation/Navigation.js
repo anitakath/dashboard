@@ -14,6 +14,7 @@ import WebNavigation from "./WebNavigation";
 import AddSportAlert from "../UI/AddSportAlert";
 import { supabase } from "@/services/supabaseClient";
 //CUSTOM HOOKS
+import useAuth from "@/custom-hooks/auth/useAuth";
 
 
 const Navigation = () => {
@@ -46,6 +47,7 @@ const Navigation = () => {
         (a, b) => a.localeCompare(b)
       )
   : [];
+  const {filterEntriesByCurrentSport} = useAuth();
 
 
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
@@ -62,6 +64,7 @@ const Navigation = () => {
   }, [navigation, allSupabaseSports]);
 
   const handleSportClick = (sport) => {
+    filterEntriesByCurrentSport(allSupabaseSports, sport)
     setActive(sport);
     setMobileSportsNavIsOpen(false);
     dispatch(setSelectedSport(sport));

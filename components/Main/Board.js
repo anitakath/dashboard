@@ -52,7 +52,6 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
     dispatch(setSelectedSport("daily"));
   };
 
-  console.log(filteredByDate);
 
 
   return (
