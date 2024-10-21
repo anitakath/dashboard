@@ -52,6 +52,8 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
     dispatch(setSelectedSport("daily"));
   };
 
+  console.log(filteredByDate);
+
 
   return (
     <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">

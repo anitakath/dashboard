@@ -9,7 +9,6 @@ import { setCurrentSport } from "@/store/sportReducer";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Login/Register";
- 
 //CUSTOM HOOKS
 import useAuth from "@/custom-hooks/auth/useAuth";
 import { fetchSportsData } from "@/custom-hooks/useSportEntries";
@@ -29,10 +28,6 @@ export default function Home() {
   const userId = useSelector((state) => state.auth.userId);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  useEffect(() => {
-    console.log("FETCH DATA");
-    fetchSportsData(dispatch, userId);
-  }, []);
 
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));

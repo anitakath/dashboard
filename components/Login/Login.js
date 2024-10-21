@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import styles from './Login.module.css'
 //CUSTOM HOOKS
 import useAuth from "../../custom-hooks/auth/useAuth";
-
+import { useSelector } from "react-redux";
 
 const Login = ({ successMessage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -13,7 +13,7 @@ const Login = ({ successMessage }) => {
     email: false,
     password: false,
   });
-
+  const currentSport = useSelector((state) => state.sport.selectedSport);
   const router = useRouter();
   const { loginHandler } = useAuth();
 
@@ -26,10 +26,11 @@ const Login = ({ successMessage }) => {
     e.preventDefault();
 
     try {
-      await loginHandler(loginData);
+      await loginHandler(loginData, currentSport);
       router.push("/");
     } catch (err) {
       setError(err.message);
+      console.log(err.message)
       setInputErrors({ email: true, password: true });
       // Set input errors based on the error message
     }

@@ -7,6 +7,7 @@ import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics'
 import RestDaysCalendar from './RestDaysCalendar';
 import RandomSportImagesGrid from './RandomSportImagesGrid';
 
+
 const Annual = ({ allSupabaseSports, date}) => {
 
   const [showFiveYearHistory, setShowFiveYearHistory] = useState({

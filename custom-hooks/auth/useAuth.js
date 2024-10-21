@@ -2,9 +2,9 @@
 import { useDispatch } from "react-redux";
 import { persistor } from "../../store";
 import { setLogin, setLogout, setUserId, setUser } from "../../store/authReducer";
-import { setSelectedSport, setAllSportsFromSupabase  } from "../../store/sportReducer";
+import { setSelectedSport, setAllSportsFromSupabase, setFilteredEntriesByCurrentSport  } from "../../store/sportReducer";
 import { supabase } from "../../services/supabaseClient";
-
+import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 
 const useAuth = (userId) => {
   const dispatch = useDispatch();
@@ -26,7 +26,9 @@ const useAuth = (userId) => {
   };
 
 
-  const loginHandler = async (loginData) => {
+  const loginHandler = async (loginData, currentSport) => {
+
+    console.log(currentSport)
 
     const {
       data: { user },
@@ -37,6 +39,7 @@ const useAuth = (userId) => {
     });
 
     if (error) {
+      //console.log(error.message)
       throw new Error(error.message);
     }
 
@@ -44,12 +47,52 @@ const useAuth = (userId) => {
     const session = await fetchUserSession();
 
     if (session) {
-       const userId = session.user.id;
-       const filteredEntriesByUserId = await fetchSportsData(userId);
-       dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
-       dispatch(setLogin(true)); 
-       dispatch(setFilteredEntries(filteredEntriesByUserId))
-       dispatch(setSelectedSport("statistics"));
+      const userId = session.user.id;
+      const currentDate = {
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
+        restDaysPerMonth: null,
+      };
+      const filteredEntriesByUserId = await fetchSportsData(userId);
+      console.log(filteredEntriesByUserId)
+
+  
+      const entries = await filteredEntriesByUserId.filter(
+        (sport) => sport.name === currentSport
+      );
+
+
+
+    const getMonthNumber = (month) => {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return months.indexOf(month) + 1;
+    };
+
+
+    const filterEntries = await entries.filter((entry) => {
+      const entryDate = new Date(entry.created_at);
+      return (
+        entryDate.getFullYear() === currentDate.year &&
+        entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
+      );
+    });
+
+      const totalDurationInMinutes = await filterEntries.reduce(
+        (total, entry) => total + entry.duration,
+        0
+      );
+
+       const totalDurationInHours = convertMinutesToHours(
+         totalDurationInMinutes
+       );
+      console.log(totalDurationInHours)
+      console.log(filterEntries);
+      console.log(entries)
+      dispatch(setFilteredEntriesByCurrentSport(filterEntries));
+
+      await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId, currentSport));
+      await dispatch(setLogin(true)); 
+      await dispatch(setSelectedSport("statistics"));
     }
    
     return user;
@@ -57,55 +100,22 @@ const useAuth = (userId) => {
 
 
 
-const fetchUserSession = async () => {
-  const { data: { session }, error } = await supabase.auth.getSession();
+  const fetchUserSession = async () => {
+    const { data: { session }, error } = await supabase.auth.getSession();
 
-  if (error) {
-    console.error("Error fetching session:", error);
-    return null; 
-  } else if (session) {
-    dispatch(setUserId(session.user.id));
-    dispatch(setUser(session));
+    if (error) {
+      console.error("Error fetching session:", error);
+      return null; 
+    } else if (session) {
+      dispatch(setUserId(session.user.id));
+      dispatch(setUser(session));
 
-    return session; 
-  } else {
-    console.log("No user is logged in");
-    return null; 
-  }
-};
-
-/*
-   const fetchSportsData = async (userId) => {
-     try {
-       const response = await fetch("/api/sports");
-
-       if (!response.ok) {
-         throw new Error("Failed to fetch sports data");
-       }
-
-       const data = await response.json();
-
-       if (data) {
-         const filteredEntriesByUserId = data.data.filter(
-           (entry) => entry.userId === userId
-         );
-
-       
-         //return filtered array
-         return filteredEntriesByUserId;
-
-         if (filteredEntriesByUserId.length === 0) {
-           dispatch(setShowAlert(true));
-         } else {
-           dispatch(setShowAlert(false));
-         }
-       }
-     } catch (error) {
-       console.error("Error fetching sports data:", error);
-     }
-     return [];
-   };*/
-
+      return session; 
+    } else {
+      console.log("No user is logged in");
+      return null; 
+    }
+  };
 
       const fetchSportsData = async (userId) => {
         try {
@@ -140,6 +150,38 @@ const fetchUserSession = async () => {
 
         return []; // Rückgabe eines leeren Arrays im Fehlerfall
       };
+
+      /*
+      const getFilteredSportsData = async (filteredEntriesByUserId, currentSport) => {
+
+        console.log(filteredEntriesByUserId);
+        const [sportsDurationByMonth, setSportsDurationByMonth] = useState(null)
+        const [filteredEntries, setFilteredEntries] = useState([]);
+      
+   
+         if (filteredEntriesByUserId) {
+          const entries = filteredEntriesByUserId.filter(
+             (sport) => sport.name === currentSport
+           );
+
+           const filteredEntriesByCurrentSport = entries.filter((entry) => {
+             const entryDate = new Date(entry.created_at);
+             return (
+               entryDate.getFullYear() === currentDate.year &&
+               entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
+             );
+           });
+           const totalDurationInMinutes = filteredEntriesByCurrentSport.reduce(
+             (total, entry) => total + entry.duration,
+             0
+           );
+           const totalDurationInHours = convertMinutesToHours(
+             totalDurationInMinutes
+           );
+           setSportsDurationByMonth(totalDurationInHours);
+           setFilteredEntries(filteredEntriesByCurrentSport);
+         }
+       };*/
 
 
 

@@ -19,6 +19,7 @@
 .container_div{
     display: flex;
     gap: 5px;
+    margin: 5px 0px;
 }
 
 .sport_div{

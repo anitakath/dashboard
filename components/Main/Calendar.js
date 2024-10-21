@@ -8,7 +8,7 @@ import { updateDate } from "@/store/CalendarReducer";
 import useCalendar from "@/custom-hooks/useCalendar";
 import { setSelectedSport } from "@/store/sportReducer";
 
-const Calendar = () => {
+const Calendar = ({ filteredByDate }) => {
   const dispatch = useDispatch();
   const allSupabaseSports = useSelector(
     (state) => state.sport.allSupabaseSports
@@ -25,7 +25,7 @@ const Calendar = () => {
       month: "short",
     });
 
-    if (currentMonth  === "Okt") {
+    if (currentMonth === "Okt") {
       currentMonth = "Oct";
     }
 
@@ -42,41 +42,41 @@ const Calendar = () => {
     dispatch(updateDate({ month: selectedMonth, year }));
   };
 
-const chooseMonthHandler = (month) => {
-  console.log(month);
+  const chooseMonthHandler = (month) => {
+    console.log(month);
 
-  if (selectedSport=== "daily") {
-    // Hier definieren wir die ID für jeden Monat
-    const monthIds = {
-      Jan: "JANUARY",
-      Feb: "FEBRUARY",
-      Mar: "MARCH",
-      Apr: "APRIL",
-      May: "MAY",
-      Jun: "JUNE",
-      Jul: "JULY",
-      Aug: "AUGUST",
-      Sep: "SEPTEMBER",
-      Oct: "OCTOBER",
-      Nov: "NOVEMBER",
-      Dec: "DECEMBER",
-    };
+    if (selectedSport === "daily") {
+      // Hier definieren wir die ID für jeden Monat
+      const monthIds = {
+        Jan: "JANUARY",
+        Feb: "FEBRUARY",
+        Mar: "MARCH",
+        Apr: "APRIL",
+        May: "MAY",
+        Jun: "JUNE",
+        Jul: "JULY",
+        Aug: "AUGUST",
+        Sep: "SEPTEMBER",
+        Oct: "OCTOBER",
+        Nov: "NOVEMBER",
+        Dec: "DECEMBER",
+      };
 
-    // Wir holen uns die ID des Monats
-    const monthId = monthIds[month];
+      // Wir holen uns die ID des Monats
+      const monthId = monthIds[month];
 
-    if (monthId) {
-      // Hier scrollen wir zum Element mit der ID des Monats
-      const element = document.getElementById(monthId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      if (monthId) {
+        // Hier scrollen wir zum Element mit der ID des Monats
+        const element = document.getElementById(monthId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
       }
     }
-  }
 
-  setSelectedMonth(month);
-  dispatch(updateDate({ month, year: selectedYear }));
-};
+    setSelectedMonth(month);
+    dispatch(updateDate({ month, year: selectedYear }));
+  };
 
   const summarizeAllHandler = (e) => {
     e.preventDefault();

@@ -16,7 +16,6 @@ const DailyDetails = () => {
   );
   const router = useRouter();
   const { id } = router.query;
-  const [isEnlarged, setIsEnlarged] = useState(false);
   const [enlargedEntryId, setEnlargedEntryId] = useState(null);
   // Function for filtering entries by date
   const filterEntriesByDate = (dateString) => {

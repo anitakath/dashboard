@@ -4,7 +4,8 @@ import styles from './SelectTimePeriod.module.css'
 
 //CUSTOM HOOKS
 import { useHandleYearChange,  useHandleMonthChange } from '@/custom-hooks/useDate';
-import { completeMonths } from '@/custom-hooks/useCalendar';
+import useCalendar  from "@/custom-hooks/useCalendar";
+
 
 const SelectTimePeriod = ({date, setDate}) =>{
   const currentYear = new Date().getFullYear();
@@ -18,9 +19,11 @@ const SelectTimePeriod = ({date, setDate}) =>{
     { length: currentYear - 2020 + 1 },
     (_, i) => 2020 + i
   );
+  const {completeMonths} = useCalendar();
+
 
   return (
-      <div className="flex flex-col lg:flex-row h-60 md:h-40 justify-center items-center relative w-full ">
+      <div className="flex flex-col lg:flex-row h-60 md:h-36 justify-center items-center relative w-full ">
         <button
           className="secondary_button"
           onClick={() => setIsYearModalOpen(true)}
@@ -67,7 +70,7 @@ const SelectTimePeriod = ({date, setDate}) =>{
             >
               Close
             </button>
-            {completeMonths.map((month) => (
+            {completeMonths && completeMonths.map((month) => (
               <button
                 key={month}
                 onClick={() =>handleMonthChange(month, setIsMonthModalOpen, setDate)}

@@ -15,7 +15,6 @@
   --mediumLight: #D784BB;
   --medium: #C34699;
   --dark: #6C2354;
-
   --greenLight: hsla( 160, 47%, 79%, 0.5);
   --greenMedium: hsla(161, 22%, 58%, 0.7);
   --greenDark: hsla(162, 24%, 37%, 0.8);
@@ -41,7 +40,7 @@
 
 
 
-  /*   label colors*/
+  /* label colors*/
 
   --fandango: #A80874;
   --sinopia: #C73E1D;
@@ -61,8 +60,6 @@
   --mossGreen: #255200;
   /*----*/
 
-   --chiliRed: #E3170A;
-
     --fandango_opaque: rgba(168, 8, 116, 0.7); /* #A80874 */
     --sinopia_opaque: rgba(199, 62, 29, 0.7); /* #C73E1D */
     --mandarine_opaque: rgba(251, 139, 36, 0.7); /* #FB8B24 */
@@ -81,24 +78,15 @@
     --mossGreen_opaque: rgba(37,82,0, 0.8);
 
 
- 
 
-
- 
-
-
-
-
+   --chiliRed: #E3170A;
   --tyianPurple: #5F0F40;
   --carmine: #9A031E;
-
   --orange:#E36414;
-
   --platinum: #E6E6EA;
   --lavender: #F9E7E7;
   --timberwolf:#DED6D6;
   --rosequarz: #ADA0A6;
-
   --jordyblue: #92B4F4;
   --glaucos: #5E7CE2;
   --celticblue: #4472CA;
