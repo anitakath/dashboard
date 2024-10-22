@@ -10,11 +10,15 @@ import { useDispatch } from 'react-redux';
 import { setSelectedSport } from '@/store/sportReducer';
 import { setSection } from '@/store/profileReducer';
 
-const BoarderSubHeader = ({ currentSport, dailyAllHandler }) => {
+const BoarderSubHeader = ({ currentSport }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [miniMenu, setMinimenu] = useState(true)
   const dispatch = useDispatch();
 
+  
+  const dailyAllHandler = () => {
+    dispatch(setSelectedSport("daily"));
+  };
   const summarizeAllHandler = (e) => {
     e.preventDefault();
     dispatch(setSelectedSport("all"));

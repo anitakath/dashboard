@@ -23,24 +23,21 @@ import useCalendar from "@/custom-hooks/useCalendar";
 const Board = ({ filteredEntries, sportsDurationByMonth }) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
-  const allSupabaseSports = useSelector(
-    (state) => state.sport.allSupabaseSports
-  );
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const actualDate = useSelector((state) => state.calendar);
   const { months } = useCalendar();
-  const actualMonthIndex = months.findIndex(
-    (month) => month === actualDate.month
-  );
+  const actualMonthIndex = months.findIndex((month) => month === actualDate.month);
   const actualMonth = actualMonthIndex + 1;
   const dispatch = useDispatch();
   const { logoutHandler } = useAuth();
+
   const filteredByDate = filteredEntries.filter((entry) => {
     const entryDate = new Date(entry.created_at);
     const entryYear = entryDate.getFullYear();
     const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
-   const { filterEntriesByCurrentSport } = useAuth();
+  const { filterEntriesByCurrentSport } = useAuth();
 
   useEffect(() => {
     if (navigation.includes(selectedSport)) {
@@ -49,9 +46,6 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
     }
   }, []);
 
-  const dailyAllHandler = () => {
-    dispatch(setSelectedSport("daily"));
-  };
 
   useEffect(()=>{
     filterEntriesByCurrentSport(allSupabaseSports, selectedSport)
@@ -88,7 +82,6 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
           {selectedSport != null && selectedSport != "start" && (
             <BoarderSubHeader
               currentSport={selectedSport}
-              dailyAllHandler={dailyAllHandler}
             />
           )}
 

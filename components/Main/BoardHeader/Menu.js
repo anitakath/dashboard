@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styles from "./Menu.module.css";
 import Link from "next/link";
-
 //REDUX
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { setSection } from "@/store/profileReducer";
 import { useRouter } from "next/router";
 
 const Menu = ({ setOpenMenu }) => {
-  
   const [openSections, setOpenSections] = useState({
     yourSports: true,
     yourProfile: true,
@@ -152,9 +150,3 @@ const Menu = ({ setOpenMenu }) => {
 
 export default Menu;
 
-/*    <button
-          onClick={() => dispatch(setSelectedSport("start"))}
-          className="absolute text-xl left-2 top-1 hover:text-red-500"
-        >
-          ?
-        </button>*/
