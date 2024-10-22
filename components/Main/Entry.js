@@ -94,8 +94,6 @@ const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
       <EntriesByYearAndMonth
         entriesByYearAndMonth={entriesByYearAndMonth}
         currentSport={currentSport}
-        filteredEntries={filteredEntries}
-        allSupabaseSports={allSupabaseSports}
       />
     </div>
   );

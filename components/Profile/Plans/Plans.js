@@ -1,13 +1,8 @@
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 //STYLES 
 import styles from './Plans.module.css'
-//FONT AWESOME
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse} from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
 import AddSportField from './AddSportField';
-
 import PlansHeader from './PlansHeader';
 import EditEntry from "./EditEntry";
 import EditEntryField from './EditEntryField';
@@ -27,7 +22,7 @@ const Plans = () =>{
   const [openDetailsIds, setOpenDetailsIds] = useState([]); // Zustand für mehrere geöffnete IDs
   const [areAllOpen, setAreAllOpen] = useState(false);
   const [addSport, setAddSport] = useState(false);
-  const currentSports = useSelector((state) => state.sport.currentSport[0]);
+  const currentSports = useSelector((state) => state.sport.currentSport);
   const [chosenSport, setChosenSport] = useState(null);
   const [sportsArray, setSportsArray] = useState([]);
   const [sortedSportsArray, setSortedSportsArray] = useState(
@@ -76,16 +71,15 @@ const Plans = () =>{
   const deleteSportHandler = useDeleteSport(sportsArray, setSportsArray);
 
 
-
-const checkSportHandler = async (sport) => {
-
-  console.log(sport)
-  try {
-    // 1. Insert the sports object into the 'sports' table
-    const { data: insertData, error: insertError } = await supabase
-      .from("sports")
-      .insert([
-        {
+  const checkSportHandler = async (sport) => {
+    try {
+      // 1. Insert the sports object into the 'sports' table
+      const response = await fetch("/api/sports", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           entryId: sport.entryId,
           name: sport.name,
           title: sport.title,
@@ -95,56 +89,60 @@ const checkSportHandler = async (sport) => {
           entryPath: sport.entryPath,
           duration: sport.duration,
           icon: sport.icon,
-          created_at: sport.created_at
+          created_at: sport.created_at,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error adding sport:", errorData.error);
+        return; // Exit the function if an error occurs
+      }
+
+      const data = await response.json();
+      console.log("Sport added successfully:", data);
+
+      // 2. Delete the sports object from the 'sports_planned' table via the API
+      const deleteResponse = await fetch("/api/plannedSports", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
         },
-      ]);
+        body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
+      });
 
-    if (insertError) {
-      console.error("Error inserting data:", insertError);
-      return; // Exit the function if an error occurs
+      if (!deleteResponse.ok) {
+        const errorData = await deleteResponse.json();
+        console.error("Error deleting planned sport:", errorData.error);
+        return; // Exit the function if an error occurs
+      }
+
+      const deleteData = await deleteResponse.json();
+      console.log("Planned sport deleted successfully:", deleteData);
+
+      // 3. Update the state and remove the deleted sport object from the array
+      const filteredSportsArray = sportsArray.filter(
+        (sportObj) => sportObj.entryId !== sport.entryId
+      );
+
+      setSportsArray(filteredSportsArray);
+
+      // Optional: Fetch updated sports data and dispatch to Redux store
+      const fetchedData = await fetchSportsData(userId);
+
+      if (fetchedData) {
+        dispatch(setAllSportsFromSupabase(fetchedData));
+      }
+
+      // Dispatch removeSport action to Redux Store
+      dispatch(removeSport(sport.entryId));
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
     }
-
-    //console.log("Data inserted successfully:", insertData);
-
-    // 2. Delete the sports object from the 'sports_planned' table via the API
-    const response = await fetch("/api/plannedSports", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Error deleting planned sport:", errorData.error);
-      return; // Exit the function if an error occurs
-    }
-
-    const deleteData = await response.json();
-    //console.log("Planned sport deleted successfully:", deleteData);
-
-    // 3. Update the state and remove the deleted sport object from the array
-    const filteredSportsArray = sportsArray.filter(
-      (sportObj) => sportObj.entryId !== sport.entryId
-    );
-
-    setSportsArray(filteredSportsArray);
-    const data = await fetchSportsData(userId);
-
-    if(data){
-      dispatch(setAllSportsFromSupabase(data));
-    }
-    // Dispatch die removeSport Action an den Redux Store
-    dispatch(removeSport(sport.entryId));
-  } catch (error) {
-    console.error("An unexpected error occurred:", error);
-  }
-};
+  };
 
 
   const editSportHandler = (sport) => {
-    console.log(sport)
     setCurrentSport(sport);
     setIsModalOpen(true);
   }; 

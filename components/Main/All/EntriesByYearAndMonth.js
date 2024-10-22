@@ -7,7 +7,7 @@ import { formatDate } from '@/custom-hooks/formatDate';
 import { formatDuration } from '@/custom-hooks/formatDate';
 
 
-const EntriesByYearAndMonth = ({ allSupabaseSports, entriesByYearAndMonth, filteredEntries, currentSport }) =>{
+const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
 
    const [openMonths, setOpenMonths] = useState({});
    const toggleMonthEntries = (monthName, year) => {
@@ -35,17 +35,13 @@ const EntriesByYearAndMonth = ({ allSupabaseSports, entriesByYearAndMonth, filte
     });
   }
 
-
-
   return (
-    <div className=''>
-       
+    <div>
       {entriesByYearAndMonth &&
           entriesByYearAndMonth.map((yearEntry) => {
             const year = Object.keys(yearEntry)[0];
             let months = yearEntry[year];
 
-            // Sortiere die Monate hier
             months = sortMonths(months);
 
             return (
