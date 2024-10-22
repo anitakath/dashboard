@@ -20,7 +20,7 @@ import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import useCalendar from "@/custom-hooks/useCalendar";
 
 
-const Board = ({ filteredEntries, sportsDurationByMonth }) => {
+const Board = ({ filteredEntries}) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
@@ -108,7 +108,7 @@ const Board = ({ filteredEntries, sportsDurationByMonth }) => {
               <Entry
                 filteredEntries={filteredEntries}
                 allSupabaseSports={allSupabaseSports}
-                sportsDurationByMonth={sportsDurationByMonth}
+               
               />
             )}
         </div>
