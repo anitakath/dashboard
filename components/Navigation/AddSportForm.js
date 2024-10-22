@@ -1,16 +1,10 @@
-
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import Link from "next/link";
 //REDUX
-import { setNavigation, setSelectedSport, setCurrentSport } from "@/store/sportReducer";
+import {setNavigation, setSelectedSport, setCurrentSport} from "@/store/sportReducer";
 import { useSelector, useDispatch } from "react-redux";
 //STYLES
-import styles from './AddSportForm.module.css'
-//FONTAWESOME
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//CUSTOM HOOKS
-import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
-
+import styles from "./AddSportForm.module.css";
 
 const initialState = {
   name: "",
@@ -36,20 +30,27 @@ const reducer = (state, action) => {
         error: action.payload.error,
         errorMessage: action.payload.message,
       };
-    
+
     default:
       return state;
   }
 };
 
-const AddSportForm = ({addSportClickHandler}) => {
+const AddSportForm = ({ addSportClickHandler }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
   const navigation = useSelector((state) => state.sport.navigation);
   const sports = useSelector((state) => state.sport.currentSport);
   const allPlannedSports = useSelector((state) => state.sport.allPlannedSports);
-  const fontAwesomeIcons = useFontAwesomeIcons();
 
+  useEffect(() => {
+    if (sports && navigation) {
+      const filteredSports = sports.filter((sport) =>
+        navigation.includes(sport.name)
+      );
+      reduxDispatch(setCurrentSport(filteredSports));
+    }
+  }, [navigation]);
 
   const colors = [
     "fandango",
@@ -96,7 +97,6 @@ const AddSportForm = ({addSportClickHandler}) => {
       name: state.name,
       color: state.color,
     };
-    console.log(data)
 
     reduxDispatch(setNavigation([...navigation, data.name]));
     reduxDispatch(setSelectedSport(data.name));
@@ -121,16 +121,15 @@ const AddSportForm = ({addSportClickHandler}) => {
     }
   };
 
-
   return (
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>
-      <label className="text-xl hidden">Type</label>
+      <label className="text-xl hidden">sport </label>
       <input
         type="text"
         onChange={(e) =>
           dispatch({ type: "SET_NAME", payload: e.target.value })
         }
-        placeholder="enter type of sport..."
+        placeholder="enter your sport..."
         className={styles.input}
       />
 
@@ -149,8 +148,6 @@ const AddSportForm = ({addSportClickHandler}) => {
           </button>
         ))}
       </div>
-
-      
 
       <p className="my-6">{state.errorMessage}</p>
       <Link href="/profile" className={styles.link}>

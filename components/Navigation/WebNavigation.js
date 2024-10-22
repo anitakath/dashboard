@@ -1,35 +1,21 @@
-import { useState, useEffect } from "react"
 import styles from "./Navigation.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedSport } from "@/store/sportReducer";
-import { setNavigationArray } from "@/store/navigationReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
-import AddSportForm from "./AddSportForm";
-import SortSports from "./SortSports";
+
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
 
-const WebNavigation = (props) =>{
-  const deleteSportHandler = props.deleteSportHandler;
-  const uniqueSports = props.uniqueSports;
-  const active = props.active;
-  const navigationArr = props.navigationArr;
-  const handleSportClick = props.handleSportClick;
+const WebNavigation = ({deleteSportHandler, uniqueSports, active, navigationArr, handleSportClick, formIsOpen, setFormIsOpen, addSportClickHandler}) =>{
+
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-  const formIsOpen = props.formIsOpen;
-  const setFormIsOpen = props.setFormIsOpen;
-  const addSportClickHandler = props.addSportClickHandler;
-
-  const [sportsNavIsOpen, setSportsNavIsOpen] = useState(false);
-
   // Verwenden des Hooks, um die Icons zu erhalten
   const fontAwesomeIcons = useFontAwesomeIcons();
 
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {!formIsOpen && (
         <div className={styles.navigation_web}>
           <ul className="w-full h-full flex lg:flex-col overflow-scroll">

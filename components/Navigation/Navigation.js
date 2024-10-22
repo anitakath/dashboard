@@ -47,8 +47,6 @@ const Navigation = () => {
       )
   : [];
   const {filterEntriesByCurrentSport} = useAuth();
-
-
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
   const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
@@ -74,56 +72,57 @@ const Navigation = () => {
   };
 
 
-  const deleteSportHandler = (sport) => {
+  const deleteSportHandler = async (sport) => {
     // Zeige das Bestätigungsfenster an
-    if (window.confirm(`Are you sure you want to delete “${sport}”? All entries will be lost`)) {
+    if (
+      window.confirm(
+        `Are you sure you want to delete “${sport}”? All entries will be lost`
+      )
+    ) {
       // Remove the sports object from navigationArr
       const updatedNavigationArr = navigationArr.filter(
         (item) => item.name !== sport
       );
 
-      //console.log(updatedNavigationArr);
       const uniqueSports = updatedNavigationArr
         ? Array.from(
             new Set(updatedNavigationArr.map((sport) => sport.name))
           ).sort((a, b) => a.localeCompare(b))
         : [];
 
-      //console.log(uniqueSports);
       dispatch(setNavigation(uniqueSports));
-      // Hier solltest du deine Supabase-Logik zum Löschen implementieren
-      const deleteSportsFromSupabase = async () => {
-        try {
-          const { data, error } = await supabase
-            .from("sports")
-            .delete()
-            .match({ name: sport, userId: userId });
 
-          if (error) throw error;
+      // API-Anfrage zum Löschen des Sports
+      try {
+        const response = await fetch("/api/deleteSport", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            sportName: sport,
+            userId: userId,
+          }),
+        });
 
-          console.log(`Erfolgreich gelöscht: ${data}`);
-
-          // Aktualisiere allSupabaseSports im Redux-Store
-          const updatedAllSupabaseSports = allSupabaseSports.filter(
-            (item) => !(item.name === sport && item.userId === userId)
-          );
-
-          //console.log(updatedAllSupabaseSports);
-
-          dispatch(setAllSportsFromSupabase(updatedAllSupabaseSports));
-        } catch (error) {
-          console.error("Fehler beim Löschen:", error);
+        if (!response.ok) {
+          throw new Error("Fehler beim Löschen des Sports");
         }
-      };
 
-      deleteSportsFromSupabase();
+        const result = await response.json();
+        console.log(result.message); // Erfolgreich gelöscht
+
+        // Aktualisiere allSupabaseSports im Redux-Store
+        const updatedAllSupabaseSports = allSupabaseSports.filter(
+          (item) => !(item.name === sport && item.userId === userId)
+        );
+        dispatch(setAllSportsFromSupabase(updatedAllSupabaseSports));
+      } catch (error) {
+        console.error("Fehler beim Löschen:", error);
+      }
     }
   };
 
-  //console.log(currentSport);
-  //console.log(navigationArr)
-  //console.log(navigation);
-  
 
   return (
     <div className="w-full relative  lg:my-4 p-0 flex flex-col items-center shadow-section">
@@ -172,10 +171,6 @@ const Navigation = () => {
         <AddSportForm addSportClickHandler={addSportClickHandler} />
       )}
 
-      {/*
-      <button className={styles.addSport_btn} onClick={addSportClickHandler}>
-        {formIsOpen ? "-" : "+"}
-      </button>*/}
     </div>
   );
 };

@@ -1,8 +1,6 @@
-import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import styles from './MobileNavigation.module.css'
-import { useSelector } from 'react-redux'
 import SortSports from './SortSports'
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from '@/custom-hooks/FontAwesome/useFontAwesomeIcons'
@@ -18,16 +16,13 @@ const MobileNavigation = ({
   setMobileSportsNavIsOpen,
   setUniqueSports,
   allSupabaseSports, 
-  setFormIsOpen, 
   formIsOpen,
   addSportClickHandler
 }) => {
 
-
-
   let btn_text = mobileSportsNavIsOpen ? "close" : "open";
 
-    const fontAwesomeIcons = useFontAwesomeIcons();
+  const fontAwesomeIcons = useFontAwesomeIcons();
 
   return (
     <div className="w-full p-2 flex-col lg:hidden  overflow-scroll">
