@@ -7,12 +7,12 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 
 /* DELETE COMPLETED  SPORT */
-
+/*used at DetailsPage.js*/
 export const useDeleteCompletedSport = (userId) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  
+
   const deleteSport = async (title, id) => {
     setLoading(true);
     setError(null);

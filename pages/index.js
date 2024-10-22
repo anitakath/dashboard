@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useDispatch, useSelector } from "react-redux";
-import { supabase } from "@/services/supabaseClient";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 import { setCurrentSport } from "@/store/sportReducer";
@@ -9,9 +8,6 @@ import { setCurrentSport } from "@/store/sportReducer";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Login/Register";
-//CUSTOM HOOKS
-import useAuth from "@/custom-hooks/auth/useAuth";
-import { fetchSportsData } from "@/custom-hooks/useSportEntries";
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -25,7 +21,6 @@ export default function Home() {
   const [register, setRegister] = useState(false);
   const currentSport = useSelector((state) => state.sport.currentSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  const userId = useSelector((state) => state.auth.userId);
   const [successMessage, setSuccessMessage] = useState(null);
 
 
@@ -70,36 +65,6 @@ export default function Home() {
     processSportsData();
   }, [allSupabaseSports, allSupabaseSports]);
 
-  //console.log(currentSport)
-  //console.log('test')
-
-  /*   CREATE A BUTTON FOR THIS FUNCTION SO THAT YOU CAN ASSIGN ICONS TO SPORTS THAT DO NOT YET HAVE ONE.
-const iconToSupabase = async () => {
-  try {
-    // Fetch alle Einträge aus der Tabelle "sports"
-    const { data: sports, error: fetchError } = await supabase
-      .from("sports")
-      .select("*");
-
-    if (fetchError) throw fetchError;
-
-    // Filtere die Einträge nach dem Namen "Gym"
-    const gymSports = sports.filter((sport) => sport.name === "Spa");
-
-    // Aktualisiere jeden Eintrag mit dem Icon "dumbbell"
-    for (const sport of gymSports) {
-      const { error: updateError } = await supabase
-        .from("sports")
-        .update({ icon: "spa" })
-        .eq("id", sport.id); // Angenommen, es gibt eine ID-Spalte
-      if (updateError) throw updateError;
-    }
-
-    console.log("Icons erfolgreich aktualisiert!");
-  } catch (error) {
-    console.error("Fehler beim Aktualisieren der Icons:", error.message);
-  }
-};*/
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">

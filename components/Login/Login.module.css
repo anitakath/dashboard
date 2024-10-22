@@ -35,6 +35,7 @@
 
 .register{
     color: var(--purpleDark);
+    margin: 0px 4px;
 }
 
 @media screen and (max-width: 600px){
