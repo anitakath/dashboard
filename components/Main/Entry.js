@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { formatDate } from "@/custom-hooks/formatDate";
 //HOOKS
 import useEntries from "@/custom-hooks/Entry/useEntries";
-import { getMonth } from "@/custom-hooks/formatDate";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useSortedEntriesByMonth from "@/custom-hooks/useSortedEntriesByMonth"; // Importiere die neue Hook
 //REDUX

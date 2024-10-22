@@ -75,7 +75,6 @@ const DetailsPage = () => {
 
             {loading && (
               <p className="text-2xl flex justify-center text-red-500">
-                {" "}
                 deleting ...
               </p>
             )}

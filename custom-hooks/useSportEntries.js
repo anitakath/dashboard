@@ -12,32 +12,32 @@ export const useDeleteCompletedSport = (userId) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-
-
   
   const deleteSport = async (title, id) => {
     setLoading(true);
     setError(null);
 
     try {
-      const { data, error } = await supabase
-        .from("sports")
-        .delete()
-        .eq("title", title)
-        .eq("id", id);
+      const response = await fetch('/api/deleteCompletedSportEntry', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ title, id, userId }),
+      });
 
-      if (error) {
-        throw new Error(error.message);
+      if (!response.ok) {
+        throw new Error('Fehler beim Löschen des Eintrags');
       }
-      await reFetchSportsData(dispatch, userId);
+
+      await reFetchSportsData(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
       return { success: true };
     } catch (err) {
       console.error("Error when deleting the entry:", err.message);
       setError(err.message);
       return { success: false, error: err.message };
     } finally {
-      setLoading(false);
+          setLoading(false);
     }
+   
   };
 
   return { deleteSport, loading, error };

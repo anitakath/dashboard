@@ -159,15 +159,13 @@
 }
 
 .secondary_button{
-   background-color: var(--purpleDarkHover);
-    color: beige;
-    padding: 5px 10px;
-    margin: 5px;
-    cursor: pointer;
-    min-width: 100px;
-    height: 40px;
-    font-size: 1rem;
-
+  background-color: var(--purpleDarkHover);
+  color: beige;
+  margin: 5px;
+  cursor: pointer;
+  min-width: 100px;
+  height: 40px;
+  font-size: 1rem;
 }
 
 .secondary_button:hover{
@@ -218,5 +216,13 @@
 @media screen and (max-width: 800px){
   .title{
     font-size: 1.2rem;
+  }
+
+
+}
+
+@media screen and (max-width: 600px){
+  .secondary_button{
+    margin: 5px 0px;
   }
 }

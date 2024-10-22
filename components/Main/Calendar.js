@@ -10,9 +10,7 @@ import { setSelectedSport } from "@/store/sportReducer";
 
 const Calendar = ({ filteredByDate }) => {
   const dispatch = useDispatch();
-  const allSupabaseSports = useSelector(
-    (state) => state.sport.allSupabaseSports
-  );
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const { getMonthStyle, months, useEntryCountForMonth } = useCalendar();
   const currentYear = new Date().getFullYear();
@@ -43,7 +41,6 @@ const Calendar = ({ filteredByDate }) => {
   };
 
   const chooseMonthHandler = (month) => {
-    console.log(month);
 
     if (selectedSport === "daily") {
       // Hier definieren wir die ID für jeden Monat
@@ -73,19 +70,18 @@ const Calendar = ({ filteredByDate }) => {
         }
       }
     }
-
     setSelectedMonth(month);
     dispatch(updateDate({ month, year: selectedYear }));
   };
 
-  const summarizeAllHandler = (e) => {
-    e.preventDefault();
-    dispatch(setSelectedSport("all"));
-  };
+  const switchAllHandler = (e) =>{
+    if(e === "daily"){
+      dispatch(setSelectedSport("daily"));
+    } else if(e === "all"){
+      dispatch(setSelectedSport("all"));
+    }
 
-  const dailyAllHandler = () => {
-    dispatch(setSelectedSport("daily"));
-  };
+  }
 
 
   return (
@@ -136,10 +132,10 @@ const Calendar = ({ filteredByDate }) => {
       </div>
 
       <div className={styles.buttons_div}>
-        <button className="secondary_button" onClick={dailyAllHandler}>
+        <button className="secondary_button" onClick={() => switchAllHandler("daily")}>
           daily overview
         </button>
-        <button className="secondary_button" onClick={summarizeAllHandler}>
+        <button className="secondary_button"  onClick={() => switchAllHandler("all")}>
           summary of all sports
         </button>
       </div>

@@ -34,7 +34,6 @@
     cursor: pointer;
     padding: 5px;
     transition: 0.2s ease;
-    border: 2px solid red;
 }
 
 .delete_btn:hover, .goback_link:hover{
