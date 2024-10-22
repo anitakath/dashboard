@@ -32,7 +32,6 @@ const Login = ({ successMessage }) => {
       setError(err.message);
       console.log(err.message)
       setInputErrors({ email: true, password: true });
-      // Set input errors based on the error message
     }
   };
 
