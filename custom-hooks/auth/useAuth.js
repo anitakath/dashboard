@@ -93,7 +93,55 @@ const useAuth = (userId) => {
     return user;
   };
 
+const filterEntriesByCurrentSportAndDate = async (
+  filteredEntriesByUserId,
+  currentSport,
+  currentDate
+) => {
+  const entries = filteredEntriesByUserId.filter(
+    (sport) => sport.name === currentSport
+  );
 
+  const getMonthNumber = (month) => {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return months.indexOf(month) + 1;
+  };
+
+  const filteredResults = entries.filter((entry) => {
+    const entryDate = new Date(entry.created_at);
+    return (
+      entryDate.getFullYear() === currentDate.year &&
+      entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
+    );
+  });
+  const totalDurationInMinutes = filteredResults.reduce(
+    (total, entry) => total + entry.duration,
+    0
+  );
+  const totalDurationInHours = convertMinutesToHours(totalDurationInMinutes);
+
+  // Optional: Hier kannst du die totalDurationInHours speichern oder verwenden
+  //console.log(`Total Duration in Hours: ${totalDurationInHours}`);
+  //console.log(filteredResults)
+
+  dispatch(setFilteredEntriesByCurrentSport(filteredResults));
+};
+
+
+  
 
 
 
@@ -184,13 +232,6 @@ const useAuth = (userId) => {
             // Da wir bereits in der API gefiltert haben, können wir hier einfach die Daten zurückgeben
             const filteredEntriesByUserId = data.data; // Die API gibt bereits gefilterte Daten zurück
              
-            // Überprüfen, ob es Einträge gibt und entsprechende Aktionen ausführen
-            /*
-            if (filteredEntriesByUserId.length === 0) {
-              dispatch(setShowAlert(true));
-            } else {
-              dispatch(setShowAlert(false));
-            }*/
 
             return filteredEntriesByUserId; // Rückgabe des gefilterten Arrays
           }
@@ -200,40 +241,6 @@ const useAuth = (userId) => {
 
         return []; // Rückgabe eines leeren Arrays im Fehlerfall
       };
-
-      /*
-      const getFilteredSportsData = async (filteredEntriesByUserId, currentSport) => {
-
-        console.log(filteredEntriesByUserId);
-        const [sportsDurationByMonth, setSportsDurationByMonth] = useState(null)
-        const [filteredEntries, setFilteredEntries] = useState([]);
-      
-   
-         if (filteredEntriesByUserId) {
-          const entries = filteredEntriesByUserId.filter(
-             (sport) => sport.name === currentSport
-           );
-
-           const filteredEntriesByCurrentSport = entries.filter((entry) => {
-             const entryDate = new Date(entry.created_at);
-             return (
-               entryDate.getFullYear() === currentDate.year &&
-               entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
-             );
-           });
-           const totalDurationInMinutes = filteredEntriesByCurrentSport.reduce(
-             (total, entry) => total + entry.duration,
-             0
-           );
-           const totalDurationInHours = convertMinutesToHours(
-             totalDurationInMinutes
-           );
-           setSportsDurationByMonth(totalDurationInHours);
-           setFilteredEntries(filteredEntriesByCurrentSport);
-         }
-       };*/
-
-
 
  
    const registerHandler = async (registerData) => {
@@ -341,6 +348,7 @@ const useAuth = (userId) => {
     updateProfileHandler,
     fetchSportsData,
     filterEntriesByCurrentSport,
+    filterEntriesByCurrentSportAndDate,
   };s
 };
 

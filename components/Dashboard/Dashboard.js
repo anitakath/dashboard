@@ -7,12 +7,28 @@ import Board from '../Main/Board'
 import { convertMinutesToHours } from '@/custom-hooks/minutesToHours';
 import useAuth from '@/custom-hooks/auth/useAuth';
 //REDUX
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { setSelectedSport } from '@/store/sportReducer';
-
 
 const Dashboard = () =>{
   const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSport)
+  const filteredEntriesByUserId = useSelector((state) => state.sport.allSupabaseSports)
+  const currentSport = useSelector((state) => state.sport.selectedSport)
+  const {filterEntriesByCurrentSportAndDate} = useAuth();
+  const currentDate = useSelector((state) => state.calendar)
+
+
+   useEffect(() => {
+     // refetching entries of sport X bc user changed the date
+     if (filteredEntriesByUserId && currentSport && currentDate) {
+       filterEntriesByCurrentSportAndDate(
+         filteredEntriesByUserId,
+         currentSport,
+         currentDate
+       );
+     }
+   }, [currentDate]);
+
 
   return (
     <div className="w-full h-full sm:p-4 " id="top">

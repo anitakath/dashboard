@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import styles from "./Login.module.css"; // Erstelle eine CSS-Datei für das Styling
 import { supabase } from "@/services/supabaseClient"; // Importiere Supabase
 import { useCallback } from "react";
-
 //CUSTOM HOOKS
 import useAuth from "@/custom-hooks/auth/useAuth";
-
+//COMPONENTS
+import InfoBoard from "../UI/InfoBoard";
 
 const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
   const [registerData, setRegisterData] = useState({
@@ -17,7 +17,10 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
     confirmPassword: "",
   });
   const [error, setError] = useState(null);
+  //const [successMessage, setSuccessMessage] = useState(null)
   const router = useRouter();
+  const [infoBoardOpen, setInfoBoardOpen] = useState(false)
+  const [infoBoardDetails, setInfoBoardDetails] = useState(null)
 
   const validateInputs = () => {
     const { name, email, password, confirmPassword } = registerData;
@@ -37,106 +40,34 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
   };
 
 
-  
-  const registerHandler = useCallback(async (e) => {
+  const { registerHandler } = useAuth(); 
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Rufe die API zur Validierung auf
-    const response = await fetch("/api/validateRegistration", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(registerData),
-    });
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-      setError(data.error);
-      return;
+    try {
+      await registerHandler(registerData); // Registriere den Benutzer
+      setSuccessMessage("Registrierung erfolgreich!"); // Erfolgreiche Nachricht
+      setError(null); // Setze Fehler zurück
+    } catch (err) {
+      setError(err.message); // Setze Fehlernachricht
+      //setSuccessMessage(null); // Setze Erfolgsmeldung zurück
     }
+  };
 
 
-    const validationError = validateInputs();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
 
-    // Check whether the e-mail already exists
-    const { data: existingUser, error: fetchError } = await supabase
-      .from("users")
-      .select("id")
-      .eq("email", registerData.email)
-      .single();
-
-    if (fetchError && fetchError.code !== "PGRST116") {
-      setError("Error when checking the e-mail.");
-      return;
-    }
-
-    if (existingUser) {
-      setError("This e-mail address is already registered.");
-      return;
-    }
-
-    // Register user
-    const { user, error: signUpError } = await supabase.auth.signUp({
-      email: registerData.email,
-      password: registerData.password,
-      options: { data: { name: registerData.name } },
-    });
-
-    if (signUpError) {
-      console.log(signUpError.message)
-      setError(signUpError.message);
-      return;
-    }
-
-    // Überprüfen, ob das Benutzerobjekt existiert
-    if (!user) {
-      setError(
-        "User successfully registered. Please check your emails and activate your account."
-      );
-      return;
-    } else {
-      setError("Registration failed");
-    }
-
-    // Zusätzliche Benutzerdaten speichern
-    const { error: insertError } = await supabase
-      .from("users")
-      .insert([
-        { id: user.id, email: registerData.email, name: registerData.name },
-      ]);
-
-    if (insertError) {
-      console.log(insertError.message);
-      setError(insertError.message);
-      return;
-    }
-
-    // Successful registration
-    setSuccessMessage(
-      "Registration successful! Please check your e-mail for confirmation."
-    );
-
-    // Redirect after successful registration
-    router.push("/login");
-  },
-    [registerData]
-  );
-
-  console.log(error)
+  const openInfoBoard = () =>{
+    setInfoBoardOpen(!infoBoardOpen)
+    setInfoBoardDetails("Registration with the help of Supabase");
+  }
  
   return (
     <div className="w-full h-full p-4">
       <div className=" flex flex-col items-center justify-center w-full h-full py-2 m-0 p-0 relative border-8">
         <form
           className="w-1/2 flex flex-col items-center justify-center"
-          onSubmit={registerHandler}
+          onSubmit={handleSubmit}
         >
           <input
             type="text"
@@ -174,13 +105,22 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
             Register
           </button>
           {error && <p className="text-red-500">{error}</p>}
+          {error && (
+            <div className=" flex my-4 border-2 p-4 bg-red-200 flex-col">
+              <p className="text-xl">
+                "Email address "..." cannot be used as it is not authorized?"
+              </p>
+              <button className=" pointer text-red-700 p-2 text-xl" onClick={openInfoBoard}> click here to see why </button>
+            </div>
+          )}
           {successMessage && <p className="text-green-500">{successMessage}</p>}
         </form>
 
         <Link href="/login" className="relative top-2 text-xl">
-          already registered?{" "}
+          already registered?
           <span className={styles.register}>login here</span>
         </Link>
+        {infoBoardOpen && <InfoBoard setInfoBoardOpen={setInfoBoardOpen} infoBoardOpen={infoBoardOpen} setInfoBoardDetails={setInfoBoardDetails} infoBoardDetails={infoBoardDetails}/>}
       </div>
     </div>
   );

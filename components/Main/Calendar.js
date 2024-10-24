@@ -42,6 +42,7 @@ const Calendar = ({ filteredByDate }) => {
 
   const chooseMonthHandler = (month) => {
 
+
     if (selectedSport === "daily") {
       // Hier definieren wir die ID für jeden Monat
       const monthIds = {

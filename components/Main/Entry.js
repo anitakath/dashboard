@@ -15,9 +15,14 @@ import { setSortedEntriesByMonth } from "@/store/sportReducer";
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
 
+
 const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const dispatch = useDispatch();
+  const currentDate = useSelector((state) => state.calendar)
+
+  //console.log(currentDate)
+ // console.log(filteredEntries)
 
   // SORTED OBJECTS AND ARRAYS FOR ENTRIESBYYEARANDMONTH; SELECTEDSPORT === "ALL"
   const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate, allSupabaseSports);
