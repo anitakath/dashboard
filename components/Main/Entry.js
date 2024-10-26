@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import { useState } from "react";
 //STYLES
 import styles from './Entry.module.css'
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +20,7 @@ import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const dispatch = useDispatch();
-  const currentDate = useSelector((state) => state.calendar)
+  const [sortedEntries, setSortedEntries] = useState([]);
 
   //console.log(currentDate)
  // console.log(filteredEntries)
@@ -49,9 +50,25 @@ const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
   }
 
   // create a copy of filteredEntries, so filteredEntries is not mutated
-  const sortedEntries = Array.isArray(filteredEntries)
+  /*const sortedEntries = Array.isArray(filteredEntries)
     ? [...filteredEntries]
     : [];
+
+    */
+
+    useEffect(() => {
+      const newSortedEntries = Array.isArray(filteredEntries)
+        ? [...filteredEntries]
+        : [];
+      newSortedEntries.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+      setSortedEntries(newSortedEntries);
+
+      // Dispatch für die sortierten Einträge nach Monat
+      dispatch(setSortedEntriesByMonth(entriesByMonth));
+    }, [allSupabaseSports, filteredEntries]);
+
 
   // sort the entries by .created_at
   sortedEntries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -62,6 +79,7 @@ const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
 
   // die gesamt Stundenanzahl an Sportstunden pro Sport im Monat X
   const summedDurationPerSportPerMonthInHours = convertMinutesToHours(summedDurationPerSportPerMonth)
+
 
 
   return (

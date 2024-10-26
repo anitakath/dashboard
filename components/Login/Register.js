@@ -17,8 +17,6 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
     confirmPassword: "",
   });
   const [error, setError] = useState(null);
-  //const [successMessage, setSuccessMessage] = useState(null)
-  const router = useRouter();
   const [infoBoardOpen, setInfoBoardOpen] = useState(false)
   const [infoBoardDetails, setInfoBoardDetails] = useState(null)
 
@@ -55,12 +53,11 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
     }
   };
 
-
-
   const openInfoBoard = () =>{
     setInfoBoardOpen(!infoBoardOpen)
     setInfoBoardDetails("Registration with the help of Supabase");
   }
+
  
   return (
     <div className="w-full h-full p-4">
@@ -108,7 +105,7 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
           {error && (
             <div className=" flex my-4 border-2 p-4 bg-red-200 flex-col">
               <p className="text-xl">
-                "Email address "..." cannot be used as it is not authorized?"
+                "Email address {registerData.email} cannot be used as it is not authorized?"
               </p>
               <button className=" pointer text-red-700 p-2 text-xl" onClick={openInfoBoard}> click here to see why </button>
             </div>

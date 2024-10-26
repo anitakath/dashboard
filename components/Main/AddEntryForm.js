@@ -21,14 +21,12 @@ import {
 import Spinner from "../UI/Spinner";
 
 
-const AddEntryForm = (props) => {
+const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
   const userId = useSelector((state) => state.auth.userId)
   const router = useRouter();
-  const setFormIsOpen = props.setFormIsOpen;
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const currentSport = useSelector((state) => state.sport.currentSport);
   const currentPath = router.pathname;
-  const chosenSport = props.chosenSport;
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   let label = "";
   let icon ="";
@@ -119,8 +117,7 @@ const AddEntryForm = (props) => {
 
  useEffect(() => {
 
-  console.log(currentSport)
-  console.log(selectedSport)
+
    if (
      Array.isArray(currentSport) &&
      currentSport.length > 0 &&
@@ -144,8 +141,7 @@ const AddEntryForm = (props) => {
  }, [currentSport, selectedSport]);
 
 
- console.log(currentSport)
- console.log(navigation);
+
 
 
   return (
@@ -238,10 +234,13 @@ const AddEntryForm = (props) => {
               <p className={styles.errorText}> please set a date!</p>
             )}
           </div>
+          <div className=" w-full  flex  justify-center">
+            <button type="submit" className={styles.submit_btn}>
+              submit
+            </button>
 
-          <button type="submit" className={styles.submit_btn}>
-            submit
-          </button>
+            {!successMessage && <button  className={styles.submit_btn} onClick={ () => setFormIsOpen(false)}> close form </button>}
+          </div>
 
           {successMessage && (
             <p className={styles.successMessage_p}>

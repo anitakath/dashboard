@@ -9,7 +9,7 @@ const EditEntry = ({
   setIsModalOpen,
 }) => {
   // Füge setIsModalOpen als Prop hinzu
-  const currentSports = useSelector((state) => state.sport.currentSport[0]);
+  const currentSports = useSelector((state) => state.sport.currentSport);
   if (!isModalOpen) return null;
 
    const handleInputChange = (e) => {

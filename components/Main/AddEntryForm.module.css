@@ -82,6 +82,7 @@
   border-bottom: 2px solid var(--purpleDarkHoverOpacity);
   background: var(--purpleDarkHoverOpacity);
   width: 200px;
+  margin: 0px 2px;
 }
 
 

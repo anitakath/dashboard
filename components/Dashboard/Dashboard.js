@@ -27,7 +27,7 @@ const Dashboard = () =>{
          currentDate
        );
      }
-   }, [currentDate]);
+   }, [currentDate, filteredEntriesByUserId, currentSport]);
 
 
   return (
