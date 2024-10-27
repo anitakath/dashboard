@@ -36,7 +36,7 @@ const Statistic = () =>{
                     key={sport.id}
                     className={`${styles.sport_div} ${styles[sport.color]}`}
                   >
-                    <button className="text-m md:text-xl text-center hover:font-bold">
+                    <button className="text-m md:text-xl text-center">
                       {sport.name}
                     </button>
                   </div>
@@ -86,7 +86,7 @@ const Statistic = () =>{
             </div>
 
             <div className="m-4 flex p-2 w-full">
-              <p className="m-4 w-6/12">
+              <p className="m-4 w-6/12 bg-red-50 p-4 shadow">
                 At vero eos et accusam et justo duo dolores et ea rebum. Stet
                 clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
                 dolor sit amet. Lorem ipsum dolor sit amet, consetetur
@@ -141,7 +141,7 @@ const Statistic = () =>{
                 nobis eleifend option congue nihil imperdiet doming id quod
                 mazim placerat facer possim assum.
               </p>
-              <p className="m-4 w-6/12">
+              <p className="m-4 w-6/12 bg-red-50 p-4 shadow">
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                 diam nonumy eirmod tempor invidunt ut labore et dolore magna
                 aliquyam erat, sed diam voluptua. At vero eos et accusam et

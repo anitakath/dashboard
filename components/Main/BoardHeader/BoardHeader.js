@@ -76,7 +76,7 @@ const BoardHeader = ({logoutHandler}) =>{
             width={30}
             height={30}
             className={styles.logout_btn}
-            fetchpriority="eager"
+            fetchpriority="high"
           />
         </button>
         <UserImage />

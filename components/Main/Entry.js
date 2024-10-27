@@ -16,7 +16,6 @@ import { setSortedEntriesByMonth } from "@/store/sportReducer";
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
 
-
 const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const dispatch = useDispatch();
@@ -49,25 +48,20 @@ const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
     filteredEntriesByMonth[month] = filteredEntries;
   }
 
-  // create a copy of filteredEntries, so filteredEntries is not mutated
-  /*const sortedEntries = Array.isArray(filteredEntries)
-    ? [...filteredEntries]
-    : [];
 
-    */
 
-    useEffect(() => {
-      const newSortedEntries = Array.isArray(filteredEntries)
-        ? [...filteredEntries]
-        : [];
-      newSortedEntries.sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at)
-      );
-      setSortedEntries(newSortedEntries);
+  useEffect(() => {
+    const newSortedEntries = Array.isArray(filteredEntries)
+      ? [...filteredEntries]
+      : [];
+    newSortedEntries.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+    setSortedEntries(newSortedEntries);
 
-      // Dispatch für die sortierten Einträge nach Monat
-      dispatch(setSortedEntriesByMonth(entriesByMonth));
-    }, [allSupabaseSports, filteredEntries]);
+    // Dispatch für die sortierten Einträge nach Monat
+    dispatch(setSortedEntriesByMonth(entriesByMonth));
+  }, [allSupabaseSports, filteredEntries]);
 
 
   // sort the entries by .created_at

@@ -259,12 +259,8 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
           .from("sports")
           .insert([data]);
         if (error) throw new Error("Failed to insert data into Supabase table");
-        /*console.log(
-          "Data successfully inserted into Supabase table:",
-          newSport
-        );*/
         await fetchSportsData(dispatch, userId);
-        setTimeout(() => setSuccessMessage(false), 5000);
+       /* setTimeout(() => setSuccessMessage(false), 5000);*/
       }
 
       /*

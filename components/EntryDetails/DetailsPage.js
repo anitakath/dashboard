@@ -59,7 +59,6 @@ const DetailsPage = () => {
               <FontAwesomeIcon icon={faTrash} />
             </button>
             <button className={styles.edit_btn} onClick={editEntryHandler}>
-              {" "}
               <FontAwesomeIcon icon={faPencil} />
             </button>
           </div>

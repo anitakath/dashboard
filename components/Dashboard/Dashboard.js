@@ -1,14 +1,12 @@
 //STYLES
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 //COMPONENTS
 import Navigation from '../Navigation/Navigation';
 import Board from '../Main/Board'
 //HOOKS
-import { convertMinutesToHours } from '@/custom-hooks/minutesToHours';
 import useAuth from '@/custom-hooks/auth/useAuth';
 //REDUX
 import { useSelector } from "react-redux";
-import { setSelectedSport } from '@/store/sportReducer';
 
 const Dashboard = () =>{
   const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSport)

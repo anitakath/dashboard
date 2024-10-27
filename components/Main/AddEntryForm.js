@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 //STYLES
 import styles from "./AddEntryForm.module.css";
 //REDUX
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 //SUPABASE
 import { supabase } from "@/services/supabaseClient";
 //CUSTOM HOOKS
@@ -43,11 +43,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     icon: icon,
   });
 
-  const navigation = useSelector((state) => state.sport.navigation)
 
-  //console.log(currentSport)
-  //console.log(inputs)
-  
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {
     submitHandler,
@@ -239,7 +235,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
               submit
             </button>
 
-            {!successMessage && <button  className={styles.submit_btn} onClick={ () => setFormIsOpen(false)}> close form </button>}
+            {successMessage && <button  className={styles.submit_btn} onClick={ () => setFormIsOpen(false)}> close form </button>}
           </div>
 
           {successMessage && (
