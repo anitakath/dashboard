@@ -153,7 +153,7 @@ const Profile = () => {
                   alt="Power Off Icon"
                   width={50}
                   height={50}
-                  fetchpriority="eager"
+                  fetchpriority="high"
                 />
               </button>
             </div>
