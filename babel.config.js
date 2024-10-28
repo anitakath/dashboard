@@ -2,6 +2,14 @@ module.exports = {
   presets: ["next/babel"],
 };
 
+/*
+   module.exports = {
+     presets: [
+       ["next/babel"], // Next.js Preset
+       "@babel/preset-env", // Für moderne JavaScript-Funktionen
+       "@babel/preset-react", // Für React
+     ],
+   };*/
 
 /*
    // babel.config.js
