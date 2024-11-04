@@ -64,7 +64,11 @@ const Statistic = () =>{
             </div>
 
             {isAnnualOpen && (
-              <Annual allSupabaseSports={allSupabaseSports} date={date} />
+              <Annual
+                allSupabaseSports={allSupabaseSports}
+                date={date}
+                setDate={setDate}
+              />
             )}
 
             <div>

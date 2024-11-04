@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 //import styles from './EntriesByYearAndMonth.module.css'
 import styles from '../Entry.module.css'
@@ -19,21 +19,43 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
        [monthYearKey]: !prevState[monthYearKey], // Toggle den Zustand für diesen spezifischen Monat und Jahr
      }));
    };
+   const [sortedEntries, setSortedEntries] = useState([]);
 
-  const monthOrder = [
-      'December', 'November', 'October', 'September', 
-      'August', 'July', 'June', 'May', 
-      'April', 'March', 'February', 'January'
-  ];
 
-  function sortMonths(entries) {
-    return entries.sort((a, b) => {
-      const monthA = Object.keys(a)[0];
-      const monthB = Object.keys(b)[0];
+/*
+const months = ["January", "March", "February", "May", "June", "April"];
 
-      return monthOrder.indexOf(monthA) - monthOrder.indexOf(monthB);
+const monthOrder = {
+  January: 0,
+  February: 1,
+  March: 2,
+  April: 3,
+  May: 4,
+  June: 5,
+  July: 6,
+  August: 7,
+  September: 8,
+  October: 9,
+  November: 10,
+  December: 11,
+};
+
+
+  useEffect(() => {
+    
+
+    months.sort((a, b) => {
+      return monthOrder[a] - monthOrder[b];
     });
-  }
+
+    console.log(months);
+  }, [])
+
+*/
+
+
+
+
 
   return (
     <div>
@@ -42,7 +64,27 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const year = Object.keys(yearEntry)[0];
             let months = yearEntry[year];
 
-            months = sortMonths(months);
+
+            const order = [
+              "November",
+              "Oktober",
+              "September",
+              "August",
+              "Juli",
+              "Juni",
+              "Mai",
+              "April",
+              "März",
+            ];
+
+            // Sortiere das months-Array basierend auf der definierten Reihenfolge
+            const sortedMonths = months.sort((a, b) => {
+              const monthA = Object.keys(a)[0];
+              const monthB = Object.keys(b)[0];
+
+              return order.indexOf(monthA) - order.indexOf(monthB);
+            });
+
 
             return (
               <div key={year}>
@@ -61,7 +103,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         <button
                           className={styles.monthYear_header}
                           onClick={() => toggleMonthEntries(monthName, year)}
-
                         >
                           <p className={styles.monthYear_header_p}>
                             {monthName}

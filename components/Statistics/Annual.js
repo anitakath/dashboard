@@ -6,9 +6,10 @@ import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics'
 //COMPONENTS
 import RestDaysCalendar from './RestDaysCalendar';
 import RandomSportImagesGrid from './RandomSportImagesGrid';
+import BarChart from './BarChart';
 
 
-const Annual = ({ allSupabaseSports, date}) => {
+const Annual = ({ allSupabaseSports, date, setDate}) => {
 
   const [showFiveYearHistory, setShowFiveYearHistory] = useState({
     favourites: false,
@@ -52,7 +53,6 @@ const Annual = ({ allSupabaseSports, date}) => {
             </div>
           )}
           <h1>
-            {" "}
             ...referred to the number of hours of sport completed in the
             individual units.
           </h1>
@@ -64,7 +64,7 @@ const Annual = ({ allSupabaseSports, date}) => {
                   className={`${styles[label]} ${styles.fav_sports_div}`}
                 >
                   <p>
-                    {index + 1}. {name}: {totalDurationFormatted} 
+                    {index + 1}. {name}: {totalDurationFormatted}
                   </p>
                 </div>
               )
@@ -142,6 +142,16 @@ const Annual = ({ allSupabaseSports, date}) => {
           </div>
         </div>
       </div>
+
+      {/* BAR CHART  */}
+
+      <BarChart
+        allSupabaseSports={allSupabaseSports}
+        date={date}
+        setDate={setDate}
+        sortedSportsByCount={sortedSportsByCount}
+        resultArray={resultArray}
+      />
 
       {/* REST DAYS */}
 

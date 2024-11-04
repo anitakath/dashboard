@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMonth } from "@/utils/helpers";
+
 const useEntries = (filteredByDate, allSupabaseSports) => {
   const [entriesByMonth, setEntriesByMonth] = useState({});
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
@@ -28,42 +29,86 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
       });
 
       const sortedEntries = {};
-
-      // Iteriere über jedes Datum im updatedEntriesByDay
       for (const date in updatedEntriesByDay) {
         const entries = updatedEntriesByDay[date];
-
-        // Extrahiere Jahr, Monat und Tag aus dem Datum
         const [day, monthName, year] = date.split(" ");
-
-        // Stelle sicher, dass das Jahr im sortedEntries existiert
         if (!sortedEntries[year]) {
           sortedEntries[year] = {};
         }
-
-        // Stelle sicher, dass der Monat im Jahr existiert
         if (!sortedEntries[year][monthName]) {
           sortedEntries[year][monthName] = [];
         }
-
-        // Füge die Einträge zum entsprechenden Jahr und Monat hinzu
         sortedEntries[year][monthName].push(...entries);
       }
 
-      const finalSortedArray = Object.keys(sortedEntries)
-        .filter((year) => year !== "1014") // Filtere das Jahr 1014 heraus
-        .sort((a, b) => b - a) // Sortiere die Jahre in absteigender Reihenfolge
-        .map((year) => ({
-          [year]: Object.keys(sortedEntries[year]).map((month) => ({
-            [month]: sortedEntries[year][month],
-          })),
-        }));
+      // Definiere die richtige Reihenfolge der Monate
+      const monthOrder = [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember",
+      ];
+
+
+
+
+
+
+
+
+      function sortMonths(data) {
+        const sortedData = {};
+        for (const year in data) {
+          if (data.hasOwnProperty(year)) {
+            const months = data[year];
+            const sortedMonths = {};
+
+            // Sortiere die Monate nach der definierten Reihenfolge
+            monthOrder.forEach((month) => {
+              if (months[month]) {
+                sortedMonths[month] = months[month];
+              }
+            });
+
+            sortedData[year] = sortedMonths;
+          }
+        }
+        return sortedData;
+      }
+
+      const sortedData = sortMonths(sortedEntries);
+
+
+      // Filtere das Jahr 1014 heraus und sortiere die Jahre absteigend
+      const finalSortedArray = Object.keys(sortedData)
+        .filter((year) => year !== "1014")
+        .sort((a, b) => b - a)
+        .map((year) => {
+          // Erstelle ein Array für die Monate mit Einträgen
+          const sortedMonthsArray = monthOrder.reduce((acc, month) => {
+            if (sortedData[year][month] && sortedData[year][month].length > 0) {
+              acc.push({ [month]: sortedData[year][month] });
+            }
+            return acc;
+          }, []);
+
+          return { [year]: sortedMonthsArray };
+        });
 
       setEntriesByYearAndMonth(finalSortedArray);
-
       setEntriesByMonth(updatedEntriesByMonth);
+
     }
-  }, [/*filteredByDate, allSupabaseSports*/]);
+   
+  }, [filteredByDate]);
 
   return { entriesByMonth, entriesByYearAndMonth };
 };
