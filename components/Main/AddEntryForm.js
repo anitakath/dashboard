@@ -4,18 +4,14 @@ import { useRouter } from "next/router";
 import styles from "./AddEntryForm.module.css";
 //REDUX
 import { useSelector } from "react-redux";
-//SUPABASE
-import { supabase } from "@/services/supabaseClient";
+
 //CUSTOM HOOKS
 import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
-import { useChangeHandler } from "@/custom-hooks/useSportEntries";
-import useFormValidation from "@/custom-hooks/validation/useFormValidation";
 
 import {
   validateTitle,
   validateText,
   validateDuration,
-  formatText,
 } from "@/custom-hooks/validation/validation";
 //COMPONENTS
 import Spinner from "../UI/Spinner";
@@ -84,17 +80,17 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     // Hier kannst du auch die Validierung aufrufen und den Zustand entsprechend setzen
     if (name === "title") {
       if (!validateTitle(value)) {
-        console.log("Titel ist ungültig");
+        //console.log("Titel ist ungültig");
       }
     }
     if (name === "text") {
       if (!validateText(value)) {
-        console.log("Text ist ungültig");
+        //console.log("Text ist ungültig");
       }
     }
     if (name === "duration") {
       if (!validateDuration(value)) {
-        console.log("Dauer ist ungültig");
+        //console.log("Dauer ist ungültig");
       }
     }
   };
