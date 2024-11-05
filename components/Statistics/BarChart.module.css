@@ -1,13 +1,11 @@
 
-
-
 .bar_chart {
     display: flex;
     align-items: flex-end; 
     overflow: scroll;
+    min-height: 100vh;
     max-height: 200vh;
     background: var(--purpleDarkHoverOpacity);
-
 }
 
 .bar {

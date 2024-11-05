@@ -1,8 +1,12 @@
 
+import { useEffect, useState } from 'react';
 import styles from './BarChart.module.css'
 
 //COMPONENTS
 import SelectTimePeriod from './SelectTimePeriod';
+
+
+
 const BarChart = ({
   allSupabaseSports,
   sortedSportsByCount,
@@ -47,9 +51,19 @@ const BarChart = ({
     .sort((a, b) => a.count - b.count); // Aufsteigend sortieren
 
   // Maximalen Wert finden
-  const maxCount = Math.max(...sortedSports.map((sport) => sport.count));
+  //const maxCount = Math.max(...sortedSports.map((sport) => sport.count));
 
-  console.log(sortedSports);
+
+  const [maxCount, setMaxCount] = useState(null)
+
+  useEffect(() => {
+    if (date.month === "All") {
+      setMaxCount(200);
+    } else if (date.month != "All") {
+      setMaxCount(31);
+    }
+  }, [date, sortedSports]);
+
 
   return (
     <div className="">
