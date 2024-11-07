@@ -135,7 +135,6 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
 
 
 
-
   return (
     <div className="my-2 p-2 flex flex-col justify-center w-full overflow-scroll flex items-center justify-center">
       {submitting && <Spinner />}

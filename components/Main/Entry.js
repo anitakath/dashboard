@@ -76,6 +76,8 @@ const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
 
 
 
+
+
   return (
     <div className={styles.container}>
       {currentSport != "all" && (

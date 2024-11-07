@@ -9,6 +9,7 @@ import colors from '../../../styles/Colors.module.css'
 
 const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSports, activeSport, addSportClickHandler, formIsOpen, chosenSport, chooseSportHandler}) =>{
 
+
   return (
     <div>
       {addSport && (

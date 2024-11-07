@@ -261,12 +261,10 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
         if (error) throw new Error("Failed to insert data into Supabase table");
         await fetchSportsData(dispatch, userId);
        /* setTimeout(() => setSuccessMessage(false), 5000);*/
+        setFormIsOpen(false);
       }
 
-      /*
-      setTimeout(() => {
-        setFormIsOpen(false);
-      }, 2000);*/
+
 
       setSuccessMessage(true);
     } catch (error) {
