@@ -88,7 +88,7 @@ const monthOrder = {
 
             return (
               <div key={year}>
-                <h2 className={styles.yearHeader}>{year} </h2>
+                <h2 className={styles.yearHeader}>{year}</h2>
                 {months.map((monthEntry) => {
                   const monthName = Object.keys(monthEntry)[0];
                   const entries = monthEntry[monthName];
@@ -105,7 +105,7 @@ const monthOrder = {
                           onClick={() => toggleMonthEntries(monthName, year)}
                         >
                           <p className={styles.monthYear_header_p}>
-                            {monthName}
+                            {monthName} 
                           </p>
                           <p className={styles.monthYear_header_span}>
                             (total hours of sport:

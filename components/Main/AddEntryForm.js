@@ -97,8 +97,6 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
 
   
 
-
-
   const blurHandler = (target) => {
     setIsTouched(true);
     setIsTouched({ ...isTouched, [target]: true });
@@ -133,8 +131,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
  }, [currentSport, selectedSport]);
 
 
- console.log(inputs)
- console.log(selectedSport)
+
 
 
   return (

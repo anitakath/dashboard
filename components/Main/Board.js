@@ -68,7 +68,14 @@ const Board = ({ filteredEntries}) => {
       <div className="flex justify-center  lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
           {selectedSport != "start" && (
-            <h2 className="subtitle flex items-center"> {selectedSport} </h2>
+            <h2 className="subtitle flex items-center">
+              {selectedSport === "all" && "all sports summarized per year and month"}
+              {selectedSport === "daily" &&
+                "all sports summarized per year and month in a calendar"}
+              {selectedSport !== "daily" &&
+                selectedSport !== "all" &&
+                selectedSport}
+            </h2>
           )}
 
           {selectedSport === "start" && <HowToUseThisApp />}
@@ -80,9 +87,7 @@ const Board = ({ filteredEntries}) => {
           )}
 
           {selectedSport != null && selectedSport != "start" && (
-            <BoarderSubHeader
-              currentSport={selectedSport}
-            />
+            <BoarderSubHeader currentSport={selectedSport} />
           )}
 
           {/* --------------------------  THE ENTRIES -------------------------- */}
@@ -108,7 +113,6 @@ const Board = ({ filteredEntries}) => {
               <Entry
                 filteredEntries={filteredEntries}
                 allSupabaseSports={allSupabaseSports}
-               
               />
             )}
         </div>

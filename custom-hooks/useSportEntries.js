@@ -292,17 +292,6 @@ export const useChangeHandler = (inputs, setInputs, validateTitle, validateText,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 export const addSportHandler = async (newSport, setSportsArray, dispatch) => {
   try {
     const response = await fetch("/api/plannedSports", {
