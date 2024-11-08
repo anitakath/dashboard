@@ -223,7 +223,28 @@
 }
 
 @media screen and (max-width: 600px){
+
+  .primary_button{
+    height: 40px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .primary_link{
+    height: 35px;
+    font-size: 1rem;
+  }
+
   .secondary_button{
     margin: 5px 0px;
+    height: 35px;
+    font-size: 1rem;
+    padding: 2;
+  }
+
+  .subtitle{
+    font-size: 1.2rem;
   }
 }

@@ -21,9 +21,6 @@ const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
   const dispatch = useDispatch();
   const [sortedEntries, setSortedEntries] = useState([]);
 
-  //console.log(currentDate)
- // console.log(filteredEntries)
-
   // SORTED OBJECTS AND ARRAYS FOR ENTRIESBYYEARANDMONTH; SELECTEDSPORT === "ALL"
   const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate, allSupabaseSports);
 
@@ -73,7 +70,6 @@ const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
 
   // die gesamt Stundenanzahl an Sportstunden pro Sport im Monat X
   const summedDurationPerSportPerMonthInHours = convertMinutesToHours(summedDurationPerSportPerMonth)
-
 
 
 

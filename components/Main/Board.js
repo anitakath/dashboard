@@ -68,7 +68,7 @@ const Board = ({ filteredEntries}) => {
       <div className="flex justify-center  lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
           {selectedSport != "start" && (
-            <h2 className="subtitle flex items-center">
+            <h2 className="subtitle flex items-center text-center">
               {selectedSport === "all" && "all sports summarized per year and month"}
               {selectedSport === "daily" &&
                 "all sports summarized per year and month in a calendar"}
