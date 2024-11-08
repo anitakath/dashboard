@@ -133,6 +133,8 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
  }, [currentSport, selectedSport]);
 
 
+ console.log(inputs)
+ console.log(selectedSport)
 
 
   return (

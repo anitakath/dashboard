@@ -119,35 +119,36 @@ export const fetchSportsData = async (dispatch, userId) => {
 export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, currentSport) => {
   const dispatch = useDispatch();
   const [successMessage, setSuccessMessage] = useState(false);
-  const [durationErrorMessage, setDurationErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [formIsOpen, setFormIsOpen] = useState(true)
 
 
-  const validateTitle = (title) => {
-    return title.length >= 3 && title.length <= 50;
-  };
+    const validateTitle = (title) => title.length >= 3 && title.length <= 50;
+    const validateText = (text) => text.length >= 5 && text.length <= 1000;
+    const validateDuration = (duration) => {
+      const num = parseFloat(duration);
+      return !isNaN(num) && num > 0;
+    };
+    const validateName = (name) => name.trim() !== "";
 
-  const validateText = (text) => {
-    return text.length >= 5 && text.length <= 1000;
-  };
+    const validateInputs = (inputs) => {
+      const errors = {};
+      if (!validateTitle(inputs.title))
+        errors.title = "The title must be between 3 and 50 characters long.";
+      if (!validateText(inputs.text))
+        errors.text = "The text must be between 5 and 1000 characters long.";
+      if (!validateDuration(inputs.duration))
+        errors.duration = "The duration must be a positive number.";
+      if (!validateName(inputs.name)) errors.name = "The name cannot be empty.";
+      if (inputs.created_at === "")
+        errors.createdAt = "The creation date cannot be empty.";
+      return errors;
+    };
 
-  const validateDuration = (duration) => {
-    const num = parseFloat(duration);
-    if (isNaN(num) || num <= 0) {
-      return false; // Wenn duration keine positive Zahl ist
-    }
-    return true; // Wenn duration eine positive Zahl ist
-  };
-  const formatText = (text) => {
-    return text.toLowerCase().replace(/\s+/g, "-");
-  };
-
-  const validateName = (name) => {
-    return name.trim() !== ""; // Überprüfen, ob der Name nicht leer ist
-  };
-
+    const formatText = (text) => {
+      return text.toLowerCase().replace(/\s+/g, "-");
+    };
 
 
 
@@ -156,38 +157,11 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
     setSubmitting(true);
 
     // Input validation
-    const isTitleValid = validateTitle(inputs.title);
-    const isTextValid = validateText(inputs.text);
-    const isDurationValid = validateDuration(inputs.duration);
-    const isNameValid = validateName(inputs.name);
+    const validationErrors = validateInputs(inputs);
 
     // Set error messages based on validation
-    if (!isTitleValid) {
-      setErrorMessage("The title must be between 3 and 50 characters long.");
-      setSubmitting(false);
-      return;
-    }
-
-    if (!isTextValid) {
-      setErrorMessage("The text must be between 5 and 1000 characters long.");
-      setSubmitting(false);
-      return;
-    }
-
-    if (!isDurationValid) {
-      setErrorMessage("The duration must be a positive number.");
-      setSubmitting(false);
-      return;
-    }
-
-    if (!isNameValid) {
-      setErrorMessage("The name cannot be empty.");
-      setSubmitting(false);
-      return;
-    }
-
-    if (inputs.created_at === "") {
-      setErrorMessage("The creation date cannot be empty.");
+    if (Object.keys(validationErrors).length > 0) {
+      setErrorMessage(Object.values(validationErrors).join(" "));
       setSubmitting(false);
       return;
     }
@@ -196,18 +170,6 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
 
     const formattedTitle = formatText(inputs.title);
     const uniqueID = uuidv4();
-
-    // Überprüfen, ob ein Sport mit dem gleichen Namen und einem Icon existiert
-    const existingSport = currentSport.find(
-      (sport) => sport.name === inputs.name && sport.icon !== null
-    );
-
-    let iconData = null;
-
-    if (existingSport) {
-       iconData = existingSport.icon; // Das Icon des bestehenden Sports speichern
-    }
-
 
     const data =
       currentPath === "/profile"
@@ -221,7 +183,6 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
             entryPath: `${formattedTitle}-${uniqueID}`,
             duration: inputs.duration,
             created_at: inputs.created_at,
-            icon: iconData,
           }
         : {
             name: inputs.name,
@@ -233,7 +194,6 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
             duration: inputs.duration,
             created_at: inputs.created_at,
             userId: inputs.userId,
-            icon: iconData,
           };
 
     if (currentPath === "/profile" && !chosenSport) {
@@ -243,7 +203,28 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
     }
 
     try {
+    
+      const validationResponse = await fetch("/api/formValidation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!validationResponse.ok) {
+        const validationResult = await validationResponse.json();
+        setErrorMessage(Object.values(validationResult.errors).join(" "));
+
+        setErrorMessage("An error occurred while validating the form.");
+        setSubmitting(false);
+        return;
+      }
+      
+     
+      
+
       let response;
+
+      console.log(data);
 
       if (currentPath === "/profile") {
         response = await fetch("/api/send-plannedSports", {
@@ -260,11 +241,8 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
           .insert([data]);
         if (error) throw new Error("Failed to insert data into Supabase table");
         await fetchSportsData(dispatch, userId);
-       /* setTimeout(() => setSuccessMessage(false), 5000);*/
         setFormIsOpen(false);
       }
-
-
 
       setSuccessMessage(true);
     } catch (error) {
@@ -273,13 +251,9 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
       setSubmitting(false);
     }
   };
-  
-
-
     return {
       submitHandler,
       successMessage,
-      durationErrorMessage,
       errorMessage,
       submitting,
       formIsOpen,
