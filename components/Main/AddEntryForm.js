@@ -135,7 +135,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
 
 
   return (
-    <div className="my-2 p-2 flex flex-col justify-center w-full overflow-scroll flex items-center justify-center">
+    <div className="lg:my-2 lg:p-2 flex flex-col justify-center w-full overflow-scroll flex items-center justify-center">
       {submitting && <Spinner />}
       {!submitting && formIsOpen && (
         <form
@@ -156,7 +156,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
             onChange={changeHandler}
           ></input>
 
-          <div className="h-8 h-20 md:h-12">
+          <div className=" md:h-12">
             {isTouched.title && !validateTitle(inputs.title) && (
               <p className={styles.errorText}>
                 The title must be between 3 and 50 characters long
@@ -224,7 +224,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
               <p className={styles.errorText}> please set a date!</p>
             )}
           </div>
-          <div className=" w-full  flex  justify-center">
+          <div className=" w-full flex  justify-center">
             <button type="submit" className={styles.submit_btn}>
               submit
             </button>
