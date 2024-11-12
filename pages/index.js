@@ -15,7 +15,9 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
 import useAuth from "@/custom-hooks/auth/useAuth";
-
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
+import { convertMinutesToHours } from "@/utils/helpers";
+import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -27,11 +29,42 @@ export default function Home() {
   const userId = useSelector((state)=> state.auth.userId)
   const {fetchSportsData} = useAuth();
 
-  console.log(userId)
 
   useEffect(()=>{
     if(userId){
-      fetchSportsData(userId);
+
+      const fetchData = async(userId) =>{
+
+        const response = await fetchSportsData(userId)
+
+
+
+        const entries = await response.filter(
+          (sport) => sport.name === currentSport
+        );
+
+        const filterEntries = await entries.filter((entry) => {
+          const entryDate = new Date(entry.created_at);
+          return (
+            entryDate.getFullYear() === currentDate.year &&
+            entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
+          );
+        });
+
+        const totalDurationInMinutes = await filterEntries.reduce(
+          (total, entry) => total + entry.duration,
+          0
+        );
+
+        const totalDurationInHours = convertMinutesToHours(
+          totalDurationInMinutes
+        );
+
+        dispatch(setFilteredEntriesByCurrentSport(filterEntries));
+
+        await dispatch(setAllSportsFromSupabase(response));
+      }
+      fetchData(userId);
     }
     
   }, [])

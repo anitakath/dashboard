@@ -53,6 +53,7 @@ const useAuth = (userId) => {
       };
       const filteredEntriesByUserId = await fetchSportsData(userId);
 
+      console.log(filteredEntriesByUserId);
   
       const entries = await filteredEntriesByUserId.filter(
         (sport) => sport.name === currentSport
@@ -232,7 +233,6 @@ const filterEntriesByCurrentSportAndDate = async (
             // Da wir bereits in der API gefiltert haben, können wir hier einfach die Daten zurückgeben
             const filteredEntriesByUserId = data.data; // Die API gibt bereits gefilterte Daten zurück
              
-
             return filteredEntriesByUserId; // Rückgabe des gefilterten Arrays
           }
         } catch (error) {
