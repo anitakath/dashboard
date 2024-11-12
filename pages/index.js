@@ -14,6 +14,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
+import useAuth from "@/custom-hooks/auth/useAuth";
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -22,7 +24,17 @@ export default function Home() {
   const currentSport = useSelector((state) => state.sport.currentSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [successMessage, setSuccessMessage] = useState(null);
+  const userId = useSelector((state)=> state.auth.userId)
+  const {fetchSportsData} = useAuth();
 
+  console.log(userId)
+
+  useEffect(()=>{
+    if(userId){
+      fetchSportsData(userId);
+    }
+    
+  }, [])
 
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));
