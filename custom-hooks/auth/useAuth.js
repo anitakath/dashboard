@@ -5,9 +5,15 @@ import { setLogin, setLogout, setUserId, setUser } from "../../store/authReducer
 import { setSelectedSport, setAllSportsFromSupabase, setFilteredEntriesByCurrentSport  } from "../../store/sportReducer";
 import { supabase } from "../../services/supabaseClient";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
+import useCalendar from "../useCalendar";
+import useFetchEntries from "../entries/useFetchEntries";
+import useFilterAndSortEntries from "../entries/useFilterAndSortEntries";
+
 
 const useAuth = (userId) => {
   const dispatch = useDispatch();
+
+
 
   const logoutHandler = async () => {
     await supabase.auth.signOut();
@@ -46,53 +52,36 @@ const useAuth = (userId) => {
 
     if (session) {
       const userId = session.user.id;
+      const { fetchSportsData } = useFetchEntries(userId);
+      const { getFilteredEntriesByCurrentSport } = useFilterAndSortEntries();
+
+
       const currentDate = {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
         restDaysPerMonth: null,
       };
+
+      //FETCHSPORTSDATA FETCHES ALL SUPABASE OBJECTS BY USER ID
       const filteredEntriesByUserId = await fetchSportsData(userId);
+      
+      //FILTER AND SORT SPORT ENTRIES BY CURRENTLY SELECTED SPORT
+      const filteredEntriesByCurrentSport = await getFilteredEntriesByCurrentSport(filteredEntriesByUserId, currentSport, currentDate)
 
       console.log(filteredEntriesByUserId);
-  
-      const entries = await filteredEntriesByUserId.filter(
-        (sport) => sport.name === currentSport
-      );
+      console.log(filteredEntriesByCurrentSport);
 
 
-
-    const getMonthNumber = (month) => {
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      return months.indexOf(month) + 1;
-    };
-
-
-    const filterEntries = await entries.filter((entry) => {
-      const entryDate = new Date(entry.created_at);
-      return (
-        entryDate.getFullYear() === currentDate.year &&
-        entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
-      );
-    });
-
-      const totalDurationInMinutes = await filterEntries.reduce(
-        (total, entry) => total + entry.duration,
-        0
-      );
-
-       const totalDurationInHours = convertMinutesToHours(
-         totalDurationInMinutes
-       );
-
-      dispatch(setFilteredEntriesByCurrentSport(filterEntries));
+      dispatch(setFilteredEntriesByCurrentSport(filteredEntriesByCurrentSport));
 
       await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
-      await dispatch(setLogin(true)); 
+      await dispatch(setLogin(true));
       await dispatch(setSelectedSport("all"));
     }
    
     return user;
   };
+  
 
 const filterEntriesByCurrentSportAndDate = async (
   filteredEntriesByUserId,
@@ -145,60 +134,6 @@ const filterEntriesByCurrentSportAndDate = async (
   
 
 
-
-  const filterEntriesByCurrentSport = async (
-    filteredEntriesByUserId,
-    currentSport
-  ) => {
-    const currentDate = {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
-      restDaysPerMonth: null,
-    };
-
-    const entries = await filteredEntriesByUserId.filter(
-      (sport) => sport.name === currentSport
-    );
-
-    const getMonthNumber = (month) => {
-      const months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-      return months.indexOf(month) + 1;
-    };
-
-    const filterEntries = await entries.filter((entry) => {
-      const entryDate = new Date(entry.created_at);
-      return (
-        entryDate.getFullYear() === currentDate.year &&
-        entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
-      );
-    });
-
-    const totalDurationInMinutes = await filterEntries.reduce(
-      (total, entry) => total + entry.duration,
-      0
-    );
-
-    const totalDurationInHours = convertMinutesToHours(totalDurationInMinutes);
-
-    dispatch(setFilteredEntriesByCurrentSport(filterEntries));
-  };
-
-
-
-
   const fetchUserSession = async () => {
     const { data: { session }, error } = await supabase.auth.getSession();
 
@@ -216,31 +151,6 @@ const filterEntriesByCurrentSportAndDate = async (
     }
   };
 
-      const fetchSportsData = async (userId) => {
-        try {
-          // Den userId als Query-Parameter an die API übergeben
-          const response = await fetch(`/api/sports?userId=${userId}`);
-
-          if (!response.ok) {
-            throw new Error("Failed to fetch sports data");
-          }
-
-          const data = await response.json();
-
-
-
-          if (data) {
-            // Da wir bereits in der API gefiltert haben, können wir hier einfach die Daten zurückgeben
-            const filteredEntriesByUserId = data.data; // Die API gibt bereits gefilterte Daten zurück
-             
-            return filteredEntriesByUserId; // Rückgabe des gefilterten Arrays
-          }
-        } catch (error) {
-          console.error("Error fetching sports data:", error);
-        }
-
-        return []; // Rückgabe eines leeren Arrays im Fehlerfall
-      };
 
  
    const registerHandler = async (registerData) => {
@@ -346,8 +256,6 @@ const filterEntriesByCurrentSportAndDate = async (
     resetPasswordHandler,
     getUserData,
     updateProfileHandler,
-    fetchSportsData,
-    filterEntriesByCurrentSport,
     filterEntriesByCurrentSportAndDate,
   };s
 };

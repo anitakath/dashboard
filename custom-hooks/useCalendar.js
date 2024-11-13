@@ -152,8 +152,14 @@ const useCalendar = () => {
     "All",
   ];
 
+  const currentDatee = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
+    restDaysPerMonth: null,
+  };
 
-  return { getMonthStyle, months, completeMonths, useEntryCountForMonth };
+
+  return { getMonthStyle, months, completeMonths, useEntryCountForMonth, currentDatee };
 };
 
 export default useCalendar;

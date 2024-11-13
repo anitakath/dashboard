@@ -15,10 +15,11 @@ import SummarizedEntries from "./Daily/SummarizedEntries";
 import UserImageMobile from "../UI/UserImageMobile";
 //HOOK
 import useAuth from "@/custom-hooks/auth/useAuth";
+import useFilterAndSortEntries from "@/custom-hooks/entries/useFilterAndSortEntries";
 import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import useCalendar from "@/custom-hooks/useCalendar";
-
+import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
 
 const Board = ({ filteredEntries}) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
@@ -37,7 +38,11 @@ const Board = ({ filteredEntries}) => {
     const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
     return entryYear === actualDate.year && entryMonth === actualMonth;
   });
-  const { filterEntriesByCurrentSport } = useAuth();
+  const { filterEntriesByCurrentSportt } = useFilterAndSortEntries();
+  //const { filterEntriesByCurrentSport } = useAuth();
+
+
+
 
   useEffect(() => {
     if (navigation.includes(selectedSport)) {
@@ -48,7 +53,17 @@ const Board = ({ filteredEntries}) => {
 
 
   useEffect(()=>{
-    filterEntriesByCurrentSport(allSupabaseSports, selectedSport)
+    //filterEntriesByCurrentSport(allSupabaseSports, selectedSport)
+    //console.log(filterEntriesByCurrentSport(allSupabaseSports, selectedSport));
+    console.log(filterEntriesByCurrentSportt(allSupabaseSports, selectedSport))
+
+    const getEntries = async() =>{
+      const entries = await filterEntriesByCurrentSportt(allSupabaseSports, selectedSport)
+      console.log(entries)
+      dispatch(setFilteredEntriesByCurrentSport(entries.filterEntries));
+    }
+
+    getEntries()
   }, [selectedSport])
 
 

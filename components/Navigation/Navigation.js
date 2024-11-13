@@ -14,6 +14,8 @@ import AddSportAlert from "../UI/AddSportAlert";
 import { supabase } from "@/services/supabaseClient";
 //CUSTOM HOOKS
 import useAuth from "@/custom-hooks/auth/useAuth";
+import useFilterAndSortEntries from "@/custom-hooks/entries/useFilterAndSortEntries";
+import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
 
 
 const Navigation = () => {
@@ -46,11 +48,31 @@ const Navigation = () => {
         (a, b) => a.localeCompare(b)
       )
   : [];
-  const {filterEntriesByCurrentSport} = useAuth();
+  //const {filterEntriesByCurrentSport} = useAuth();
+  const { filterEntriesByCurrentSportt} = useFilterAndSortEntries();
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
   const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
   const showAlert = useSelector((state) => state.sport.showAlert);
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
+  useEffect(() => {
+      //filterEntriesByCurrentSport(allSupabaseSports, selectedSport)
+      //console.log(filterEntriesByCurrentSport(allSupabaseSports, selectedSport));
+      console.log(
+        filterEntriesByCurrentSportt(allSupabaseSports, selectedSport)
+      );
+
+      const getEntries = async () => {
+        const entries = await filterEntriesByCurrentSportt(
+          allSupabaseSports,
+          selectedSport
+        );
+        console.log(entries);
+        dispatch(setFilteredEntriesByCurrentSport(entries.filterEntries));
+      };
+
+      getEntries();
+  }, [selectedSport]);
 
   useEffect(() => {
     dispatch(setNavigation(uniqueSports));
@@ -61,7 +83,7 @@ const Navigation = () => {
   }, [navigation, allSupabaseSports]);
 
   const handleSportClick = (sport) => {
-    filterEntriesByCurrentSport(allSupabaseSports, sport)
+    //filterEntriesByCurrentSport(allSupabaseSports, sport)
     setActive(sport);
     setMobileSportsNavIsOpen(false);
     dispatch(setSelectedSport(sport));

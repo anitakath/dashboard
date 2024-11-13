@@ -18,6 +18,7 @@ import useAuth from "@/custom-hooks/auth/useAuth";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 import { convertMinutesToHours } from "@/utils/helpers";
 import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function Home() {
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [successMessage, setSuccessMessage] = useState(null);
   const userId = useSelector((state)=> state.auth.userId)
-  const {fetchSportsData} = useAuth();
+  const {fetchSportsData} = useFetchEntries();
 
 
   useEffect(()=>{
