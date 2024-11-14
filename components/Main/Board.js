@@ -13,34 +13,31 @@ import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
 import UserImageMobile from "../UI/UserImageMobile";
-//HOOK
-import useAuth from "@/custom-hooks/auth/useAuth";
-import useFilterAndSortEntries from "@/custom-hooks/entries/useFilterAndSortEntries";
+//CUSTOM HOOKS
 import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import useCalendar from "@/custom-hooks/useCalendar";
-import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
 
-const Board = ({ filteredEntries}) => {
+const Board = ({ filteredEntries, currentDate}) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  const actualDate = useSelector((state) => state.calendar);
+  //const actualDate = useSelector((state) => state.calendar);
   const { months } = useCalendar();
-  const actualMonthIndex = months.findIndex((month) => month === actualDate.month);
+  const actualMonthIndex = months.findIndex((month) => month === currentDate.month);
   const actualMonth = actualMonthIndex + 1;
   const dispatch = useDispatch();
-  const { logoutHandler } = useAuth();
 
-  const filteredByDate = filteredEntries.filter((entry) => {
-    const entryDate = new Date(entry.created_at);
-    const entryYear = entryDate.getFullYear();
-    const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
-    return entryYear === actualDate.year && entryMonth === actualMonth;
-  });
-  const { filterEntriesByCurrentSportt } = useFilterAndSortEntries();
-  //const { filterEntriesByCurrentSport } = useAuth();
 
+  let filteredByDate;
+  if(filteredEntries){
+    filteredByDate = filteredEntries.filter((entry) => {
+      const entryDate = new Date(entry.created_at);
+      const entryYear = entryDate.getFullYear();
+      const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
+      return entryYear === currentDate.year && entryMonth === actualMonth;
+    });
+  }
 
 
 
@@ -52,19 +49,6 @@ const Board = ({ filteredEntries}) => {
   }, []);
 
 
-  useEffect(()=>{
-    //filterEntriesByCurrentSport(allSupabaseSports, selectedSport)
-    //console.log(filterEntriesByCurrentSport(allSupabaseSports, selectedSport));
-    console.log(filterEntriesByCurrentSportt(allSupabaseSports, selectedSport))
-
-    const getEntries = async() =>{
-      const entries = await filterEntriesByCurrentSportt(allSupabaseSports, selectedSport)
-      console.log(entries)
-      dispatch(setFilteredEntriesByCurrentSport(entries.filterEntries));
-    }
-
-    getEntries()
-  }, [selectedSport])
 
 
   return (
@@ -73,7 +57,7 @@ const Board = ({ filteredEntries}) => {
 
       <UserImageMobile />
 
-      <BoardHeader logoutHandler={logoutHandler} />
+      <BoardHeader />
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
       <div className="flex w-full lg:hidden">

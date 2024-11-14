@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
-import styles from "./Navigation.module.css";
 import AddSportForm from "./AddSportForm";
 import {
   setSelectedSport,
@@ -11,20 +10,16 @@ import SortSports from "./SortSports";
 import MobileNavigation from "./MobileNavigation";
 import WebNavigation from "./WebNavigation";
 import AddSportAlert from "../UI/AddSportAlert";
-import { supabase } from "@/services/supabaseClient";
 //CUSTOM HOOKS
-import useAuth from "@/custom-hooks/auth/useAuth";
 import useFilterAndSortEntries from "@/custom-hooks/entries/useFilterAndSortEntries";
 import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
-
+import useDeleteSport from "@/custom-hooks/sports/useDeleteSport";
 
 const Navigation = () => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [active, setActive] = useState(null);
   const dispatch = useDispatch();
-  const allSupabaseSports = useSelector(
-    (state) => state.sport.allSupabaseSports
-  );
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const userId = useSelector((state) => state.auth.userId);
   // Erstelle navigationArr basierend auf allSupabaseSports
   const navigationArr = allSupabaseSports
@@ -48,28 +43,22 @@ const Navigation = () => {
         (a, b) => a.localeCompare(b)
       )
   : [];
-  //const {filterEntriesByCurrentSport} = useAuth();
-  const { filterEntriesByCurrentSportt} = useFilterAndSortEntries();
+
+  const { filterEntriesByCurrentSport} = useFilterAndSortEntries();
   const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
   const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
   const showAlert = useSelector((state) => state.sport.showAlert);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-  useEffect(() => {
-      //filterEntriesByCurrentSport(allSupabaseSports, selectedSport)
-      //console.log(filterEntriesByCurrentSport(allSupabaseSports, selectedSport));
-      console.log(
-        filterEntriesByCurrentSportt(allSupabaseSports, selectedSport)
-      );
 
-      const getEntries = async () => {
-        const entries = await filterEntriesByCurrentSportt(
-          allSupabaseSports,
-          selectedSport
-        );
-        console.log(entries);
-        dispatch(setFilteredEntriesByCurrentSport(entries.filterEntries));
-      };
+  useEffect(() => {
+    const getEntries = async () => {
+      const entries = await filterEntriesByCurrentSport(
+        allSupabaseSports,
+        selectedSport,
+      );
+      dispatch(setFilteredEntriesByCurrentSport(entries.filterEntries));
+    };
 
       getEntries();
   }, [selectedSport]);
@@ -93,58 +82,7 @@ const Navigation = () => {
     setFormIsOpen((prevState) => !prevState);
   };
 
-
-  const deleteSportHandler = async (sport) => {
-    // Zeige das Bestätigungsfenster an
-    if (
-      window.confirm(
-        `Are you sure you want to delete “${sport}”? All entries will be lost`
-      )
-    ) {
-      // Remove the sports object from navigationArr
-      const updatedNavigationArr = navigationArr.filter(
-        (item) => item.name !== sport
-      );
-
-      const uniqueSports = updatedNavigationArr
-        ? Array.from(
-            new Set(updatedNavigationArr.map((sport) => sport.name))
-          ).sort((a, b) => a.localeCompare(b))
-        : [];
-
-      dispatch(setNavigation(uniqueSports));
-
-      // API-Anfrage zum Löschen des Sports
-      try {
-        const response = await fetch("/api/deleteSport", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            sportName: sport,
-            userId: userId,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Fehler beim Löschen des Sports");
-        }
-
-        const result = await response.json();
-        console.log(result.message); // Erfolgreich gelöscht
-
-        // Aktualisiere allSupabaseSports im Redux-Store
-        const updatedAllSupabaseSports = allSupabaseSports.filter(
-          (item) => !(item.name === sport && item.userId === userId)
-        );
-        dispatch(setAllSportsFromSupabase(updatedAllSupabaseSports));
-      } catch (error) {
-        console.error("Fehler beim Löschen:", error);
-      }
-    }
-  };
-
+  const { deleteSportHandler } = useDeleteSport();
 
   return (
     <div className="w-full relative  lg:my-4 p-0 flex flex-col items-center shadow-section">

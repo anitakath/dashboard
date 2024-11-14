@@ -10,18 +10,19 @@ import ResultsBar from "@/components/UI/ResultsBar";
 import Menu from "./Menu";
 //STYLES 
 import styles from './BoardHeader.module.css'
-//HOOK
+//CUSTOM HOOKS
+import useAuth from "@/custom-hooks/auth/useAuth";
 import { useSearchTerm } from "@/custom-hooks/useSearchTerm";
 //REDUX 
 import { useSelector} from "react-redux";
 
 
-const BoardHeader = ({logoutHandler}) =>{
+const BoardHeader = () =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [searchTerm, setSearchTerm] = useState("");
   const [openMenu, setOpenMenu] = useState(false)
   const filteredSearchedEntries = useSearchTerm(allSupabaseSports, searchTerm)
-
+  const { logoutHandler } = useAuth();
 
   return (
     <div className={styles.headerDiv}>

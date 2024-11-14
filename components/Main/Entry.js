@@ -16,11 +16,11 @@ import { setSortedEntriesByMonth } from "@/store/sportReducer";
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
 
-const Entry = ({ filteredByDate, filteredEntries, allSupabaseSports }) => {
+const Entry = ({ filteredByDate, filteredEntries }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const dispatch = useDispatch();
   const [sortedEntries, setSortedEntries] = useState([]);
-
+   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   // SORTED OBJECTS AND ARRAYS FOR ENTRIESBYYEARANDMONTH; SELECTEDSPORT === "ALL"
   const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate, allSupabaseSports);
 

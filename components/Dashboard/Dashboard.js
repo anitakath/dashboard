@@ -5,25 +5,29 @@ import Navigation from '../Navigation/Navigation';
 import Board from '../Main/Board'
 //HOOKS
 import useAuth from '@/custom-hooks/auth/useAuth';
+
 //REDUX
 import { useSelector } from "react-redux";
+import useFilterAndSortEntries from '@/custom-hooks/entries/useFilterAndSortEntries';
 
 const Dashboard = () =>{
   const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSport)
   const filteredEntriesByUserId = useSelector((state) => state.sport.allSupabaseSports)
   const currentSport = useSelector((state) => state.sport.selectedSport)
-  const {filterEntriesByCurrentSportAndDate} = useAuth();
+  const { filterEntriesByCurrentSportAndDate} = useAuth();
   const currentDate = useSelector((state) => state.calendar)
 
 
    useEffect(() => {
      // refetching entries of sport X bc user changed the date
      if (filteredEntriesByUserId && currentSport && currentDate) {
-       filterEntriesByCurrentSportAndDate(
+        filterEntriesByCurrentSportAndDate(
          filteredEntriesByUserId,
          currentSport,
          currentDate
        );
+       
+       //filterEntriesByCurrentSport(filteredEntriesByUserId, currentSport, currentDate );
      }
    }, [currentDate, filteredEntriesByUserId, currentSport]);
 
@@ -37,6 +41,7 @@ const Dashboard = () =>{
 
         <Board
           filteredEntries={filteredEntries}
+          currentDate={currentDate}
         />
       </div>
     </div>
