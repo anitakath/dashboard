@@ -8,7 +8,6 @@ import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useFetchEntries from "../entries/useFetchEntries";
 import useFilterAndSortEntries from "../entries/useFilterAndSortEntries";
 import useCalendar from "@/custom-hooks/useCalendar";
-//import { months } from "@/custom-hooks/useCalendar"; // Importiere das months-Array
 
 const useAuth = (userId) => {
   const dispatch = useDispatch();
@@ -65,7 +64,6 @@ const useAuth = (userId) => {
     return user;
   };
 
-  // *******************CLEAN IT UPPPP *******************
 
   const filterEntriesByCurrentSportAndDate = async (
     filteredEntriesByUserId,
@@ -97,7 +95,6 @@ const useAuth = (userId) => {
 
     
   };
-  // ******************* CLEANED IT UPPPP ???? *******************
 
   
   
@@ -216,7 +213,6 @@ const useAuth = (userId) => {
     resetPasswordHandler,
     getUserData,
     updateProfileHandler,
-    // *******************CLEAN IT UPPPP *******************
     filterEntriesByCurrentSportAndDate,
     
   };

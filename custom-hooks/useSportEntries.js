@@ -28,7 +28,7 @@ export const useDeleteCompletedSport = (userId) => {
         throw new Error('Fehler beim Löschen des Eintrags');
       }
 
-      await reFetchSportsData(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
+      await fetchSportsData(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
       return { success: true };
     } catch (err) {
       console.error("Error when deleting the entry:", err.message);
@@ -84,21 +84,10 @@ export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
 };
 
 
-const reFetchSportsData = async (dispatch, userId) => {
-  try {
-    const response = await fetch(`/api/sports?userId=${userId}`); // Pass userId als Query-Parameter
-    if (!response.ok) {
-      throw new Error("Failed to fetch sports data");
-    }
-    const data = await response.json();
-    dispatch(setAllSportsFromSupabase(data.data));
-  } catch (error) {
-    console.error("Error fetching sports data:", error)
-  }
-};
 
 
 export const fetchSportsData = async (dispatch, userId) => {
+
   try {
     const response = await fetch(`/api/sports?userId=${userId}`);
     if (!response.ok) {

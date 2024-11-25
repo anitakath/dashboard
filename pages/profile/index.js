@@ -49,7 +49,9 @@ const Profile = () => {
 
     // Funktion zum Hochladen eines Bildes
     const handleImageUpload = async (sport) => {
-      const fileInput = document.createElement("input");
+
+      console.log(sport)
+      /*const fileInput = document.createElement("input");
       fileInput.type = "file";
       fileInput.accept = "image/*";
 
@@ -64,7 +66,7 @@ const Profile = () => {
           }
         }
       };
-      fileInput.click();
+      fileInput.click();*/
     };
 
 
@@ -73,17 +75,26 @@ const Profile = () => {
       {!isLoggedIn && <Login />}
       {isLoggedIn && (
         <div className="flex w-full h-full border-2 overflow-scroll sm:py-2 m-0 p-0 relative ">
-          <Link href="/" className=" absolute m-2 p-2 cursor-pointer">
-            <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
+          <Link href="/" className=" relative h-14 w-14 m-2 p-2 cursor-pointer flex justify-center items-center ">
+            <FontAwesomeIcon icon={faArrowLeft} className="font_purple" /> 
           </Link>
 
           <div className="sm:m-4 lg:p-4 lg:pl-14  relative w-full overflow-scroll">
-           
-            <h1
-              className={`${styles.textBackground} relative left-10 p-4`}
-            >
-              plan your future workouts
-            </h1>
+            {profileSection === "plans" && (
+              <h1 className={`${styles.textBackground} relative left-10 p-4`}>
+                plan your future workouts
+              </h1>
+            )}
+            {profileSection === "settings" && (
+              <h1 className={`${styles.textBackground} relative left-10 p-4`}>
+                your personal data
+              </h1>
+            )}
+            {profileSection === "sports" && (
+              <h1 className={`${styles.textBackground} relative left-10 p-4`}>
+                sports overview
+              </h1>
+            )}
 
             <div className="text-xl flex sm:mt-4 mb-4 justify-evenly border-b pb-2">
               <button onClick={() => profileSectionHandler("sports")}>
