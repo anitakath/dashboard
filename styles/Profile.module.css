@@ -68,7 +68,7 @@
 }
 
 
-.textBackground {
+.textBackground{
   background-image: url('/pexelsSpace.jpg');
   background-size: cover;
   -webkit-background-clip: text;
