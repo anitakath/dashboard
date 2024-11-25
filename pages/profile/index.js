@@ -51,6 +51,8 @@ const Profile = () => {
     const handleImageUpload = async (sport) => {
 
       console.log(sport)
+
+      
       /*const fileInput = document.createElement("input");
       fileInput.type = "file";
       fileInput.accept = "image/*";
@@ -74,12 +76,12 @@ const Profile = () => {
     <div className="w-full h-screen sm:p-4 md:p-14">
       {!isLoggedIn && <Login />}
       {isLoggedIn && (
-        <div className="flex w-full h-full border-2 overflow-scroll sm:py-2 m-0 p-0 relative ">
-          <Link href="/" className=" relative h-14 w-14 m-2 p-2 cursor-pointer flex justify-center items-center ">
+        <div className="flex w-full h-full border-2 overflow-scroll my-12 md:my-0 sm:py-2 p-0 relative ">
+          <Link href="/" className="z-50 absolute top-0 lg:relative h-10 w-10 m-2 p-2 cursor-pointer flex justify-center items-center ">
             <FontAwesomeIcon icon={faArrowLeft} className="font_purple" /> 
           </Link>
 
-          <div className="sm:m-4 lg:p-4 lg:pl-14  relative w-full overflow-scroll">
+          <div className="  my-14  lg:m-0   sm:m-4 lg:p-4 lg:pl-14  relative w-full overflow-scroll">
             {profileSection === "plans" && (
               <h1 className={`${styles.textBackground} relative left-10 p-4`}>
                 plan your future workouts
