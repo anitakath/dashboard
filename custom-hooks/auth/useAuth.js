@@ -7,8 +7,7 @@ import { supabase } from "../../services/supabaseClient";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useFetchEntries from "../entries/useFetchEntries";
 import useFilterAndSortEntries from "../entries/useFilterAndSortEntries";
-import { current } from "@reduxjs/toolkit";
-
+import { months } from "@/custom-hooks/useCalendar"; // Importiere das months-Array
 
 const useAuth = (userId) => {
   const dispatch = useDispatch();
@@ -19,20 +18,21 @@ const useAuth = (userId) => {
     dispatch(setLogout(false));
     dispatch(setUserId(null));
 
-    persistor
+    await persistor.purge();
+    /*persistor
       .purge()
       .then(() => {
         console.log("Persisted state has been purged");
       })
       .catch((error) => {
         console.error("Error purging persisted state:", error);
-      });
+      });*/
   };
 
   const loginHandler = async (loginData, currentSport) => {
     const {
       data: { user },
-      error,
+      error
     } = await supabase.auth.signInWithPassword({
       email: loginData.email,
       password: loginData.password,
@@ -42,9 +42,7 @@ const useAuth = (userId) => {
       //console.log(error.message)
       throw new Error(error.message);
     }
-
     const session = await fetchUserSession();
-
     if (session) {
       const userId = session.user.id;
       const { fetchSportsData } = useFetchEntries(userId);
@@ -52,7 +50,7 @@ const useAuth = (userId) => {
 
       const currentDate = {
         year: new Date().getFullYear(),
-        month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
+        month: new Date().getMonth() + 1,
         restDaysPerMonth: null,
       };
 
@@ -66,9 +64,6 @@ const useAuth = (userId) => {
           currentSport,
           currentDate
         );
-
-      console.log(filteredEntriesByUserId);
-      console.log(filteredEntriesByCurrentSport);
 
       dispatch(setFilteredEntriesByCurrentSport(filteredEntriesByCurrentSport));
 
@@ -93,6 +88,7 @@ const useAuth = (userId) => {
 
 
     const getMonthNumber = (month) => {
+      
       const months = [
         "Jan",
         "Feb",

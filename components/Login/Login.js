@@ -5,6 +5,7 @@ import styles from './Login.module.css'
 //CUSTOM HOOKS
 import useAuth from "../../custom-hooks/auth/useAuth";
 import { useSelector } from "react-redux";
+import { current } from "@reduxjs/toolkit";
 
 const Login = ({ successMessage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -25,6 +26,9 @@ const Login = ({ successMessage }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
+    console.log(loginData)
+    console.log(currentSport)
     try {
       await loginHandler(loginData, currentSport);
       router.push("/");
