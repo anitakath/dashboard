@@ -7,26 +7,19 @@ import { supabase } from "../../services/supabaseClient";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useFetchEntries from "../entries/useFetchEntries";
 import useFilterAndSortEntries from "../entries/useFilterAndSortEntries";
-import { months } from "@/custom-hooks/useCalendar"; // Importiere das months-Array
+import useCalendar from "@/custom-hooks/useCalendar";
+//import { months } from "@/custom-hooks/useCalendar"; // Importiere das months-Array
 
 const useAuth = (userId) => {
   const dispatch = useDispatch();
 
+  const {months} = useCalendar();
+
   const logoutHandler = async () => {
     await supabase.auth.signOut();
-
     dispatch(setLogout(false));
     dispatch(setUserId(null));
-
     await persistor.purge();
-    /*persistor
-      .purge()
-      .then(() => {
-        console.log("Persisted state has been purged");
-      })
-      .catch((error) => {
-        console.error("Error purging persisted state:", error);
-      });*/
   };
 
   const loginHandler = async (loginData, currentSport) => {
@@ -64,14 +57,11 @@ const useAuth = (userId) => {
           currentSport,
           currentDate
         );
-
       dispatch(setFilteredEntriesByCurrentSport(filteredEntriesByCurrentSport));
-
       await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
       await dispatch(setLogin(true));
       await dispatch(setSelectedSport("all"));
     }
-
     return user;
   };
 
@@ -87,24 +77,8 @@ const useAuth = (userId) => {
     );
 
 
-    const getMonthNumber = (month) => {
-      
-      const months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-      return months.indexOf(month) + 1;
-    };
+    const getMonthNumber = (month) => months.indexOf(month) + 1; 
+
 
     const filteredResults = entries.filter((entry) => {
       const entryDate = new Date(entry.created_at);
@@ -113,17 +87,15 @@ const useAuth = (userId) => {
         entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
       );
     });
-    const totalDurationInMinutes = filteredResults.reduce(
-      (total, entry) => total + entry.duration,
-      0
-    );
-    const totalDurationInHours = convertMinutesToHours(totalDurationInMinutes);
 
-    // Optional: Hier kannst du die totalDurationInHours speichern oder verwenden
-    //console.log(`Total Duration in Hours: ${totalDurationInHours}`);
-    //console.log(filteredResults)
 
-    dispatch(setFilteredEntriesByCurrentSport(filteredResults));
+     const totalDurationInMinutes = filteredResults.reduce(
+       (total, entry) => total + entry.duration,
+       0
+     );
+     dispatch(setFilteredEntriesByCurrentSport(filteredResults));
+
+    
   };
   // ******************* CLEANED IT UPPPP ???? *******************
 

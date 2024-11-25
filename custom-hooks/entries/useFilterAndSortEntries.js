@@ -1,5 +1,4 @@
 import { convertMinutesToHours } from "../minutesToHours";
-import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
 
 const useFilterAndSortEntries = () =>{
   //FILTER SPORT ENTRIES BY CURRENT SPORT
@@ -57,8 +56,6 @@ const useFilterAndSortEntries = () =>{
   };
 
 
-
- 
 
   return {
     getFilteredEntriesByCurrentSport,
