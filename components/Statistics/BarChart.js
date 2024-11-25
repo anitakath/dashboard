@@ -5,8 +5,6 @@ import styles from './BarChart.module.css'
 //COMPONENTS
 import SelectTimePeriod from './SelectTimePeriod';
 
-
-
 const BarChart = ({
   allSupabaseSports,
   sortedSportsByCount,

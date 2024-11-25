@@ -8,7 +8,6 @@ import RestDaysCalendar from './RestDaysCalendar';
 import RandomSportImagesGrid from './RandomSportImagesGrid';
 import BarChart from './BarChart';
 
-
 const Annual = ({ allSupabaseSports, date, setDate}) => {
 
   const [showFiveYearHistory, setShowFiveYearHistory] = useState({
