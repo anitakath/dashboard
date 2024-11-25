@@ -77,8 +77,13 @@ const Profile = () => {
             <FontAwesomeIcon icon={faArrowLeft} className="font_purple" />
           </Link>
 
-          <div className="sm:m-4 lg:p-4 lg:pl-14  w-full overflow-scroll">
-            <h1 className="text-xl my-12 m-8"> hey sporty spice! </h1>
+          <div className="sm:m-4 lg:p-4 lg:pl-14  relative w-full overflow-scroll">
+           
+            <h1
+              className={`${styles.textBackground} relative left-10 p-4`}
+            >
+              plan your future workouts
+            </h1>
 
             <div className="text-xl flex sm:mt-4 mb-4 justify-evenly border-b pb-2">
               <button onClick={() => profileSectionHandler("sports")}>

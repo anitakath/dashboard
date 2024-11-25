@@ -7,6 +7,7 @@ import { supabase } from "../../services/supabaseClient";
 import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
 import useFetchEntries from "../entries/useFetchEntries";
 import useFilterAndSortEntries from "../entries/useFilterAndSortEntries";
+import { current } from "@reduxjs/toolkit";
 
 
 const useAuth = (userId) => {
@@ -89,6 +90,7 @@ const useAuth = (userId) => {
     const entries = filteredEntriesByUserId.filter(
       (sport) => sport.name === currentSport
     );
+
 
     const getMonthNumber = (month) => {
       const months = [
@@ -248,8 +250,8 @@ const useAuth = (userId) => {
     updateProfileHandler,
     // *******************CLEAN IT UPPPP *******************
     filterEntriesByCurrentSportAndDate,
+    
   };
-  s;
 };
 
 export default useAuth;

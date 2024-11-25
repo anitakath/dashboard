@@ -1,5 +1,6 @@
 // pages/api/formValidation.js
 
+
 const validateTitle = (title) =>
   title && title.length >= 3 && title.length <= 50;
 

@@ -23,9 +23,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const currentSport = useSelector((state) => state.sport.currentSport);
   const currentPath = router.pathname;
-  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  let label = "";
-  let icon ="";
+  
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
   const [inputs, setInputs] = useState({
     name: selectedSport,
@@ -33,10 +31,9 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     text: "",
     created_at: "",
     duration: "",
-    label: label,
-    userId: userId,
+    label: "",
+    userId,
     img: "",
-    icon: icon,
   });
 
 
@@ -57,58 +54,28 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     }
   }, [formIsOpen])
 
-  
-  if (selectedSport) {
-    const foundSport = allSupabaseSports.find(
-      (sport) => sport.name === selectedSport
-    );
-    if (foundSport) {
-      label = foundSport.label;
-      icon = foundSport.icon;
-    } else {
-      //console.log(`Kein Sport mit dem Namen ${selectedSport} gefunden`);
-    }
-
-  }
-
-
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
-
-    // Hier kannst du auch die Validierung aufrufen und den Zustand entsprechend setzen
-    if (name === "title") {
-      if (!validateTitle(value)) {
-        //console.log("Titel ist ungültig");
-      }
-    }
-    if (name === "text") {
-      if (!validateText(value)) {
-        //console.log("Text ist ungültig");
-      }
-    }
-    if (name === "duration") {
-      if (!validateDuration(value)) {
-        //console.log("Dauer ist ungültig");
-      }
-    }
   };
 
-  
 
+   const blurHandler = (target) => {
+     setIsTouched((prev) => ({ ...prev, [target]: true }));
+   };
+
+  /*
   const blurHandler = (target) => {
     setIsTouched(true);
     setIsTouched({ ...isTouched, [target]: true });
-  };
+  };*/
 
 
 
 
  useEffect(() => {
-
-
-   if (
+  if (
      Array.isArray(currentSport) &&
      currentSport.length > 0 &&
      selectedSport
@@ -129,9 +96,6 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
      console.warn("currentSport is not an array or is empty");
    }
  }, [currentSport, selectedSport]);
-
-
-
 
 
   return (

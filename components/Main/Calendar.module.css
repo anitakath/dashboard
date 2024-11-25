@@ -131,10 +131,16 @@
 
 .maxi{
     background-color: var(--medium);
+    
 }
 
 .maxixl{
     background-color: var(--dark);
+}
+
+.empty{
+    background: white;
+
 }
 
 

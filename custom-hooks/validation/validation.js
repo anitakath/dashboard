@@ -1,11 +1,21 @@
 // validation.js
 
+
 export const validateTitle = (title) => {
-  return title.length >= 3 && title.length <= 50;
+  if (title.length >= 3 && title.length <= 50) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 export const validateText = (text) => {
-  return text.length >= 5 && text.length <= 1000;
+
+  if (text.length >= 5 && text.length <= 1000) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 export const validateDuration = (duration) => {
@@ -20,4 +30,3 @@ export const formatText = (text) => {
 export const validateName = (name) => {
   return name.trim() !== ""; // Überprüfen, ob der Name nicht leer ist
 };
-

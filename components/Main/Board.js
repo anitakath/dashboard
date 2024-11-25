@@ -7,6 +7,8 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useSelector, useDispatch} from "react-redux";
 import { setSelectedSport } from "@/store/sportReducer";
 //COMPONENTS
+import BoardHeader from "./BoardHeader/BoardHeader";
+import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import HowToUseThisApp from "./HowToUseThisApp.js/HowToUseThisApp";
 import Calendar from "./Calendar";
 import Entry from "./Entry";
@@ -14,8 +16,6 @@ import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
 import UserImageMobile from "../UI/UserImageMobile";
 //CUSTOM HOOKS
-import BoardHeader from "./BoardHeader/BoardHeader";
-import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
 import useCalendar from "@/custom-hooks/useCalendar";
 
 const Board = ({ filteredEntries, currentDate}) => {

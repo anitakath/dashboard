@@ -8,13 +8,18 @@ import useAuth from '@/custom-hooks/auth/useAuth';
 
 //REDUX
 import { useSelector } from "react-redux";
-import useFilterAndSortEntries from '@/custom-hooks/entries/useFilterAndSortEntries';
 
 const Dashboard = () =>{
   const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSport)
   const filteredEntriesByUserId = useSelector((state) => state.sport.allSupabaseSports)
   const currentSport = useSelector((state) => state.sport.selectedSport)
+  //
+  //
+  //
   const { filterEntriesByCurrentSportAndDate} = useAuth();
+  //
+  //
+  //
   const currentDate = useSelector((state) => state.calendar)
 
 

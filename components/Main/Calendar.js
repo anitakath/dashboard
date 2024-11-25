@@ -83,6 +83,8 @@ const Calendar = ({ filteredByDate }) => {
   }
 
 
+
+
   return (
     <div className="w-full">
       <div className={styles.calendar_div} id="calendar">
@@ -113,6 +115,7 @@ const Calendar = ({ filteredByDate }) => {
               selectedSport
             );
 
+    
             const monthStyle = getMonthStyle(entryCount);
             return (
               <div

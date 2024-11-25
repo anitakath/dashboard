@@ -65,6 +65,7 @@ const useCalendar = () => {
           const entryYear = entryDate.getFullYear();
           const sportName = entry.name;
 
+
           let monthAbbreviation = month.slice(0, 3);
           if (entryMonth === "Mär") {
             entryMonth = "Mar";
@@ -79,6 +80,8 @@ const useCalendar = () => {
           if (entryMonth === "Dez") {
             entryMonth = "Dec";
           }
+
+         
 
           return (
             entryMonth === monthAbbreviation &&
@@ -104,6 +107,8 @@ const useCalendar = () => {
         return styles.mini;
       } else if (entryCount > 0) {
         return styles.minixs;
+      } else if(entryCount === 0){
+        return styles.empty;
       }
     } else {
       if (entryCount > 14) {
@@ -116,6 +121,8 @@ const useCalendar = () => {
         return styles.mini;
       } else if (entryCount > 0) {
         return styles.minixs;
+      } else if (entryCount === 0) {
+        return styles.empty;
       }
     }
     return;

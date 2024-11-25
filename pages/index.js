@@ -7,16 +7,14 @@ import { setCurrentSport } from "@/store/sportReducer";
 //COMPONENTS
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
-import Register from "@/components/Login/Register";
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
 import '@fortawesome/fontawesome-svg-core/styles.css';
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
-import useAuth from "@/custom-hooks/auth/useAuth";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-import { convertMinutesToHours } from "@/utils/helpers";
+
 import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 
@@ -33,12 +31,8 @@ export default function Home() {
 
   useEffect(()=>{
     if(userId){
-
       const fetchData = async(userId) =>{
-
         const response = await fetchSportsData(userId)
-
-
 
         const entries = await response.filter(
           (sport) => sport.name === currentSport
@@ -51,15 +45,6 @@ export default function Home() {
             entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
           );
         });
-
-        const totalDurationInMinutes = await filterEntries.reduce(
-          (total, entry) => total + entry.duration,
-          0
-        );
-
-        const totalDurationInHours = convertMinutesToHours(
-          totalDurationInMinutes
-        );
 
         dispatch(setFilteredEntriesByCurrentSport(filterEntries));
 

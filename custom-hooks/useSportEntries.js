@@ -219,12 +219,9 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
         return;
       }
       
-     
-      
 
       let response;
 
-      console.log(data);
 
       if (currentPath === "/profile") {
         response = await fetch("/api/send-plannedSports", {
