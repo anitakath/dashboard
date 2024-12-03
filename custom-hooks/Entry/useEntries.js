@@ -5,6 +5,8 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
   const [entriesByMonth, setEntriesByMonth] = useState({});
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
 
+
+  
   useEffect(() => {
     if (filteredByDate) {
       const updatedEntriesByMonth = {};
@@ -32,6 +34,7 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
       for (const date in updatedEntriesByDay) {
         const entries = updatedEntriesByDay[date];
         const [day, monthName, year] = date.split(" ");
+
         if (!sortedEntries[year]) {
           sortedEntries[year] = {};
         }
@@ -43,22 +46,19 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
 
       // Definiere die richtige Reihenfolge der Monate
       const monthOrder = [
-        "Januar",
-        "Februar",
-        "März",
+        "January ",
+        "February",
+        "March",
         "April",
-        "Mai",
-        "Juni",
-        "Juli",
+        "May",
+        "June",
+        "July",
         "August",
         "September",
-        "Oktober",
+        "October",
         "November",
-        "Dezember",
+        "December",
       ];
-
-
-
 
 
 
@@ -66,6 +66,7 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
 
       function sortMonths(data) {
         const sortedData = {};
+
         for (const year in data) {
           if (data.hasOwnProperty(year)) {
             const months = data[year];
@@ -89,26 +90,30 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
 
       // Filtere das Jahr 1014 heraus und sortiere die Jahre absteigend
       const finalSortedArray = Object.keys(sortedData)
-        .filter((year) => year !== "1014")
-        .sort((a, b) => b - a)
-        .map((year) => {
-          // Erstelle ein Array für die Monate mit Einträgen
-          const sortedMonthsArray = monthOrder.reduce((acc, month) => {
-            if (sortedData[year][month] && sortedData[year][month].length > 0) {
-              acc.push({ [month]: sortedData[year][month] });
-            }
-            return acc;
-          }, []);
+  .filter((year) => year !== "1014")
+  .sort((a, b) => b - a)
+  .map((year) => {
+    // Erstelle ein Array für die Monate mit Einträgen
+    const sortedMonthsArray = [];
 
-          return { [year]: sortedMonthsArray };
-        });
+    // Iteriere über monthOrder und füge die Monate in der richtigen Reihenfolge hinzu
+    for (const month of monthOrder) {
+      const cleanMonth = month.trim(); // Entferne mögliche Leerzeichen
 
-      setEntriesByYearAndMonth(finalSortedArray);
-      setEntriesByMonth(updatedEntriesByMonth);
-
+      if (sortedData[year][cleanMonth] && sortedData[year][cleanMonth].length > 0) {
+        sortedMonthsArray.push({ [cleanMonth]: sortedData[year][cleanMonth] });
+      }
     }
-   
+
+    return { [year]: sortedMonthsArray };
+  });
+
+setEntriesByYearAndMonth(finalSortedArray);
+setEntriesByMonth(updatedEntriesByMonth);
+    }
+
   }, [filteredByDate]);
+  
 
   return { entriesByMonth, entriesByYearAndMonth };
 };
