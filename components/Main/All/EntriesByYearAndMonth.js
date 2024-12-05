@@ -27,7 +27,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
 
   return (
     <div>
-      <h1> moin</h1>
       {entriesByYearAndMonth &&
           entriesByYearAndMonth.map((yearEntry) => {
             const year = Object.keys(yearEntry)[0];
