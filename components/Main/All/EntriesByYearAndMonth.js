@@ -22,68 +22,41 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
    const [sortedEntries, setSortedEntries] = useState([]);
 
 
-/*
-const months = ["January", "March", "February", "May", "June", "April"];
-
-const monthOrder = {
-  January: 0,
-  February: 1,
-  March: 2,
-  April: 3,
-  May: 4,
-  June: 5,
-  July: 6,
-  August: 7,
-  September: 8,
-  October: 9,
-  November: 10,
-  December: 11,
-};
-
-
-  useEffect(() => {
-    
-
-    months.sort((a, b) => {
-      return monthOrder[a] - monthOrder[b];
-    });
-
-    console.log(months);
-  }, [])
-
-*/
-
-
 
 
 
   return (
     <div>
+      <h1> moin</h1>
       {entriesByYearAndMonth &&
           entriesByYearAndMonth.map((yearEntry) => {
             const year = Object.keys(yearEntry)[0];
             let months = yearEntry[year];
 
-
             const order = [
+              "December",
               "November",
-              "Oktober",
+              "October",
               "September",
               "August",
-              "Juli",
-              "Juni",
-              "Mai",
+              "July",
+              "June",
+              "May",
               "April",
-              "März",
+              "March",
+              "February",
+              "January"
             ];
-
+            
             // Sortiere das months-Array basierend auf der definierten Reihenfolge
             const sortedMonths = months.sort((a, b) => {
               const monthA = Object.keys(a)[0];
               const monthB = Object.keys(b)[0];
-
+            
               return order.indexOf(monthA) - order.indexOf(monthB);
             });
+
+
 
 
             return (
