@@ -7,6 +7,8 @@ import { updateDate } from "@/store/CalendarReducer";
 //HOOKS
 import useCalendar from "@/custom-hooks/useCalendar";
 import { setSelectedSport } from "@/store/sportReducer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const Calendar = ({ filteredByDate }) => {
   const dispatch = useDispatch();
@@ -105,7 +107,9 @@ const Calendar = ({ filteredByDate }) => {
                 {year}
               </option>
             ))}
+            
           </select>
+          <FontAwesomeIcon icon={faChevronDown} className={styles.icon} />
         </div>
         <div className="mb-4 p-0 grid grid-cols-3 gap-1">
           {months.map((month) => {

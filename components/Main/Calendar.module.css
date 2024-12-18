@@ -42,7 +42,7 @@
 
 .chooseYear_div{
     position: absolute;
-    top: 44px;
+    top: 40px;
     right: 0;
     display: flex;
     justify-content: center;
@@ -52,6 +52,12 @@
     transition: 0.2s ease;
 }
 
+.icon{
+   position: relative;
+   right: 2.5px;
+   font-size: 0.7rem;
+   color: var(--purpleDarkHover);
+}
 
 
 .year_input{
