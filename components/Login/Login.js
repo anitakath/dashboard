@@ -51,7 +51,7 @@ const Login = ({ successMessage }) => {
 
   return (
     <div className="w-full h-full p-4">
-      <div className="flex justify-center w-full h-full py-2 m-0 p-0 relative border-8">
+      <div className="flex justify-center w-full h-full py-2 m-0 p-0 relative border-2">
         <form
           className="sm:w-full lg:w-1/2 flex flex-col items-center justify-center"
           onSubmit={handleSubmit}

@@ -14,8 +14,6 @@ import { setAllSportsFromSupabase } from "@/store/sportReducer";
 //CUSTOM HOOKS
 import { useDeleteSport } from '@/custom-hooks/useSportEntries';
 //import { fetchSportsData } from "@/custom-hooks/useSportEntries";
-import { supabase } from '@/services/supabaseClient';
-import { current } from '@reduxjs/toolkit';
 import useAuth from '@/custom-hooks/auth/useAuth';
 
 const Plans = () =>{
@@ -175,10 +173,12 @@ const Plans = () =>{
     setFormIsOpen((prevState) => !prevState);
   };
 
+
   return (
     <div className="flex-col justify-center items-center">
       <EditEntry
         isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
         currentSport={currentSport}
         setCurrentSport={setCurrentSport}
      
@@ -199,6 +199,8 @@ const Plans = () =>{
             activeSport={activeSport}
             addSportClickHandler={addSportClickHandler}
             formIsOpen={formIsOpen}
+            setFormIsOpen={setFormIsOpen}
+            
             chosenSport={chosenSport}
             chooseSportHandler={chooseSportHandler}
        

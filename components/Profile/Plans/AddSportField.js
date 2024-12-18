@@ -7,7 +7,7 @@ import AddEntryForm from "@/components/Main/AddEntryForm";
 import styles from './Plans.module.css'
 import colors from '../../../styles/Colors.module.css'
 
-const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSports, activeSport, addSportClickHandler, formIsOpen, chosenSport, chooseSportHandler}) =>{
+const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSports, activeSport, addSportClickHandler, formIsOpen, setFormIsOpen, chosenSport, chooseSportHandler}) =>{
 
 
   return (
@@ -52,7 +52,7 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
               tell us more about your goals :)
             </h2>
 
-            <AddEntryForm chosenSport={chosenSport} />
+            <AddEntryForm chosenSport={chosenSport} setFormIsOpen={setFormIsOpen} />
           </div>
         </div>
       )}

@@ -118,6 +118,66 @@ const useAuth = (userId) => {
     }
   };
 
+
+  const registerHandler = async (registerData) => {
+    // Validierung der Eingaben
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registerData.email)) {
+        throw new Error("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+    }
+    if (registerData.name.length < 1 || registerData.name.length > 20) {
+        throw new Error("Der Name muss zwischen 1 und 20 Zeichen lang sein.");
+    }
+    if (registerData.password !== registerData.confirmPassword) {
+        throw new Error("Die Passwörter stimmen nicht überein.");
+    }
+    if (!/^(?=.*[A-Z])(?=.*[0-9]).{6,}$/.test(registerData.password)) {
+        throw new Error(
+            "Das Passwort muss mindestens 6 Zeichen lang sein und mindestens einen Großbuchstaben und eine Zahl enthalten."
+        );
+    }
+
+    // Überprüfen, ob der Benutzer bereits existiert
+    const { data: existingUser, error: fetchError } = await supabase
+        .from('users') // Ersetze 'users' durch den tatsächlichen Tabellennamen in deiner Supabase-Datenbank
+        .select('*')
+        .eq('email', registerData.email)
+        .single();
+
+    if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 bedeutet, dass kein Benutzer gefunden wurde
+        throw new Error("Fehler beim Überprüfen des Benutzers: " + fetchError.message);
+    }
+
+    if (existingUser) {
+        throw new Error("Ein Benutzer mit dieser E-Mail-Adresse ist bereits registriert.");
+    }
+
+    // Benutzer registrieren
+    const { user, error: signUpError } = await supabase.auth.signUp({
+        email: registerData.email,
+        password: registerData.password,
+    });
+
+    if (signUpError) {
+        throw new Error("Fehler bei der Registrierung: " + signUpError.message);
+    }
+
+    // Optional: Hier kannst du zusätzliche Informationen zum Benutzer in deiner Datenbank speichern
+    const { error: insertError } = await supabase
+        .from('users') // Ersetze 'users' durch den tatsächlichen Tabellennamen in deiner Supabase-Datenbank
+        .insert([{ id: user.id, name: registerData.name, email: registerData.email }]);
+
+    if (insertError) {
+        throw new Error("Fehler beim Speichern der Benutzerdaten: " + insertError.message);
+    }
+
+    console.log(registerData); // Optionales Logging
+
+    return user; // Benutzer zurückgeben für weitere Verwendung
+  };
+
+
+  /*
+
   const registerHandler = async (registerData) => {
     // Validierung der Eingaben
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registerData.email)) {
@@ -137,12 +197,16 @@ const useAuth = (userId) => {
       );
     }
 
+    console.log(registerData)
+    /*
     // Überprüfen, ob die E-Mail bereits existiert
     const { data: existingUser, error: fetchError } = await supabase
       .from("users")
-      .select("id")
-      .eq("email", registerData.email)
-      .single();
+      .select("*")
+      //.eq("email", registerData.email)
+      //.single();
+
+    console.log(existingUser)
 
     if (fetchError && fetchError.code !== "PGRST116") {
       throw new Error("Fehler beim Überprüfen der E-Mail.");
@@ -150,7 +214,9 @@ const useAuth = (userId) => {
     if (existingUser) {
       throw new Error("Diese E-Mail-Adresse ist bereits registriert.");
     }
-
+    if(!existingUser){
+      console.log('email gibts nicht')
+    }*//*
     // Benutzer registrieren
     const { user, error: signUpError } = await supabase.auth.signUp({
       email: registerData.email,
@@ -158,7 +224,10 @@ const useAuth = (userId) => {
       options: { data: { name: registerData.name } },
     });
 
+    console.log(user)
+
     if (signUpError) {
+      console.log('SIGN UP ERROR')
       throw new Error(signUpError.message);
     }
     // Zusätzliche Benutzerdaten speichern
@@ -174,7 +243,9 @@ const useAuth = (userId) => {
 
     console.log("User registered:", user);
     return user; // Benutzer zurückgeben für weitere Verwendung
-  };
+  };*/
+
+
 
   const resetPasswordHandler = async (email) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email);

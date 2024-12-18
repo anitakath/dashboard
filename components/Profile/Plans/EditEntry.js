@@ -1,4 +1,3 @@
-import { current } from "@reduxjs/toolkit";
 import React from "react";
 import styles from "./EditEntry.module.css"; // Importiere die CSS-Moduldatei
 import { useSelector } from "react-redux";
@@ -110,7 +109,7 @@ const EditEntry = ({
             />
           </label>
 
-          <div className="border-2 flex justify-evenly">
+          <div className="flex justify-evenly">
             <label className="py-2">
               Duration:
               <input
@@ -121,7 +120,7 @@ const EditEntry = ({
                 className={styles.modal_input}
               />
             </label>
-            <label className="py-2">
+            <label className="py-2 ">
               Date:
               <input
                 type="datetime-local"
@@ -137,7 +136,7 @@ const EditEntry = ({
           <button onClick={saveChanges} className={styles.save_button}>
             Save Changes
           </button>
-          <button className={styles.cancel_button}>Cancel</button>
+          <button onClick={()=> setIsModalOpen(false)} className={styles.cancel_button}>Cancel</button>
         </div>
       </form>
     </div>

@@ -11,7 +11,7 @@
 }
 
 .icon{
-    font-size: 1.5rem !important;
+    font-size: 1rem !important;
 }
 
 .field{
@@ -58,10 +58,9 @@
 }
 
 .enlarge_btn{
-    width: 40px;
     position: absolute;
-    right: 3px;
-    top: 8px;
+    right: 5px;
+    top: 0px;
     cursor: pointer;
     transition: 0.2s ease;
     color: lightgrey;
@@ -71,7 +70,7 @@
 }
 
 .enlarge_icon{
-    font-size: 1.4rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -104,13 +103,14 @@
     margin: 0px 10px;
     font-size: 1.2rem;
     background: rgba(255,255,255, 0.3);
-    transition: 0.2s ease;
+    transition: 0.2s ease-in;
     border-radius: 50%;
 }
 
 
 .action_btns:hover{
-    background: rgba(255,255,255, 0.7);
+    background: rgba(255,255,255, 0.2);
+    background-color: var(--purpleDark)
 }
 
 .delete_icon{
@@ -121,6 +121,14 @@
 .check_icon{
     color: green;
 }
+
+.check_icon, .delete_icon, .edit_icon{
+    font-size: 1rem;
+    transition: 0.2s ease;
+}
+
+
+
 
 
 

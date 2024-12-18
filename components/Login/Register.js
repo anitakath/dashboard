@@ -47,6 +47,7 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
       await registerHandler(registerData); // Registriere den Benutzer
       setSuccessMessage("Registrierung erfolgreich!"); // Erfolgreiche Nachricht
       setError(null); // Setze Fehler zurück
+      console.log(registerData)
     } catch (err) {
       setError(err.message); // Setze Fehlernachricht
       //setSuccessMessage(null); // Setze Erfolgsmeldung zurück
@@ -61,7 +62,7 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
  
   return (
     <div className="w-full h-full p-4">
-      <div className=" flex flex-col items-center justify-center w-full h-full py-2 m-0 p-0 relative border-8">
+      <div className=" flex flex-col items-center justify-center w-full h-full py-2 m-0 p-0 relative border-2">
         <form
           className="w-1/2 flex flex-col items-center justify-center"
           onSubmit={handleSubmit}
