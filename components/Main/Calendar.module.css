@@ -62,6 +62,9 @@
     color: var(--purpleDark);
     cursor: pointer;
     background-color: transparent;
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    outline: none;
 
 }
 
