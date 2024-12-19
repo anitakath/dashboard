@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 import { setCurrentSport } from "@/store/sportReducer";
 //COMPONENTS
+import Head from "next/head";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
 // The following import prevents a Font Awesome icon server-side rendering bug,
@@ -99,6 +100,19 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen m-0 md:p-10">
+     
+      <Head>
+        <title>Sports Diary</title>
+        <meta name="description" content="Your personal sports diary for tracking your athletic progress and connecting with a community." />
+        <meta name="keywords" content="sports diary, fitness, track progress, sports community, training, health, wellness" />
+        <meta name="author" content="Anne-Kathrin Wagner" />  {/* or companies name */}
+        <meta property="og:title" content="Sports Diary" />
+        <meta property="og:description" content="Track your athletic progress and connect with like-minded individuals in our community." />
+        <meta property="og:image" content="/path/to/your/image.jpg" /> {/* Add the path to an image here */}
+        <meta property="og:url" content="https://your-website.com/" /> {/* Replace with your website's URL */}
+       </Head>
+
+
       {!isLoggedIn &&
         register &&
         {

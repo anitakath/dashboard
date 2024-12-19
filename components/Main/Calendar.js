@@ -144,6 +144,9 @@ const Calendar = ({ filteredByDate }) => {
         <button className="secondary_button"  onClick={() => switchAllHandler("all")}>
           summary of all sports
         </button>
+        <button className="secondary_button"  onClick={() => switchAllHandler("weekly")}>
+          soon available: weekly goals 
+        </button>
       </div>
     </div>
   );

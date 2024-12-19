@@ -47,12 +47,13 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     formIsOpen,
   } = useSubmitHandler(currentPath, chosenSport, inputs, userId, currentSport);
 
+  /*
 
   useEffect(()=>{
     if (!formIsOpen && currentPath != "/profile") {
       setFormIsOpen(false);
     }
-  }, [formIsOpen])
+  }, [formIsOpen]*/
 
 
   const changeHandler = (e) => {
@@ -97,6 +98,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
    }
  }, [currentSport, selectedSport]);
 
+ console.log(formIsOpen)
 
   return (
     <div className="lg:my-2 lg:p-2 flex flex-col justify-center w-full overflow-scroll flex items-center justify-center">
@@ -189,11 +191,10 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
             )}
           </div>
           <div className=" w-full flex  justify-center">
-            <button type="submit" className={styles.submit_btn}>
+            <button className={styles.submit_btn}>
               submit
             </button>
 
-            {successMessage && <button  className={styles.submit_btn} onClick={ () => setFormIsOpen(false)}> close form </button>}
           </div>
 
           {successMessage && (
