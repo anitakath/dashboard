@@ -19,6 +19,7 @@ const Calendar = ({ filteredByDate }) => {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMonth, setSelectedMonth] = useState("");
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
+  const {monthAbbreviations} = useCalendar()
 
   useEffect(() => {
     let currentMonth = new Date().toLocaleString("default", {
@@ -44,24 +45,9 @@ const Calendar = ({ filteredByDate }) => {
 
   const chooseMonthHandler = (month) => {
     if (selectedSport === "daily") {
-      // Hier definieren wir die ID für jeden Monat
-      const monthIds = {
-        Jan: "JANUARY",
-        Feb: "FEBRUARY",
-        Mar: "MARCH",
-        Apr: "APRIL",
-        May: "MAY",
-        Jun: "JUNE",
-        Jul: "JULY",
-        Aug: "AUGUST",
-        Sep: "SEPTEMBER",
-        Oct: "OCTOBER",
-        Nov: "NOVEMBER",
-        Dec: "DECEMBER",
-      };
-
+    
       // Wir holen uns die ID des Monats
-      const monthId = monthIds[month];
+         const monthId = monthAbbreviations[month]; 
 
       if (monthId) {
         // Hier scrollen wir zum Element mit der ID des Monats

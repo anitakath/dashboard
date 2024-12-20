@@ -17,6 +17,9 @@ import SummarizedEntries from "./Daily/SummarizedEntries";
 import UserImageMobile from "../UI/UserImageMobile";
 //CUSTOM HOOKS
 import useCalendar from "@/custom-hooks/useCalendar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
 
 const Board = ({ filteredEntries, currentDate}) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
@@ -52,7 +55,12 @@ const Board = ({ filteredEntries, currentDate}) => {
 
 
   return (
-    <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">
+    <div className="w-full  relative overflow-scroll flex flex-col items-center h-full p-2 ">
+
+      <button className={styles.goUp_btn}> 
+        <FontAwesomeIcon icon={faChevronUp} />
+      </button>
+
       <h1 className="title title_mini"> DASHBOARD </h1>
 
       <UserImageMobile />

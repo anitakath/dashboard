@@ -3,6 +3,10 @@ import styles from './SummarizedEntries.module.css'
 import Calendar from "../Calendar";
 //REDUX
 import { useSelector } from "react-redux";
+//CUSTOM HOOKS
+import useCalendar from "../../../custom-hooks/useCalendar";
+
+
 const SummarizedCalendar = (props) => {
   const currentDate = props.currentDate;
   const filteredAndGroupedEntries = props.filteredAndGroupedEntries;
@@ -26,29 +30,18 @@ const SummarizedCalendar = (props) => {
       const chosenMonth = useSelector((state) => state.calendar.month);
       console.log(chosenMonth);
 
-      // Mapping von abgekürzten Monatsnamen zu vollständigen Namen
-      const monthAbbreviations = {
-          Jan: "JANUARY",
-          Feb: "FEBRUARY",
-          Mar: "MARCH",
-          Apr: "APRIL",
-          May: "MAY",
-          Jun: "JUNE",
-          Jul: "JULY",
-          Aug: "AUGUST",
-          Sep: "SEPTEMBER",
-          Oct: "OCTOBER",
-          Nov: "NOVEMBER",
-          Dec: "DECEMBER"
-      };
+      const {monthAbbreviations} = useCalendar()
+
+  
 
       return (
           <div className={styles.calendar_div}>
+            
               <Calendar />
               {monthsInYear.map((month, monthIndex) => {
                   // Überprüfen, ob der aktuelle Monat aktiv ist
+                  
                   const isActiveMonth = month.name === monthAbbreviations[chosenMonth];
-
                   return (
                       <div key={month.name} className={`${styles.month} ${isActiveMonth ? styles.activeMonth : ""}`} id={month.name}>
                           <h3 className={styles.title}>{month.name}</h3>

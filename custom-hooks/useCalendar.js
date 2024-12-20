@@ -158,6 +158,20 @@ const useCalendar = () => {
     "December",
     "All",
   ];
+  const monthAbbreviations = {
+    Jan: "JANUARY",
+    Feb: "FEBRUARY",
+    Mar: "MARCH",
+    Apr: "APRIL",
+    May: "MAY",
+    Jun: "JUNE",
+    Jul: "JULY",
+    Aug: "AUGUST",
+    Sep: "SEPTEMBER",
+    Oct: "OCTOBER",
+    Nov: "NOVEMBER",
+    Dec: "DECEMBER"
+};
 
   const currentDatee = {
     year: new Date().getFullYear(),
@@ -166,7 +180,7 @@ const useCalendar = () => {
   };
 
 
-  return { getMonthStyle, months, completeMonths, useEntryCountForMonth, currentDatee };
+  return { getMonthStyle, months, completeMonths, monthAbbreviations, useEntryCountForMonth, currentDatee };
 };
 
 export default useCalendar;
