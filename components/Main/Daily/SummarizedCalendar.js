@@ -54,7 +54,7 @@ const SummarizedCalendar = (props) =>{
                      className={styles.day_date}
                      href={`/daily-details/${dayNumber}${month.name}`}
                    >
-                     {dayNumber}
+                     {dayNumber} 
                    </Link>
 
                    <div className={styles.sport_subsection}>

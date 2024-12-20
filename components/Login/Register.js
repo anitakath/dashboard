@@ -8,6 +8,7 @@ import { useCallback } from "react";
 import useAuth from "@/custom-hooks/auth/useAuth";
 //COMPONENTS
 import InfoBoard from "../UI/InfoBoard";
+import uuid4 from "uuid4";
 
 const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
   const [registerData, setRegisterData] = useState({
@@ -15,6 +16,7 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
     email: "",
     password: "",
     confirmPassword: "",
+    id: "",
   });
   const [error, setError] = useState(null);
   const [infoBoardOpen, setInfoBoardOpen] = useState(false)
@@ -43,8 +45,12 @@ const Register = ({ setRegister, setSuccessMessage, successMessage }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const uniqueId = uuid4();
+
+    const dataWithId = { ...registerData, id: uniqueId };
+
     try {
-      await registerHandler(registerData); // Registriere den Benutzer
+      await registerHandler(dataWithId); // Registriere den Benutzer
       setSuccessMessage("Registrierung erfolgreich!"); // Erfolgreiche Nachricht
       setError(null); // Setze Fehler zurück
       console.log(registerData)

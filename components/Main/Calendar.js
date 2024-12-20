@@ -145,7 +145,7 @@ const Calendar = ({ filteredByDate }) => {
           summary of all sports
         </button>
         <button className="secondary_button"  onClick={() => switchAllHandler("weekly")}>
-          soon available: weekly goals 
+          <em>soon available: goals</em> 
         </button>
       </div>
     </div>

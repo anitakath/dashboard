@@ -23,18 +23,16 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr); 
     gap: 8px;
-    
 }
 
-.day {
+.day{
     border: 1px solid #ddd; 
     text-align: center; 
     display: flex;
     flex-direction: column;
-    height: 45px;
+    height: 35px;
     position: relative;
     overflow: scroll;
-    
 }
 
 .today {
@@ -167,13 +165,32 @@
         grid-template-columns: repeat(2, 1fr); 
     
     }
+
+    .day{
+       height: 50px;
+    }
+}
+
+@media screen and (max-width: 1000px){
+    .day{
+        height: 45px;
+     }
 }
 
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width:900px){
     .calendar_div {
-        grid-template-columns: repeat(1, 1fr); 
-    
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .day{
+        height: 60px;
+    }
+}
+
+@media screen and (max-width:600px){
+    .day{
+        height: 40px;
     }
 }
 

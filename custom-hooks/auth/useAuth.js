@@ -143,14 +143,55 @@ const useAuth = (userId) => {
         .eq('email', registerData.email)
         .single();
 
-    if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 bedeutet, dass kein Benutzer gefunden wurde
+    if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 === no user was found
         throw new Error("Fehler beim Überprüfen des Benutzers: " + fetchError.message);
-    }
+    } else if (existingUser) {
+      throw new Error("Ein Benutzer mit dieser E-Mail-Adresse ist bereits registriert.");
+    }  else if (fetchError && fetchError.code === 'PGRST116') { 
+      //"Kein User gefunden"
+      console.log('NO USER WAS FOUND')
 
-    if (existingUser) {
-        throw new Error("Ein Benutzer mit dieser E-Mail-Adresse ist bereits registriert.");
-    }
+      // Benutzer registrieren
+      console.log("signing user up...")
+      const { user, error: signUpError } = await supabase.auth.signUp({
+        email: registerData.email,
+        password: registerData.password,
+      });
 
+      console.log(registerData)
+
+      if (signUpError) {
+        console.log('SIGNUP ERROR')
+        console.log(signUpError)
+        throw new Error("Fehler bei der Registrierung: " + signUpError.message);
+      } else{
+        console.log('SIGNED HIM UP!')
+        console.log(user)
+        console.log(registerData)
+      }
+
+    console.log(user.id)
+    console.log(registerData.id)
+      // Optional: Hier kannst du zusätzliche Informationen zum Benutzer in deiner Datenbank speichern
+      const { error: insertError } = await supabase
+      .from('users') // Ersetze 'users' durch den tatsächlichen Tabellennamen in deiner Supabase-Datenbank
+      .insert([{ /*id: registerData.id,*/ name: registerData.name, email: registerData.email }]);
+
+  if (insertError) {
+      throw new Error("Fehler beim Speichern der Benutzerdaten: " + insertError.message);
+  }
+
+
+  }
+
+  
+
+   
+
+    console.log(existingUser)
+    console.log(fetchError)
+
+    /*
     // Benutzer registrieren
     const { user, error: signUpError } = await supabase.auth.signUp({
         email: registerData.email,
@@ -159,16 +200,9 @@ const useAuth = (userId) => {
 
     if (signUpError) {
         throw new Error("Fehler bei der Registrierung: " + signUpError.message);
-    }
+    }*/
 
-    // Optional: Hier kannst du zusätzliche Informationen zum Benutzer in deiner Datenbank speichern
-    const { error: insertError } = await supabase
-        .from('users') // Ersetze 'users' durch den tatsächlichen Tabellennamen in deiner Supabase-Datenbank
-        .insert([{ id: user.id, name: registerData.name, email: registerData.email }]);
-
-    if (insertError) {
-        throw new Error("Fehler beim Speichern der Benutzerdaten: " + insertError.message);
-    }
+  
 
     console.log(registerData); // Optionales Logging
 
