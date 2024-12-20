@@ -18,6 +18,10 @@
     padding: 16px; 
 }
 
+.activeMonth{
+    background-color: var(--ultraLight);
+}
+
 
 .days {
     display: grid;
