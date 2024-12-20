@@ -28,8 +28,6 @@ const SummarizedCalendar = (props) => {
       ];
 
       const chosenMonth = useSelector((state) => state.calendar.month);
-      console.log(chosenMonth);
-
       const {monthAbbreviations} = useCalendar()
 
   
@@ -42,6 +40,7 @@ const SummarizedCalendar = (props) => {
                   // Überprüfen, ob der aktuelle Monat aktiv ist
                   
                   const isActiveMonth = month.name === monthAbbreviations[chosenMonth];
+
                   return (
                       <div key={month.name} className={`${styles.month} ${isActiveMonth ? styles.activeMonth : ""}`} id={month.name}>
                           <h3 className={styles.title}>{month.name}</h3>

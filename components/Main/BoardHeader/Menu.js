@@ -8,13 +8,15 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { setSection } from "@/store/profileReducer";
 import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Menu = ({ setOpenMenu }) => {
   const [openSections, setOpenSections] = useState({
     yourSports: true,
-    yourProfile: true,
-    community: true,
-    app: true,
+    yourProfile: false,
+    community: false,
+    app: false,
   });
   const dispatch = useDispatch();
   const router = useRouter();
@@ -47,7 +49,7 @@ const Menu = ({ setOpenMenu }) => {
     >
       <div className={styles.menu_div} onClick={(e) => e.stopPropagation()}>
         <button className={styles.close_btn} onClick={() => setOpenMenu(false)}>
-          X
+         <FontAwesomeIcon icon={faXmark} />
         </button>
         <h1 className={styles.title}>MENU</h1>
         <ul className={styles.table}>
@@ -59,8 +61,7 @@ const Menu = ({ setOpenMenu }) => {
               Your Sports
             </button>
           </li>
-          {openSections.yourSports && (
-            <>
+            <div className={`${styles.subLinkDiv} ${openSections.yourSports ? styles.yourSportsactive : styles.subLinkInactive}`}>
               <li
                 className={styles.link}
                 onClick={() => navigateHandler("allsports")}
@@ -75,11 +76,10 @@ const Menu = ({ setOpenMenu }) => {
               </li>
               <li className={styles.link}>Completed Sports Units</li>
               <Link className={styles.link} href="/statistics">
-                {" "}
-                Statistics{" "}
+                Statistics
               </Link>
-            </>
-          )}
+            </div>
+          
           <br />
           <li>
             <button
@@ -89,8 +89,8 @@ const Menu = ({ setOpenMenu }) => {
               Your Profile
             </button>
           </li>
-          {openSections.yourProfile && (
-            <>
+        
+          <div className={`${styles.subLinkDiv} ${openSections.yourProfile ? styles.yourProfileactive : styles.subLinkInactive}`}>
               <li className={styles.link} onClick={navigateHandler}>
                 <Link
                   href="/profile"
@@ -100,8 +100,8 @@ const Menu = ({ setOpenMenu }) => {
                 </Link>
               </li>
               <li className={styles.link}> Favorites </li>
-            </>
-          )}
+            </div>
+      
           <br />
           <li>
             <button
@@ -111,13 +111,11 @@ const Menu = ({ setOpenMenu }) => {
               Community
             </button>
           </li>
-          {openSections.community && (
-            <>
+            <div className={`${styles.subLinkDiv} ${openSections.community ? styles.communityactive : styles.subLinkInactive}`}>
               <li className={styles.link}>Events</li>
               <li className={styles.link}>Your Friends</li>
               <li className={styles.link}>Find Friends</li>
-            </>
-          )}
+            </div>
           <br />
 
           <li>
@@ -128,15 +126,14 @@ const Menu = ({ setOpenMenu }) => {
               About this Diary
             </button>
           </li>
-          {openSections.app && (
-            <>
+         
+             <div className={`${styles.subLinkDiv} ${openSections.app ? styles.appactive : styles.subLinkInactive}`}>
               <li className={styles.link}> How to use this app </li>
               <li className={styles.link}> Help / Support </li>
               <li className={styles.link}> Feedback </li>
               <li className={styles.link}> Notifications </li>
               <li className={styles.link}> Privacy Policy </li>
-            </>
-          )}
+            </div>
           <br />
 
           <div className={styles.anne_div}>

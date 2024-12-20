@@ -9,9 +9,15 @@
 .goUp_btn{
   position: fixed;
   top: 60px;
-  left: 20px;
+  left: 18px;
   z-index: 1000;
-  border: 2px solid red;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.goUp_btn:hover{
+  color: var(--purpleDark)
 }
 
 .diary_link:hover{
