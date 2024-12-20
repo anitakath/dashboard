@@ -7,6 +7,10 @@
     padding: 0px 5px;
     font-size: 1rem;
     font-weight: bolder;
+    background-color: transparent;
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    outline: none;
 }
 
 .select_input:hover{
@@ -20,7 +24,7 @@
 
 .sort{
     position: absolute;
-    right: -3px;
+    right: -15px;
     font-size: 1.3rem;
     background: white;
     z-index: 100;
@@ -50,9 +54,9 @@
 
 .sport_btn{
     width: 100%;
-    margin: 10px;
-    padding: 10px 4px;
-    font-size: 1.3rem;
+    margin: 5px;
+    padding: 7px 4px;
+    font-size: 1.1rem;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -62,6 +66,7 @@
     position: relative; 
     z-index: 100;
     overflow: hidden;
+
 }
 
 .sport_btn:hover{ 
@@ -132,6 +137,7 @@
 .sportBtnText{
     z-index: 100000;
     max-width: 150px;
+    margin-left: 5px;
 }
 
 
@@ -141,27 +147,24 @@
     right: -60px;
     top: 5.5px;
     width:  100px;
-    height:40px;
+    height:30px;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
     transition: transform 0.2s ease;
-    
-
-    
 }
 
 .sport_btn:hover .circle_div {
     /*transform: translateX(-245px);*/ /* Bewege die circle_div um 300px nach links */
-    transform: translateX(-40px);
+   transform: translateX(-40px);
     
 }
 
 
 .circle{
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     bottom: 27.5px;
     box-shadow: 0px 0px 60px white;
@@ -214,6 +217,7 @@
     .select_input{
         width: 160px;
         font-size: 0.9rem;
+        margin-bottom: 10px;
     }
 
     .sort{
