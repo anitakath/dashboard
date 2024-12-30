@@ -35,7 +35,7 @@ const CurrentMonthEntries = (props) => {
   );
 
   return (
-    <div className="my-6">
+    <div className="my-6 ">
       {Object.keys(currentMonthEntries).map((date) =>
         renderDateSection(date, currentMonthEntries[date])
       )}

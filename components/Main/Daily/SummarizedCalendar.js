@@ -12,9 +12,17 @@ const SummarizedCalendar = (props) => {
   const filteredAndGroupedEntries = props.filteredAndGroupedEntries;
 
   const renderCalendar = () => {
+
+    const calendar = useSelector((state) => state.calendar)
+    const selectedYear = calendar.year;
+
+    const isLeapYear = (year) => {
+        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    };
+
       const monthsInYear = [
           { name: "JANUARY", days: 31 },
-          { name: "FEBRUARY", days: 29 },
+          { name: "FEBRUARY", days: isLeapYear(calendar.year) ? 29 : 28 },
           { name: "MARCH", days: 31 },
           { name: "APRIL", days: 30 },
           { name: "MAY", days: 31 },
@@ -30,7 +38,7 @@ const SummarizedCalendar = (props) => {
       const chosenMonth = useSelector((state) => state.calendar.month);
       const {monthAbbreviations} = useCalendar()
 
-  
+
 
       return (
           <div className={styles.calendar_div}>
@@ -38,7 +46,6 @@ const SummarizedCalendar = (props) => {
               <Calendar />
               {monthsInYear.map((month, monthIndex) => {
                   // Überprüfen, ob der aktuelle Monat aktiv ist
-                  
                   const isActiveMonth = month.name === monthAbbreviations[chosenMonth];
 
                   return (
@@ -47,8 +54,15 @@ const SummarizedCalendar = (props) => {
                           <div className={styles.days}>
                               {[...Array(month.days)].map((_, dayIndex) => {
                                   const dayNumber = dayIndex + 1;
-                                  const dateString = `${new Date(currentDate.getFullYear(), monthIndex, dayNumber).toISOString().split("T")[0]}`;
+                                  //const date = new Date(currentDate.getFullYear(), monthIndex, dayNumber);
+                                  const date = new Date(calendar.year, monthIndex, dayNumber); 
+                                  date.setDate(date.getDate() + 1); 
+                                  const dateString = date.toISOString().split("T")[0];
+                        
+                                  
                                   const isToday = new Date().toISOString().split("T")[0] === dateString;
+                                  const entriesForDay = filteredAndGroupedEntries[dateString] || [];
+
 
                                   return (
                                       <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ""}`}>
@@ -57,10 +71,21 @@ const SummarizedCalendar = (props) => {
                                           </Link>
                                           <div className={styles.sport_subsection}>
                                               {(filteredAndGroupedEntries[dateString] || []).map((entry) => {
-                                                  // Berechnung der Höhe basierend auf der Dauer
-                                                  const height = entry.duration < 20 ? "3px" : `${Math.floor(entry.duration / 20) * 5}px`;
-                                                  // Dynamische Klasse basierend auf entry.label
-                                                  const entryClass = styles[`${entry.label}_opaque`] || styles.defaultLabel;
+                                                const entryDate = new Date(entry.created_at).toISOString().split("T")[0];
+                                                const isEntryDate = dateString === entryDate;
+                            
+                                                // Alternativ:
+                                                const entryYear = entry.created_at.split("-")[0]; // Ansatz 2
+
+                        
+                                                if (entryYear != selectedYear) {
+                                                    return null; // Wenn das Jahr nicht übereinstimmt, nichts rendern
+                                                }
+
+                                                // Berechnung der Höhe basierend auf der Dauer
+                                                const height = entry.duration < 20 ? "3px" : `${Math.floor(entry.duration / 20) * 5}px`;
+                                                const entryClass = styles[`${entry.label}_opaque`] || styles.defaultLabel;
+                            
 
                                                   return (
                                                       <div key={entry.entryId} className={`${styles.sport_subsectionLabel} ${entryClass}`} style={{ height }}></div>
