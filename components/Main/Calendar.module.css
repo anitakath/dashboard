@@ -18,14 +18,17 @@
     display: flex;
     align-items: end;
     padding: 0px 10px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
+
+
 /* SUMMARY SECTION*/
 
 
 .summary_span{
     margin: 0 5px;
     color: var(--purpleDark);
+    font-size: 1.1rem;
 }
 
 .buttons_div{
@@ -44,12 +47,12 @@
 
 .chooseYear_div{
     position: absolute;
-    top: 40px;
+    top: 44px;
     right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     padding: 0px;
     transition: 0.2s ease;
 }
@@ -73,7 +76,6 @@
     -webkit-appearance: none; 
     -moz-appearance: none; 
     outline: none;
-
 }
 
 .year_input:hover {
@@ -88,7 +90,6 @@
     color: var(--purpleDarkHover);
     transition: 0.2s ease;
     font-size:1.4rem;
-
 }
 
 .chevron:hover{
@@ -105,6 +106,7 @@
     transition: 0.2s ease;
     cursor: pointer;
     position: relative;
+    font-size: 0.9rem;
 }
 
 .month:hover{
@@ -119,7 +121,7 @@
     display: flex;
     justify-content: center;
     background-color:var(--purpleDarkHoverOpacity);
-    
+    font-size: 0.9rem;
 }
 
 

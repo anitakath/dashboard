@@ -55,7 +55,7 @@ const BoarderSubHeader = ({ currentSport }) => {
   };
 
   return (
-    <div className="mb-2 flex flex-wrap justify-center relative bottom-2">
+    <div className="mb-2  flex-wrap justify-center relative bottom-2">
       <div className="relative w-full h-8">
         <button
           className="absolute top-2 left-2 lg:hidden"
@@ -75,7 +75,7 @@ const BoarderSubHeader = ({ currentSport }) => {
       </div>
 
       {miniMenu && (
-        <div className="w-full relative right-1 flex flex-col lg:flex-row justify-center">
+        <div className="w-full relative  flex flex-col lg:flex-row justify-center items-center">
           {currentSport !== "all" && currentSport !== "daily" && (
             <button className="secondary_button" onClick={addEntryHandler}>
               <span className={styles.add_btn_icon}> + </span> {addEntryText}

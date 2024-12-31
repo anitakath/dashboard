@@ -137,12 +137,13 @@
     width: 100%;
     margin: 5px 0px;
     margin-top:20px;
+    font-size: 0.9rem;
 }
 
 
 .link{
     color: var(--purpleDark);
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     margin: 5px 5px;
     position: relative;
     left: -3px;

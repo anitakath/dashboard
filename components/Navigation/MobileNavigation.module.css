@@ -15,7 +15,7 @@
 .sport_btn{
     width: 100%;
     padding: 10px 4px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -32,6 +32,8 @@
 
 .sport_btn:hover{ 
     overflow: hidden;
+    background-color: var(--purpleDarkHoverOpacity);
+    border: 2px solid transparent;
 }
 
 
@@ -43,7 +45,7 @@
 
 
 .delete_btn{
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin: 0px 5px;
     padding: 2px;
     width: 25px;
@@ -127,20 +129,21 @@
     border: none;
     color: var(--purpleDark);
     transition: 0.2s ease;
-    margin: 10px 0px;
-    font-size: 3rem;
+    font-size: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid var(--purpleDarkHoverOpacity);
 
 }
 
 
 
 .addSport_btn:hover{
-    color: black;
+    color: beige;
     cursor: pointer;
-    font-size: 3rem;
+    background-color: var(--purpleDarkHover);
+
 }
 
 @media screen and (max-width: 1300px){

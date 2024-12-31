@@ -103,10 +103,7 @@ const MobileNavigation = ({
             >
               {formIsOpen ? "-" : "+"}
             </button>
-            <span className="relative top-0.5 mx-1 text-zinc-400">
-              {" "}
-              add a new sport{" "}
-            </span>
+         
           </li>
         </ul>
       )}

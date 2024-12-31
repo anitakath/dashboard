@@ -1,5 +1,11 @@
 
 
+.title{
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
 .diary_link{
   color: var(--purpleDarkHoverOpacity);
   font-size: 1.4rem;

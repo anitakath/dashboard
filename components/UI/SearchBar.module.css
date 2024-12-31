@@ -17,7 +17,6 @@
 }
 
 .search_input:hover{
-    border-bottom: 2px solid var(--purpleDarkHoverOpacity);
     cursor: pointer;
 }
 

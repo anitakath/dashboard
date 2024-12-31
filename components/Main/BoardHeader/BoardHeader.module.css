@@ -7,7 +7,6 @@
     align-items: center;
     padding: 10px 20px;
     position: relative;
-  
 }
 
 .searchBarResult_div {
@@ -30,10 +29,9 @@
   border-radius: 8px; 
   z-index: 1000000000;
   position: absolute;
+  border: 2px solid purple;
   
 }
-
-
 
 
 
@@ -44,7 +42,7 @@
     height: 40px;
     top: 10px;
     right: 10px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     transition: color 0.2s ease;
     
 }
@@ -54,14 +52,16 @@
 }
 
 .icons {
-    margin: 0 15px; 
+    margin: 15px 15px 0px 15px; 
     width: 60px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-  
+
 }
+
+
 
 
 .icons_mobile{
@@ -70,8 +70,14 @@
 
 .icons:hover, .icons_mobile{
   cursor: pointer;
+  background-color: var(--purpleDarkHoverOpacity);
 }
 
+.logout_btn{
+  font-size: 1.4rem;
+  width: 25px;
+  height: 25px;
+}
 
 
 @media screen and (max-width: 1300px) {
@@ -111,7 +117,7 @@
 
   .diary_link{
     margin-left: 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }   
  
 }
@@ -124,7 +130,9 @@
     display: inline-block;
     position: absolute;
     top: -30px;
-    font-size: 1.3rem;
+    font-size: 1rem;
+    border: 2px solid blue;
+
   }
 }
 

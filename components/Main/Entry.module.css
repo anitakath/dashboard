@@ -18,7 +18,7 @@
 
 .monthYear_header{
     color: var(--purpleDark);
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin: 10px 0px;
     background-color: var(--purpleDarkHoverOpacity);
     padding: 10px 5px;
@@ -46,19 +46,22 @@
     width: 150px;
     color: black;
     display: flex;
-
 }
 
 .monthYear_header_span{
-    font-size: 1rem;
+    font-size: 0.8rem;
     height: 100%;
     position: absolute;
     right: 15px;
-    top: 20px;
+    top: 0px;
+    display: flex;
+    align-items: end;
+    padding-bottom: 6px;
 }
 
 .totalDuration{
     color: black;
+    margin-left: 3px;
 }
 
 
@@ -76,12 +79,38 @@
 
 }
 
+.date {
+    margin-top: 0.5rem; 
+    padding-left: 0.5rem; 
+    padding-right: 0.5rem; 
+    font-size: 0.75rem; 
+    position: absolute;
+    right: 1rem; 
+  }
+  
+  .title {
+    font-size: 1.3rem; 
+    margin-bottom: 1rem; 
+    margin-top: 1.5rem; 
+    padding-left: 0.5rem;
+    padding-right: 0.5rem; 
+  }
+  
+  .description{
+    padding-left: 0.5rem; 
+    padding-right: 0.5rem; 
+    margin-bottom: 1rem; 
+  }
+
+
+/*
 .totalHours_p{
     height: 6vh;
     display: flex;
     align-items: center;
     color: var(--purpleDark);
     font-size: 1.4rem;
+    border: 2px solid red;
 }
 
 .totalHours_span{
@@ -90,7 +119,8 @@
     margin: 0px 5px;
     display: flex;
     justify-content: center;
-}
+    border: 2px solid red;
+}*/
 
 
 @media screen and (max-width: 1600px){

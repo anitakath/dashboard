@@ -4,7 +4,7 @@ const UserImage = () =>{
 
 
     return (
-      <div className='hidden lg:flex'>
+      <div className='hidden relative lg:flex'>
         <p
           className={styles.user_image}
           style={{ backgroundColor: "var(--purpleDarkHover)" }}

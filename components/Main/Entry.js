@@ -72,6 +72,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   const summedDurationPerSportPerMonthInHours = convertMinutesToHours(summedDurationPerSportPerMonth)
 
 
+  
 
 
   return (
@@ -96,11 +97,11 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
           >
             <Link href={`/details/${entry.entryPath}`}>
               <div className={styles.link}>
-                <p className="my-2 px-2 text-xs absolute right-4">
+                <p className={styles.date}>
                   {formatDate(entry.created_at)}
                 </p>
-                <h2 className="text-2xl mb-4 mt-6 px-2 h-18"> {entry.title} </h2>
-                <p className="px-2 mb-4"> {entry.entry} </p>
+                <h2 className={styles.title}> {entry.title} </h2>
+                <p className={styles.description}> {entry.entry} </p>
               </div>
             </Link>
           </div>

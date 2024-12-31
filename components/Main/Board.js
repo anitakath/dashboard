@@ -55,7 +55,7 @@ const Board = ({ filteredEntries, currentDate}) => {
 
 
   return (
-    <div className="w-full  relative overflow-scroll flex flex-col items-center h-full p-2 ">
+    <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">
 
       <button className={styles.goUp_btn}> 
         <FontAwesomeIcon icon={faChevronUp} />
@@ -72,10 +72,10 @@ const Board = ({ filteredEntries, currentDate}) => {
         <Navigation />
       </div>
 
-      <div className="flex justify-center  lg:flex-row flex-col w-full lg:max-h-screen  ">
+      <div className="flex justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
           {selectedSport != "start" && (
-            <h2 className="subtitle flex items-center text-center">
+            <h2 className={`flex items-center text-center ${styles.title}`}>
               {selectedSport === "all" && "all sports summarized per year and month"}
               {selectedSport === "daily" &&
                 "all sports summarized per year and month in a calendar"}

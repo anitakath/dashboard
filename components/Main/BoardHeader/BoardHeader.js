@@ -51,7 +51,7 @@ const BoardHeader = () =>{
           )}
         </div>
 
-        <div className=" hidden md:flex items-center w-full justify-center lg:justify-end ">
+        <div className="h-14 hidden md:flex items-center w-full justify-center lg:justify-end ">
           <p className={styles.icons}>
             <Link href="/" className={styles.backToHomepage_link}>
               <FontAwesomeIcon icon={faHouse} className="font_purple" />

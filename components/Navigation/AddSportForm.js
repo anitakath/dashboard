@@ -123,7 +123,7 @@ const AddSportForm = ({ addSportClickHandler }) => {
 
   return (
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>
-      <label className="text-xl hidden">sport </label>
+      <label className="text-xs hidden">sport </label>
       <input
         type="text"
         onChange={(e) =>

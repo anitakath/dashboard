@@ -22,7 +22,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
    const [sortedEntries, setSortedEntries] = useState([]);
 
 
-
+  
 
 
   return (
@@ -82,7 +82,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                           <p className={styles.monthYear_header_span}>
                             (total hours of sport:
                             <span className={styles.totalDuration}>
-                              {" "}
                               {formatDuration(totalDuration)}
                             </span>
                             )
