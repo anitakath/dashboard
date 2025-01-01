@@ -26,13 +26,13 @@ const BoardHeader = () =>{
 
   return (
     <div className={styles.headerDiv}>
-      <p className={styles.icons_mobile}>
+      <div className={styles.icons_mobile}>
         <FontAwesomeIcon
           icon={faBars}
           className="font_purple hover:pointer"
           onClick={() => setOpenMenu(true)}
         />
-      </p>
+      </div>
 
       {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}
 

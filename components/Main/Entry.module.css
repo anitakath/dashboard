@@ -13,13 +13,25 @@
 
 .yearHeader{
     font-weight: bolder;
-    color: var(--purpleDark)
+    color: var(--purpleDark);
+    margin: 15px 0px;
+    padding: 5px;
+}
+
+.yearHeaderActive{
+    margin-bottom: -10px;
+    /*border: 3px solid orange;*/
+}
+
+.yearHeader:hover{
+    cursor: pointer;
+    color: var(--purpleDarkHoverOpacity);
 }
 
 .monthYear_header{
     color: var(--purpleDark);
     font-size: 1.1rem;
-    margin: 10px 0px;
+    margin: 0px;
     background-color: var(--purpleDarkHoverOpacity);
     padding: 10px 5px;
     text-align: center;
@@ -29,6 +41,9 @@
     display: flex;
     align-items: center;
     position: relative;
+
+
+    /*border: 3px solid gold;*/
 }
 
 .monthYear_header:hover{
@@ -47,6 +62,7 @@
     color: black;
     display: flex;
 }
+
 
 .monthYear_header_span{
     font-size: 0.8rem;

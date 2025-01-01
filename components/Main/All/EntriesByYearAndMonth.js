@@ -5,25 +5,22 @@ import styles from '../Entry.module.css'
 //CUSTOM HOOKS
 import { formatDate } from '@/custom-hooks/formatDate';
 import { formatDuration } from '@/custom-hooks/formatDate';
-
+import { useSelector } from 'react-redux';
 
 const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
+  const calendar = useSelector((state) => state.calendar)
+  const [openMonths, setOpenMonths] = useState({});
+  const [openYear, setOpenYear] = useState(calendar.year)
+  const toggleMonthEntries = (monthName, year) => {
+  // Erstelle einen Schlüssel, der sowohl den Monat als auch das Jahr kombiniert
+  const monthYearKey = `${monthName}-${year}`;
 
-   const [openMonths, setOpenMonths] = useState({});
-   const toggleMonthEntries = (monthName, year) => {
-     // Erstelle einen Schlüssel, der sowohl den Monat als auch das Jahr kombiniert
-     const monthYearKey = `${monthName}-${year}`;
-
-     setOpenMonths((prevState) => ({
+  setOpenMonths((prevState) => ({
        ...prevState,
        [monthYearKey]: !prevState[monthYearKey], // Toggle den Zustand für diesen spezifischen Monat und Jahr
      }));
-   };
-   const [sortedEntries, setSortedEntries] = useState([]);
-
-
+  };
   
-
 
   return (
     <div>
@@ -56,11 +53,14 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             });
 
 
-
-
             return (
-              <div key={year}>
-                <h2 className={styles.yearHeader}>{year}</h2>
+              <div key={year} >
+                <button
+              className={`${styles.yearHeader} ${parseInt(year) === openYear ? styles.yearHeaderActive : ''}`}
+              onClick={() => setOpenYear(parseInt(year))}
+            >
+              {year}
+            </button>
                 {months.map((monthEntry) => {
                   const monthName = Object.keys(monthEntry)[0];
                   const entries = monthEntry[monthName];
@@ -68,26 +68,29 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                     (acc, entry) => acc + entry.duration,
                     0
                   );
+              
+                
 
                   return (
-                    <div key={monthName}>
-                      {currentSport === "all" && (
-                        <button
-                          className={styles.monthYear_header}
-                          onClick={() => toggleMonthEntries(monthName, year)}
-                        >
-                          <p className={styles.monthYear_header_p}>
-                            {monthName} 
-                          </p>
-                          <p className={styles.monthYear_header_span}>
-                            (total hours of sport:
-                            <span className={styles.totalDuration}>
-                              {formatDuration(totalDuration)}
-                            </span>
-                            )
-                          </p>
-                        </button>
-                      )}
+                    
+                    <div key={monthName} className='border-0'>
+                      {parseInt(year) === openYear && currentSport === "all" && (
+                    <button
+                      className={styles.monthYear_header}
+                      onClick={() => toggleMonthEntries(monthName, year)}
+                    >
+                      <p className={styles.monthYear_header_p}>
+                        {monthName} {year}
+                      </p>
+                      <p className={styles.monthYear_header_span}>
+                        (total hours of sport:
+                        <span className={styles.totalDuration}>
+                          {formatDuration(totalDuration)}
+                        </span>
+                        )
+                      </p>
+                    </button>
+                  )}
                       {openMonths[`${monthName}-${year}`] &&
                         entries
                           .sort(
