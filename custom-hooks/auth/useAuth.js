@@ -170,8 +170,6 @@ const useAuth = (userId) => {
         console.log(registerData)
       }
 
-    console.log(user.id)
-    console.log(registerData.id)
       // Optional: Hier kannst du zusätzliche Informationen zum Benutzer in deiner Datenbank speichern
       const { error: insertError } = await supabase
       .from('users') // Ersetze 'users' durch den tatsächlichen Tabellennamen in deiner Supabase-Datenbank

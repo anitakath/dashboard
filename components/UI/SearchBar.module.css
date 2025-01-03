@@ -40,4 +40,8 @@
     .submit_btn{
         top: 3.5px;
     }
+
+    .form{
+        width: 80%;
+    }
 }

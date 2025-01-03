@@ -63,6 +63,7 @@ const Board = ({ filteredEntries, currentDate}) => {
 
       <h1 className="title title_mini"> DASHBOARD </h1>
 
+
       <UserImageMobile />
 
       <BoardHeader />

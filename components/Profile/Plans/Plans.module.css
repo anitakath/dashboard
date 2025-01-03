@@ -17,12 +17,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    top: -35px;
 }
 
 
 .addSport_btn{
     color: var(--purpleDarkHover);
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .home_link{

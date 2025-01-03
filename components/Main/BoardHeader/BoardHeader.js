@@ -26,13 +26,7 @@ const BoardHeader = () =>{
 
   return (
     <div className={styles.headerDiv}>
-      <div className={styles.icons_mobile}>
-        <FontAwesomeIcon
-          icon={faBars}
-          className="font_purple hover:pointer"
-          onClick={() => setOpenMenu(true)}
-        />
-      </div>
+      
 
       {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}
 
@@ -49,8 +43,17 @@ const BoardHeader = () =>{
               </button>
             </div>
           )}
+
+        <div className={styles.icons_mobile}>
+          <FontAwesomeIcon
+            icon={faBars}
+            className=" hover:pointer"
+            onClick={() => setOpenMenu(true)}
+          />
+        </div>
         </div>
 
+       
         <div className="h-14 hidden md:flex items-center w-full justify-center lg:justify-end ">
           <p className={styles.icons}>
             <Link href="/" className={styles.backToHomepage_link}>
@@ -70,6 +73,8 @@ const BoardHeader = () =>{
         <Link href="/community" className={styles.icons}>
           <FontAwesomeIcon icon={faUsers} className="font_purple" />
         </Link>
+
+        
         <button className={styles.icons} onClick={logoutHandler}>
           <Image
             src="/power-off.png"

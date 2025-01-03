@@ -1,10 +1,11 @@
 
 .toggleEntries_btn{
-    border-bottom: 2px solid var(--purpleDarkHover);
+    border-bottom: 1px solid var(--purpleDarkHover);
     width: 200px;
     height: 40px;
     transition: 0.4s ease;
     letter-spacing: 1px;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    padding: 0;
 }
 

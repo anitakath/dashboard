@@ -98,37 +98,25 @@ const Profile = () => {
               </h1>
             )}
 
-            <div className="text-xl flex sm:mt-4 mb-4 justify-evenly border-b pb-2">
+          <div className="text-xl flex sm:mt-4 mb-4 justify-evenly border-b pb-2">
               <button onClick={() => profileSectionHandler("sports")}>
-                <h2
-                  className={
-                    profileSection === "sports" ? styles.activeSection : ""
-                  }
-                >
-                  Sports
-                </h2>
+                  <h2 className={`${profileSection === "sports" ? styles.activeSection : ""} ${styles.navigationTitle}`}>
+                      Sports
+                  </h2>
               </button>
               <button onClick={() => profileSectionHandler("plans")}>
-                <h2
-                  className={
-                    profileSection === "plans" ? styles.activeSection : ""
-                  }
-                >
-                  Plans
-                </h2>
+                  <h2 className={`${profileSection === "plans" ? styles.activeSection : ""} ${styles.navigationTitle}`}>
+                      Plans
+                  </h2>
               </button>
               <button onClick={() => profileSectionHandler("settings")}>
-                <h2
-                  className={
-                    profileSection === "settings" ? styles.activeSection : ""
-                  }
-                >
-                  Settings
-                </h2>
+                  <h2 className={`${profileSection === "settings" ? styles.activeSection : ""} ${styles.navigationTitle}`}>
+                      Settings
+                  </h2>
               </button>
-            </div>
+          </div>
 
-            <div className="flex w-full flex flex-wrap justify-center">
+            <div className="flex w-full flex-wrap justify-center">
               {profileSection === "sports" &&
                 navigation &&
                 navigation.map((sport, index) => (

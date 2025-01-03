@@ -200,7 +200,6 @@ const Plans = () =>{
             addSportClickHandler={addSportClickHandler}
             formIsOpen={formIsOpen}
             setFormIsOpen={setFormIsOpen}
-            
             chosenSport={chosenSport}
             chooseSportHandler={chooseSportHandler}
        

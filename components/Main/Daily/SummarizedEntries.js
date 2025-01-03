@@ -127,7 +127,7 @@ const SummarizedEntries = () => {
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
 
-      <div className="flex items-center">
+      <div className="flex bg-red-500 items-center">
         <button
           className={styles.expand_btn}
           onClick={() => setIsExpanded(!isExpanded)}

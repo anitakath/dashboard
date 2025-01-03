@@ -10,7 +10,7 @@ const EditEntryField = ({addSportHandler, addSportBtnText}) =>{
       <div>
         <div className="flex justify-center border-b-2 h-16 items-center relative">
           <button className={styles.addSport_btn} onClick={addSportHandler}>
-            {addSportBtnText}
+            {addSportBtnText} 
           </button>
           <Link href="/" className={styles.home_link}>
             <FontAwesomeIcon icon={faHouse} />

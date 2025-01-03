@@ -220,7 +220,6 @@
     }
 
     .sport_btn{
-        background: red;
         background: var( --purpleDarkHoverOpacity);
         width: 240px;
         margin: 0px 2px;

@@ -96,7 +96,7 @@ const MobileNavigation = ({
               </li>
             </div>
           ))}
-          <li className="flex relative items-center">
+          <li className="flex mx-0.5 relative items-center">
             <button
               className={styles.addSport_btn}
               onClick={addSportClickHandler}

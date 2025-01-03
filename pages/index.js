@@ -48,11 +48,13 @@ export default function Home() {
         });
 
         dispatch(setFilteredEntriesByCurrentSport(filterEntries));
-
         await dispatch(setAllSportsFromSupabase(response));
       }
       fetchData(userId);
+
+
     }
+
     
   }, [])
 

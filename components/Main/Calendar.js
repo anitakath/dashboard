@@ -9,6 +9,8 @@ import useCalendar from "@/custom-hooks/useCalendar";
 import { setSelectedSport } from "@/store/sportReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 const Calendar = ({ filteredByDate }) => {
   const dispatch = useDispatch();
@@ -20,6 +22,9 @@ const Calendar = ({ filteredByDate }) => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
   const {monthAbbreviations} = useCalendar()
+  const userId = useSelector((state) => state.auth.userId)
+  const {fetchSportsDataBySelectedYear} = useFetchEntries()
+
 
   useEffect(() => {
     let currentMonth = new Date().toLocaleString("default", {
@@ -37,10 +42,13 @@ const Calendar = ({ filteredByDate }) => {
     dispatch(updateDate({ month: currentMonth, year: selectedYear }));
   }, [dispatch, selectedYear]);
 
-  const handleYearChange = (e) => {
+  const handleYearChange = async (e) => {
+   
     const year = parseInt(e.target.value);
     setSelectedYear(year);
     dispatch(updateDate({ month: selectedMonth, year }));
+    const entries = await fetchSportsDataBySelectedYear(userId, e.target.value)
+    await dispatch(setAllSportsFromSupabase(entries));
   };
 
   const chooseMonthHandler = (month) => {
