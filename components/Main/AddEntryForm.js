@@ -66,11 +66,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
      setIsTouched((prev) => ({ ...prev, [target]: true }));
    };
 
-  /*
-  const blurHandler = (target) => {
-    setIsTouched(true);
-    setIsTouched({ ...isTouched, [target]: true });
-  };*/
+
 
 
 
@@ -98,7 +94,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
    }
  }, [currentSport, selectedSport]);
 
- console.log(formIsOpen)
+
 
   return (
     <div className="lg:my-2 lg:p-2 flex flex-col justify-center w-full overflow-scroll flex items-center justify-center">

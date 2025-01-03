@@ -1,10 +1,11 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import Link from "next/link";
 //REDUX
 import {setNavigation, setSelectedSport, setCurrentSport} from "@/store/sportReducer";
 import { useSelector, useDispatch } from "react-redux";
 //STYLES
 import styles from "./AddSportForm.module.css";
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 
 const initialState = {
   name: "",
@@ -42,6 +43,10 @@ const AddSportForm = ({ addSportClickHandler }) => {
   const navigation = useSelector((state) => state.sport.navigation);
   const sports = useSelector((state) => state.sport.currentSport);
   const allPlannedSports = useSelector((state) => state.sport.allPlannedSports);
+  const userId = useSelector((state) => state.auth.userId)
+  const [showSportButtons, setShowSportsButton] = useState(false)
+  const {fetchAllSportsFromUser} = useFetchEntries()
+  const [navigationsArray, setNavigationsArray] = useState([])
 
   useEffect(() => {
     if (sports && navigation) {
@@ -121,7 +126,53 @@ const AddSportForm = ({ addSportClickHandler }) => {
     }
   };
 
+  const getAllSports =async () =>{
+
+    const navigationsArray = await fetchAllSportsFromUser(userId)
+
+    
+    if(navigationsArray.length > 0){
+      setNavigationsArray(navigationsArray)
+      setShowSportsButton(true)
+    }
+
+
+  }
+
+
+
+  const handleSportSelect = (sport) => {
+    dispatch({ type: "SET_NAME", payload: sport.name });
+    dispatch({ type: "SET_COLOR", payload: { color: sport.color, style: sport.color } });
+    setError(false, ""); // Setze Fehler zurück
+
+    // Führe die Logik von handleSubmit hier aus
+    if (!sport.name) return setError(true, "please enter a type of sport!");
+    if (sport.color === null || usedColors.has(sport.color))
+        return setError(true, "Color is already in use - please choose another one");
+    if (navigation.includes(sport.name))
+        return setError(true, "You have already added this sport to your diary.");
+
+    const data = {
+        name: sport.name,
+        color: sport.color,
+    };
+
+    reduxDispatch(setNavigation([...navigation, data.name]));
+    reduxDispatch(setSelectedSport(data.name));
+    reduxDispatch(setCurrentSport([...sports, data]));
+
+    addSportClickHandler();
+
+    // Reset the form
+    dispatch({ type: "SET_NAME", payload: "" });
+    dispatch({ type: "SET_COLOR", payload: { color: null, style: "" } });
+  };
+
+  
+
   return (
+    <div className="w-full">
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>
       <label className="text-xs hidden">sport </label>
       <input
@@ -157,7 +208,35 @@ const AddSportForm = ({ addSportClickHandler }) => {
       <button type="submit" className={styles.add_btn}>
         Add Sport
       </button>
+     
     </form>
+    <button className="flex mx-0.5 bg-red-700 relative items-center" onClick={getAllSports}> 
+      get all sports ever done + label
+    </button>
+
+   
+    {showSportButtons && (
+            <div>
+                {navigationsArray.map((sport, index) => {
+                    if (!sport || !sport.name || !sport.color) {
+                        return null; // Überspringe ungültige Objekte
+                    }
+                    const color = sport.color;
+                    return (
+                        <div key={index} className="m-2">
+                            <button
+                                className={`${styles[color]} w-full p-1 flex justify-start`}
+                                onClick={() => handleSportSelect(sport)} // Hier wird die Funktion aufgerufen
+                            >
+                                {sport.name}
+                            </button> {/* Name des Sports */}
+                        </div>
+                    );
+                })}
+            </div>
+        )}
+         
+    </div>
   );
 };
 

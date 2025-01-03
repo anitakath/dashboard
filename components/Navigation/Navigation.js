@@ -5,7 +5,6 @@ import {
   setSelectedSport,
   setNavigation,
 } from "@/store/sportReducer";
-import { setAllSportsFromSupabase } from "@/store/sportReducer";
 import SortSports from "./SortSports";
 import MobileNavigation from "./MobileNavigation";
 import WebNavigation from "./WebNavigation";
@@ -21,32 +20,34 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const userId = useSelector((state) => state.auth.userId);
-  // Erstelle navigationArr basierend auf allSupabaseSports
-  const navigationArr = allSupabaseSports
-    ? allSupabaseSports
-        .filter((sport) => sport.userId === userId) // Filtere nach userId
-        .map((sport) => ({
-          name: sport.name,
-          color: sport.label, // Hier wird angenommen, dass 'label' die Farbe ist
-        }))
-        .reduce((accumulator, current) => {
-          // Überprüfe, ob der Name bereits im Akkumulator vorhanden ist
-          if (!accumulator.some((item) => item.name === current.name)) {
-            accumulator.push(current); // Füge das aktuelle Element hinzu
-          }
-          return accumulator;
-        }, [])
+ 
+
+  const navigationArr = allSupabaseSports ? allSupabaseSports
+    .filter((sport) => sport.userId === userId)
+    .map((sport) => ({
+      name: sport.name,
+      color: sport.label,
+    }))
+    .reduce((accumulator, current) => {
+      if (!accumulator.some((item) => item.name === current.name)) {
+        accumulator.push(current);
+      }
+      return accumulator;
+    }, [])
+    .sort((a, b) => a.name.localeCompare(b.name)) // Alphabetische Sortierung hier hinzufügen
   : [];
 
-  const alphabetic = allSupabaseSports
-    ? Array.from(new Set(navigationArr.map((sport) => sport.name))).sort(
-        (a, b) => a.localeCompare(b)
-      )
-  : [];
+
+  const [sortedNavigationArr, setSortedNavigationArr] = useState(navigationArr);
+
+
+  useEffect(() => {
+    setSortedNavigationArr(navigationArr);
+  }, [allSupabaseSports]);
+
+
 
   const { filterEntriesByCurrentSport} = useFilterAndSortEntries();
-  const [uniqueSports, setUniqueSports] = useState([...alphabetic]);
-  const navigation = useSelector((state) => state.sport.navigation);
   const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
   const showAlert = useSelector((state) => state.sport.showAlert);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
@@ -63,13 +64,9 @@ const Navigation = () => {
       getEntries();
   }, [selectedSport]);
 
-  useEffect(() => {
-    dispatch(setNavigation(uniqueSports));
-  }, [uniqueSports]);
 
-  useEffect(() => {
-    setUniqueSports(navigation);
-  }, [navigation, allSupabaseSports]);
+
+
 
   const handleSportClick = (sport) => {
     //filterEntriesByCurrentSport(allSupabaseSports, sport)
@@ -84,31 +81,41 @@ const Navigation = () => {
 
   const { deleteSportHandler } = useDeleteSport();
 
+
+
+  
+
+
   return (
     <div className="w-full relative  lg:my-4 p-0 flex flex-col items-center shadow-section">
       <h1 className="title title_maxi">DASHBOARD</h1>
 
       <div className="hidden lg:inline">
         <SortSports
-          uniqueSports={uniqueSports}
-          setUniqueSports={setUniqueSports}
+          sortedNavigationArr={sortedNavigationArr}
+          setSortedNavigationArr={setSortedNavigationArr}
           allSupabaseSports={allSupabaseSports}
         />
       </div>
 
       {/*-------------------  MOBILE  NAVIGATION ------------------- */}
 
+
+
       <MobileNavigation
         formIsOpen={formIsOpen}
         setFormIsOpen={setFormIsOpen}
         active={active}
-        uniqueSports={uniqueSports}
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
+
+
+
         navigationArr={navigationArr}
+        sortedNavigationArr={sortedNavigationArr}
+        setSortedNavigationArr={setSortedNavigationArr}
         mobileSportsNavIsOpen={mobileSportsNavIsOpen}
         setMobileSportsNavIsOpen={setMobileSportsNavIsOpen}
-        setUniqueSports={setUniqueSports}
         allSupabaseSports={allSupabaseSports}
         addSportClickHandler={addSportClickHandler}
       />
@@ -121,10 +128,14 @@ const Navigation = () => {
         setFormIsOpen={setFormIsOpen}
         addSportClickHandler={addSportClickHandler}
         active={active}
-        uniqueSports={uniqueSports}
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
+
+
+
         navigationArr={navigationArr}
+        sortedNavigationArr={sortedNavigationArr}
+        setSortedNavigationArr={setSortedNavigationArr}
       />
 
       {formIsOpen && (

@@ -7,12 +7,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
 
-const WebNavigation = ({deleteSportHandler, uniqueSports, active, navigationArr, handleSportClick, formIsOpen, setFormIsOpen, addSportClickHandler}) =>{
+const WebNavigation = ({deleteSportHandler, sortedNavigationArr,  active,  handleSportClick, formIsOpen, setFormIsOpen, addSportClickHandler}) =>{
 
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   // Verwenden des Hooks, um die Icons zu erhalten
   const fontAwesomeIcons = useFontAwesomeIcons();
-
 
 
   return (
@@ -20,58 +19,38 @@ const WebNavigation = ({deleteSportHandler, uniqueSports, active, navigationArr,
       {!formIsOpen && (
         <div className={styles.navigation_web}>
           <ul className="w-full h-full flex lg:flex-col overflow-scroll">
-            {uniqueSports.map((sport, index) => (
+            {sortedNavigationArr.map((sportsObj, index) => (
               <div className="relative" key={index}>
-                <li key={index} className="flex">
+                <li className="flex">
                   <button
                     className={`${styles.sport_btn} ${
-                      active === sport && selectedSport != "all"
+                      active === sportsObj.name && selectedSport !== "all"
                         ? styles.active
                         : ""
                     }`}
-                    onClick={() => handleSportClick(sport)}
+                    onClick={() => handleSportClick(sportsObj.name)}
                   >
                     <button
                       className={styles.delete_btn}
-                      onClick={() => deleteSportHandler(sport)}
+                      onClick={() => deleteSportHandler(sportsObj.name)}
                     >
                       <FontAwesomeIcon
                         icon={faTrash}
                         className={styles.trash_icon}
                       />
                     </button>
-                    <span className={styles.sportBtnText}>{sport}</span>
-                    {navigationArr &&
-                      navigationArr.map((sportsObj, index) => {
-                        if (sportsObj.name === sport) {
-                          return (
-                            <div className={styles.circle_div} key={index}>
-                              <div
-                                className={`${styles.circle_background} ${
-                                  styles[sportsObj.color]
-                                } `}
-                              ></div>
-                              <div
-                                className={`${styles[sportsObj.color]} ${
-                                  styles.circle
-                                }`}
-                              >
-                                {/* Hier wird das Icon gerendert */}
-                                {sportsObj.icon &&
-                                  fontAwesomeIcons[sportsObj.icon] && (
-                                    <FontAwesomeIcon
-                                      icon={fontAwesomeIcons[sportsObj.icon]}
-                                      className={styles.icon}
-                                      
-                                    />
-                                  )}
-                           
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
+                    <span className={styles.sportBtnText}>{sportsObj.name}</span>
+                    <div className={styles.circle_div}>
+                      <div
+                        className={`${styles.circle_background} ${styles[sportsObj.color]}`}
+                      ></div>
+                      <div className={`${styles[sportsObj.color]} ${styles.circle}`}>
+                        {/* Hier wird das Icon gerendert */}
+                        {sportsObj.icon && fontAwesomeIcons[sportsObj.icon] && (
+                          <FontAwesomeIcon icon={fontAwesomeIcons[sportsObj.icon]} className={styles.icon} />
+                        )}
+                      </div>
+                    </div>
                   </button>
                 </li>
               </div>
@@ -84,6 +63,6 @@ const WebNavigation = ({deleteSportHandler, uniqueSports, active, navigationArr,
       </button>
     </div>
   );
-}
+};
 
-export default WebNavigation
+export default WebNavigation;

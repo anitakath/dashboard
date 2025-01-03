@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { useState } from "react";
 //STYLES
@@ -46,7 +45,6 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   }
 
 
-
   useEffect(() => {
     const newSortedEntries = Array.isArray(filteredEntries)
       ? [...filteredEntries]
@@ -75,7 +73,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   
 
 
-  console.log(currentSport)
+  //console.log(currentSport)
 
   return (
     <div className={styles.container}>
@@ -116,7 +114,6 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
          />
         )}
 
-     
     </div>
   );
 };

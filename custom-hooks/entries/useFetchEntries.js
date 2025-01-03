@@ -6,14 +6,14 @@ const useFetchEntries = (userId) => {
 
   //const dispatch = useDispatch()
 
+
   const extractUniqueSportsTitles = async(data) => {
-    // Set zum Speichern einzigartiger Titel
+
     const uniqueTitlesSet = new Set();
 
-    // Iteriere über jedes Objekt in data
+
     data.forEach(entry => {
         if (entry.title) {
-            // Füge den Titel zum Set hinzu (doppelte Einträge werden ignoriert)
             uniqueTitlesSet.add(entry.name); // Hier verwenden wir entry.name für die Sportarten
         }
     });
@@ -54,6 +54,44 @@ const useFetchEntries = (userId) => {
     return []; 
   };
 
+  const fetchAllSportsFromUser  = async(userId) =>{
+    try{
+       // Den userId als Query-Parameter an die API übergeben
+       const response = await fetch(`/api/sports?userId=${userId}`);
+
+       if (!response.ok) {
+         throw new Error("Failed to fetch sports data");
+       }
+ 
+       const data = await response.json();
+ 
+       if (data) {
+        const uniqueItems = new Set(); // Set für einzigartige Kombinationen
+        const newArray = [];
+
+        data.data.forEach(item => {
+          const key = `${item.label}-${item.name}`; // Eindeutiger Schlüssel
+
+        if (!uniqueItems.has(key)) { // Überprüfen, ob der Schlüssel bereits existiert
+              uniqueItems.add(key); // Schlüssel hinzufügen
+              newArray.push({
+                  color: item.label,
+                  name: item.name
+              });
+          }
+        });
+
+      return newArray
+
+      
+       }
+
+    } catch(error){
+      console.error("Error fetching sports data:", error);
+    }
+
+  }
+
 
   const fetchSportsDataBySelectedYear = async (userId, selectedYear) =>{
     try {
@@ -82,7 +120,7 @@ const useFetchEntries = (userId) => {
   return [];
   }
 
-  return { fetchSportsData, fetchSportsDataBySelectedYear  };
+  return { fetchSportsData, fetchSportsDataBySelectedYear, fetchAllSportsFromUser  };
 };
 
 export default useFetchEntries;
