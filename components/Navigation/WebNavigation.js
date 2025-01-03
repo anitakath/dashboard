@@ -14,6 +14,7 @@ const WebNavigation = ({deleteSportHandler, uniqueSports, active, navigationArr,
   const fontAwesomeIcons = useFontAwesomeIcons();
 
 
+
   return (
     <div className="w-full ">
       {!formIsOpen && (

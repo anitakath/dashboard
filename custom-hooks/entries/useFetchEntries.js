@@ -1,6 +1,26 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setNavigation } from "@/store/sportReducer";
 
 const useFetchEntries = (userId) => {
+
+  const dispatch = useDispatch()
+
+  const extractUniqueSportsTitles = async(data) => {
+    // Set zum Speichern einzigartiger Titel
+    const uniqueTitlesSet = new Set();
+
+    // Iteriere über jedes Objekt in data
+    data.forEach(entry => {
+        if (entry.title) {
+            // Füge den Titel zum Set hinzu (doppelte Einträge werden ignoriert)
+            uniqueTitlesSet.add(entry.name); // Hier verwenden wir entry.name für die Sportarten
+        }
+    });
+
+    // Konvertiere das Set zurück in ein Array
+    return Array.from(uniqueTitlesSet);
+};
   
 
   const fetchSportsData = async (userId) => {
@@ -16,7 +36,10 @@ const useFetchEntries = (userId) => {
 
       if (data) {
         const filteredEntriesByUserId = data.data; 
-      
+        const sportsArray = await extractUniqueSportsTitles(filteredEntriesByUserId);
+
+        dispatch(setNavigation(sportsArray))
+
         const currentYear = new Date().getFullYear();
         const entriesInCurrentYear = filteredEntriesByUserId.filter(entry => {
         const entryYear = new Date(entry.created_at).getFullYear();
