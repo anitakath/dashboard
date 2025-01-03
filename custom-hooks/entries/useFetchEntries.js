@@ -4,7 +4,7 @@ import { setNavigation } from "@/store/sportReducer";
 
 const useFetchEntries = (userId) => {
 
-  const dispatch = useDispatch()
+  //const dispatch = useDispatch()
 
   const extractUniqueSportsTitles = async(data) => {
     // Set zum Speichern einzigartiger Titel
@@ -38,7 +38,7 @@ const useFetchEntries = (userId) => {
         const filteredEntriesByUserId = data.data; 
         const sportsArray = await extractUniqueSportsTitles(filteredEntriesByUserId);
 
-        dispatch(setNavigation(sportsArray))
+        //dispatch(setNavigation(sportsArray))
 
         const currentYear = new Date().getFullYear();
         const entriesInCurrentYear = filteredEntriesByUserId.filter(entry => {

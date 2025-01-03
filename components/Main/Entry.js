@@ -75,6 +75,8 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   
 
 
+  console.log(currentSport)
+
   return (
     <div className={styles.container}>
       {currentSport != "all" && (
@@ -107,10 +109,14 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
           </div>
         ))}
 
-      <EntriesByYearAndMonth
-        entriesByYearAndMonth={entriesByYearAndMonth}
-        currentSport={currentSport}
-      />
+        {currentSport === "all" && (
+           <EntriesByYearAndMonth
+           entriesByYearAndMonth={entriesByYearAndMonth}
+           currentSport={currentSport}
+         />
+        )}
+
+     
     </div>
   );
 };
