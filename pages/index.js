@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import { useDispatch, useSelector } from "react-redux";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 import { setCurrentSport } from "@/store/sportReducer";
@@ -8,15 +7,15 @@ import { setCurrentSport } from "@/store/sportReducer";
 import Head from "next/head";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
-// The following import prevents a Font Awesome icon server-side rendering bug,
-// where the icons flash from a very large icon down to a properly sized one:
+
 import '@fortawesome/fontawesome-svg-core/styles.css';
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
+import { setSelectedSport } from "@/store/sportReducer";
 
-import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
+import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 
 export default function Home() {
@@ -29,6 +28,15 @@ export default function Home() {
   const userId = useSelector((state)=> state.auth.userId)
   const {fetchSportsData} = useFetchEntries();
 
+
+  useEffect(()=>{
+    dispatch(setSelectedSport("all"))
+  }, [])
+
+
+
+
+  
 
   useEffect(()=>{
     if(userId){
@@ -47,15 +55,11 @@ export default function Home() {
           );
         });
 
-        dispatch(setFilteredEntriesByCurrentSport(filterEntries));
+        dispatch(setFilteredEntriesByCurrentSportAndDate(filterEntries));
         await dispatch(setAllSportsFromSupabase(response));
       }
       fetchData(userId);
-
-
     }
-
-    
   }, [])
 
   const addSportsToReduxStore = (arr) => {

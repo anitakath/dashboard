@@ -4,13 +4,16 @@ import { supabase } from "../services/supabaseClient";
 const sportSlice = createSlice({
   name: "sport",
   initialState: {
-    selectedSport: "Cardio",
-    /********/
-    //array with object .name, .color, .icon
+    /* All, Cardio, Poledance, ... */
+    selectedSport: "all",
+
+    /* used for Navigation */
     currentSport: [],
-    /********/
+    /**** ****/
     allSupabaseSports: [],
-    filteredEntriesByCurrentSport: [],
+    /* used whenever a user wants to see poledance entries for march 2024 for example*/
+    filteredEntriesByCurrentSportAndDate: [],
+
     allPlannedSports: [],
     /* needs to be changed to sortedEntriesByYearbyMonth: */
     sortedEntriesByMonth: [],
@@ -37,8 +40,8 @@ const sportSlice = createSlice({
     setAllSportsFromSupabase(state, action) {
       state.allSupabaseSports = action.payload;
     },
-    setFilteredEntriesByCurrentSport(state, action){
-      state.filteredEntriesByCurrentSport = action.payload;
+    setFilteredEntriesByCurrentSportAndDate(state, action){
+      state.filteredEntriesByCurrentSportAndDate = action.payload;
     },
     setSortedEntriesByMonth(state, action) {
       state.sortedEntriesByMonth = action.payload;
@@ -88,7 +91,7 @@ export const {
   setAllPlannedSports,
   setAllSports,
   setAllSportsFromSupabase,
-  setFilteredEntriesByCurrentSport,
+  setFilteredEntriesByCurrentSportAndDate,
   setSortedEntriesByMonth,
   setNavigation,
   setLabel,

@@ -70,10 +70,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   const summedDurationPerSportPerMonthInHours = convertMinutesToHours(summedDurationPerSportPerMonth)
 
 
-  
 
-
-  //console.log(currentSport)
 
   return (
     <div className={styles.container}>

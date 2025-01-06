@@ -1,13 +1,20 @@
 import { convertMinutesToHours } from "../minutesToHours";
-
+import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
+import useCalendar from "../useCalendar";
+import { useDispatch } from "react-redux";
 const useFilterAndSortEntries = () =>{
-  //FILTER SPORT ENTRIES BY CURRENT SPORT
-  //ONLY WHEN USER LOGGED IN
-  const getFilteredEntriesByCurrentSport = async (
+  const dispatch = useDispatch();
+  const {months} = useCalendar();
+
+
+  //FILTER SPORT ENTRIES BY CURRENT SPORT AND DATE
+  const getFilteredEntriesByCurrentSportAndDate = async (
     filteredEntriesByUserId,
     currentSport,
     currentDate
   ) => {
+
+
     const entries = filteredEntriesByUserId.filter(
       (sport) => sport.name === currentSport
     );
@@ -23,43 +30,36 @@ const useFilterAndSortEntries = () =>{
     return filterEntries;
   };
 
-
-  const filterEntriesByCurrentSport = async (
-    filteredEntriesByUserId,
-    currentSport
-  ) => {
-    const currentDate = {
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
-      restDaysPerMonth: null,
-    };
-    
-    const entries = await filteredEntriesByUserId.filter(
+ const filterEntriesByCurrentSportAndDate = async (filteredEntriesByUserId, currentSport, currentDate) => {
+    const entries = filteredEntriesByUserId.filter(
       (sport) => sport.name === currentSport
     );
 
-    const filterEntries = await entries.filter((entry) => {
+
+    const getMonthNumber = (month) => months.indexOf(month) + 1; 
+
+
+    const filteredResults = entries.filter((entry) => {
       const entryDate = new Date(entry.created_at);
       return (
         entryDate.getFullYear() === currentDate.year &&
-        entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
+        entryDate.getMonth() + 1 === getMonthNumber(currentDate.month)
       );
     });
 
-    const totalDurationInMinutes = await filterEntries.reduce(
-      (total, entry) => total + entry.duration,
-      0
-    );
 
-    const totalDurationInHours = convertMinutesToHours(totalDurationInMinutes);
-    return { filterEntries, totalDurationInMinutes, totalDurationInHours };
+     const totalDurationInMinutes = filteredResults.reduce(
+       (total, entry) => total + entry.duration,
+       0
+     );
+     dispatch(setFilteredEntriesByCurrentSportAndDate(filteredResults));
+    
   };
 
 
-
   return {
-    getFilteredEntriesByCurrentSport,
-    filterEntriesByCurrentSport,
+    getFilteredEntriesByCurrentSportAndDate,
+    filterEntriesByCurrentSportAndDate
   };
 }
 

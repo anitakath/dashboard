@@ -4,7 +4,6 @@ import styles from './MobileNavigation.module.css'
 import SortSports from './SortSports'
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from '@/custom-hooks/FontAwesome/useFontAwesomeIcons'
-import { useSelector } from 'react-redux'
 
 const MobileNavigation = ({
   deleteSportHandler,

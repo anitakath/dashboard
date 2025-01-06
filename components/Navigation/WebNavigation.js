@@ -7,7 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
 
-const WebNavigation = ({deleteSportHandler, sortedNavigationArr,  active,  handleSportClick, formIsOpen, setFormIsOpen, addSportClickHandler}) =>{
+const WebNavigation = ({deleteSportHandler, sortedNavigationArr,  active,  handleSportClick, formIsOpen, addSportClickHandler}) =>{
 
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   // Verwenden des Hooks, um die Icons zu erhalten

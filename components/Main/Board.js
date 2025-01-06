@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 //STYLES
 import styles from './Board.module.css'
 //TRANSITION GROUP
@@ -21,7 +21,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 
-const Board = ({ filteredEntries, currentDate}) => {
+const Board = () => {
+  const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSportAndDate);
+  const currentDate = useSelector((state) => state.calendar);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
@@ -30,17 +32,19 @@ const Board = ({ filteredEntries, currentDate}) => {
   const actualMonthIndex = months.findIndex((month) => month === currentDate.month);
   const actualMonth = actualMonthIndex + 1;
   const dispatch = useDispatch();
+  const [filteredByDate, setFilteredByDate ] = useState([])
 
+  //console.log(filteredEntries)
 
-  let filteredByDate;
-  if(filteredEntries){
-    filteredByDate = filteredEntries.filter((entry) => {
+  /*
+    if(filteredEntries){
+      filteredByDate = filteredEntries.filter((entry) => {
       const entryDate = new Date(entry.created_at);
       const entryYear = entryDate.getFullYear();
       const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
       return entryYear === currentDate.year && entryMonth === actualMonth;
     });
-  }
+  }*/
 
 
 

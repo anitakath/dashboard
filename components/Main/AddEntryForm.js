@@ -97,11 +97,11 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
 
 
   return (
-    <div className="lg:my-2 lg:p-2 flex flex-col justify-center w-full overflow-scroll flex items-center justify-center">
+    <div className="lg:my-2 lg:p-2  flex-col justify-center w-full overflow-scroll flex items-center ">
       {submitting && <Spinner />}
       {!submitting && formIsOpen && (
         <form
-          className="my-2  p-2 flex flex-col flex flex-col items-center w-full"
+          className="my-2  p-2   flex flex-col items-center w-full"
           onSubmit={submitHandler}
         >
           <label className={styles.labels}> Title </label>

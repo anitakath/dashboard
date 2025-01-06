@@ -6,14 +6,16 @@ import AddEntryForm from "@/components/Main/AddEntryForm";
 //STYLES
 import styles from './Plans.module.css'
 import colors from '../../../styles/Colors.module.css'
+import { current } from "@reduxjs/toolkit";
 
 const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSports, activeSport, addSportClickHandler, formIsOpen, setFormIsOpen, chosenSport, chooseSportHandler}) =>{
 
 
+  console.log(currentSports)
   return (
     <div>
       {addSport && (
-        <div className="w-full  flex flex-col md:flex-row p-4">
+        <div className="w-full bg-red-200 flex flex-col md:flex-row p-4">
           <div className=" pb-8 mb-6 w-full md:w-6/12 flex items-center h-full flex-col">
             <div className="  pb-8 flex-col w-full">
               <h2 className="text-2xl my-2 px-2"> choose your sport </h2>

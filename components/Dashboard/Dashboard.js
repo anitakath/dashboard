@@ -3,38 +3,30 @@ import { useEffect } from 'react';
 //COMPONENTS
 import Navigation from '../Navigation/Navigation';
 import Board from '../Main/Board'
-//HOOKS
-import useAuth from '@/custom-hooks/auth/useAuth';
-
 //REDUX
 import { useSelector } from "react-redux";
+//CUSTOM HOOKS
+import useFilterAndSortEntries from '@/custom-hooks/entries/useFilterAndSortEntries';
+
 
 const Dashboard = () =>{
-  const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSport)
   const filteredEntriesByUserId = useSelector((state) => state.sport.allSupabaseSports)
   const currentSport = useSelector((state) => state.sport.selectedSport)
-  //
-  //
-  //
-  const { filterEntriesByCurrentSportAndDate} = useAuth();
-  //
-  //
-  //
   const currentDate = useSelector((state) => state.calendar)
 
+  const { filterEntriesByCurrentSportAndDate} = useFilterAndSortEntries();
 
-   useEffect(() => {
-     // refetching entries of sport X bc user changed the date
-     if (filteredEntriesByUserId && currentSport && currentDate) {
-        filterEntriesByCurrentSportAndDate(
-         filteredEntriesByUserId,
-         currentSport,
-         currentDate
-       );
-       
-       //filterEntriesByCurrentSport(filteredEntriesByUserId, currentSport, currentDate );
-     }
-   }, [currentDate, filteredEntriesByUserId, currentSport]);
+  useEffect(() => {
+    // refetching entries of sport X bc user changed the date
+    if (filteredEntriesByUserId && currentSport && currentDate) {
+       filterEntriesByCurrentSportAndDate(
+        filteredEntriesByUserId,
+        currentSport,
+        currentDate
+      );
+
+    }
+  }, [currentDate, filteredEntriesByUserId, currentSport]);
 
 
   return (
@@ -44,10 +36,7 @@ const Dashboard = () =>{
           <Navigation />
         </div>
 
-        <Board
-          filteredEntries={filteredEntries}
-          currentDate={currentDate}
-        />
+        <Board/>
       </div>
     </div>
   );

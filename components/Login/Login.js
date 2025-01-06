@@ -26,9 +26,6 @@ const Login = ({ successMessage }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    console.log(loginData)
-    console.log(currentSport)
     try {
       await loginHandler(loginData, currentSport);
       router.push("/");

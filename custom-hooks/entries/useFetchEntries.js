@@ -4,12 +4,12 @@ import { setNavigation } from "@/store/sportReducer";
 
 const useFetchEntries = (userId) => {
 
-  //const dispatch = useDispatch()
-
-
+  //EXTRACT UNIQUE SPORTS TITLE (FOR NAVIGATION?)
   const extractUniqueSportsTitles = async(data) => {
 
     const uniqueTitlesSet = new Set();
+
+    console.log(DataTransferItemList)
 
 
     data.forEach(entry => {
@@ -20,9 +20,9 @@ const useFetchEntries = (userId) => {
 
     // Konvertiere das Set zurück in ein Array
     return Array.from(uniqueTitlesSet);
-};
-  
+  };
 
+ //FETCH ENTRIES IN CURRENT YEAR BUT ALSO EXTRACT UNIQUE SPORTS TITLE (FOR NAVIGATION?)
   const fetchSportsData = async (userId) => {
     try {
       // Den userId als Query-Parameter an die API übergeben
@@ -38,13 +38,11 @@ const useFetchEntries = (userId) => {
         const filteredEntriesByUserId = data.data; 
         const sportsArray = await extractUniqueSportsTitles(filteredEntriesByUserId);
 
-        //dispatch(setNavigation(sportsArray))
-
         const currentYear = new Date().getFullYear();
         const entriesInCurrentYear = filteredEntriesByUserId.filter(entry => {
-        const entryYear = new Date(entry.created_at).getFullYear();
-        return entryYear === currentYear;
-      });
+          const entryYear = new Date(entry.created_at).getFullYear();
+          return entryYear === currentYear;
+        });
         return entriesInCurrentYear;
       }
     } catch (error) {
@@ -54,6 +52,7 @@ const useFetchEntries = (userId) => {
     return []; 
   };
 
+  // FETCH ENTRIES OF ALL YEARS
   const fetchAllSportsFromUser  = async(userId) =>{
     try{
        // Den userId als Query-Parameter an die API übergeben
@@ -81,6 +80,8 @@ const useFetchEntries = (userId) => {
           }
         });
 
+        console.log(newArray)
+
       return newArray
 
       
@@ -92,7 +93,7 @@ const useFetchEntries = (userId) => {
 
   }
 
-
+  //FETCH ENTRIES IN SELECTED YEAR
   const fetchSportsDataBySelectedYear = async (userId, selectedYear) =>{
     try {
       const response = await fetch(`/api/sports?userId=${userId}`);

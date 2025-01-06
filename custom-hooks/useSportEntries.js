@@ -4,7 +4,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/supabaseClient";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-
+import useFetchEntries from "./entries/useFetchEntries";
 
 /* DELETE COMPLETED  SPORT */
 /*used at DetailsPage.js*/
@@ -28,7 +28,7 @@ export const useDeleteCompletedSport = (userId) => {
         throw new Error('Fehler beim Löschen des Eintrags');
       }
 
-      await fetchSportsData(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
+      await fetchSportsDatas(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
       return { success: true };
     } catch (err) {
       console.error("Error when deleting the entry:", err.message);
@@ -86,15 +86,32 @@ export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
 
 
 
-export const fetchSportsData = async (dispatch, userId) => {
-
+//folgende FUnktion wird nach dem Absenden eines neuen Tagebucheintrags ausgeführt
+export const fetchSportsDatas = async (dispatch, userId,  currentSport) => {
+  
   try {
     const response = await fetch(`/api/sports?userId=${userId}`);
     if (!response.ok) {
       throw new Error("Failed to fetch sports data");
     }
     const data = await response.json();
-    dispatch(setAllSportsFromSupabase(data.data));
+
+     // Extrahiere die Namen aus currentSport
+     const currentSportNames = currentSport.map(sport => sport.name);
+
+     // Filtere die Daten basierend auf den aktuellen Sportnamen
+     const filteredData = data.data.filter(sport => 
+         currentSportNames.includes(sport.name)
+     );
+
+     // Nur dispatchen, wenn gefilterte Daten vorhanden sind
+     if (filteredData.length > 0) {
+         dispatch(setAllSportsFromSupabase(filteredData));
+     } else {
+         console.log("Keine Übereinstimmungen gefunden. Nichts wird dispatched.");
+     }
+
+
   } catch (error) {
     console.error("Error fetching sports data:", error);
   }
@@ -144,6 +161,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
   const submitHandler = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    console.log(e)
 
     // Input validation
     const validationErrors = validateInputs(inputs);
@@ -226,7 +244,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
           .from("sports")
           .insert([data]);
         if (error) throw new Error("Failed to insert data into Supabase table");
-        await fetchSportsData(dispatch, userId);
+        await fetchSportsDatas(dispatch, userId, currentSport);
         setFormIsOpen(false);
       }
 

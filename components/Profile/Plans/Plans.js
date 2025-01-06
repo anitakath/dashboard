@@ -173,6 +173,7 @@ const Plans = () =>{
     setFormIsOpen((prevState) => !prevState);
   };
 
+  console.log(currentSports)
 
   return (
     <div className="flex-col justify-center items-center">

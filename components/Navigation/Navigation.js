@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AddSportForm from "./AddSportForm";
 import {
   setSelectedSport,
-  setNavigation,
+  setCurrentSport,
 } from "@/store/sportReducer";
 import SortSports from "./SortSports";
 import MobileNavigation from "./MobileNavigation";
@@ -11,7 +11,7 @@ import WebNavigation from "./WebNavigation";
 import AddSportAlert from "../UI/AddSportAlert";
 //CUSTOM HOOKS
 import useFilterAndSortEntries from "@/custom-hooks/entries/useFilterAndSortEntries";
-import { setFilteredEntriesByCurrentSport } from "@/store/sportReducer";
+import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
 import useDeleteSport from "@/custom-hooks/sports/useDeleteSport";
 
 const Navigation = () => {
@@ -20,8 +20,8 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const userId = useSelector((state) => state.auth.userId);
- 
-
+  const calendar =  useSelector((state) => state.calendar);
+  //const sortedNavigationArray = useNavigation(userId);
   const navigationArr = allSupabaseSports ? allSupabaseSports
     .filter((sport) => sport.userId === userId)
     .map((sport) => ({
@@ -36,35 +36,35 @@ const Navigation = () => {
     }, [])
     .sort((a, b) => a.name.localeCompare(b.name)) // Alphabetische Sortierung hier hinzufügen
   : [];
-
-
   const [sortedNavigationArr, setSortedNavigationArr] = useState(navigationArr);
+  const { getFilteredEntriesByCurrentSportAndDate } = useFilterAndSortEntries();
+  const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
+  const showAlert = useSelector((state) => state.sport.showAlert);
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
+  const { deleteSportHandler } = useDeleteSport();
+ 
 
 
   useEffect(() => {
     setSortedNavigationArr(navigationArr);
+    setCurrentSport(navigationArr)
   }, [allSupabaseSports]);
 
 
 
-  const { filterEntriesByCurrentSport} = useFilterAndSortEntries();
-  const [mobileSportsNavIsOpen, setMobileSportsNavIsOpen] = useState(false);
-  const showAlert = useSelector((state) => state.sport.showAlert);
-  const selectedSport = useSelector((state) => state.sport.selectedSport);
 
   useEffect(() => {
     const getEntries = async () => {
-      const entries = await filterEntriesByCurrentSport(
+      const entries = await getFilteredEntriesByCurrentSportAndDate(
         allSupabaseSports,
         selectedSport,
+        calendar
       );
-      dispatch(setFilteredEntriesByCurrentSport(entries.filterEntries));
+      dispatch(setFilteredEntriesByCurrentSportAndDate(entries.filterEntries));
     };
 
       getEntries();
-  }, [selectedSport]);
-
-
+  }, []);
 
 
 
@@ -79,12 +79,7 @@ const Navigation = () => {
     setFormIsOpen((prevState) => !prevState);
   };
 
-  const { deleteSportHandler } = useDeleteSport();
-
-
-
   
-
 
   return (
     <div className="w-full relative  lg:my-4 p-0 flex flex-col items-center shadow-section">
@@ -108,10 +103,6 @@ const Navigation = () => {
         active={active}
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
-
-
-
-        navigationArr={navigationArr}
         sortedNavigationArr={sortedNavigationArr}
         setSortedNavigationArr={setSortedNavigationArr}
         mobileSportsNavIsOpen={mobileSportsNavIsOpen}
@@ -130,10 +121,6 @@ const Navigation = () => {
         active={active}
         handleSportClick={handleSportClick}
         deleteSportHandler={deleteSportHandler}
-
-
-
-        navigationArr={navigationArr}
         sortedNavigationArr={sortedNavigationArr}
         setSortedNavigationArr={setSortedNavigationArr}
       />

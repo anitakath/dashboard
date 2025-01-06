@@ -47,15 +47,9 @@ const AddSportForm = ({ addSportClickHandler }) => {
   const [showSportButtons, setShowSportsButton] = useState(false)
   const {fetchAllSportsFromUser} = useFetchEntries()
   const [navigationsArray, setNavigationsArray] = useState([])
+  const allSports = useSelector((state) => state.sport)
 
-  useEffect(() => {
-    if (sports && navigation) {
-      const filteredSports = sports.filter((sport) =>
-        navigation.includes(sport.name)
-      );
-      reduxDispatch(setCurrentSport(filteredSports));
-    }
-  }, [navigation]);
+
 
   const colors = [
     "fandango",
@@ -127,27 +121,24 @@ const AddSportForm = ({ addSportClickHandler }) => {
   };
 
   const getAllSports =async () =>{
-
+    //renders all sports + labels user had already been using in the past as buttons, so he can quick choose them
     const navigationsArray = await fetchAllSportsFromUser(userId)
 
-    
     if(navigationsArray.length > 0){
       setNavigationsArray(navigationsArray)
-      setShowSportsButton(true)
+      setShowSportsButton(prevState => !prevState)
     }
-
-
   }
 
 
-
   const handleSportSelect = (sport) => {
+    console.log(sport)
     dispatch({ type: "SET_NAME", payload: sport.name });
     dispatch({ type: "SET_COLOR", payload: { color: sport.color, style: sport.color } });
     setError(false, ""); // Setze Fehler zurück
 
     // Führe die Logik von handleSubmit hier aus
-    if (!sport.name) return setError(true, "please enter a type of sport!");
+    if (!sport.name) return setError(true, "theres no type of sport!");
     if (sport.color === null || usedColors.has(sport.color))
         return setError(true, "Color is already in use - please choose another one");
     if (navigation.includes(sport.name))
@@ -169,10 +160,13 @@ const AddSportForm = ({ addSportClickHandler }) => {
     dispatch({ type: "SET_COLOR", payload: { color: null, style: "" } });
   };
 
+
   
+ // console.log('navigations array:')
+  //console.log(allSports.currentSport)
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>
       <label className="text-xs hidden">sport </label>
       <input
@@ -184,21 +178,59 @@ const AddSportForm = ({ addSportClickHandler }) => {
         className={styles.input}
       />
 
-      <label>Choose a label</label>
-      <div className={styles.colors_div}>
-        {colors.map((color) => (
-          <button
-            key={color}
-            type="button"
-            className={`${styles.colors} ${styles[color]} ${
-              color === state.selectedSportStyle ? styles.selectedSport : ""
-            }`}
-            onClick={() => colorLabelHandler(color)}
-          >
-            {usedColors.has(color) && "❌"}
-          </button>
-        ))}
+     <div className="flex-col items-center justify-center">
+        <h2>Choose a label or</h2>
+        <button onClick={getAllSports} className="primary_button" > 
+        {showSportButtons ? 'Create a new sport + label' : 'Get all sports ever done + label'}
+       </button>
       </div>
+
+
+    {showSportButtons && (
+            <div>
+                {navigationsArray.map((sport, index) => {
+                    if (!sport || !sport.name || !sport.color) {
+                        return null; 
+                    }
+                    const color = sport.color;
+                    
+                    const isColorUsed = allSports.currentSport.some(nav => nav.color === color);
+
+                    return (
+                        <div key={index} className="m-2 relative">
+                            <button
+                                className={`${styles[color]} w-full  p-1 flex justify-start`}
+                                onClick={() => handleSportSelect(sport)} 
+                            >
+                                {sport.name}
+                            </button> 
+                            {isColorUsed && (
+                              <div className={styles.overlay}>
+                                  <h2 className={styles.text}>Already in use</h2> {/* Dunkelschwarzer Text */}
+                              </div>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        )}
+         
+         {!showSportButtons && (
+           <div className={styles.colors_div}>
+           {colors.map((color) => (
+             <button
+               key={color}
+               type="button"
+               className={`${styles.colors} ${styles[color]} ${
+                 color === state.selectedSportStyle ? styles.selectedSport : ""
+               }`}
+               onClick={() => colorLabelHandler(color)}
+             >
+               {usedColors.has(color) && "❌"}
+             </button>
+           ))}
+         </div>
+         )}
 
       <p className="my-6">{state.errorMessage}</p>
       <Link href="/profile" className={styles.link}>
@@ -210,32 +242,9 @@ const AddSportForm = ({ addSportClickHandler }) => {
       </button>
      
     </form>
-    <button className="flex mx-0.5 bg-red-700 relative items-center" onClick={getAllSports}> 
-      get all sports ever done + label
-    </button>
+
 
    
-    {showSportButtons && (
-            <div>
-                {navigationsArray.map((sport, index) => {
-                    if (!sport || !sport.name || !sport.color) {
-                        return null; // Überspringe ungültige Objekte
-                    }
-                    const color = sport.color;
-                    return (
-                        <div key={index} className="m-2">
-                            <button
-                                className={`${styles[color]} w-full p-1 flex justify-start`}
-                                onClick={() => handleSportSelect(sport)} // Hier wird die Funktion aufgerufen
-                            >
-                                {sport.name}
-                            </button> {/* Name des Sports */}
-                        </div>
-                    );
-                })}
-            </div>
-        )}
-         
     </div>
   );
 };
