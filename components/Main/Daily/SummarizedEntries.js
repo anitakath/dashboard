@@ -12,6 +12,8 @@ import SearchBar from "../../UI/SearchBar"
 import SummarizedCalendar from "./SummarizedCalendar";
 import CurrentMonthEntries from "./CurrentMonthEntries";
 import FilteredMonthEntries from "./FilteredMonthsEntries";
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
 const SummarizedEntries = () => {
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
@@ -22,7 +24,6 @@ const SummarizedEntries = () => {
   const year = useSelector((state) => state.calendar.year)
   const month = useSelector((state) => state.calendar.month);
   const dispatch = useDispatch();
-
   const groupAndSortEntries = (entries) => {
     const groupedEntries = {};
     entries.forEach((entry) => {
@@ -114,20 +115,43 @@ const SummarizedEntries = () => {
   };
 
   const filteredCurrentMonthEntries = filterBySearchTerm(allSupabaseSports);
+  const {fetchSportsDataBySelectedYear} = useFetchEntries()
+  const userId = useSelector((state) => state.auth.userId)
 
-  const changeYear = (e) =>{
-    if(e === "up"){
-      dispatch(updateDate({year: year + 1, month}))
-    } else if (e === "down"){
-      dispatch(updateDate({year: year - 1, month}))
+  const changeYear = async (e) => {
+    let newYear;
+
+    if (e === "up") {
+        newYear = year + 1;
+    } else if (e === "down") {
+        newYear = year - 1;
     }
-  }
+
+    // Dispatch the update with the new year
+    dispatch(updateDate({ year: newYear, month }));
+
+    console.log('HALLO');
+    console.log(newYear); // Log the new year instead of the old one
+
+    const entries = await fetchSportsDataBySelectedYear(userId, newYear);
+    console.log(entries);
+
+    await dispatch(setAllSportsFromSupabase(entries));
+};
+
+
+  
+
+  const calendar = useSelector((state) => state.calendar)
+  console.log(calendar)
+
+
 
 
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
 
-      <div className="flex bg-red-500 items-center">
+      <div className="flex items-center">
         <button
           className={styles.expand_btn}
           onClick={() => setIsExpanded(!isExpanded)}

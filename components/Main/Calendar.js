@@ -17,13 +17,12 @@ const Calendar = ({ filteredByDate }) => {
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const { getMonthStyle, months, useEntryCountForMonth } = useCalendar();
-  const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMonth, setSelectedMonth] = useState("");
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
   const {monthAbbreviations} = useCalendar()
   const userId = useSelector((state) => state.auth.userId)
   const {fetchSportsDataBySelectedYear} = useFetchEntries()
+  const year = useSelector((state) => state.calendar.year)
 
 
   useEffect(() => {
@@ -39,17 +38,17 @@ const Calendar = ({ filteredByDate }) => {
       currentMonth = "Dec";
     }
     setSelectedMonth(currentMonth);
-    dispatch(updateDate({ month: currentMonth, year: selectedYear }));
-  }, [dispatch, selectedYear]);
+
+    dispatch(updateDate({ month: currentMonth, year: year }));
+  }, [dispatch, year]);
 
   const handleYearChange = async (e) => {
-   
     const year = parseInt(e.target.value);
-    setSelectedYear(year);
     dispatch(updateDate({ month: selectedMonth, year }));
     const entries = await fetchSportsDataBySelectedYear(userId, e.target.value)
     await dispatch(setAllSportsFromSupabase(entries));
   };
+
 
   const chooseMonthHandler = (month) => {
     if (selectedSport === "daily") {
@@ -66,7 +65,7 @@ const Calendar = ({ filteredByDate }) => {
       }
     }
     setSelectedMonth(month);
-    dispatch(updateDate({ month, year: selectedYear }));
+    dispatch(updateDate({ month, year: year }));
   };
 
   const switchAllHandler = (e) =>{
@@ -77,8 +76,6 @@ const Calendar = ({ filteredByDate }) => {
     }
 
   }
-
-
 
 
   return (
@@ -93,7 +90,7 @@ const Calendar = ({ filteredByDate }) => {
             name="year"
             id="year"
             className={styles.year_input}
-            value={selectedYear}
+            value={year}
             onChange={handleYearChange}
           >
             {[2023, 2024, 2025, 2026, 2027, 2028].map((year) => (
@@ -109,7 +106,7 @@ const Calendar = ({ filteredByDate }) => {
           {months.map((month) => {
             const entryCount = getEntryCountForMonth(
               month,
-              selectedYear,
+              year,
               selectedSport
             );
 

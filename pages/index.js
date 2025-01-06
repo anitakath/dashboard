@@ -17,7 +17,7 @@ import { setSelectedSport } from "@/store/sportReducer";
 
 import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
-
+import { updateDate } from "@/store/CalendarReducer";
 export default function Home() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -31,6 +31,7 @@ export default function Home() {
 
   useEffect(()=>{
     dispatch(setSelectedSport("all"))
+    dispatch(updateDate({ month: "Jan", year:  2025 }));
   }, [])
 
 
