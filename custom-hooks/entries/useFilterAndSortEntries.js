@@ -1,6 +1,6 @@
-import { convertMinutesToHours } from "../minutesToHours";
+
 import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
-import useCalendar from "../useCalendar";
+import useCalendar from "../times_and_dates/useCalendar";
 import { useDispatch } from "react-redux";
 const useFilterAndSortEntries = () =>{
   const dispatch = useDispatch();

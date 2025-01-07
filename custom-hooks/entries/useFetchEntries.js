@@ -121,7 +121,9 @@ const useFetchEntries = (userId) => {
   return [];
   }
 
-  return { fetchSportsData, fetchSportsDataBySelectedYear, fetchAllSportsFromUser  };
+  
+
+  return { fetchSportsData, fetchSportsDataBySelectedYear, fetchAllSportsFromUser, };
 };
 
 export default useFetchEntries;

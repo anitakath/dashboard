@@ -4,10 +4,8 @@ import { useRouter } from "next/router";
 import styles from "./AddEntryForm.module.css";
 //REDUX
 import { useSelector } from "react-redux";
-
 //CUSTOM HOOKS
 import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
-
 import {
   validateTitle,
   validateText,
@@ -47,13 +45,6 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     formIsOpen,
   } = useSubmitHandler(currentPath, chosenSport, inputs, userId, currentSport);
 
-  /*
-
-  useEffect(()=>{
-    if (!formIsOpen && currentPath != "/profile") {
-      setFormIsOpen(false);
-    }
-  }, [formIsOpen]*/
 
 
   const changeHandler = (e) => {
@@ -98,7 +89,11 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
 
   return (
     <div className="lg:my-2 lg:p-2  flex-col justify-center w-full overflow-scroll flex items-center ">
-      {submitting && <Spinner />}
+      {submitting && (
+        <div className="relative w-full h-96 flex justify-center items-center">
+            <Spinner text="submitting"/> 
+        </div>
+       )}
       {!submitting && formIsOpen && (
         <form
           className="my-2  p-2   flex flex-col items-center w-full"

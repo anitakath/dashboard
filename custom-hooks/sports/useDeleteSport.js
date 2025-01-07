@@ -54,4 +54,4 @@ const useDeleteSport = () => {
   return { deleteSportHandler };
 };
 
-export default useDeleteSport;
+export default useDeleteSport; 

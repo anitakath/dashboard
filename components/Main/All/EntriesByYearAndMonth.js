@@ -2,13 +2,14 @@ import { useState} from 'react';
 import Link from 'next/link';
 import styles from '../Entry.module.css'
 //CUSTOM HOOKS
-import { formatDate } from '@/custom-hooks/formatDate';
-import { formatDuration } from '@/custom-hooks/formatDate';
+import useFormatDate from '@/custom-hooks/times_and_dates/useFormatDate';
+import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
 import { useSelector, useDispatch } from 'react-redux';
 import useFetchEntries from '@/custom-hooks/entries/useFetchEntries';
 import { updateDate } from '@/store/CalendarReducer';
 import { setAllSportsFromSupabase } from '@/store/sportReducer';
-
+//UI 
+import Spinner from '@/components/UI/Spinner';
 const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const calendar = useSelector((state) => state.calendar)
   const [openMonths, setOpenMonths] = useState({});
@@ -17,8 +18,8 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const userId = useSelector((state) => state.auth.userId)
   const dispatch = useDispatch();
   const {fetchSportsDataBySelectedYear} = useFetchEntries()
-
-
+  const {convertMinutesToHours} = useConvertTimes()
+  const {formatDate} = useFormatDate()
   const toggleMonthEntries = (monthName, year) => {
     const monthYearKey = `${monthName}-${year}`;
     setOpenMonths((prevState) => ({
@@ -26,17 +27,27 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
         [monthYearKey]: !prevState[monthYearKey], 
       }));
   };
+  const [isLoading, setIsLoading] = useState(false)
 
 
   const handleYearChange = async (year) => {
+    setIsLoading(true)
     dispatch(updateDate({ month: calendar.month, year }));
     const entries = await fetchSportsDataBySelectedYear(userId, year)
     await dispatch(setAllSportsFromSupabase(entries));
     setOpenYear(parseInt(year))
+    setIsLoading(false)
   };
 
+  console.log(isLoading)
   return (
-    <div>
+    <div className=' w-full'>
+        {isLoading && (
+            <div className=' h-20 w-full  m-0'>
+                <Spinner text="loading"/> 
+            </div>
+        )}
+
         {years.slice().reverse().map((year) => {
             // Überprüfen, ob das Jahr in entriesByYearAndMonth vorhanden ist
             const yearEntry = entriesByYearAndMonth ?  entriesByYearAndMonth.find(entry => Object.keys(entry)[0] === year.toString()) : "";
@@ -44,12 +55,15 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
 
             return (
                 <div key={year}>
+
                     <button
                         className={`${styles.yearHeader} ${parseInt(year) === openYear ? styles.yearHeaderActive : ''}`}
                         onClick={() => handleYearChange(year)}
                     >
                         {year} 
                     </button>
+
+             
 
                     {months.length > 0 && parseInt(year) === openYear && currentSport === "all" && months.map((monthEntry) => {
                         const monthName = Object.keys(monthEntry)[0];
@@ -60,7 +74,12 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         );
 
                         return (
-                            <div key={monthName} className='border-0'>
+                            <div key={monthName} className=' my-2'>
+                   
+                               
+             
+
+                                
                                 <button
                                     className={styles.monthYear_header}
                                     onClick={() => toggleMonthEntries(monthName, year)}
@@ -71,7 +90,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                                     <p className={styles.monthYear_header_span}>
                                         (total hours of sport:
                                         <span className={styles.totalDuration}>
-                                            {formatDuration(totalDuration)}
+                                            {convertMinutesToHours(totalDuration)}
                                         </span>
                                         )
                                     </p>
@@ -85,7 +104,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                                                     {formatDate(entry.created_at)}
                                                 </p>
                                                 <p className="my-2 px-2 text-xs absolute right-4 top-6">
-                                                    {formatDuration(entry.duration)}
+                                                    {convertMinutesToHours(entry.duration)}
                                                 </p>
                                                 <h2 className="text-2xl mb-4 mt-0 w-8/12 px-2">
                                                     {entry.title}

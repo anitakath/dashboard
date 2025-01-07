@@ -4,10 +4,10 @@ import { useState } from "react";
 import styles from './Entry.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect} from "react";
-import { formatDate } from "@/custom-hooks/formatDate";
+import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //HOOKS
 import useEntries from "@/custom-hooks/Entry/useEntries";
-import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
+import useConvertTimes from "@/custom-hooks/times_and_dates/useConvertTimes";
 // Importiere die neue Hook
 //REDUX
 import { setSortedEntriesByMonth } from "@/store/sportReducer";
@@ -22,10 +22,10 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
    const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   // SORTED OBJECTS AND ARRAYS FOR ENTRIESBYYEARANDMONTH; SELECTEDSPORT === "ALL"
   const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate, allSupabaseSports);
-
   useEffect(() => {
     dispatch(setSortedEntriesByMonth(entriesByMonth));
   }, [allSupabaseSports, filteredEntries]);
+  const { formatDate } = useFormatDate();
 
 
   const filteredEntriesByMonth = {};
@@ -67,6 +67,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   }, 0);
 
   // die gesamt Stundenanzahl an Sportstunden pro Sport im Monat X
+  const {convertMinutesToHours} = useConvertTimes()
   const summedDurationPerSportPerMonthInHours = convertMinutesToHours(summedDurationPerSportPerMonth)
 
 

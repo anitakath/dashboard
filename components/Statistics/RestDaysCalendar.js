@@ -1,6 +1,6 @@
 
 import styles from "./RestDaysCalendar.module.css";
-import useCalendar from "@/custom-hooks/useCalendar";
+import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 import useStatistics from "@/custom-hooks/Statistics/useStatistics";
 
 const RestDaysCalendar = ({ allSupabaseSports, date }) => {

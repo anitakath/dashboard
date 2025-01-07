@@ -1,7 +1,7 @@
 // useCalendar.js
 
 import { useSelector } from "react-redux";
-import styles from "../components/Main/Calendar.module.css"; // Stelle sicher, dass der Pfad zu deinen Styles korrekt ist
+import styles from "../../components/Main/Calendar.module.css"; // Stelle sicher, dass der Pfad zu deinen Styles korrekt ist
 
 const useCalendar = () => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
@@ -178,6 +178,18 @@ const useCalendar = () => {
     month: new Date().getMonth() + 1, // Monate sind nullbasiert, daher +1
     restDaysPerMonth: null,
   };
+
+  /*
+  export function getMonthNameFromDate(created_at) {
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
+  const date = new Date(created_at);
+  const monthIndex = date.getMonth();
+  return months[monthIndex];
+}
+  */
 
 
   return { getMonthStyle, months, completeMonths, monthAbbreviations, useEntryCountForMonth, currentDatee };

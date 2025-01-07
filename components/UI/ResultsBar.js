@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./ResultsBar.module.css";
 
-import { getMonth } from "@/custom-hooks/formatDate";const ResultsBar = ({ filteredSearchedEntries }) => {
+import { getMonth } from "@/custom-hooks/times_and_dates/useFormatDate";const ResultsBar = ({ filteredSearchedEntries }) => {
   // Check whether there are filtered entries
   if (!filteredSearchedEntries || filteredSearchedEntries.length === 0) {
     return (

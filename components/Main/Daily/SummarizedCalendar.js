@@ -4,7 +4,7 @@ import Calendar from "../Calendar";
 //REDUX
 import { useSelector } from "react-redux";
 //CUSTOM HOOKS
-import useCalendar from "../../../custom-hooks/useCalendar";
+import useCalendar from "../../../custom-hooks/times_and_dates/useCalendar";
 
 
 const SummarizedCalendar = (props) => {

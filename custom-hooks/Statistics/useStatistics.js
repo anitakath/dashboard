@@ -1,6 +1,6 @@
 // hooks/useStatistics.js
 import { useMemo } from "react";
-import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
+import { convertMinutesToHours } from "@/utils/helpers";
 
 
 

@@ -4,9 +4,12 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/supabaseClient";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-import useFetchEntries from "./entries/useFetchEntries";
 
-/* DELETE COMPLETED  SPORT */
+
+/******** DELETE COMPLETED SPORT ********/
+/******** DELETE COMPLETED SPORT ********/
+/******** DELETE COMPLETED SPORT ********/
+/******** DELETE COMPLETED SPORT ********/
 /*used at DetailsPage.js*/
 export const useDeleteCompletedSport = (userId) => {
   const [loading, setLoading] = useState(false);
@@ -28,7 +31,7 @@ export const useDeleteCompletedSport = (userId) => {
         throw new Error('Fehler beim Löschen des Eintrags');
       }
 
-      await fetchSportsDatas(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
+      await fetchSportsDataAfterEntry(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
       return { success: true };
     } catch (err) {
       console.error("Error when deleting the entry:", err.message);
@@ -43,7 +46,13 @@ export const useDeleteCompletedSport = (userId) => {
   return { deleteSport, loading, error };
 };
 
-/* DELETE PLANNED SPORT */
+
+
+/******** DELETE PLANNED SPORT ********/
+/******** DELETE PLANNED SPORT ********/
+/******** DELETE PLANNED SPORT ********/
+/******** DELETE PLANNED SPORT ********/
+/*used at Plans.js*/
 export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
   const dispatch = useDispatch();
 
@@ -81,13 +90,15 @@ export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
   };
 
   return deleteSportHandler;
-};
+}; 
 
 
-
-
-//folgende FUnktion wird nach dem Absenden eines neuen Tagebucheintrags ausgeführt
-export const fetchSportsDatas = async (dispatch, userId,  currentSport) => {
+/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE  ********/
+/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE  ********/
+/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE  ********/
+/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE ********/
+/*used at useSportEntries.js in submitHandler further down  and useDeleteCompletedSport further up */
+export const fetchSportsDataAfterEntry = async (dispatch, userId,  currentSport) => {
   
   try {
     const response = await fetch(`/api/sports?userId=${userId}`);
@@ -121,7 +132,6 @@ export const fetchSportsDatas = async (dispatch, userId,  currentSport) => {
 
 
 /* ADDENTRYFORM */
-
 export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, currentSport) => {
   const dispatch = useDispatch();
   const [successMessage, setSuccessMessage] = useState(false);
@@ -244,7 +254,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
           .from("sports")
           .insert([data]);
         if (error) throw new Error("Failed to insert data into Supabase table");
-        await fetchSportsDatas(dispatch, userId, currentSport);
+        await fetchSportsDataAfterEntry(dispatch, userId, currentSport);
         setFormIsOpen(false);
       }
 

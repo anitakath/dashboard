@@ -5,7 +5,7 @@ import styles from "./Calendar.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDate } from "@/store/CalendarReducer";
 //HOOKS
-import useCalendar from "@/custom-hooks/useCalendar";
+import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 import { setSelectedSport } from "@/store/sportReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";

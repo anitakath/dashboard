@@ -16,7 +16,7 @@ import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
 import UserImageMobile from "../UI/UserImageMobile";
 //CUSTOM HOOKS
-import useCalendar from "@/custom-hooks/useCalendar";
+import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 

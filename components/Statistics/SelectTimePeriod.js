@@ -3,8 +3,8 @@ import { useState } from 'react';
 import styles from './SelectTimePeriod.module.css'
 
 //CUSTOM HOOKS
-import { useHandleYearChange,  useHandleMonthChange } from '@/custom-hooks/useDate';
-import useCalendar  from "@/custom-hooks/useCalendar";
+import { useHandleYearChange,  useHandleMonthChange } from '@/custom-hooks/times_and_dates/useDateChange';
+import useCalendar  from "@/custom-hooks/times_and_dates/useCalendar";
 
 
 const SelectTimePeriod = ({date, setDate}) =>{

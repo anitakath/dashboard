@@ -4,12 +4,12 @@ import { persistor } from "../../store";
 import { setLogin, setLogout, setUserId, setUser } from "../../store/authReducer";
 import { setSelectedSport, setAllSportsFromSupabase, setFilteredEntriesByCurrentSportAndDate  } from "../../store/sportReducer";
 import { supabase } from "../../services/supabaseClient";
-import { convertMinutesToHours } from "@/custom-hooks/minutesToHours";
+
 
 
 import useFetchEntries from "../entries/useFetchEntries";
 import useFilterAndSortEntries from "../entries/useFilterAndSortEntries";
-import useCalendar from "@/custom-hooks/useCalendar";
+import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 import { v1ToV6 } from "uuid";
 
 const useAuth = (userId) => {

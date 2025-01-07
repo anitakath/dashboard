@@ -1,7 +1,9 @@
 import styles from "./SummarizedEntries.module.css";
-import { formatDate } from "@/custom-hooks/formatDate";
+import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 
 const CurrentMonthEntries = (props) => {
+
+  const { formatDate } = useFormatDate();
   const {
     currentMonthEntries,
     showAllThisYear,

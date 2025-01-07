@@ -7,7 +7,7 @@ import { faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icon
 import styles from "./PlansEntryField.module.css";
 import colors from "../../../styles/Colors.module.css";
 //HOOKS
-import { formatDate } from "@/custom-hooks/formatDate";
+import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //REDUX
 import { useDispatch } from "react-redux";
 import { setAllPlannedSports } from "@/store/sportReducer";
@@ -26,11 +26,10 @@ const PlansEntryField = ({
   const sortedByDate = [...sortedSportsArray].sort(
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
   );
-
   const dispatch = useDispatch();
   const [layoutMode, setLayoutMode] = useState("list");
   const [enlargedEntryId, setEnlargedEntryId] = useState(null);
-
+  const {formatDate} = useFormatDate()
   useEffect(() => {
     dispatch(setAllPlannedSports(sortedByDate));
   }, [sortedByDate]);

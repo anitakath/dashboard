@@ -3,7 +3,7 @@ import styles from './SummarizedEntries.module.css'
 import colors from '../../../styles/Colors.module.css'
 
 //CUSTOM HOOKS
-import { formatDate } from '@/custom-hooks/formatDate';
+import { formatDate } from '@/custom-hooks/times_and_dates/useFormatDate';
 
 const FilteredMonthEntries = (props) =>{
 
