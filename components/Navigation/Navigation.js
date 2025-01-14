@@ -75,11 +75,25 @@ const Navigation = () => {
     dispatch(setSelectedSport(sport));
   };
 
+  
   const addSportClickHandler = () => {
     setFormIsOpen((prevState) => !prevState);
+   
   };
 
-  
+
+
+  useEffect(() => {
+    if (formIsOpen) {
+      const element = document.getElementById('addSportContainer');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [formIsOpen]); 
+
+
+
 
   return (
     <div className="w-full relative  lg:my-4 p-0 flex flex-col items-center shadow-section">

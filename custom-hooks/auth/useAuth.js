@@ -41,22 +41,19 @@ const useAuth = (userId) => {
 
     const session = await fetchUserSession();
 
+
     if (session) {
       const userId = session.user.id;
       // fetch sports data from user in current year only
       const { fetchSportsData } = useFetchEntries(userId);
-      const { getFilteredEntriesByCurrentSportAndDate } = useFilterAndSortEntries();
-
+   
       const currentDate = {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
         restDaysPerMonth: null,
       };
 
-
-      console.log('CURRENT DATE AFTER LOGIN')
-      console.log
-
+      
       // FETCHSPORTSDATA FETCHES ALL SUPABASE OBJECTS BY USER ID IN CURRNT YEAR
       const filteredEntriesByUserId = await fetchSportsData(userId);
 
@@ -69,14 +66,42 @@ const useAuth = (userId) => {
           currentDate
         );
 
+ 
+
       // SET FILTERED ENTRIES TO REDUX STORE (AFTER LOGIN ALL ENTRIES OF CURRENT YEAR)
-      dispatch(setFilteredEntriesByCurrentSportAndDate(filteredEntriesByCurrentSport));
+      await dispatch(setFilteredEntriesByCurrentSportAndDate(filteredEntriesByCurrentSport));
       await dispatch(setAllSportsFromSupabase(filteredEntriesByUserId));
       await dispatch(setLogin(true));
-      dispatch(setSelectedSport(currentSport))
+      await dispatch(setSelectedSport(currentSport))
+    
     }
     return user;
   };
+
+  const getFilteredEntriesByCurrentSportAndDate = async (
+    filteredEntriesByUserId,
+    currentSport,
+    currentDate
+  ) => {
+
+
+    const entries = filteredEntriesByUserId.filter(
+      (sport) => sport.name === currentSport
+    );
+
+    const filterEntries = entries.filter((entry) => {
+      const entryDate = new Date(entry.created_at);
+      return (
+        entryDate.getFullYear() === currentDate.year &&
+        entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
+      );
+    });
+
+    console.log(filterEntries)
+
+    return filterEntries;
+  };
+
 
 
   const fetchUserSession = async () => {
@@ -86,11 +111,12 @@ const useAuth = (userId) => {
     } = await supabase.auth.getSession();
 
     if (error) {
+      console.log('ERROR')
       console.error("Error fetching session:", error);
       return null;
     } else if (session) {
-      dispatch(setUserId(session.user.id));
-      dispatch(setUser(session));
+      await dispatch(setUserId(session.user.id));
+      await dispatch(setUser(session));
 
       return session;
     } else {

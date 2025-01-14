@@ -2,18 +2,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 
+.staticsticsBodyContainer{
+    padding: 10px 0px;
+    background-color: var(--purpleDarkHoverOpacity);
+}
+
 .container{
-    min-height: 400px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: scroll;
     position: relative;
     overflow: scroll;
+    margin: 20px; 
+    background-color: rgba(255,255,255, 0.8);
+}
+
+.title{
+    font-size: 1.3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 10px 5px;
+}
+
+.subContainer{
+    display: flex;
+    
+}
+
+.showBarChartButton{
+    width: 20px;
+    margin: 0px 10px;
+    transition: 0.2s ease-in-out;
+}
+
+.showBarChartButton:hover{
+    color: var(--purpleDark);
 }
 
 .container h1{
-    font-family: "Nunito", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
   font-weight: <weight>;
   font-style: normal;
@@ -47,10 +79,7 @@
 
 
 .totalHours_sports_div{
-    /*background: linear-gradient(to right, white, var(--purpleDarkHoverOpacity));*/
-    background: linear-gradient(to left, white, var(--purpleDarkHoverOpacity));
-    /*border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;*/
+    background: linear-gradient(to left, var(--purpleDarkHoverOpacity), rgba(255,255,255, 0.5));
     margin: 4px 0px;
 }
 
@@ -67,10 +96,12 @@
   justify-content: center;
   align-items: center;
   font-weight: bolder;
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin: 0px 4px;
   min-width: 160px;
-  height: 80%;
+  height: 100%;
+  margin-right: 10px;
+
 }
 
 .error_p{
@@ -78,6 +109,53 @@
     min-height: 100px;
     display: flex;
     align-items: center;
+}
+
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+   background-color: #fefefe; 
+    margin: 15% auto;
+    border: 1px solid #888;
+    width: 80%; 
+    overflow: scroll;
+    height: 80%;
+
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+    top: 10px;
+    right: 24px;
+    height: 30px;
+    transition: 0.2s ease-in-out;
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--purpleDark);
 }
 
 
@@ -162,74 +240,3 @@
 .mossGreen{
     background: var(--mossGreen_opaque);
 }
-
-
-
-
-
-
-
-.fandango_font{
-    border-bottom: 2px solid var(--fandango_opaque);
-}
-
-.celeste_font{
-    border-bottom: 2px solid var(--celeste_opaque);
-}
-
-.springGreen_font{
-   border-bottom: 2px solid var(--springGreen_opaque);
-}
-
-.sinopia_font{
-   border-bottom: 2px solid var(--sinopia_opaque);
-}
-
-.lightOrange_font{
-   border-bottom: 2px solid var(--lightOrange_opaque);
-}
-
-.wenge_font{
-    border-bottom: 2px solid var(--wenge_opaque);
-}
-
-.spaceCadet_font{
-    border-bottom: 2px solid var(--spaceCadet_opaque);
-}
-
-.mauve_font{
-    border-bottom: 2px solid var(--mauve_opaque);
-}
-
-.aquamarine_font{
-    border-bottom: 2px solid var(--aquamarine_opaque);
-}
-
-.mandarine_font{
-    border-bottom: 2px solid var(--mandarine_opaque)
-}
-
-.brown_font{
-    border-bottom: 2px solid var(--brown_opaque)
-}
-
-.mustard_font{
-    border-bottom: 2px solid var(--mustard_opaque);
-}
-
-.jasmine_font{
-    border-bottom: 2px solid var(--jasmine_opaque)
-}
-
-.frenchGrey_font{
-    border-bottom: 2px solid var(--frenchGrey_opaque);
-}
-
-.eggplant_font{
-    color: var(--eggplant_opaque);
-}
-
-.mossGreen_font{
-    color: var(--mossGreen_opaque);
-}
-

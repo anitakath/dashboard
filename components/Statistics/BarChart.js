@@ -4,17 +4,18 @@ import styles from './BarChart.module.css'
 
 //COMPONENTS
 import SelectTimePeriod from './SelectTimePeriod';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 const BarChart = ({
   allSupabaseSports,
   sortedSportsByCount,
   date,
   setDate,
   resultArray,
+  showBarChart,
+  //scrollHandler,
+  isScrolled
 }) => {
-  console.log(sortedSportsByCount);
-  console.log(date);
-  console.log(resultArray);
 
   const sportCounts = {};
 
@@ -63,25 +64,32 @@ const BarChart = ({
   }, [date, sortedSports]);
 
 
+
   return (
-    <div className="">
-      <h1 className="text-xl m-2">Your Bar Chart for {date.year}, {date.month} months </h1>
-      <div className="flex px-4 my-2">
-        <SelectTimePeriod date={date} setDate={setDate} />
-      </div>
-      <div className={styles.bar_chart}>
+    <div className={styles.container} id="container">
+      <h1 className="text-xl py-2 flex items-center">Your Bar Chart for {date.year}, {date.month} <span className='text-xs mx-6 my-2'>(referred to number of units)</span> </h1>
+      <div className=" flex px-4 my-2">
+        <SelectTimePeriod  showBarChart={showBarChart} date={date} setDate={setDate} />
+      </div> 
+
+      <div className={styles.bar_chart} id="barChart">
+
         {sortedSports.map(({ name, count, label }) => (
           <div
             key={name}
             className={`${styles.bar} ${styles[label]}`}
             style={{ height: `${(count / maxCount) * 100}vh` }}
           >
-            <span className="w-full text-center">
-              {name} ({count})
-            </span>
+            <h1 className={styles.barChart_titles}>
+              {name}
+            </h1>
+            <p className='text-zinc-600'> {count}x </p>
+
+
           </div>
         ))}
       </div>
+     
     </div>
   );
 };

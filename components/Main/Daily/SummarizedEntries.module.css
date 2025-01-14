@@ -3,8 +3,27 @@
     grid-template-columns: repeat(3, 1fr); 
     gap: 16px;
     width: 100%;
+    
 }
 
+.calendarDiv{
+    height: 400px;
+    overflow: scroll;
+
+}
+.quotesDiv{
+    height: 400px;
+    overflow: scroll;
+    background-color: var(--purpleDarkHover);
+    padding: 5px;
+}
+
+.placeholdersDiv{
+    height: 400px;
+    overflow: scroll;
+    background-color: var(--purpleDarkHover);
+    padding: 5px;
+}
 
 .title{
     margin: 5px 0px;

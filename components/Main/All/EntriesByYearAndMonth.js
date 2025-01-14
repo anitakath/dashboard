@@ -39,12 +39,14 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
     setIsLoading(false)
   };
 
-  console.log(isLoading)
+
   return (
     <div className=' w-full'>
         {isLoading && (
-            <div className=' h-20 w-full  m-0'>
-                <Spinner text="loading"/> 
+            <div className='h-screen w-full m-0'>
+                <div className='w-full h-60'>
+                    <Spinner text="loading"/> 
+                </div>
             </div>
         )}
 

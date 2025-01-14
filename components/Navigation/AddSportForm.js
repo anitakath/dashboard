@@ -166,7 +166,7 @@ const AddSportForm = ({ addSportClickHandler }) => {
   //console.log(allSports.currentSport)
 
   return (
-    <div className="w-full ">
+    <div className="w-full" id="addSportContainer">
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>
       <label className="text-xs hidden">sport </label>
       <input
@@ -179,9 +179,9 @@ const AddSportForm = ({ addSportClickHandler }) => {
       />
 
      <div className="flex-col items-center justify-center">
-        <h2>Choose a label or</h2>
-        <button onClick={getAllSports} className="primary_button" > 
-        {showSportButtons ? 'Create a new sport + label' : 'Get all sports ever done + label'}
+        <h2 className="mx-2">Choose a label or</h2>
+        <button onClick={getAllSports} className="secondary_button" > 
+        {showSportButtons ? 'Create a new sport + label' : 'Get all sports ever done'}
        </button>
       </div>
 

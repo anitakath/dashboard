@@ -5,7 +5,8 @@ import Calendar from "../Calendar";
 import { useSelector } from "react-redux";
 //CUSTOM HOOKS
 import useCalendar from "../../../custom-hooks/times_and_dates/useCalendar";
-
+//COMPONENTS
+import QuotesSlider from "@/components/UI/QuotesSlider";
 
 const SummarizedCalendar = (props) => {
   const currentDate = props.currentDate;
@@ -21,29 +22,38 @@ const SummarizedCalendar = (props) => {
     };
 
       const monthsInYear = [
-          { name: "JANUARY", days: 31 },
-          { name: "FEBRUARY", days: isLeapYear(calendar.year) ? 29 : 28 },
-          { name: "MARCH", days: 31 },
-          { name: "APRIL", days: 30 },
-          { name: "MAY", days: 31 },
-          { name: "JUNE", days: 30 },
-          { name: "JULY", days: 31 },
-          { name: "AUGUST", days: 31 },
-          { name: "SEPTEMBER", days: 30 },
-          { name: "OCTOBER", days: 31 },
-          { name: "NOVEMBER", days: 30 },
-          { name: "DECEMBER", days: 31 },
+        { name: "JANUARY", days: 31 },
+        { name: "FEBRUARY", days: isLeapYear(calendar.year) ? 29 : 28 },
+        { name: "MARCH", days: 31 },
+        { name: "APRIL", days: 30 },
+        { name: "MAY", days: 31 },
+        { name: "JUNE", days: 30 },
+        { name: "JULY", days: 31 },
+        { name: "AUGUST", days: 31 },
+        { name: "SEPTEMBER", days: 30 },
+        { name: "OCTOBER", days: 31 },
+        { name: "NOVEMBER", days: 30 },
+        { name: "DECEMBER", days: 31 },
       ];
 
       const chosenMonth = useSelector((state) => state.calendar.month);
       const {monthAbbreviations} = useCalendar()
 
+      
+
 
 
       return (
           <div className={styles.calendar_div}>
-            
-              <Calendar />
+            <div className={styles.calendarDiv}>
+                <Calendar />
+            </div>
+            <div className={styles.quotesDiv}>
+                <QuotesSlider/>
+            </div>
+            <div className={styles.placeholdersDiv}> another placeholder </div>
+
+
               {monthsInYear.map((month, monthIndex) => {
                   // Überprüfen, ob der aktuelle Monat aktiv ist
                   const isActiveMonth = month.name === monthAbbreviations[chosenMonth];
@@ -59,15 +69,19 @@ const SummarizedCalendar = (props) => {
                                   date.setDate(date.getDate() + 1); 
                                   const dateString = date.toISOString().split("T")[0];
                         
+                                  console.log(month)
                                   
                                   const isToday = new Date().toISOString().split("T")[0] === dateString;
-                                  const entriesForDay = filteredAndGroupedEntries[dateString] || [];
+                                  //const entriesForDay = filteredAndGroupedEntries[dateString] || [];
 
+                                  //)
+
+                                  console.log(dateString)
 
                                   return (
                                       <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ""}`}>
                                           <Link className={styles.day_date} href={`/daily-details/${dayNumber}${month.name}`}>
-                                              {dayNumber}
+                                              {dayNumber} 
                                           </Link>
                                           <div className={styles.sport_subsection}>
                                               {(filteredAndGroupedEntries[dateString] || []).map((entry) => {
@@ -76,6 +90,8 @@ const SummarizedCalendar = (props) => {
                             
                                                 // Alternativ:
                                                 const entryYear = entry.created_at.split("-")[0]; // Ansatz 2
+
+                              
 
                         
                                                 if (entryYear != selectedYear) {
@@ -88,7 +104,7 @@ const SummarizedCalendar = (props) => {
                             
 
                                                   return (
-                                                      <div key={entry.entryId} className={`${styles.sport_subsectionLabel} ${entryClass}`} style={{ height }}></div>
+                                                      <div key={entry.entryId} className={`${styles.sport_subsectionLabel} ${entryClass}`} style={{ height }}> </div>
                                                   );
                                               })}
                                           </div>
@@ -111,3 +127,7 @@ const SummarizedCalendar = (props) => {
 };
 
 export default SummarizedCalendar;
+
+
+/*      
+        */

@@ -143,7 +143,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
           <h2 className=" mb-4 text-center">
             enter the date and duration of your sports sessions
           </h2>
-          <div className="flex pb-2 lg:p-0 w-full lg:w-6/12 border-b-2 border-red-700 w-6/12 flex-col md:flex-row items-center justify-evenly items-center ">
+          <div className="flex pb-2 lg:p-0  border-b-2 w-full flex-col md:flex-row justify-evenly items-center ">
             <div className={styles.date_div}>
               <input
                 type="datetime-local"

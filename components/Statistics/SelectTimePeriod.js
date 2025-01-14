@@ -7,7 +7,7 @@ import { useHandleYearChange,  useHandleMonthChange } from '@/custom-hooks/times
 import useCalendar  from "@/custom-hooks/times_and_dates/useCalendar";
 
 
-const SelectTimePeriod = ({date, setDate}) =>{
+const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
   const [isYearModalOpen, setIsYearModalOpen] = useState(false);
@@ -16,30 +16,38 @@ const SelectTimePeriod = ({date, setDate}) =>{
   const [selectedMonth, handleMonthChange] = useHandleMonthChange(currentMonth);
 
   const years = Array.from(
-    { length: currentYear - 2020 + 1 },
-    (_, i) => 2020 + i
+    { length: 10 },
+    (_, i) => 2023 + i
   );
   const {completeMonths} = useCalendar();
 
 
   return (
-      <div className="flex flex-col lg:flex-row h-60 md:h-36 justify-center items-center relative w-full ">
-        <button
+      <div className="flex flex-col lg:flex-row h-60 md:h-auto justify-center items-center relative w-full ">
+        {!isYearModalOpen && !isMonthModalOpen && (
+          <button
           className="secondary_button"
           onClick={() => setIsYearModalOpen(true)}
         >
           select year
-        </button>
-        <button
-          className="secondary_button"
-          onClick={() => setIsMonthModalOpen(true)}
-        >
-          select month
-        </button>
-        <p className="mx-4 my-4 lg:my-0">
-          <span className={styles.selected_span}>currently selected:</span>
-          {selectedYear}, {selectedMonth}
-        </p>
+        </button>)}
+
+        {!isYearModalOpen && !isMonthModalOpen && (
+           <button
+           className="secondary_button"
+           onClick={() => setIsMonthModalOpen(true)}
+         >
+           select month
+         </button>
+        )}
+       
+        {showBarChart !== "XUNITS" && showBarChart !== "XTIMES"  && (
+           <p className="mx-4 my-4 lg:my-0">
+           <span className={styles.selected_span}>currently selected:</span>
+           {selectedYear}, {selectedMonth}
+         </p>
+        )}
+       
 
         {/* Year Modal */}
         {isYearModalOpen && (
@@ -76,7 +84,7 @@ const SelectTimePeriod = ({date, setDate}) =>{
                 onClick={() =>handleMonthChange(month, setIsMonthModalOpen, setDate)}
                 className={styles.month}
               >
-                {month}
+                {month} 
               </button>
             ))}
           </div>
