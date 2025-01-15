@@ -38,35 +38,38 @@ const DetailsPage = () => {
     }
   };
 
-
   const editEntryHandler = (e) =>{
     e.preventDefault();
   }
 
   return (
     <div className="w-full h-screen m-0 md:p-14">
-      <div className="flex w-full h-full border-2 py-2 m-0 p-0 relative z-20">
-        <div className=" absolute w-full h-full m-0  z-0 top-0">
-          {/* future image div*/}
+      <div className="flex w-full h-full border-2 overflow-scroll py-2 m-0 p-0 relative z-20">
+        <div className="absolute w-full h-full m-0  z-0 top-0">
+          
         </div>
-        <div className="absolute w-full h-full z-10 top-0">
-          <Link href="/" className=" absolute mt-2 p-2 cursor-pointer">
-            <FontAwesomeIcon icon={faArrowLeft} className={styles.goback_link}/>
-          </Link>
+        <div className="absolute  w-full h-full z-10 top-0">
 
-          <div className={styles.buttons_div}>
-            <button className={styles.delete_btn} onClick={deleteEntryHandler}>
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-            <button className={styles.edit_btn} onClick={editEntryHandler}>
-              <FontAwesomeIcon icon={faPencil} />
-            </button>
+          <div className="border-b-2 border-red-200 w-full h-20 relative flex justify-between items-center">
+            <Link href="/" className=" p-4 cursor-pointer">
+              <FontAwesomeIcon icon={faArrowLeft} className={styles.goback_link}/>
+            </Link>
+
+            <div className={styles.buttons_div}>
+              <button className={styles.delete_btn} onClick={deleteEntryHandler}>
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+              <button className={styles.edit_btn} onClick={editEntryHandler}>
+                <FontAwesomeIcon icon={faPencil} />
+              </button>
+            </div>
           </div>
 
-          <div className=" mt-4 w-full ">
-         
+          <div className="flex">
+
+          <div className="w-2/3 p-4 mx-2">
             {filteredEntry.length > 0 && (
-              <div className="mt-10 py-2">
+              <div className="p-2">
                 <h2 className={styles.title}> {filteredEntry[0].title}</h2>
                 <p className={styles.entry}>{filteredEntry[0].entry}</p>
               </div>
@@ -78,6 +81,31 @@ const DetailsPage = () => {
               </p>
             )}
           </div>
+
+
+
+
+          <div className="w-1/3  m-2 flex justify-center items-center flex-col">
+            <div className="h-60 my-2 w-full flex bg-red-200 justify-center items-center">
+              <h1 className="font_meowScript text-2xl text-amber-400 p-4 "> future image div </h1>
+            </div>
+            <div className="h-60 my-2 w-full flex bg-red-200 justify-center items-center  ">
+              <h1 className="font_meowScript text-2xl text-amber-400 p-4"> *placeholder* </h1>
+            </div>
+            <div className="h-60 my-2 w-full flex bg-red-200 justify-center items-center">
+              <h1 className="font_meowScript text-2xl text-amber-400 p-4"> *placeholder*  </h1>
+            </div>
+            <div className="h-60 my-2  w-full flex bg-red-200 justify-center items-center">
+              <h1 className="font_meowScript text-2xl text-amber-400 p-4"> *placeholder*  </h1>
+            </div>
+          </div>
+
+
+
+          </div>
+         
+
+          
         </div>
       </div>
     </div>

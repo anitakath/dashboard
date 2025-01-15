@@ -7,6 +7,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'zoom-in': 'zoomIn 2s ease forwards',
+      },
+      keyframes: {
+        zoomIn: {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(1)' },
+        },
+      },
       screens: {
         ssm: "300px",
         sm: "590px",

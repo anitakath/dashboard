@@ -3,7 +3,7 @@
 
 .title{
     font-size: 2rem;
-    color: var(--purpleDarkHover);
+    color: black;
     margin: 5px 0px;
     padding: 0px 5px;
 
@@ -18,11 +18,6 @@
 
 }
 
-
-.buttons_div{
-    position: absolute;
-    right: 10px;
-}
 
 .goback_link{
     font-size: 1.2rem;

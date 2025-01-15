@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Meow+Script&display=swap');
+
+.font_meowScript{
+  font-family: 'Meow Script', cursive;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;

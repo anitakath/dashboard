@@ -39,10 +39,7 @@ const SummarizedCalendar = (props) => {
       const chosenMonth = useSelector((state) => state.calendar.month);
       const {monthAbbreviations} = useCalendar()
 
-      
-
-
-
+    
       return (
           <div className={styles.calendar_div}>
             <div className={styles.calendarDiv}>
@@ -51,7 +48,9 @@ const SummarizedCalendar = (props) => {
             <div className={styles.quotesDiv}>
                 <QuotesSlider/>
             </div>
-            <div className={styles.placeholdersDiv}> another placeholder </div>
+            <div className={styles.placeholdersDiv}>
+                <h1 className="font_meowScript text-4xl text-amber-400 animate-zoom-in"> ✨another placeholder✨ </h1>
+            </div>
 
 
               {monthsInYear.map((month, monthIndex) => {
@@ -64,19 +63,12 @@ const SummarizedCalendar = (props) => {
                           <div className={styles.days}>
                               {[...Array(month.days)].map((_, dayIndex) => {
                                   const dayNumber = dayIndex + 1;
-                                  //const date = new Date(currentDate.getFullYear(), monthIndex, dayNumber);
                                   const date = new Date(calendar.year, monthIndex, dayNumber); 
                                   date.setDate(date.getDate() + 1); 
                                   const dateString = date.toISOString().split("T")[0];
                         
-                                  console.log(month)
-                                  
                                   const isToday = new Date().toISOString().split("T")[0] === dateString;
-                                  //const entriesForDay = filteredAndGroupedEntries[dateString] || [];
 
-                                  //)
-
-                                  console.log(dateString)
 
                                   return (
                                       <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ""}`}>
@@ -89,16 +81,13 @@ const SummarizedCalendar = (props) => {
                                                 const isEntryDate = dateString === entryDate;
                             
                                                 // Alternativ:
-                                                const entryYear = entry.created_at.split("-")[0]; // Ansatz 2
+                                                const entryYear = entry.created_at.split("-")[0]; 
 
-                              
-
-                        
+                            
                                                 if (entryYear != selectedYear) {
                                                     return null; // Wenn das Jahr nicht übereinstimmt, nichts rendern
                                                 }
-
-                                                // Berechnung der Höhe basierend auf der Dauer
+                                                // Berechnung der Höhe des Markers basierend auf der Dauer
                                                 const height = entry.duration < 20 ? "3px" : `${Math.floor(entry.duration / 20) * 5}px`;
                                                 const entryClass = styles[`${entry.label}_opaque`] || styles.defaultLabel;
                             
