@@ -1,4 +1,17 @@
 const useFormatDate = () => {
+
+    const formatDate = (dateString) => {
+        const options = { 
+            day: "2-digit", 
+            month: "long", // Vollständiger Monatsname
+            year: "numeric" 
+        };
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", options); // Amerikanisches Datumsformat
+    };
+
+
+
   const formatDateUS = (dateString) => {
       const options = { 
           day: "2-digit", 
@@ -29,7 +42,7 @@ const useFormatDate = () => {
       return date.toLocaleDateString("de-DE", options); // DE-Format: 15. Januar 2025
   };
 
-  return { formatDateUS, formatDateUK, formatDateDE };
+  return { formatDate, formatDateUS, formatDateUK, formatDateDE };
 };
 
 export default useFormatDate;
