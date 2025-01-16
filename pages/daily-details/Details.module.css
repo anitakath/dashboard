@@ -1,5 +1,8 @@
 
-
+.fontAwesomeIcon{
+    width: 20px;
+    height: 20px;
+}
 
 .entry_div{
     background: var(--purpleDarkHoverOpacity);
@@ -19,40 +22,41 @@
     height: auto; 
     min-height: 110px;
     overflow: scroll;
-
 }
 
 
-.historical_entry_div{
-    max-height: 200px;
-    overflow: scroll;
+.entryBg{
+    background-color: var(--purpleDarkHoverOpacity);
+    padding: 2px 0px;
+    transition: 0.2s ease-in-out;
+}
+
+.entryBg:hover{
+    background-color: var(--purpleDarkHover);
+}
+
+.historyBtn {
+    font-size: 1rem; 
+    cursor: pointer;
+    margin: 1.4rem; 
+    background-color: var(--purpleDarkHoverOpacity);
+    color: #f56565; 
+    border-radius: 0.3rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 10px 0px;
+    padding: 0.5rem 0.7rem; 
+    z-index: 1000;
+    transition: background-color 300ms ease-in-out; 
+    
 }
 
-.historical_entry{
-    width:300px;
-    margin: 5px 0px;
-    padding: 10px;
-    background: var(--purpleDarkHoverOpacity);
-    border-bottom: 1px solid grey;
-    border-right: 2px solid grey;
+.historyBtn:hover {
+    background-color: var(--purpleDarkHover);
+    color: beige;
+    cursor: pointer;
 }
 
-.historical_noentry{
-     width:300px;
-    margin: 5px 0px;
-    padding: 10px;
-    background: rgba(0,0,0,0.1);
-    border-bottom: 1px solid grey;
-    border-right: 2px solid grey;
-
-}
 
 .enlarge_div{
     position: absolute;

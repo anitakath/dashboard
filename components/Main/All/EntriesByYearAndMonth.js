@@ -76,27 +76,26 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         );
 
                         return (
-                            <div key={monthName} className=' my-2'>
-                   
-                               
-             
+                            <div key={monthName} className='my-2'>
 
+                                <div className='w-full flex justify-center'>
                                 
-                                <button
-                                    className={styles.monthYear_header}
-                                    onClick={() => toggleMonthEntries(monthName, year)}
-                                >
-                                    <p className={styles.monthYear_header_p}>
-                                        {monthName} {year}
-                                    </p>
-                                    <p className={styles.monthYear_header_span}>
-                                        (total hours of sport:
-                                        <span className={styles.totalDuration}>
-                                            {convertMinutesToHours(totalDuration)}
-                                        </span>
-                                        )
-                                    </p>
-                                </button>
+                                    <button
+                                        className={styles.monthYear_header}
+                                        onClick={() => toggleMonthEntries(monthName, year)}
+                                    >
+                                        <p className={styles.monthYear_header_p}>
+                                            {monthName}  
+                                        </p>
+                                        <p className={styles.monthYear_header_span}>
+                                            (total hours of sport:
+                                            <span className={styles.totalDuration}>
+                                                {convertMinutesToHours(totalDuration)}
+                                            </span>
+                                            )
+                                        </p>
+                                    </button>
+                                </div>
 
                                 {openMonths[`${monthName}-${year}`] && entries.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at)).map((entry, index) => (
                                     <div className={styles.entry} key={index} style={{ background: getComputedStyle(document.documentElement).getPropertyValue(`--${entry.label}`), }}>

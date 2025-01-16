@@ -49,7 +49,7 @@ const SummarizedCalendar = (props) => {
                 <QuotesSlider/>
             </div>
             <div className={styles.placeholdersDiv}>
-                <h1 className="font_meowScript text-4xl text-amber-400 animate-zoom-in"> ✨another placeholder✨ </h1>
+                <h1 className="font_meowScript text-2xl text-amber-400 animate-zoom-in"> ✨another placeholder✨ </h1>
             </div>
 
 
@@ -69,10 +69,11 @@ const SummarizedCalendar = (props) => {
                         
                                   const isToday = new Date().toISOString().split("T")[0] === dateString;
 
+                                  console.log(dateString)
 
                                   return (
                                       <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ""}`}>
-                                          <Link className={styles.day_date} href={`/daily-details/${dayNumber}${month.name}`}>
+                                          <Link className={styles.day_date} href={`/daily-details/${dateString}`}>
                                               {dayNumber} 
                                           </Link>
                                           <div className={styles.sport_subsection}>

@@ -34,19 +34,6 @@ const Board = () => {
   const dispatch = useDispatch();
   const [filteredByDate, setFilteredByDate ] = useState([])
 
-  //console.log(filteredEntries)
-
-  /*
-    if(filteredEntries){
-      filteredByDate = filteredEntries.filter((entry) => {
-      const entryDate = new Date(entry.created_at);
-      const entryYear = entryDate.getFullYear();
-      const entryMonth = entryDate.getMonth() + 1; // Monat von 0-11 zu 1-12 ändern
-      return entryYear === currentDate.year && entryMonth === actualMonth;
-    });
-  }*/
-
-
 
   useEffect(() => {
     if (navigation.includes(selectedSport)) {
@@ -80,10 +67,7 @@ const Board = () => {
       <div className="flex justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
           {selectedSport != "start" && (
-            <h2 className={`flex items-center text-center ${styles.title}`}>
-              {selectedSport === "all" && "all sports summarized per year and month"}
-              {selectedSport === "daily" &&
-                "all sports summarized per year and month in a calendar"}
+            <h2 className={`flex mt-4 items-center text-center ${styles.title}`}>
               {selectedSport !== "daily" &&
                 selectedSport !== "all" &&
                 selectedSport}

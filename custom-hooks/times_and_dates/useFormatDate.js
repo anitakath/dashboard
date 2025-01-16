@@ -1,24 +1,35 @@
 const useFormatDate = () => {
+  const formatDateUS = (dateString) => {
+      const options = { 
+          day: "2-digit", 
+          month: "long", 
+          year: "numeric" 
+      };
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-US", options); // US-Format: January 15, 2025
+  };
 
-  const formatDate = (dateString) =>{
-    const options = {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZone: "UTC", // Behalte die Zeit in UTC
-    };
-    const date = new Date(dateString);
-    return date.toLocaleString("de-DE", options).replace(",", "");
+  const formatDateUK = (dateString) => {
+      const options = { 
+          day: "2-digit", 
+          month: "long", 
+          year: "numeric" 
+      };
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-GB", options); // UK-Format: 15 January 2025
+  };
 
-  }
+  const formatDateDE = (dateString) => {
+      const options = { 
+          day: "2-digit", 
+          month: "long", 
+          year: "numeric" 
+      };
+      const date = new Date(dateString);
+      return date.toLocaleDateString("de-DE", options); // DE-Format: 15. Januar 2025
+  };
 
-  return{formatDate}
- 
-}
+  return { formatDateUS, formatDateUK, formatDateDE };
+};
 
-export default useFormatDate
-
-
-
+export default useFormatDate;

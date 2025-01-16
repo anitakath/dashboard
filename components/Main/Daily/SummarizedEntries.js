@@ -146,8 +146,6 @@ const SummarizedEntries = () => {
   console.log(calendar)
 
 
-
-
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
 
