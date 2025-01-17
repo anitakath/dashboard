@@ -36,11 +36,11 @@ const QuotesSlider = () => {
               key={index} 
               className={`${styles.slide} ${index === currentIndex ? styles.active : ''}`}
             >
-              <Image 
+             <Image 
                 src={image} 
                 alt={`Quote ${index}`} 
-                layout="fill" 
-                objectFit="cover" 
+                fill
+                style={{ objectFit: 'cover' }} 
               />
             </div>
           ))}

@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 //STYLES
 import styles from "./AddSportForm.module.css";
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
+//CUSTOM HOOKS
+import useColors from "@/custom-hooks/useColors";
 
 const initialState = {
   name: "",
@@ -48,27 +50,8 @@ const AddSportForm = ({ addSportClickHandler }) => {
   const {fetchAllSportsFromUser} = useFetchEntries()
   const [navigationsArray, setNavigationsArray] = useState([])
   const allSports = useSelector((state) => state.sport)
+  const {colors} = useColors();
 
-
-
-  const colors = [
-    "fandango",
-    "celeste",
-    "springGreen",
-    "sinopia",
-    "lightOrange",
-    "wenge",
-    "spaceCadet",
-    "mauve",
-    "aquamarine",
-    "mandarine",
-    "brown",
-    "jasmine",
-    "mustard",
-    "frenchGrey",
-    "eggplant",
-    "mossGreen",
-  ];
 
   const usedColors = new Set([
     ...(sports ? sports.map((sport) => sport.color) : []),
@@ -90,7 +73,6 @@ const AddSportForm = ({ addSportClickHandler }) => {
       );
     if (navigation.includes(state.name))
       return setError(true, "You have already added this sport to your diary.");
-    //if (!state.selectedIcon) return setError(true, "Please select an icon for the sport!");
 
     const data = {
       name: state.name,
@@ -130,7 +112,6 @@ const AddSportForm = ({ addSportClickHandler }) => {
     }
   }
 
-
   const handleSportSelect = (sport) => {
     console.log(sport)
     dispatch({ type: "SET_NAME", payload: sport.name });
@@ -160,10 +141,6 @@ const AddSportForm = ({ addSportClickHandler }) => {
     dispatch({ type: "SET_COLOR", payload: { color: null, style: "" } });
   };
 
-
-  
- // console.log('navigations array:')
-  //console.log(allSports.currentSport)
 
   return (
     <div className="w-full" id="addSportContainer">

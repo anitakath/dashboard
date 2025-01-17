@@ -140,12 +140,6 @@ const SummarizedEntries = () => {
 };
 
 
-  
-
-  const calendar = useSelector((state) => state.calendar)
-  console.log(calendar)
-
-
   return (
     <div className={`${isExpanded ? styles.expanded : ""}`}>
 

@@ -21,7 +21,6 @@ const Navigation = () => {
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const userId = useSelector((state) => state.auth.userId);
   const calendar =  useSelector((state) => state.calendar);
-  //const sortedNavigationArray = useNavigation(userId);
   const navigationArr = allSupabaseSports ? allSupabaseSports
     .filter((sport) => sport.userId === userId)
     .map((sport) => ({
@@ -49,8 +48,6 @@ const Navigation = () => {
     setSortedNavigationArr(navigationArr);
     setCurrentSport(navigationArr)
   }, [allSupabaseSports]);
-
-
 
 
   useEffect(() => {
@@ -129,7 +126,7 @@ const Navigation = () => {
 
       {showAlert && <AddSportAlert />}
       <WebNavigation
-        formisOpen={formIsOpen}
+        formIsOpen={formIsOpen}
         setFormIsOpen={setFormIsOpen}
         addSportClickHandler={addSportClickHandler}
         active={active}

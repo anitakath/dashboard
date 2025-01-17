@@ -1,16 +1,13 @@
 import styles from "./Navigation.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-//COMPONENTS
-
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from "@/custom-hooks/FontAwesome/useFontAwesomeIcons";
 
 const WebNavigation = ({deleteSportHandler, sortedNavigationArr,  active,  handleSportClick, formIsOpen, addSportClickHandler}) =>{
 
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-  // Verwenden des Hooks, um die Icons zu erhalten
   const fontAwesomeIcons = useFontAwesomeIcons();
 
 
@@ -58,9 +55,12 @@ const WebNavigation = ({deleteSportHandler, sortedNavigationArr,  active,  handl
           </ul>
         </div>
       )}
+      <div className="flex justify-center">
       <button className={styles.addSport_btn} onClick={addSportClickHandler}>
         {formIsOpen ? "-" : "+"}
       </button>
+      </div>
+      
     </div>
   );
 };

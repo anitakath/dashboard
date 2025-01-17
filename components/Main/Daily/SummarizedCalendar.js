@@ -69,8 +69,6 @@ const SummarizedCalendar = (props) => {
                         
                                   const isToday = new Date().toISOString().split("T")[0] === dateString;
 
-                                  console.log(dateString)
-
                                   return (
                                       <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ""}`}>
                                           <Link className={styles.day_date} href={`/daily-details/${dateString}`}>
@@ -118,6 +116,3 @@ const SummarizedCalendar = (props) => {
 
 export default SummarizedCalendar;
 
-
-/*      
-        */

@@ -2,10 +2,7 @@ import Link from "next/link";
 import { useState, useEffect} from "react";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowLeft,
-  faUpRightAndDownLeftFromCenter,
-} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import styles from "./Details.module.css";
 import { useSelector } from "react-redux";
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
@@ -15,15 +12,14 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
     const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
     const router = useRouter();
     const { id } = router.query;
-    const [enlargedEntryId, setEnlargedEntryId] = useState(null);
     const [openHistory, setOpenHistory] = useState(false)
-    const [entriesLastFiveYears, setEntriesLastFiveYears] = useState([]);
     const [filteredEntries, setFilteredEntries] = useState([]);
     const { formatDateUS, formatDateUK, formatDateDE } = useFormatDate()
     const [currentFormat, setCurrentFormat] = useState('US');
     const [selectedEntry, setSelectedEntry] = useState(null); 
+    const [lastFiveYears, setLastFiveYears] = useState([])
 
-    const getFormattedDate = (dateString) => {
+  const getFormattedDate = (dateString) => {
       switch (currentFormat) {
         case 'UK':
           return formatDateUK(dateString);
@@ -32,26 +28,26 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
         default:
           return formatDateUS(dateString);
       }
-    };
+  };
 
-    const formattedDate = getFormattedDate(id);
+  const formattedDate = getFormattedDate(id);
   
 
 
-    // Funktion zum Filtern der Einträge für das spezifische Datum
-    const filterEntriesByDate = (dateString) => {
+  // Funktion zum Filtern der Einträge für das spezifische Datum
+  const filterEntriesByDate = (dateString) => {
       const filtered = allSupabaseSports.filter(entry => {
           const entryDate = new Date(entry.created_at).toISOString().split('T')[0];
           return entryDate === dateString;
       });
-      console.log('NOW')
-      console.log(filtered)
+
       setFilteredEntries(filtered);
   };
 
 
   
 
+  /*
   useEffect(()=>{
 
     if(openHistory){
@@ -63,44 +59,93 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
      // [2024: [{...}, {...}, {...}, ...], 2023:[{...}, {...},..], .... 2020: [{...}, {...},..] ]
     }
 
-  }, [openHistory])
+  }, [openHistory])*/
   
 
-  // Funktion zum Abrufen der Einträge der letzten 5 Jahre für dasselbe Datum
-  /*
-  const fetchEntriesFromLastFiveYearsByDate = (dateString) => {
-    const baseDate = new Date(dateString);
-    const entries = [];
-
-    for (let i = 0; i < 5; i++) {
-        const yearDate = new Date(baseDate.getFullYear() - i, baseDate.getMonth(), baseDate.getDate());
-        const formattedYearDate = yearDate.toISOString().split('T')[0];
-
-        allSupabaseSports.forEach(entry => {
-            const entryDate = new Date(entry.created_at).toISOString().split('T')[0];
-            if (entryDate === formattedYearDate) {
-                entries.push(entry);
-            }
-        });
-    }
-
-
-    console.log('THEN')
-    console.log(entries)
-    setEntriesLastFiveYears(entries);
-  };*/
+  
 
   useEffect(() => {
     if (id) {
       filterEntriesByDate(id);
-      //fetchEntriesFromLastFiveYearsByDate(id);
     }
   }, [id, allSupabaseSports]);
 
 
+  const fiveYearsExampleData = [
+    {
+      created_at: "2024-01-15T17:15:00+00:00",
+      duration: 90,
+      entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      entryId:"3dc8f3789-2239-4c0w-9ad5-e59mnsd5642f",
+      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
+      icon: null,
+      id: 111,
+      label: "wenge",
+      name: "Gym",
+      title:"lorem ipsum at the gym",
+      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
+    },
+    {
+      created_at: "2024-01-15T17:15:00+00:00",
+      duration: 90,
+      entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      entryId:"3fv36gzny9-2650-0huw-zzz5-e6dbnz9hunff",
+      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
+      icon: null,
+      id: 111,
+      label: "wenge",
+      name: "Gym",
+      title:"lorem ipsum at the gym",
+      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
+    },
+    {
+      created_at: "2023-01-15T17:15:00+00:00",
+      duration: 120,
+      entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      entryId:"ju87f3789-2zu9-4c0w-9if5-os89swd5642f",
+      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
+      icon: null,
+      id: 112,
+      label: "wenge",
+      name: "Gym",
+      title:"lorem ipsum at the gym - part 2",
+      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
+    },
 
-  console.log(filteredEntries)
- 
+
+  ]
+
+
+  const getLastFiveYears = () => {
+    const currentYear = new Date().getFullYear();
+    return Array.from({ length: 5 }, (_, i) => currentYear - (i + 1));
+  };
+
+
+
+  useEffect(() => {
+    setLastFiveYears(getLastFiveYears());
+  }, []);
+
+
+  const filterEntriesByYear = (year) => {
+      return fiveYearsExampleData.filter(entry => {
+        const entryYear = new Date(entry.created_at).getFullYear();
+        return entryYear === year;
+      });
+  };
+
+
+
+
+  useEffect(() => {
+    if (openHistory) {
+      const element = document.getElementById('historyDiv');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [openHistory]); 
 
 
 
@@ -174,10 +219,7 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
           </div>
          
 
-         
-
-
-      
+     
 
           <div className="my-4 p-2flex-col">
             <div className="flex justify-center items-center"> 
@@ -190,18 +232,30 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
            
 
             {openHistory && (
-              <div className={` ${styles.entryBg} flex min-h-20 bg-red-200 mx-4 pb-10 items-center justify-evenly`}>
-                <h1> Render entries of the last 5 years here ...  </h1>
-              {/* Render entries of the last 5 years here */}
-              {/*{entriesLastFiveYears.map(entry => (
-                  <div key={entry.id}>
-                    <h2>{entry.title}</h2>
-                    <p>{entry.entry}</p>
+              <div className="flex min-h-20 mx-4  pb-10 items-center justify-evenly" id="historyDiv">
+               {Array.isArray(lastFiveYears) && lastFiveYears.map(year => {
+                const entriesForYear = filterEntriesByYear(year);
+                return (
+                  <div key={year} className={styles.year}>
+                    <h2>{year}</h2>
+                    {entriesForYear.length > 0 ? (
+                      entriesForYear.map(entry => (
+                        <div key={entry.entryId} className={styles.pastYearsEntry}>
+                          <h3>{entry.title}</h3>
+                          <p>{entry.entry}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className={styles.pastYearsEntry}>
+                          <p>No entries were made that year.</p> 
+                      </div>
+                    )}
                   </div>
-              ))}*/}
+                );
+              })}
+            
             </div>
             )}
-
             
           </div>
         </div>
