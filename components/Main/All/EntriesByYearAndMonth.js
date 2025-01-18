@@ -76,24 +76,20 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         );
 
                         return (
-                            <div key={monthName} className='my-2'>
+                            <div key={monthName} >
 
-                                <div className='w-full flex justify-center'>
+                                <div className='w-full p-0 h-20 flex justify-center items-center'>
                                 
                                     <button
-                                        className={styles.monthYear_header}
+                                        className={styles.monthBtn}
                                         onClick={() => toggleMonthEntries(monthName, year)}
                                     >
-                                        <p className={styles.monthYear_header_p}>
-                                            {monthName}  
-                                        </p>
-                                        <p className={styles.monthYear_header_span}>
-                                            (total hours of sport:
-                                            <span className={styles.totalDuration}>
-                                                {convertMinutesToHours(totalDuration)}
-                                            </span>
-                                            )
-                                        </p>
+                                        <span className='mx-4'> {monthName} </span> 
+                                        <span className={styles.totalDuration}>
+                                           total hours of sport:  {convertMinutesToHours(totalDuration)}
+                                        </span>
+                                            
+                                        
                                     </button>
                                 </div>
 

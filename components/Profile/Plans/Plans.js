@@ -143,6 +143,13 @@ const Plans = () =>{
   const editSportHandler = (sport) => {
     setCurrentSport(sport);
     setIsModalOpen(true);
+
+    const editPlannedEntryForm = document.getElementById("editPlannedEntryForm")
+
+    if (editPlannedEntryForm) {
+      editPlannedEntryForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   }; 
 
   useEffect(() => {
@@ -176,7 +183,7 @@ const Plans = () =>{
   console.log(currentSports)
 
   return (
-    <div className="flex-col justify-center items-center">
+    <div className="flex-col  justify-center items-center">
       <EditEntry
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

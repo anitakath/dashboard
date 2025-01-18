@@ -129,8 +129,6 @@ const SummarizedEntries = () => {
 
     // Dispatch the update with the new year
     dispatch(updateDate({ year: newYear, month }));
-
-    console.log('HALLO');
     console.log(newYear); // Log the new year instead of the old one
 
     const entries = await fetchSportsDataBySelectedYear(userId, newYear);

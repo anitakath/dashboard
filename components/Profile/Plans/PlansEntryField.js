@@ -5,7 +5,6 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 import styles from "./PlansEntryField.module.css";
-import colors from "../../../styles/Colors.module.css";
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //REDUX
@@ -84,7 +83,6 @@ function groupByDate(entries) {
         <FontAwesomeIcon
           className={`hidden ssm:flex ml-2 ${styles.icon}`}
           icon={layoutMode === "list" ? faBars : faGripHorizontal}
-
         />
       </button>
 

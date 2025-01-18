@@ -1,24 +1,17 @@
 import React from "react";
 import styles from "./EditEntry.module.css"; // Importiere die CSS-Moduldatei
 import { useSelector } from "react-redux";
-const EditEntry = ({
-  isModalOpen,
-  currentSport,
-  setCurrentSport,
-  setIsModalOpen,
-}) => {
+const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen }) => {
   // Füge setIsModalOpen als Prop hinzu
   const currentSports = useSelector((state) => state.sport.currentSport);
   if (!isModalOpen) return null;
 
-   const handleInputChange = (e) => {
-     const { name, value } = e.target;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-     setCurrentSport((prev) => {
+    setCurrentSport((prev) => {
        // look for an object in currentSports (name & color)whose .name matches the input.name property
-       const matchingSport = currentSports.find(
-         (sport) => sport.name === value
-       );
+       const matchingSport = currentSports.find((sport) => sport.name === value);
 
        //If there is an object whose name property matches the name of the input, the colour of the object is used as the label property.
        return {
@@ -27,9 +20,9 @@ const EditEntry = ({
          label: matchingSport ? matchingSport.color : prev.label,
        };
      });
-   };
+  };
 
-    const saveChanges = async () => {
+  const saveChanges = async () => {
       if (!currentSport) return; //Check whether currentSport is set
 
       try {
@@ -69,13 +62,19 @@ const EditEntry = ({
       } catch (error) {
         console.error("An unexpected error occurred:", error);
       }
-    };
+  };
+
+
+  const formatDateForInput = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
+  };
 
 
 
 
   return (
-    <div className={styles.modal_container}>
+    <div className={styles.modal_container} id="editPlannedEntryForm">
       <form className={styles.modal_form}>
         <h2 className={styles.modal_header}>Edit Sport Entry</h2>
         <div className={styles.modal_body}>
@@ -124,9 +123,9 @@ const EditEntry = ({
               Date:
               <input
                 type="datetime-local"
-                name="created_at" // Ändere den Namen auf "created_at", um die Änderungen zu verfolgen
-                value={currentSport.created_at} // Verwende created_at direkt
-                onChange={(e) => handleInputChange(e)} // Stelle sicher, dass die Änderung verarbeitet wird
+                name="created_at" 
+                value={formatDateForInput(currentSport.created_at)} 
+                onChange={(e) => handleInputChange(e)}
                 className={styles.modal_input}
               />
             </label>
