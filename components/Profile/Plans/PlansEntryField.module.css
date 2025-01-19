@@ -1,13 +1,18 @@
 .layout_btn{
     font-size: 1.5rem;
-    width: 50px;
-    height: 50px;
     cursor: pointer;
     transition: 0.2s ease;
+    font-size: 1rem;
+    color: #D1D5DB;
+}
+
+.layout_btn span{
+    font-size: 1rem;
 }
 
 .layout_btn:hover{
-    color: var(--purpleDark)
+    color: var(--purpleDark);
+
 }
 
 .icon{
@@ -64,14 +69,8 @@
     cursor: pointer;
     transition: 0.2s ease;
     color: lightgrey;
-}
-.enlarge_btn:hover{
-    color: black;
-}
-
-.enlarge_icon{
-    font-size: 1rem;
-    cursor: pointer;
+    width: 40px;
+    height: 40px;
 }
 
 
@@ -112,25 +111,6 @@
     background: rgba(255,255,255, 0.2);
     background-color: var(--purpleDark)
 }
-
-.delete_icon{
-    color: red;
-}
-
-
-.check_icon{
-    color: green;
-}
-
-.check_icon, .delete_icon, .edit_icon{
-    font-size: 1rem;
-    transition: 0.2s ease;
-}
-
-
-
-
-
 
 
 

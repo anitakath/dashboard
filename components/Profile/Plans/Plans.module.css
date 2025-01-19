@@ -30,8 +30,13 @@
 .home_link{
     position: absolute;
     left:10px;
-    color: lightgrey;
+    color: #D1D5DB;
     font-size: 1.2rem;
+    transition: 0.2s ease-in-out;
+}
+
+.home_link:hover{
+    color: var(--purpleDark)
 }
 
 

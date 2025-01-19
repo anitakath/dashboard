@@ -7,15 +7,13 @@ import colors from '../../../styles/Colors.module.css'
 
 const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSports, activeSport, addSportClickHandler, formIsOpen, setFormIsOpen, chosenSport, chooseSportHandler}) =>{
 
-
-  console.log(currentSports)
   return (
     <div>
       {addSport && (
         <div className="w-full flex flex-col md:flex-row p-4">
           <div className=" pb-8 mb-6 w-full md:w-6/12 flex items-center h-full flex-col">
-            <div className="  pb-8 flex-col w-full">
-              <h2 className="text-2xl my-2 px-2"> choose your sport </h2>
+            <div className=" mb-2 flex-col w-full">
+              <h2 className="my-2 px-2"> choose your sport </h2>
               {currentSports &&
                 currentSports.map((currSport) => (
                   <div
@@ -34,7 +32,7 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
                 ))}
             </div>
 
-            <h2 className="text-2xl  my-4 px-2">Your sport is not listed?</h2>
+            <h2 className="mb-2 px-2">Your sport is not listed?</h2>
             <button
               onClick={addSportClickHandler}
               className={styles.addNewSport_btn}
@@ -47,7 +45,7 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
           </div>
 
           <div className=" flex-col md:mx-2 w-full md:w-6/12 justify-start  mt-2">
-            <h2 className=" mb-4 text-center text-2xl px-2">
+            <h2 className=" mb-4 text-center px-2">
               tell us more about your goals :)
             </h2>
 

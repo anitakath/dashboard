@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import Tooltip from '../../UI/Tooltip'
 
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 import styles from "./PlansEntryField.module.css";
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //REDUX
 import { useDispatch } from "react-redux";
 import { setAllPlannedSports } from "@/store/sportReducer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faGripHorizontal } from "@fortawesome/free-solid-svg-icons";
+
 const PlansEntryField = ({
   sortedSportsArray,
   enlargeWorkoutHandler,
@@ -21,6 +17,28 @@ const PlansEntryField = ({
   deleteSportHandler,
   openDetailsIds,
 }) => {
+
+
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [tooltipText, setTooltipText] = useState('');
+  const [cursorX, setCursorX] = useState(0);
+  const [cursorY, setCursorY] = useState(0);
+
+const handleMouseEnter = (text) => {
+  setTooltipText(text);
+  setTooltipVisible(true);
+};
+
+const handleMouseLeave = () => {
+  setTooltipVisible(false);
+  setTooltipText('');
+};
+
+const handleMouseMove = (e) => {
+  setCursorX(e.clientX);
+  setCursorY(e.clientY);
+};
+
   // Sortiere nach dem Erstellungsdatum aufsteigend (ältestes Datum zuerst)
   const sortedByDate = [...sortedSportsArray].sort(
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
@@ -80,10 +98,11 @@ function groupByDate(entries) {
   return (
     <div className="w-full">
       <button onClick={toggleLayout} className={styles.layout_btn}>
-        <FontAwesomeIcon
-          className={`hidden ssm:flex ml-2 ${styles.icon}`}
+        {/*<FontAwesomeIcon
+          className={` ssm:flex ml-2 ${styles.icon}`}
           icon={layoutMode === "list" ? faBars : faGripHorizontal}
-        />
+        /> */}
+         LAYOUT
       </button>
 
       <div
@@ -118,19 +137,10 @@ function groupByDate(entries) {
                   >
                     <div>
                       <div className="relative flex flex-col items-center">
-                        <button
-                          className={styles.enlarge_btn}
-                          onClick={() =>
-                            layoutMode === "grid"
-                              ? enlargeObject(sport.entryId)
-                              : enlargeWorkoutHandler(sport.entryId)
-                          }
-                        >
-                          <FontAwesomeIcon
-                            icon={faUpRightAndDownLeftFromCenter}
-                            className={styles.enlarge_icon}
-                          />
-                        </button>
+                     
+                      <button className={styles.enlarge_btn} onClick={() => layoutMode === "grid" ? enlargeObject(sport.entryId) : enlargeWorkoutHandler(sport.entryId)}>
+                      🔍
+                       </button>
                         <div className="w-full flex flex-col items-center mt-4">
                           <h1
                             className=" text-s md:text-2xl cursor-pointer"
@@ -164,6 +174,7 @@ function groupByDate(entries) {
                         {(openDetailsIds.includes(sport.entryId) ||
                           enlargedEntryId === sport.entryId) && (
                           <div
+                            onMouseMove={handleMouseMove}
                             className={`flex justify-center m-2 p-1${
                               enlargedEntryId !== sport.entryId
                                 ? ""
@@ -175,30 +186,43 @@ function groupByDate(entries) {
                                 : { position: "relative", top: "200px" }
                             }
                           >
-                            <button className={styles.action_btns}>
-                              <FontAwesomeIcon
-                                icon={faXmark}
-                                className={styles.delete_icon}
-                                onClick={() => deleteSportHandler(sport)}
-                              />
+                            <button 
+                              onClick={() => deleteSportHandler(sport)} 
+                              onMouseEnter={() => handleMouseEnter('Delete entry')} 
+                              onMouseLeave={handleMouseLeave}
+                              className={styles.action_btns} 
+                            >
+                            
+                              🚮
+                            
                             </button>
-                            <button className={styles.action_btns}>
-                              <FontAwesomeIcon
-                                icon={faCheck}
-                                className={styles.check_icon}
-                                onClick={() => checkSportHandler(sport)}
-                              />
+
+                            <button 
+                              className={styles.action_btns}  
+                              onClick={() => checkSportHandler(sport)} 
+                              onMouseEnter={() => handleMouseEnter('Check entry')} 
+                              onMouseLeave={handleMouseLeave}
+                            >
+                             ✔️
+                             
                             </button>
-                            <button className={styles.action_btns}>
-                              <FontAwesomeIcon
-                                icon={faPencil}
-                                className={styles.edit_icon}
-                                onClick={() => editSportHandler(sport)}
-                              />
+
+                            <button 
+                              className={styles.action_btns} 
+                              onClick={() => editSportHandler(sport)} 
+                              onMouseEnter={() => handleMouseEnter('Edit entry')} 
+                              onMouseLeave={handleMouseLeave}
+                            >
+                             ✍🏼
                             </button>
+
+                          {tooltipVisible && (
+                            <Tooltip text={tooltipText} />
+                          )}
                           </div>
                         )}
                       </div>
+                      
                     </div>
                     {(openDetailsIds.includes(sport.entryId) ||
                       enlargedEntryId === sport.entryId) && (
@@ -223,142 +247,3 @@ function groupByDate(entries) {
 };
 
 export default PlansEntryField;
-/*
-const PlansEntryField = ({
-  sortedSportsArray,
-  enlargeWorkoutHandler,
-  editSportHandler,
-  checkSportHandler,
-  deleteSportHandler,
-  openDetailsIds,
-}) => {
-  // Create a copy of the array and sort it by created_at date (most recent first)
-  const sortedByDate = [...sortedSportsArray].sort(
-    (a, b) => new Date(a.created_at) - new Date(b.created_at)
-  );
-  const dispatch = useDispatch();
-  const [layoutMode, setLayoutMode] = useState("list");
-  const [enlargedEntryId, setEnlargedEntryId] = useState(null); // Zustand für das vergrößerte Objekt
-  //const [enlargedEntryId, setEnlargedEntryId] = useState({ active: null }); // Zustand für das vergrößerte Objekt
-
-  useEffect(() => {
-    dispatch(setAllPlannedSports(sortedByDate));
-  }, [sortedByDate]);
-
-  const toggleLayout = () => {
-    setLayoutMode((prevMode) => (prevMode === "list" ? "grid" : "list"));
-    setEnlargedEntryId(null);
-  };
-
-  console.log(sortedByDate);
-
-  const enlargeObject = (entryId) => {
-    if (layoutMode === "grid") {
-      setEnlargedEntryId((prevId) => (prevId === entryId ? null : entryId)); // Toggle zwischen vergrößern und verkleinern
-    }
-  };
-
-  return (
-    <div className="w-full">
-      <button onClick={toggleLayout} className={styles.layout_btn}>
-        <FontAwesomeIcon
-          icon={layoutMode === "list" ? faBars : faGripHorizontal}
-        />
-      </button>
-
-      <div
-        className={`${styles.field} ${
-          layoutMode === "grid" ? styles.grid : styles.list
-        }`}
-      >
-        {sortedByDate &&
-          sortedByDate.map((sport) => (
-            <div
-              key={sport.entryId}
-              className={`${
-                enlargedEntryId === sport.entryId
-                  ? styles.expanded_grid
-                  : styles.collapsed_grid
-              } ${styles.sport_entry_div} ${styles[sport.label + "_bg"]}`}
-            >
-              <div>
-                <div className="relative flex flex-col items-center">
-                  <button
-                    className={styles.enlarge_btn}
-                    onClick={() =>
-                      layoutMode === "grid"
-                        ? enlargeObject(sport.entryId)
-                        : enlargeWorkoutHandler(sport.entryId)
-                    }
-                  >
-                    <FontAwesomeIcon
-                      icon={faUpRightAndDownLeftFromCenter}
-                      className={styles.enlarge_icon}
-                    />
-                  </button>
-
-                  <div className="w-full flex flex-col items-center mt-4">
-                    <h1
-                      className="md:text-2xl cursor-pointer"
-                      onClick={() => enlargeWorkoutHandler(sport.entryId)}
-                    >
-                      {sport.name}
-                    </h1>
-                    <h2 className={styles.created_at_h2}>
-                      {formatDate(sport.created_at)}
-                    </h2>
-                    <h3 className={styles.duration_h3}>{sport.duration} min</h3>
-                  </div>
-
-                  <div
-                    className={`${styles.sport_entry_details} ${
-                      openDetailsIds.includes(sport.entryId)
-                        ? styles.expanded
-                        : styles.collapsed
-                    }`}
-                  >
-                    {openDetailsIds.includes(sport.entryId) && (
-                      <>
-                        <h3 className="hidden sm:flex">- {sport.title} -</h3>
-                        <p>{sport.entry}</p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {(openDetailsIds.includes(sport.entryId) ||
-                enlargedEntryId === sport.entryId) && (
-                <div className="flex justify-center m-2 p-1">
-                  <button className={styles.action_btns}>
-                    <FontAwesomeIcon
-                      icon={faXmark}
-                      className={styles.delete_icon}
-                      onClick={() => deleteSportHandler(sport)}
-                    />
-                  </button>
-                  <button className={styles.action_btns}>
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={styles.check_icon}
-                      onClick={() => checkSportHandler(sport)}
-                    />
-                  </button>
-                  <button className={styles.action_btns}>
-                    <FontAwesomeIcon
-                      icon={faPencil}
-                      className={styles.edit_icon}
-                      onClick={() => editSportHandler(sport)}
-                    />
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-      </div>
-    </div>
-  );
-};
-
-export default PlansEntryField;
-*/

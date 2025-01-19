@@ -180,10 +180,9 @@ const Plans = () =>{
     setFormIsOpen((prevState) => !prevState);
   };
 
-  console.log(currentSports)
 
   return (
-    <div className="flex-col  justify-center items-center">
+    <div className="flex-col justify-center items-center">
       <EditEntry
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

@@ -9,9 +9,6 @@ const useFetchEntries = (userId) => {
 
     const uniqueTitlesSet = new Set();
 
-    console.log(DataTransferItemList)
-
-
     data.forEach(entry => {
         if (entry.title) {
             uniqueTitlesSet.add(entry.name); // Hier verwenden wir entry.name für die Sportarten

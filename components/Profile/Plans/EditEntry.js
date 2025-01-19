@@ -24,7 +24,6 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
 
   const saveChanges = async () => {
       if (!currentSport) return; //Check whether currentSport is set
-
       try {
         // 1. Send the edited sports object to the API for updating
         const response = await fetch("/api/plannedSports", {

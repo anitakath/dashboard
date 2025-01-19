@@ -128,6 +128,7 @@
 .errorText{
   color: var(--error);
   position: relative;
+  margin-top: 10px;
 }
 
 
