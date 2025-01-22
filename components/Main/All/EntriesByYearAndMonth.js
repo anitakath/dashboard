@@ -1,6 +1,6 @@
 import { useState} from 'react';
 import Link from 'next/link';
-import styles from '../Entry.module.css'
+import styles from './EntriesByYearAndMonth.module.css'
 //CUSTOM HOOKS
 import useFormatDate from '@/custom-hooks/times_and_dates/useFormatDate';
 import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
@@ -18,7 +18,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const userId = useSelector((state) => state.auth.userId)
   const dispatch = useDispatch();
   const {fetchSportsDataBySelectedYear} = useFetchEntries()
-  const {convertMinutesToHours} = useConvertTimes()
+  const {convertMinutesToHours, averageDurationPerDay} = useConvertTimes()
   const {formatDate} = useFormatDate()
   const toggleMonthEntries = (monthName, year) => {
     const monthYearKey = `${monthName}-${year}`;
@@ -40,8 +40,9 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   };
 
 
+
   return (
-    <div className=' w-full'>
+    <div className='w-full'>
         {isLoading && (
             <div className='h-screen w-full m-0'>
                 <div className='w-full h-60'>
@@ -85,11 +86,16 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                                         onClick={() => toggleMonthEntries(monthName, year)}
                                     >
                                         <span className='mx-4'> {monthName} </span> 
-                                        <span className={styles.totalDuration}>
-                                           total hours of sport:  {convertMinutesToHours(totalDuration)}
-                                        </span>
-                                            
+                                        <div className={styles.durationDiv}>
+                                            <span className={styles.totalDuration}>
+                                                total hours of sport:  <strong> {convertMinutesToHours(totalDuration)} </strong>
+                                            </span>
+                                            <span className={styles.averageDuration}> 
+                                                average hours of sport per day:  <strong>{averageDurationPerDay(totalDuration)} </strong>
+                                            </span>
                                         
+                                        </div>
+                                       
                                     </button>
                                 </div>
 

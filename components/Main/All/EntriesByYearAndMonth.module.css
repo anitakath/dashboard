@@ -1,0 +1,84 @@
+.yearHeader{
+    font-weight: bolder;
+    color: var(--purpleDark);
+    margin: 15px;
+    padding: 5px;
+}
+
+.yearHeaderActive{
+    margin-bottom: -10px;
+}
+
+.yearHeader:hover{
+    cursor: pointer;
+    color: var(--purpleDarkHoverOpacity);
+}
+
+.monthBtn{
+    color: var(--purpleDark);
+    font-size: 1.1rem;
+    margin: 0px;
+    background-color: var(--purpleDarkHoverOpacity);
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    width: 95%;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    transition: 0.2s ease-in-out;
+}
+
+.monthBtn:hover{
+    box-shadow: 0px 2px 5px grey;
+    width: 96%;
+}
+
+.monthBtn:active{
+    transform: scale(1);
+}
+
+.durationDiv{
+    display: flex; 
+    flex-direction: column;
+}
+
+
+.totalDuration{
+    color: black;
+    margin: 0px 5px;
+    font-size: 0.8rem;
+
+}
+
+.averageDuration{
+    color: black;
+    margin: 0px 5px;
+    font-size: 0.8rem;
+}
+
+.entry{
+    box-shadow:0px 0px 10px rgba(0,0,0, 0.2);
+    margin: 10px 0px;
+    padding: 0px;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+.link{
+    cursor: pointer;
+    transition: 0.2s ease;
+    padding: 5px;
+    position: relative;
+    padding: 10px 0px;
+}
+
+.link:hover{
+    color: beige;
+    background-color: var(--purpleDarkHover);
+}
+
+

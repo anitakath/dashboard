@@ -34,6 +34,7 @@ const Plans = () =>{
   const [activeSport, setActiveSport] = useState(null);
   const userId = useSelector((state)=> state.auth.userId)
   const { fetchSportsData } = useAuth();
+  const [isLoading, setIsLoading] = useState(null)
 
 
   useEffect(() => {
@@ -70,6 +71,8 @@ const Plans = () =>{
 
 
   const checkSportHandler = async (sport) => {
+
+    setIsLoading("checkPlannedSport")
     try {
       // 1. Insert the sports object into the 'sports' table
       const response = await fetch("/api/sports", {
@@ -99,6 +102,7 @@ const Plans = () =>{
 
       const data = await response.json();
       console.log("Sport added successfully:", data);
+      setIsLoading(null)
 
       // 2. Delete the sports object from the 'sports_planned' table via the API
       const deleteResponse = await fetch("/api/plannedSports", {
@@ -126,7 +130,12 @@ const Plans = () =>{
       setSportsArray(filteredSportsArray);
 
       // Optional: Fetch updated sports data and dispatch to Redux store
+      /** fetchSportsData NOT A FUNCTION??!?!!! */
+      /** fetchSportsData NOT A FUNCTION??!?!!! */
+      /** fetchSportsData NOT A FUNCTION??!?!!! */
+      /** fetchSportsData NOT A FUNCTION??!?!!! */
       const fetchedData = await fetchSportsData(userId);
+
 
       if (fetchedData) {
         dispatch(setAllSportsFromSupabase(fetchedData));
@@ -134,6 +143,7 @@ const Plans = () =>{
 
       // Dispatch removeSport action to Redux Store
       dispatch(removeSport(sport.entryId));
+     
     } catch (error) {
       console.error("An unexpected error occurred:", error);
     }
@@ -227,6 +237,7 @@ const Plans = () =>{
               deleteSportHandler={deleteSportHandler}
               sortedSportsArray={sortedSportsArray}
               enlargeWorkoutHandler={enlargeWorkoutHandler}
+              isLoading={isLoading}
             />
           </div>
         )}

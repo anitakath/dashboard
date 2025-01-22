@@ -50,8 +50,6 @@ const Profile = () => {
     // Funktion zum Hochladen eines Bildes
     const handleImageUpload = async (sport) => {
 
-      console.log(sport)
-
       
       /*const fileInput = document.createElement("input");
       fileInput.type = "file";
@@ -83,7 +81,7 @@ const Profile = () => {
 
           <div className="  my-14  lg:m-0   sm:m-4 lg:p-4 lg:pl-14  relative w-full overflow-scroll">
             {profileSection === "plans" && (
-              <h1 className={`${styles.textBackground} relative left-10 p-4`}>
+              <h1 className={`${styles.textBackground} relative p-4`}>
                 plan your future workouts
               </h1>
             )}

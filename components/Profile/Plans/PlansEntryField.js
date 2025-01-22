@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Tooltip from '../../UI/Tooltip'
 
 import styles from "./PlansEntryField.module.css";
@@ -16,9 +15,8 @@ const PlansEntryField = ({
   checkSportHandler,
   deleteSportHandler,
   openDetailsIds,
+  isLoading
 }) => {
-
-
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
   const [cursorX, setCursorX] = useState(0);
@@ -94,6 +92,7 @@ function groupByDate(entries) {
 
   const groupedEntries = groupByDate(sortedByDate);
 
+  
 
   return (
     <div className="w-full">
@@ -140,8 +139,8 @@ function groupByDate(entries) {
                      
                       <button className={styles.enlarge_btn} onClick={() => layoutMode === "grid" ? enlargeObject(sport.entryId) : enlargeWorkoutHandler(sport.entryId)}>
                       🔍
-                       </button>
-                        <div className="w-full flex flex-col items-center mt-4">
+                      </button>
+                      <div className="w-full flex flex-col items-center mt-4">
                           <h1
                             className=" text-s md:text-2xl cursor-pointer"
                             onClick={() => enlargeWorkoutHandler(sport.entryId)}
@@ -154,8 +153,8 @@ function groupByDate(entries) {
                           <h3 className={styles.duration_h3}>
                             {sport.duration} min
                           </h3>
-                        </div>
-                        <div
+                      </div>
+                      <div
                           className={`${styles.sport_entry_details} ${
                             openDetailsIds.includes(sport.entryId)
                               ? styles.expanded
@@ -170,12 +169,11 @@ function groupByDate(entries) {
                               <p>{sport.entry}</p>
                             </>
                           )}
-                        </div>
-                        {(openDetailsIds.includes(sport.entryId) ||
-                          enlargedEntryId === sport.entryId) && (
-                          <div
+                      </div>
+                      {(openDetailsIds.includes(sport.entryId) || enlargedEntryId === sport.entryId) && (
+                        <div
                             onMouseMove={handleMouseMove}
-                            className={`flex justify-center m-2 p-1${
+                            className={`flex relative min-w-60 justify-center m-2 p-1${
                               enlargedEntryId !== sport.entryId
                                 ? ""
                                 : "relative"
@@ -185,36 +183,49 @@ function groupByDate(entries) {
                                 ? {}
                                 : { position: "relative", top: "200px" }
                             }
-                          >
-                            <button 
+                        >
+                          {isLoading === null && (
+                            <div>
+                              <button 
                               onClick={() => deleteSportHandler(sport)} 
                               onMouseEnter={() => handleMouseEnter('Delete entry')} 
                               onMouseLeave={handleMouseLeave}
                               className={styles.action_btns} 
-                            >
+                              >
                             
                               🚮
                             
-                            </button>
+                              </button>
 
-                            <button 
-                              className={styles.action_btns}  
-                              onClick={() => checkSportHandler(sport)} 
-                              onMouseEnter={() => handleMouseEnter('Check entry')} 
-                              onMouseLeave={handleMouseLeave}
-                            >
-                             ✔️
-                             
-                            </button>
+                              <button 
+                                className={styles.action_btns}  
+                                onClick={() => checkSportHandler(sport)} 
+                                onMouseEnter={() => handleMouseEnter('Check entry')} 
+                                onMouseLeave={handleMouseLeave}
+                              >
+                              ✔️
+                              
+                              </button>
 
-                            <button 
+                              <button 
                               className={styles.action_btns} 
                               onClick={() => editSportHandler(sport)} 
                               onMouseEnter={() => handleMouseEnter('Edit entry')} 
                               onMouseLeave={handleMouseLeave}
-                            >
-                             ✍🏼
-                            </button>
+                              >
+                              ✍🏼
+                              </button> 
+
+                            </div>
+                          )}
+                           
+
+                          
+                          {isLoading === "checkPlannedSport" && (
+                            <div className="absolute bottom-4 h-10 z-10">
+                              <h1> completing entry.... </h1>
+                            </div>
+                          )}
 
                           {tooltipVisible && (
                             <Tooltip text={tooltipText} />
@@ -238,6 +249,7 @@ function groupByDate(entries) {
                       ></div>
                     )}
                   </div>
+                 
                 ))}
               </div>
             ))}
