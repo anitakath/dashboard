@@ -73,6 +73,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
 
 
 
+
   return (
     <div className={styles.container}>
       {currentSport != "all" && (
@@ -100,6 +101,8 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
                 </p>
                 <h2 className={styles.title}> {entry.title} </h2>
                 <p className={styles.description}> {entry.entry} </p>
+                {entry.provider != null && <p className="mx-4 text-xs">{entry.provider}</p>}
+                {entry.provider === null && <p className="mx-4 text-xs"> no provider was added</p>}
               </div>
             </Link>
           </div>

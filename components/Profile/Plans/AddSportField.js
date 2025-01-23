@@ -10,7 +10,7 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
   return (
     <div>
       {addSport && (
-        <div className="w-full flex flex-col md:flex-row p-4">
+        <div className="w-full  flex flex-col md:flex-row p-4">
           <div className=" pb-8 mb-6 w-full md:w-6/12 flex items-center h-full flex-col">
             <div className=" mb-2 flex-col w-full">
               <h2 className="my-2 px-2"> choose your sport </h2>
@@ -26,7 +26,7 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
                         colors[currSport.color]
                       } ${activeSport === currSport.name ? styles.active : ""}`}
                     >
-                      {currSport.name}
+                      {currSport.name} 
                     </button>
                   </div>
                 ))}

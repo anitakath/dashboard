@@ -32,6 +32,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     label: "",
     userId,
     img: "",
+    provider: "",
   });
 
 
@@ -86,6 +87,18 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
  }, [currentSport, selectedSport]);
 
 
+ const sportProviders = [
+  "Urban Sports Club",
+  "Wellpass",
+  "eGym",
+  "Self Paid",
+  "At Home", 
+  "Club",
+  "Other"
+];
+
+
+
 
   return (
     <div className="lg:my-2 lg:p-2  flex-col justify-center w-full overflow-scroll flex items-center ">
@@ -113,7 +126,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
             onChange={changeHandler}
           ></input>
 
-          <div className=" md:h-12">
+          <div className="md:h-12">
             {isTouched.title && !validateTitle(inputs.title) && (
               <p className={styles.errorText}>
                 The title must be between 3 and 50 characters long
@@ -132,13 +145,32 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
             onChange={changeHandler}
           ></textarea>
 
-          <div className=" h-20 md:h-12 ">
+          <div className="  md:h-12 ">
             {isTouched.text && !validateText(inputs.text) && (
               <p className={styles.errorText}>
                 The text must be between 5 and 1000 characters long.
               </p>
             )}
           </div>
+
+          <div className={styles.providerContainer}>
+          {currentPath === "/profile" && <p className="absolute text-xs top-1 left-0 text-zinc-300"> SCROLL TO THE RIGHT  </p>}
+            {sportProviders.map((provider) => (
+              <div key={provider} className={styles.providerDiv}>
+              
+                <input 
+                  type="radio" 
+                  id={provider} 
+                  name="provider" 
+                  value={provider} 
+                  onChange={changeHandler} 
+                 
+                />
+                <label htmlFor={provider}>{provider}</label>
+              </div>
+            ))}
+          </div>
+         
 
           <h2 className=" mb-4 text-center">
             enter the date and duration of your sports sessions

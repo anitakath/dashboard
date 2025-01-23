@@ -9,12 +9,9 @@ import EditEntryField from './EditEntryField';
 import PlansEntryField from "./PlansEntryField";
 //REDUX 
 import { useSelector, useDispatch } from 'react-redux';
-import { removeSport, replaceSportsArray } from "@/store/profileReducer";
-import { setAllSportsFromSupabase } from "@/store/sportReducer";
+import { removeSport } from "@/store/profileReducer";
 //CUSTOM HOOKS
 import { useDeleteSport } from '@/custom-hooks/useSportEntries';
-//import { fetchSportsData } from "@/custom-hooks/useSportEntries";
-import useAuth from '@/custom-hooks/auth/useAuth';
 
 const Plans = () =>{
   const [openDetailsIds, setOpenDetailsIds] = useState([]); // Zustand für mehrere geöffnete IDs
@@ -32,9 +29,9 @@ const Plans = () =>{
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSport, setCurrentSport] = useState(null);
   const [activeSport, setActiveSport] = useState(null);
-  const userId = useSelector((state)=> state.auth.userId)
-  const { fetchSportsData } = useAuth();
   const [isLoading, setIsLoading] = useState(null)
+  const [formIsOpen, setFormIsOpen] = useState(false);
+  let addSportBtnText = addSport ? "close form" : "add a sport";
 
 
   useEffect(() => {
@@ -57,8 +54,6 @@ const Plans = () =>{
     setAddSport(!addSport);
   };
 
-  let addSportBtnText = addSport ? "close form" : "add a sport";
-
   const chooseSportHandler = (e) => {
     const currSport = e.currSport;
     setChosenSport(e.currSport);
@@ -69,9 +64,7 @@ const Plans = () =>{
 
   const deleteSportHandler = useDeleteSport(sportsArray, setSportsArray);
 
-
   const checkSportHandler = async (sport) => {
-
     setIsLoading("checkPlannedSport")
     try {
       // 1. Insert the sports object into the 'sports' table
@@ -82,6 +75,7 @@ const Plans = () =>{
         },
         body: JSON.stringify({
           entryId: sport.entryId,
+          provider: sport.provider,
           name: sport.name,
           title: sport.title,
           entry: sport.entry,
@@ -101,7 +95,7 @@ const Plans = () =>{
       }
 
       const data = await response.json();
-      console.log("Sport added successfully:", data);
+
       setIsLoading(null)
 
       // 2. Delete the sports object from the 'sports_planned' table via the API
@@ -129,19 +123,6 @@ const Plans = () =>{
 
       setSportsArray(filteredSportsArray);
 
-      // Optional: Fetch updated sports data and dispatch to Redux store
-      /** fetchSportsData NOT A FUNCTION??!?!!! */
-      /** fetchSportsData NOT A FUNCTION??!?!!! */
-      /** fetchSportsData NOT A FUNCTION??!?!!! */
-      /** fetchSportsData NOT A FUNCTION??!?!!! */
-      const fetchedData = await fetchSportsData(userId);
-
-
-      if (fetchedData) {
-        dispatch(setAllSportsFromSupabase(fetchedData));
-      }
-
-      // Dispatch removeSport action to Redux Store
       dispatch(removeSport(sport.entryId));
      
     } catch (error) {
@@ -183,8 +164,6 @@ const Plans = () =>{
     }
     setAreAllOpen(!areAllOpen);
   };
-
-  const [formIsOpen, setFormIsOpen] = useState(false);
 
   const addSportClickHandler = () => {
     setFormIsOpen((prevState) => !prevState);

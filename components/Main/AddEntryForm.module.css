@@ -132,6 +132,40 @@
 }
 
 
+.providerContainer{
+  width: 100%;
+  display: flex;
+  overflow: scroll;
+  border-top: 1px solid var(--purpleDark);
+  border-bottom: 1px solid var(--purpleDark);
+  padding-top: 25px;
+  height: 90px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.providerDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+ 
+}
+
+.providerDiv input{
+
+
+}
+
+.providerDiv label{
+  margin-top: 4px;
+  width: 100px;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: center;
+}
+
 .successMessage_p{
   font-size: 1.2rem;
   color: lightgreen;

@@ -171,7 +171,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
   const submitHandler = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    console.log(e)
+
 
     // Input validation
     const validationErrors = validateInputs(inputs);
@@ -200,6 +200,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
             entryPath: `${formattedTitle}-${uniqueID}`,
             duration: inputs.duration,
             created_at: inputs.created_at,
+            provider: inputs.provider
           }
         : {
             name: inputs.name,
@@ -211,6 +212,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
             duration: inputs.duration,
             created_at: inputs.created_at,
             userId: inputs.userId,
+            provider: inputs.provider
           };
 
     if (currentPath === "/profile" && !chosenSport) {

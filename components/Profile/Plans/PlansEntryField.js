@@ -19,8 +19,6 @@ const PlansEntryField = ({
 }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
-  const [cursorX, setCursorX] = useState(0);
-  const [cursorY, setCursorY] = useState(0);
 
 const handleMouseEnter = (text) => {
   setTooltipText(text);
@@ -32,10 +30,6 @@ const handleMouseLeave = () => {
   setTooltipText('');
 };
 
-const handleMouseMove = (e) => {
-  setCursorX(e.clientX);
-  setCursorY(e.clientY);
-};
 
   // Sortiere nach dem Erstellungsdatum aufsteigend (ältestes Datum zuerst)
   const sortedByDate = [...sortedSportsArray].sort(
@@ -92,16 +86,33 @@ function groupByDate(entries) {
 
   const groupedEntries = groupByDate(sortedByDate);
 
-  
+
+  const actionButtons = [
+    {
+      label: '🚮',
+      onClick: () => deleteSportHandler(sport),
+      onMouseEnter: () => handleMouseEnter('Delete entry'),
+      onMouseLeave: handleMouseLeave,
+    },
+    {
+      label: '✔️',
+      onClick: () => checkSportHandler(sport),
+      onMouseEnter: () => handleMouseEnter('Check entry'),
+      onMouseLeave: handleMouseLeave,
+    },
+    {
+      label: '✍🏼',
+      onClick: () => editSportHandler(sport),
+      onMouseEnter: () => handleMouseEnter('Edit entry'),
+      onMouseLeave: handleMouseLeave,
+    },
+  ]
+
 
   return (
     <div className="w-full">
       <button onClick={toggleLayout} className={styles.layout_btn}>
-        {/*<FontAwesomeIcon
-          className={` ssm:flex ml-2 ${styles.icon}`}
-          icon={layoutMode === "list" ? faBars : faGripHorizontal}
-        /> */}
-         LAYOUT
+        LAYOUT
       </button>
 
       <div
@@ -154,6 +165,14 @@ function groupByDate(entries) {
                             {sport.duration} min
                           </h3>
                       </div>
+
+                      <div className="absolute bottom-0 right-0">
+                        <button>
+                          {sport.provider}
+                        </button>
+
+                      </div>
+                    
                       <div
                           className={`${styles.sport_entry_details} ${
                             openDetailsIds.includes(sport.entryId)
@@ -172,7 +191,6 @@ function groupByDate(entries) {
                       </div>
                       {(openDetailsIds.includes(sport.entryId) || enlargedEntryId === sport.entryId) && (
                         <div
-                            onMouseMove={handleMouseMove}
                             className={`flex relative min-w-60 justify-center m-2 p-1${
                               enlargedEntryId !== sport.entryId
                                 ? ""
@@ -186,40 +204,19 @@ function groupByDate(entries) {
                         >
                           {isLoading === null && (
                             <div>
-                              <button 
-                              onClick={() => deleteSportHandler(sport)} 
-                              onMouseEnter={() => handleMouseEnter('Delete entry')} 
-                              onMouseLeave={handleMouseLeave}
-                              className={styles.action_btns} 
-                              >
-                            
-                              🚮
-                            
-                              </button>
-
-                              <button 
-                                className={styles.action_btns}  
-                                onClick={() => checkSportHandler(sport)} 
-                                onMouseEnter={() => handleMouseEnter('Check entry')} 
-                                onMouseLeave={handleMouseLeave}
-                              >
-                              ✔️
-                              
-                              </button>
-
-                              <button 
-                              className={styles.action_btns} 
-                              onClick={() => editSportHandler(sport)} 
-                              onMouseEnter={() => handleMouseEnter('Edit entry')} 
-                              onMouseLeave={handleMouseLeave}
-                              >
-                              ✍🏼
-                              </button> 
-
+                             {actionButtons.map((button, index) => (
+                                <button
+                                  key={index}
+                                  className={styles.action_btns}
+                                  onClick={button.onClick}
+                                  onMouseEnter={button.onMouseEnter}
+                                  onMouseLeave={button.onMouseLeave}
+                                >
+                                  {button.label}
+                                </button>
+                              ))}
                             </div>
                           )}
-                           
-
                           
                           {isLoading === "checkPlannedSport" && (
                             <div className="absolute bottom-4 h-10 z-10">
@@ -227,9 +224,8 @@ function groupByDate(entries) {
                             </div>
                           )}
 
-                          {tooltipVisible && (
-                            <Tooltip text={tooltipText} />
-                          )}
+                          {tooltipVisible && <Tooltip text={tooltipText} /> }
+
                           </div>
                         )}
                       </div>

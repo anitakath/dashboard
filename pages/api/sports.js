@@ -15,6 +15,7 @@ export default async (req, res) => {
       duration,
       icon,
       created_at,
+      provider
     } = req.body;
 
     // Füge den neuen Sport zur Supabase-Datenbank hinzu
@@ -30,6 +31,7 @@ export default async (req, res) => {
         duration,
         icon,
         created_at,
+        provider
       },
     ]);
 
@@ -60,19 +62,3 @@ export default async (req, res) => {
   res.setHeader("Allow", ["POST", "GET"]);
   res.status(405).end(`Method ${req.method} Not Allowed`);
 };
-/*
-export default async (req, res) => {
-  const { userId } = req.query; 
-
-  const { data, error } = await supabase
-    .from("sports")
-    .select("*")
-    .eq("userId", userId)
-    .order("id", { ascending: false });
-
-  if (error) {
-    return res.status(500).json({ error: error.message });
-  }
-
-  res.status(200).json({ data });
-};*/
