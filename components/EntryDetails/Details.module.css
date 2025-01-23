@@ -1,21 +1,30 @@
 
 
+.entryContainer{
+    display: flex;
+}
+
+.entryDiv{
+    width: 70%;
+}
 
 .title{
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: black;
     margin: 5px 0px;
     padding: 0px 5px;
-
 }
 
 
 .entry{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 10px 0px;
     color: var(--purpleDark);
     padding: 0px 5px;
+}
 
+.imageDiv{
+    width: 30%;
 }
 
 
@@ -24,10 +33,10 @@
 }
 
 .delete_btn, .edit_btn{
-    width: 60px;
-    height: 60px;
-    margin: 0px 10px;
-    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    margin: 0px 5px;
+    font-size: 1rem;
     cursor: pointer;
     padding: 5px;
     transition: 0.2s ease;
@@ -37,6 +46,18 @@
     color: var(--purpleDark);
 }
 
+
+
+@media screen and (max-width: 800px){
+    .entryContainer{
+        flex-direction: column;
+    }
+
+    .entryDiv, .imageDiv{
+        width: 100%;
+        min-height: 200px;
+    }
+}
 @media screen and (max-width: 600px){
 
     .goback_link{
@@ -55,9 +76,26 @@
 
     .title, .entry{
         margin: 10px;
+        font-size: 1rem;
+    }
+
+    .title{
+        font-size: 1.3rem;
     }
 
     .title{
         border-top: 1px solid var(--purpleDarkHoverOpacity);
     }
+}
+
+@media screen and (max-width: 350px){
+    .entryDiv{
+        align-items: center;
+        justify-content: center;
+    }
+
+    .title, .entry{
+        text-align: center;
+    }
+
 }
