@@ -171,7 +171,34 @@ const useCalendar = () => {
     Oct: "OCTOBER",
     Nov: "NOVEMBER",
     Dec: "DECEMBER"
-};
+  };
+
+
+  const getMonthsDays = (calendar) =>{
+
+    const isLeapYear = (year) => {
+      return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    };
+  
+    const monthsInYear = [
+      { name: "JANUARY", days: 31 },
+      { name: "FEBRUARY", days: isLeapYear(calendar.year) ? 29 : 28 },
+      { name: "MARCH", days: 31 },
+      { name: "APRIL", days: 30 },
+      { name: "MAY", days: 31 },
+      { name: "JUNE", days: 30 },
+      { name: "JULY", days: 31 },
+      { name: "AUGUST", days: 31 },
+      { name: "SEPTEMBER", days: 30 },
+      { name: "OCTOBER", days: 31 },
+      { name: "NOVEMBER", days: 30 },
+      { name: "DECEMBER", days: 31 },
+    ];
+
+    return monthsInYear;
+  }
+
+
 
   const currentDatee = {
     year: new Date().getFullYear(),
@@ -180,7 +207,7 @@ const useCalendar = () => {
   };
 
 
-  return { getMonthStyle, months, completeMonths, monthAbbreviations, useEntryCountForMonth, currentDatee };
+  return { getMonthStyle, months, completeMonths, monthAbbreviations, useEntryCountForMonth,  getMonthsDays, currentDatee };
 };
 
 export default useCalendar;

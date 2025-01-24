@@ -9,7 +9,6 @@ import useCalendar from "../../../custom-hooks/times_and_dates/useCalendar";
 import QuotesSlider from "@/components/UI/QuotesSlider";
 
 const SummarizedCalendar = (props) => {
-  const currentDate = props.currentDate;
   const filteredAndGroupedEntries = props.filteredAndGroupedEntries;
 
   const renderCalendar = () => {
@@ -17,31 +16,16 @@ const SummarizedCalendar = (props) => {
     const calendar = useSelector((state) => state.calendar)
     const selectedYear = calendar.year;
 
-    const isLeapYear = (year) => {
-        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-    };
+    const {getMonthsDays} = useCalendar();
 
-      const monthsInYear = [
-        { name: "JANUARY", days: 31 },
-        { name: "FEBRUARY", days: isLeapYear(calendar.year) ? 29 : 28 },
-        { name: "MARCH", days: 31 },
-        { name: "APRIL", days: 30 },
-        { name: "MAY", days: 31 },
-        { name: "JUNE", days: 30 },
-        { name: "JULY", days: 31 },
-        { name: "AUGUST", days: 31 },
-        { name: "SEPTEMBER", days: 30 },
-        { name: "OCTOBER", days: 31 },
-        { name: "NOVEMBER", days: 30 },
-        { name: "DECEMBER", days: 31 },
-      ];
+    const monthsInYear = getMonthsDays(calendar);
 
-      const chosenMonth = useSelector((state) => state.calendar.month);
-      const {monthAbbreviations} = useCalendar()
+    const chosenMonth = useSelector((state) => state.calendar.month);
+    const {monthAbbreviations} = useCalendar()
 
     
-      return (
-          <div className={styles.calendar_div}>
+    return (
+        <div className={styles.calendar_div}>
             <div className={styles.calendarDiv}>
                 <Calendar />
             </div>

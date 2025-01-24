@@ -8,37 +8,28 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 import { useDispatch } from "react-redux";
 import { setAllPlannedSports } from "@/store/sportReducer";
 
-const PlansEntryField = ({
-  sortedSportsArray,
-  enlargeWorkoutHandler,
-  editSportHandler,
-  checkSportHandler,
-  deleteSportHandler,
-  openDetailsIds,
-  isLoading
-}) => {
+const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
-
-const handleMouseEnter = (text) => {
-  setTooltipText(text);
-  setTooltipVisible(true);
-};
-
-const handleMouseLeave = () => {
-  setTooltipVisible(false);
-  setTooltipText('');
-};
-
-
+  const handleMouseEnter = (text) => {
+    setTooltipText(text);
+    setTooltipVisible(true);
+  };
+  const handleMouseLeave = () => {
+    setTooltipVisible(false);
+    setTooltipText('');
+  };
   // Sortiere nach dem Erstellungsdatum aufsteigend (ältestes Datum zuerst)
-  const sortedByDate = [...sortedSportsArray].sort(
-    (a, b) => new Date(a.created_at) - new Date(b.created_at)
-  );
+  const sortedByDate = [...sortedSportsArray].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   const dispatch = useDispatch();
   const [layoutMode, setLayoutMode] = useState("list");
   const [enlargedEntryId, setEnlargedEntryId] = useState(null);
   const {formatDate} = useFormatDate()
+  //const [expandedGroupId, setExpandedGroupId] = useState(null);
+  console.log('BITTE aus Sing Plur machen, sodass der User nicht nur einen Tag öffnen kann, sondern mehrere! dann durchmappen und so weiter unten rendern')
+  const [expandedGroupId, setExpandedGroupId] = useState(true);
+
+
   useEffect(() => {
     dispatch(setAllPlannedSports(sortedByDate));
   }, [sortedByDate]);
@@ -56,7 +47,7 @@ const handleMouseLeave = () => {
 
 
   // Funktion zum Gruppieren der Objekte nach Datum
-function groupByDate(entries) {
+  function groupByDate(entries) {
   const grouped = {};
 
   entries.forEach((entry) => {
@@ -82,31 +73,14 @@ function groupByDate(entries) {
   return Object.values(grouped).sort(
     (a, b) => new Date(b.dateTitle) - new Date(a.dateTitle)
   );
-}
+  }
 
   const groupedEntries = groupByDate(sortedByDate);
 
-
-  const actionButtons = [
-    {
-      label: '🚮',
-      onClick: () => deleteSportHandler(sport),
-      onMouseEnter: () => handleMouseEnter('Delete entry'),
-      onMouseLeave: handleMouseLeave,
-    },
-    {
-      label: '✔️',
-      onClick: () => checkSportHandler(sport),
-      onMouseEnter: () => handleMouseEnter('Check entry'),
-      onMouseLeave: handleMouseLeave,
-    },
-    {
-      label: '✍🏼',
-      onClick: () => editSportHandler(sport),
-      onMouseEnter: () => handleMouseEnter('Edit entry'),
-      onMouseLeave: handleMouseLeave,
-    },
-  ]
+  const handleGroupClick = (dateTitle) => {
+    // Toggle the expanded group
+    setExpandedGroupId(expandedGroupId === dateTitle ? null : dateTitle);
+  };
 
 
   return (
@@ -127,9 +101,18 @@ function groupByDate(entries) {
             .map((group) => (
               <div key={group.dateTitle} className={styles.sportItem}>
                 {enlargedEntryId === null && (
-                  <h2 className={styles.date_title}>{group.dateTitle}</h2>
+                  <button 
+                    className={styles.date_title} 
+                    onClick={() => handleGroupClick(group.dateTitle)}
+                  >
+                    {group.dateTitle}
+                  </button>
                 )}
-                {group.entries.map((sport) => (
+
+                {expandedGroupId != group.dateTitle && (
+
+                  <div className="w-full">
+                     {group.entries.map((sport) => (
                   <div
                     key={sport.entryId}
                     className={`${
@@ -204,17 +187,30 @@ function groupByDate(entries) {
                         >
                           {isLoading === null && (
                             <div>
-                             {actionButtons.map((button, index) => (
-                                <button
-                                  key={index}
+                              <button
+                                className={styles.action_btns}
+                                onClick={() => deleteSportHandler(sport)}
+                                onMouseEnter={() => handleMouseEnter('Delete entry')}
+                                onMouseLeave={handleMouseLeave}
+                              >
+                                🚮
+                              </button>
+                              <button
                                   className={styles.action_btns}
-                                  onClick={button.onClick}
-                                  onMouseEnter={button.onMouseEnter}
-                                  onMouseLeave={button.onMouseLeave}
-                                >
-                                  {button.label}
-                                </button>
-                              ))}
+                                  onClick={() => checkSportHandler(sport)}
+                                  onMouseEnter={() => handleMouseEnter('Check entry')}
+                                  onMouseLeave={handleMouseLeave}
+                              >
+                                  ✔️
+                              </button>
+                              <button
+                                  className={styles.action_btns}
+                                  onClick={() => editSportHandler(sport)}
+                                  onMouseEnter={() => handleMouseEnter('Edit entry')}
+                                  onMouseLeave={handleMouseLeave}
+                              >
+                                  ✍🏼
+                              </button>
                             </div>
                           )}
                           
@@ -248,7 +244,12 @@ function groupByDate(entries) {
                  
                 ))}
               </div>
-            ))}
+              )}
+
+
+     
+            </div>
+          ))}
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import styles from "./Details.module.css";
 import { useSelector } from "react-redux";
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
+//COMPONENTS
+import PreviousEntries from "./PreviousEntries";
 
 
   const DailyDetails = () => {
@@ -48,18 +50,19 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
   
 
   /*
-  useEffect(()=>{
+    useEffect(()=>{
 
-    if(openHistory){
-      console.log('fetching all entries from this day of the last 5 years ...')
-      //fetch ALL supabase table entries
-      // filter, starting from the date YYYY - MM - DD ( id ), all entries that were made in the 5 previous years on day DD and month MM.
-      // example: id => 2025-01-15 ... filter all entries that were made 2024-01-15, 2023-01-15, .... 2020-01-15 and store them  in entriesLastFiveYears
-      // entriesLastFiveYears should then look like this:
-     // [2024: [{...}, {...}, {...}, ...], 2023:[{...}, {...},..], .... 2020: [{...}, {...},..] ]
-    }
+      if(openHistory){
+        console.log('fetching all entries from this day of the last 5 years ...')
+        //fetch ALL supabase table entries
+        // filter, starting from the date YYYY - MM - DD ( id ), all entries that were made in the 5 previous years on day DD and month MM.
+        // example: id => 2025-01-15 ... filter all entries that were made 2024-01-15, 2023-01-15, .... 2020-01-15 and store them  in entriesLastFiveYears
+        // entriesLastFiveYears should then look like this:
+      // [2024: [{...}, {...}, {...}, ...], 2023:[{...}, {...},..], .... 2020: [{...}, {...},..] ]
+      }
 
-  }, [openHistory])*/
+    }, [openHistory])
+  */
   
 
   
@@ -71,6 +74,7 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
   }, [id, allSupabaseSports]);
 
 
+  /*
   const fiveYearsExampleData = [
     {
       created_at: "2024-01-15T17:15:00+00:00",
@@ -111,9 +115,21 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
       title:"lorem ipsum at the gym - part 2",
       userId: "29517271-304a-4ce5-a60b-881a43e91d84"
     },
-
-
+    {
+      created_at: "2022-01-15T17:15:00+00:00",
+      duration: 60,
+      entry:" Poledance is such  a lovely sport!.",
+      entryId:"3dh4is789-0w28-4zzz-cf65-e59mhsn2837ds",
+      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
+      icon: null,
+      id: 111,
+      label: "fandango",
+      name: "Poledance",
+      title:"lorem ipsum at the Poledance Studio",
+      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
+    },
   ]
+  */
 
 
   const getLastFiveYears = () => {
@@ -128,12 +144,13 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
   }, []);
 
 
+  /*
   const filterEntriesByYear = (year) => {
-      return fiveYearsExampleData.filter(entry => {
-        const entryYear = new Date(entry.created_at).getFullYear();
-        return entryYear === year;
-      });
-  };
+    return fiveYearsExampleData.filter(entry => {
+      const entryYear = new Date(entry.created_at).getFullYear();
+      return entryYear === year;
+    });
+  };*/
 
 
 
@@ -148,14 +165,15 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
   }, [openHistory]); 
 
 
+  const [viewOldEntry, setViewOldEntry] = useState(null)
+
+
 
   return (
     <div className="w-full h-screen m-0 md:p-14">
-
       <div className="flex w-full border-2 h-full overflow-scroll py-2 m-0 p-0 relative z-20">
-
-        <div className=" absolute right-3 top-3 bg-red-800 w-20 h-20 m-0 z-0 ">
-          <p className="text-xs"> future image div </p>
+        <div className=" absolute right-0 bg-red-100 top-0 border-2 p-2 w-20 h-20 m-0 z-0 ">
+          <p className="text-xs"> {/* FUTURE IMAGE DIV */} </p>
         </div>
 
         <div className="absolute left-0 top-0 w-20 h-20 ">
@@ -165,11 +183,9 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
           </Link>
         </div>
 
-        
-
         <div className="w-full">
-          <div className="flex justify-center ">
-          <h1 className="text-xl flex justify-center my-6">
+          <div className="flex justify-center">
+          <h1 className=" md:text-xl flex justify-center my-6">
             {formattedDate}
           </h1>
           <button 
@@ -185,9 +201,9 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 
 
 
-          <div className="w-full flex">
+          <div className={styles.entryContainer}>
 
-            <div className="my-10 w-2/4 p-1 mx-1">
+            <div className="mb-5 w-full p-1 mx-1">
             {/* Render filtered entries here */}
             {filteredEntries.map(entry => (
               <div 
@@ -200,7 +216,7 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
             ))}
             </div>
 
-            <div className={`my-10 w-2/4 p-4 mx-1 mr-4 min-h-20 max-h-96 overflow-scroll`}>
+            <div className={`mb-10 w-full p-4 mx-1 mr-4 max-h-96 overflow-scroll`}>
                {/* Placeholder für den Inhalt des ausgewählten Eintrags */}
                 {selectedEntry ? (
                  <div className={`min-h-20 animate-zoom-in max-h-96 overflow-scroll p-3 ${styles[selectedEntry?.label]}`}>
@@ -210,7 +226,7 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
                     <p className="text-sm text-gray-600"><strong>Created At:</strong> {new Date(selectedEntry.created_at).toLocaleString()}</p>
                 </div>
                 ) : (
-                  <div className="w-full p-2 min-h-20 flex justify-center items-center animate-zoom-in">
+                  <div className="w-full p-2 flex justify-center items-center animate-zoom-in">
                     <p className="mx-2 pb-4 "> Please select an entry to view its content </p> 
                   </div>
                 )}
@@ -218,9 +234,6 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 
           </div>
          
-
-     
-
           <div className="my-4 p-2flex-col">
             <div className="flex justify-center items-center"> 
               <h1> Want to know what you were doing on January 15 of the last 5 years? </h1>
@@ -229,34 +242,14 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
                   Get your 5 year story here
               </button>
             </div>
-           
 
-            {openHistory && (
-              <div className="flex min-h-20 mx-4  pb-10 items-center justify-evenly" id="historyDiv">
-               {Array.isArray(lastFiveYears) && lastFiveYears.map(year => {
-                const entriesForYear = filterEntriesByYear(year);
-                return (
-                  <div key={year} className={styles.year}>
-                    <h2>{year}</h2>
-                    {entriesForYear.length > 0 ? (
-                      entriesForYear.map(entry => (
-                        <div key={entry.entryId} className={styles.pastYearsEntry}>
-                          <h3>{entry.title}</h3>
-                          <p>{entry.entry}</p>
-                        </div>
-                      ))
-                    ) : (
-                      <div className={styles.pastYearsEntry}>
-                          <p>No entries were made that year.</p> 
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            
-            </div>
-            )}
-            
+            <PreviousEntries 
+              openHistory={openHistory} 
+              viewOldEntry={viewOldEntry} 
+              setViewOldEntry={setViewOldEntry} 
+              lastFiveYears={lastFiveYears}
+            /> 
+           
           </div>
         </div>
       </div>
