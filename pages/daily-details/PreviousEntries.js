@@ -72,19 +72,19 @@ const PreviousEntries = ({openHistory, viewOldEntry, setViewOldEntry, lastFiveYe
 
     return(
 
-        <div>
+        <div className='w-full h-full'>
              {openHistory && (
-              <div className={styles.pasEntriesContainer} id="historyDiv">
+              <div className={styles.pastEntriesContainer} id="historyDiv">
 
                 {viewOldEntry != null && (
-                 <div className='w-full border-2 h-full absolute bg-white z-50'>
+                 <div className='w-full  bg-white z-50'>
                     <div className={`bg-red-200 z-50 p-2  w-full h-full ${styles[viewOldEntry?.label]}`}>
                         <div className="flex justify-end"> 
                         <button onClick={() => setViewOldEntry(null)} className="text-zinc-600 m-2 text-xs"> CLOSE </button>
                         </div>
 
                         <h1 className="mx-2 text-lg"> {viewOldEntry.title} </h1>
-                        <p className="m-2"> {viewOldEntry.entry} </p>
+                        <p className="m-2"> {viewOldEntry.entry}  </p>
                         <p> {viewOldEntry.label}</p>
 
                         <div className="flex">
@@ -95,32 +95,34 @@ const PreviousEntries = ({openHistory, viewOldEntry, setViewOldEntry, lastFiveYe
                     </div>
                   </div>
                 )}
-               {Array.isArray(lastFiveYears) && lastFiveYears
-                  .sort((a, b) => a - b) // Sortiere die Jahre aufsteigend
-                  .map(year => {
-                  const entriesForYear = filterEntriesByYear(year);
-           
-                return (
-                  <div key={year} className={styles.yearDiv}>
-                    <h2 className="text-center">{year}</h2>
-                    {entriesForYear.length > 0 ? (
-                      entriesForYear.map(entry => (
-                        <div key={entry.entryId} className={`${styles.pastYearsEntry} ${styles[entry.label]} `}>
-                          <button className={styles.titleButton} onClick={() => setViewOldEntry(entry)}>{entry.title}</button>
-              
-        
-                          {/*<p>{entry.entry}</p>*/}
+
+                {viewOldEntry === null && (
+                   Array.isArray(lastFiveYears) && lastFiveYears
+                    .sort((a, b) => a - b) // Sortiere die Jahre aufsteigend
+                    .map(year => {
+                    const entriesForYear = filterEntriesByYear(year);
+             
+                  return (
+                    <div key={year} className={styles.yearDiv}>
+                      <h2 className="text-center">{year}</h2>
+                      {entriesForYear.length > 0 ? (
+                        entriesForYear.map(entry => (
+                          <div key={entry.entryId} className={`${styles.pastYearsEntry} ${styles[entry.label]} `}>
+                            <button className={styles.titleButton} onClick={() => setViewOldEntry(entry)}>{entry.title}</button>
+                
+          
+                            {/*<p>{entry.entry}</p>*/}
+                          </div>
+                        ))
+                      ) : (
+                        <div className={`${styles.pastYearsEntry} opacity-60`}>
+                            <p className="opacity-90">No entries were made that year.</p> 
                         </div>
-                      ))
-                    ) : (
-                      <div className={`${styles.pastYearsEntry} opacity-60`}>
-                          <p className="opacity-90">No entries were made that year.</p> 
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            
+                      )}
+                    </div>
+                  );
+                })
+              )}
             </div>
             )}
 

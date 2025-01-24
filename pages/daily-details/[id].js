@@ -2,7 +2,8 @@ import Link from "next/link";
 import { useState, useEffect} from "react";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faChevronLeft, faChevronUp} from "@fortawesome/free-solid-svg-icons";
+import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Details.module.css";
 import { useSelector } from "react-redux";
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
@@ -167,14 +168,19 @@ import PreviousEntries from "./PreviousEntries";
                 </div>
                 ) : (
                   <div className="w-full p-2 flex justify-center items-center animate-zoom-in">
-                    <p className="mx-2 pb-4 "> Please select an entry to view its content </p> 
+                    <p className="mx-2 pb-4 flex "> 
+                      <FontAwesomeIcon icon={faChevronLeft} className={`${styles.fontAwesomeIcon} mr-2 mt-1 hidden slg:flex`} />
+                      Please select an entry to view its content
+                      <FontAwesomeIcon icon={faChevronUp} className={`${styles.fontAwesomeIcon} ml-2 mt-1 slg:hidden`} />
+                      
+                    </p> 
                   </div>
                 )}
             </div>
 
           </div>
          
-          <div className="my-4 p-2flex-col">
+          <div className="my-4 p-2 overflow-scroll relative flex-col">
             <div className={styles.pastEntriesTitleContainer}> 
               <h1> Want to know what you were doing on January 15 of the last 5 years? </h1>
 
