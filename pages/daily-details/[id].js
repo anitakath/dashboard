@@ -74,63 +74,6 @@ import PreviousEntries from "./PreviousEntries";
   }, [id, allSupabaseSports]);
 
 
-  /*
-  const fiveYearsExampleData = [
-    {
-      created_at: "2024-01-15T17:15:00+00:00",
-      duration: 90,
-      entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      entryId:"3dc8f3789-2239-4c0w-9ad5-e59mnsd5642f",
-      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-      icon: null,
-      id: 111,
-      label: "wenge",
-      name: "Gym",
-      title:"lorem ipsum at the gym",
-      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-    },
-    {
-      created_at: "2024-01-15T17:15:00+00:00",
-      duration: 90,
-      entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      entryId:"3fv36gzny9-2650-0huw-zzz5-e6dbnz9hunff",
-      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-      icon: null,
-      id: 111,
-      label: "wenge",
-      name: "Gym",
-      title:"lorem ipsum at the gym",
-      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-    },
-    {
-      created_at: "2023-01-15T17:15:00+00:00",
-      duration: 120,
-      entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      entryId:"ju87f3789-2zu9-4c0w-9if5-os89swd5642f",
-      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-      icon: null,
-      id: 112,
-      label: "wenge",
-      name: "Gym",
-      title:"lorem ipsum at the gym - part 2",
-      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-    },
-    {
-      created_at: "2022-01-15T17:15:00+00:00",
-      duration: 60,
-      entry:" Poledance is such  a lovely sport!.",
-      entryId:"3dh4is789-0w28-4zzz-cf65-e59mhsn2837ds",
-      entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-      icon: null,
-      id: 111,
-      label: "fandango",
-      name: "Poledance",
-      title:"lorem ipsum at the Poledance Studio",
-      userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-    },
-  ]
-  */
-
 
   const getLastFiveYears = () => {
     const currentYear = new Date().getFullYear();
@@ -142,15 +85,6 @@ import PreviousEntries from "./PreviousEntries";
   useEffect(() => {
     setLastFiveYears(getLastFiveYears());
   }, []);
-
-
-  /*
-  const filterEntriesByYear = (year) => {
-    return fiveYearsExampleData.filter(entry => {
-      const entryYear = new Date(entry.created_at).getFullYear();
-      return entryYear === year;
-    });
-  };*/
 
 
 
@@ -167,12 +101,18 @@ import PreviousEntries from "./PreviousEntries";
 
   const [viewOldEntry, setViewOldEntry] = useState(null)
 
-
+  const selectEntryHandler = (entry) => {
+    if (selectedEntry && selectedEntry.entryId === entry.entryId) {
+        setSelectedEntry(null);
+    } else {
+        setSelectedEntry(entry);
+    }
+};
 
   return (
     <div className="w-full h-screen m-0 md:p-14">
       <div className="flex w-full border-2 h-full overflow-scroll py-2 m-0 p-0 relative z-20">
-        <div className=" absolute right-0 bg-red-100 top-0 border-2 p-2 w-20 h-20 m-0 z-0 ">
+        <div className=" absolute right-0 top-0 p-2 w-20 h-20 m-0 z-0 ">
           <p className="text-xs"> {/* FUTURE IMAGE DIV */} </p>
         </div>
 
@@ -208,8 +148,8 @@ import PreviousEntries from "./PreviousEntries";
             {filteredEntries.map(entry => (
               <div 
                 key={entry.id} 
-                className={` ${styles.entryBg} m-2 flex-col cursor-pointer`}
-                onClick={() => setSelectedEntry(entry)}
+                className={` ${styles.entryBg} ${styles[entry.label]} m-2 flex-col cursor-pointer`}
+                onClick={() => selectEntryHandler(entry)}
               >
                 <h2 className="m-2 text-xl text-center">{entry.title}</h2>
               </div>
@@ -235,7 +175,7 @@ import PreviousEntries from "./PreviousEntries";
           </div>
          
           <div className="my-4 p-2flex-col">
-            <div className="flex justify-center items-center"> 
+            <div className={styles.pastEntriesTitleContainer}> 
               <h1> Want to know what you were doing on January 15 of the last 5 years? </h1>
 
               <button className={styles.historyBtn} onClick={() => setOpenHistory(prevState => !prevState)}>

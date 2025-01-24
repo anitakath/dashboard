@@ -32,11 +32,17 @@
 .entryBg{
     padding: 2px 0px;
     transition: 0.2s ease-in-out;
-    background-color: var(--purpleDarkHoverOpacity);
+    
 }
 
 .entryBg:hover{
-    background-color: var(--purpleDarkHover);
+    background-color: var(--purpleDarkHoverOpacity);
+}
+
+.pastEntriesTitleContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .historyBtn {
@@ -68,6 +74,11 @@
     width: 30px;
     height: 30px;
     cursor: pointer;
+}
+
+
+.pasEntriesContainer{
+    display: flex;
 }
 
 
@@ -116,6 +127,22 @@
 @media screen and (max-width: 1200px){
     .entryContainer{
         flex-direction: column;
+    }
+}
+
+
+@media screen and (max-width: 900px){
+
+
+    .pastEntriesTitleContainer{
+        flex-direction: column;
+    }
+    .pasEntriesContainer{
+        flex-direction: column;
+    }
+
+    .yearDiv{
+        margin: 0;
     }
 }
 
