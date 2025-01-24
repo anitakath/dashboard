@@ -77,7 +77,7 @@ const PreviousEntries = ({openHistory, viewOldEntry, setViewOldEntry, lastFiveYe
               <div className={styles.pastEntriesContainer} id="historyDiv">
 
                 {viewOldEntry != null && (
-                 <div className='w-full  bg-white z-50'>
+                 <div className='w-full bg-white z-50'>
                     <div className={`bg-red-200 z-50 p-2  w-full h-full ${styles[viewOldEntry?.label]}`}>
                         <div className="flex justify-end"> 
                         <button onClick={() => setViewOldEntry(null)} className="text-zinc-600 m-2 text-xs"> CLOSE </button>

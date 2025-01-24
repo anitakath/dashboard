@@ -128,15 +128,15 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                           : "block",
                     }}
                   >
-                    <div>
-                      <div className="relative flex flex-col items-center">
+                    <div className=" h-full relative">
+                      <div className="relative h-full flex flex-col items-center">
                      
                       <button className={styles.enlarge_btn} onClick={() => layoutMode === "grid" ? enlargeObject(sport.entryId) : enlargeWorkoutHandler(sport.entryId)}>
                       🔍
                       </button>
                       <div className="w-full flex flex-col items-center mt-4">
                           <h1
-                            className=" text-s md:text-2xl cursor-pointer"
+                            className="w-full text-center hover:text-red-800 text-s md:text-xl cursor-pointer"
                             onClick={() => enlargeWorkoutHandler(sport.entryId)}
                           >
                             {sport.name}
@@ -150,7 +150,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                       </div>
 
                       <div className="absolute bottom-0 right-0">
-                        <button>
+                        <button className=" text-xs">
                           {sport.provider}
                         </button>
 
@@ -174,7 +174,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                       </div>
                       {(openDetailsIds.includes(sport.entryId) || enlargedEntryId === sport.entryId) && (
                         <div
-                            className={`flex relative min-w-60 justify-center m-2 p-1${
+                            className={`flex relative min-w-60  justify-center m-2 p-1${
                               enlargedEntryId !== sport.entryId
                                 ? ""
                                 : "relative"
@@ -182,11 +182,11 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                             style={
                               enlargedEntryId !== sport.entryId
                                 ? {}
-                                : { position: "relative", top: "200px" }
+                                : { position: "absolute", bottom: "0px", }
                             }
                         >
                           {isLoading === null && (
-                            <div>
+                            <div className=" ">
                               <button
                                 className={styles.action_btns}
                                 onClick={() => deleteSportHandler(sport)}
@@ -227,10 +227,10 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                       </div>
                       
                     </div>
-                    {(openDetailsIds.includes(sport.entryId) ||
+                    {/*{(openDetailsIds.includes(sport.entryId) ||
                       enlargedEntryId === sport.entryId) && (
                       <div
-                        className={`flex justify-center m-2 p-1${
+                        className={`flex  h-full justify-center m-2 p-1${
                           enlargedEntryId !== sport.entryId ? "" : "relative"
                         }`}
                         style={
@@ -238,8 +238,8 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                             ? {}
                             : { position: "relative", top: "200px" }
                         }
-                      ></div>
-                    )}
+                      > </div>
+                    )}*/} 
                   </div>
                  
                 ))}
