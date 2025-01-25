@@ -4,7 +4,16 @@
 
 .staticsticsBodyContainer{
     padding: 10px 0px;
-    background-color: var(--purpleDarkHoverOpacity);
+    /* UPLOAD A VIDEO HERE!*/
+    position: relative;
+}
+
+.backgroundVideo{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .container{
@@ -47,15 +56,15 @@
 .container h1{
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
+  /*font-weight: <weight>;
+  font-style: normal;*/
 }
 
 .container p{
     font-family: "Inconsolata", monospace;
   font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
+  /*font-weight: <weight>;
+  font-style: normal;*/
   font-variation-settings:
     "wdth" 100;
 }

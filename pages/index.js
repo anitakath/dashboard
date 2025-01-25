@@ -115,6 +115,7 @@ export default function Home() {
         <meta property="og:description" content="Track your athletic progress and connect with like-minded individuals in our community." />
         <meta property="og:image" content="/path/to/your/image.jpg" /> {/* Add the path to an image here */}
         <meta property="og:url" content="https://your-website.com/" /> {/* Replace with your website's URL */}
+        <meta name="mobile-web-app-capable" content="yes"></meta>
        </Head>
 
 

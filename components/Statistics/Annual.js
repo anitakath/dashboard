@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './Annual.module.css'
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
+import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
 //COMPONENTS
 import RestDaysCalendar from './RestDaysCalendar';
 import RandomSportImagesGrid from './RandomSportImagesGrid';
 import BarChart from './BarChart';
+import ColumnChart from './ColumnChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+
 const Annual = ({ allSupabaseSports, date, setDate}) => {
   const [showBarChart, setShowBarChart] = useState(null)
   //const [isScrolled, setIsScrolled] = useState(false)
@@ -17,43 +20,38 @@ const Annual = ({ allSupabaseSports, date, setDate}) => {
     totalHours: false,
     restDays: false,
   })
+  const videoRef = useRef(null);
 
   const { sortedSportsByCount, resultArray } = useStatistics(
     allSupabaseSports,
     date
   );
+  const { convertMinutesToHours } = useConvertTimes();
   const topSportsByDuration = useTopSportsByDuration(allSupabaseSports, date);
 
   const showBarChartHandler = (item) =>{
     setShowBarChart(item)
 
   }
-/*
-  const scrollHandler = (scroll) => {
-    const barChartElement = document.getElementById('barChart');
-    const container = document.getElementById('container');
 
-    if(scroll === "down"){
-      if (barChartElement) {
-        barChartElement.scrollIntoView({ behavior: 'smooth' });
-        setIsScrolled(true)
-      }
-    } else if(scroll === "up"){
-      if (container) {
-        container.scrollIntoView({ behavior: 'smooth' });
-        setIsScrolled(false)
+   // Effect for setting the playback speed
+   useEffect(() => {
+    if (videoRef.current) {
+        videoRef.current.playbackRate = 0.5; // Setze die Wiedergabegeschwindigkeit auf 0.75
     }
-    }
-
-     
-};*/
+}, []);
 
 
-  return (
+
+return (
    
     <div className={styles.staticsticsBodyContainer}>
 
       {/* VIDEO IN staticsticsBodyContainer  */}
+      <video ref={videoRef} width="600" controls autoPlay loop muted className={styles.backgroundVideo}>
+                <source src="/yoga.mp4" type="video/mp4" />
+                Dein Browser unterstützt das Video-Tag nicht.
+      </video>
 
 
 
@@ -137,21 +135,22 @@ const Annual = ({ allSupabaseSports, date, setDate}) => {
             </button>
          </div>
 
-          <div className="mb-4 h-60">
-            {topSportsByDuration.map(
-              ({ name, totalDurationFormatted, label }, index) => (
-                <div
-                  key={name}
-                  className={`${styles[label]} ${styles.fav_sports_div}`}
-                >
-                  <p>
-                    {index + 1}. {name}: {totalDurationFormatted}
-                  </p>
-                </div>
-              )
-            )}
+            <div className="mb-4 h-60">
+              {topSportsByDuration.map(({ name, totalDurationFormatted, label }, index) => {
+                // Konvertiere totalDurationFormatted (z.B. 5.75) in Minuten
+                const totalDurationInMinutes = Math.round(totalDurationFormatted * 60); // 5.75 Stunden * 60 Minuten
+
+                // Verwende die Funktion zum Konvertieren von Minuten in Stunden und Minuten
+                const formattedDuration = convertMinutesToHours(totalDurationInMinutes);
+
+                return (
+                  <div key={name} className={`${styles[label]} ${styles.fav_sports_div}`}>
+                    <p>{index + 1}. {name}: {formattedDuration}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
         </div>
       </div>
 
@@ -178,21 +177,30 @@ const Annual = ({ allSupabaseSports, date, setDate}) => {
         </button>
 
         <div className="flex flex-col lg:flex-row mt-2">
-          
           {showFiveYearHistory.totalHours && (
             <div className={styles.history_div}>
-              <p> history div </p> 
+              <h2> history div </h2> 
+           
+              <p> - show a table with the last 5 years in the columns and the sports A-Z in the rows. </p>
+              <p> - Then show for year X and sport Y the number of hours of sport completed. </p>
+              <p> - the last row should contain the total number of hours for year X</p>
             </div>
           )}
 
           {showFiveYearHistory.totalHours === false && (
             <div className="w-full flex my-4 lg:m-0">
               
-              <div className='w-full border-r-2 border-red-200'>
+              <div className='w-full'>
                 <p className='mx-2'> total: </p>
                 {resultArray.length > 0 ? (
-                  resultArray.map(
-                    ({ name, label, totalDurationFormatted }, index) => (
+                  resultArray.map(({ name, label, totalDurationFormatted }, index) => {
+                    // Konvertiere totalDurationFormatted (z.B. 5.75) in Minuten
+                    const totalDurationInMinutes = Math.round(totalDurationFormatted * 60); // 5.75 Stunden * 60 Minuten
+
+                    // Verwende die Funktion zum Konvertieren von Minuten in Stunden und Minuten
+                    const formattedDuration = convertMinutesToHours(totalDurationInMinutes);
+
+                    return(
                       <div
                         key={index}
                         className={`${styles.totalHours_sports_div} ${styles.linearGradient_bg}`}
@@ -205,10 +213,12 @@ const Annual = ({ allSupabaseSports, date, setDate}) => {
                           >
                             {name}:
                           </span>
-                          {totalDurationFormatted}  - CONVERT TO HOURS + MINUTES 
+                          {formattedDuration}
                         </p>
                       </div>
                     )
+                      
+                  }
                   )
                 ) : (
                   <div className="text-center flex justify-center items-center h-full">
@@ -218,11 +228,7 @@ const Annual = ({ allSupabaseSports, date, setDate}) => {
               </div>
 
               <div className=" w-full h-80 m-0 my-2 mr-2 p-2 overflow-scroll">
-                <h1>
-                bar chart: completed hours of sport X in relation to the total number of hours worked out + percentage
-                <br/>
-                eg: 100 hours of sport - 10 hours of yoga - 10% of yoga
-                </h1>
+                <ColumnChart resultArray={resultArray}/>
               </div>
             </div>
           )}

@@ -227,19 +227,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                       </div>
                       
                     </div>
-                    {/*{(openDetailsIds.includes(sport.entryId) ||
-                      enlargedEntryId === sport.entryId) && (
-                      <div
-                        className={`flex  h-full justify-center m-2 p-1${
-                          enlargedEntryId !== sport.entryId ? "" : "relative"
-                        }`}
-                        style={
-                          enlargedEntryId !== sport.entryId
-                            ? {}
-                            : { position: "relative", top: "200px" }
-                        }
-                      > </div>
-                    )}*/} 
+                    
                   </div>
                  
                 ))}

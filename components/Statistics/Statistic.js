@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 //COMPONENTS
 import BoardHeader from "../Main/BoardHeader/BoardHeader";
+import StatisticNavigation from "./StatisticNavigation";
 import SelectTimePeriod from "./SelectTimePeriod";
 import Annual from "./Annual";
 import Login from "../Login/Login";
@@ -28,23 +29,13 @@ const Statistic = () =>{
           <div>
             <BoardHeader allSupabaseSports={allSupabaseSports} />
 
-            <h1 className="text-2xl mb-2"> Statistics </h1>
-            <div className={styles.container_div}>
-              {currentSport &&
-                currentSport.map((sport) => (
-                  <div
-                    key={sport.id}
-                    className={`${styles.sport_div} ${styles[sport.color]}`}
-                  >
-                    <button className="text-m md:text-xl text-center">
-                      {sport.name}
-                    </button>
-                  </div>
-                ))}
-            </div>
+            <h1 className="text-xl text-center mt-2 mb-4"> Statistics </h1>
 
-            <div className="flex   items-center">
-              <h1 className="text-2xl w-full p-2">
+            <StatisticNavigation currentSport={currentSport}/>
+            
+
+            <div className="flex items-center">
+              <h1 className="text-xl w-full p-2">
                 Annual overview for
                 <span
                   style={{ color: "var(--purpleDark)", margin: "0px 10px" }}
@@ -59,7 +50,7 @@ const Statistic = () =>{
               </h1>
             </div>
 
-            <div className="flex relative flex-col lg:flex-row my-4 md:mx-2">
+            <div className="flex relative flex-col lg:flex-row mb-2 h-20  md:mx-2">
               <SelectTimePeriod date={date} setDate={setDate} />
             </div>
 

@@ -82,7 +82,7 @@ const BoardHeader = () =>{
             width={30}
             height={30}
             className={styles.logout_btn}
-            fetchpriority="high"
+            fetchPriority="high" 
           />
         </button>
         <UserImage />

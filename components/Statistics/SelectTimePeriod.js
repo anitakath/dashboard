@@ -23,7 +23,7 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
 
 
   return (
-      <div className="flex flex-col lg:flex-row h-60 md:h-auto justify-center items-center relative w-full ">
+      <div className="flex  flex-col lg:flex-row h-60 md:h-auto justify-center items-center relative w-full ">
         {!isYearModalOpen && !isMonthModalOpen && (
           <button
           className="secondary_button"
@@ -32,19 +32,24 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
           select year
         </button>)}
 
-        {!isYearModalOpen && !isMonthModalOpen && (
-           <button
-           className="secondary_button"
-           onClick={() => setIsMonthModalOpen(true)}
-         >
-           select month
-         </button>
-        )}
+        {/*
+         ----------------------------------------------------------- 
+         IF WE WANT TO OFFER THE USER NOT ONLY ANNUAL, BUT ALSO MONTHLY STATISTICS
+         -----------------------------------------------------------
+          {!isYearModalOpen && !isMonthModalOpen && (
+            <button
+            className="secondary_button"
+            onClick={() => setIsMonthModalOpen(true)}
+          >
+            select month
+          </button>
+          )} 
+        */}
        
         {showBarChart !== "XUNITS" && showBarChart !== "XTIMES"  && (
-           <p className="mx-4 my-4 lg:my-0">
+           <p className="my-4 lg:my-0">
            <span className={styles.selected_span}>currently selected:</span>
-           {selectedYear}, {selectedMonth}
+           {selectedYear} {/* , {selectedMonth} */}
          </p>
         )}
        
