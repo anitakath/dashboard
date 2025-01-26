@@ -3,7 +3,7 @@ import { useState } from "react";
 //COMPONENTS
 import BoardHeader from "../Main/BoardHeader/BoardHeader";
 import StatisticNavigation from "./StatisticNavigation";
-import SelectTimePeriod from "./SelectTimePeriod";
+import SelectTimePeriod from "./FirstSection/SelectTimePeriod";
 import Annual from "./Annual";
 import Login from "../Login/Login";
 import { useSelector } from "react-redux";

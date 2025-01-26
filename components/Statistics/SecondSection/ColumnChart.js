@@ -47,9 +47,9 @@ const ColumnChart = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="totalHoursInYear" fill="grey" name="total 2025" />
-                    <Bar dataKey="totalHoursOfSport" fill="hsl(340, 90%, 55%)" name="total hours of sport" />
-                    <Bar dataKey="percentage" fill="black" name="percentage"/>
+                    <Bar dataKey="totalHoursInYear" fill="grey" name="Total Sports Hours" />
+                    <Bar dataKey="totalHoursOfSport" fill="hsl(340, 90%, 55%)" name="sport hours for sport x" />
+                    <Bar dataKey="percentage" fill="black" name="sport x as % of Total Hours"/>
                 </BarChart>
             </ResponsiveContainer>
         </div>
