@@ -1,25 +1,26 @@
+import styles from "../../pages/statistics/Statistics.module.css";
 
-import styles from "../../pages/statistics/Statistics.module.css"
-const StatisticNavigation = ({currentSport}) =>{
+const StatisticNavigation = ({ currentSport, setSport, sport }) => {
+    console.log(sport);
 
+    return (
+        <div className={styles.container_div}>
+            {currentSport && currentSport.map((sportItem, index) => (
+                <div
+                    key={sportItem.id || index}
+                    className={`${styles.sport_div} ${sportItem.name === sport ? styles.activeNavigationButton : ''} ${styles[sportItem.color]}`}
+                >
+                    <button
+                        className="text-m md:text-xl text-center"
+                        onClick={() => setSport(sportItem.name)} 
+                    >
+                        {sportItem.name}
+                    </button>
+                </div>
+            ))}
+            <p> choose</p>
+        </div>
+    );
+};
 
-  return(
-    <div className={styles.container_div}>
-
-
-      {currentSport && currentSport.map((sport, index) => (
-       <div key={sport.id || index} className={`${styles.sport_div} ${styles[sport.color]}`}>
-           <button className="text-m md:text-xl text-center">
-               {sport.name}
-           </button>
-       </div>
-      ))}
-      
-    </div>
-
-  )
-
-
-}
-
-export default StatisticNavigation
+export default StatisticNavigation;

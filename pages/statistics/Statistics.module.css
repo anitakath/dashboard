@@ -1,5 +1,5 @@
 
-
+/*
 .backToHomepage_link{
     width: 60px;
     height: 60px;
@@ -15,11 +15,17 @@
 .backToHomepage_link:hover{
     color: var(--purpleDark);
 
-}
+}*/
+
 .container_div{
     display: flex;
+    position: relative;
     gap: 5px;
     margin: 5px 0px;
+}
+
+.activeNavigationButton{
+    background-color: var(--purpleDarkHoverOpacity);
 }
 
 .sport_div{
