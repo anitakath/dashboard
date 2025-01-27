@@ -22,6 +22,14 @@
   transition: 0.2s ease-in;
 }
 
+.userImageDiv{
+  display: flex;
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 100;
+}
+
 .goUp_btn:hover{
   color: var(--purpleDark)
 }
@@ -69,12 +77,32 @@
 }
 
 
+@media screen and (max-width: 1300px){
+  .userImageDiv{
+    right: 30px;
+    top: 30px;
+  }
+}
+
 @media screen and (max-width: 1000px){
   .diary_link{
     margin-left: 50px;
   }   
+
+  .userImageDiv{
+    right: 35px;
+    top: 35px;
+  }
 }
 
+
+@media screen and (max-width: 900px){
+
+  .userImageDiv{
+    right: 35px;
+    top: 25px;
+  }
+}
 
 @media screen and (max-width: 800px){
   .icons{
@@ -95,6 +123,10 @@
    width: 40px;
   }
 
+  .userImageDiv{
+    right: 35px;
+    top: 20px;
+  }
  
 }
 
@@ -117,6 +149,10 @@
   .allSports_btn{
     width: 100%;
     margin: 5px 0px;
+  }
+  .userImageDiv{
+    right: 10px;
+    top: 0px;
   }
 
 }

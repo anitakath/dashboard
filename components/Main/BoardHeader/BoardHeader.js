@@ -85,7 +85,8 @@ const BoardHeader = () =>{
             fetchPriority="high" 
           />
         </button>
-        <UserImage />
+
+
       </div>
     </div>
   );

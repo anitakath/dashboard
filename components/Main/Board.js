@@ -14,11 +14,11 @@ import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
-import UserImageMobile from "../UI/UserImageMobile";
 //CUSTOM HOOKS
 import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import UserImage from "../UI/UserImage";
 
 
 const Board = () => {
@@ -54,8 +54,10 @@ const Board = () => {
 
       <h1 className="title title_mini"> DASHBOARD </h1>
 
-
-      <UserImageMobile />
+      <div className={styles.userImageDiv}>
+        <UserImage />
+      </div>
+  
 
       <BoardHeader />
 

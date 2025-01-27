@@ -10,6 +10,8 @@ import { setSection } from "@/store/profileReducer";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import UserImage from "@/components/UI/UserImage";
+
 
 const Menu = ({ setOpenMenu }) => {
   const [openSections, setOpenSections] = useState({
@@ -48,6 +50,7 @@ const Menu = ({ setOpenMenu }) => {
       onClick={() => setOpenMenu(false)}
     >
       <div className={styles.menu_div} onClick={(e) => e.stopPropagation()}>
+
         <button className={styles.close_btn} onClick={() => setOpenMenu(false)}>
          <FontAwesomeIcon icon={faXmark} />
         </button>
@@ -136,11 +139,16 @@ const Menu = ({ setOpenMenu }) => {
             </div>
           <br />
 
-          <div className={styles.anne_div}>
-            <li className={styles.anne_link}>About Anne</li>
-            <li className={styles.anne_link}>Contact Anne</li>
+          <div className={styles.subDiv}>
+            <li className={styles.subLink}>About</li>
+            <li className={styles.subLink}>Contact</li>
           </div>
         </ul>
+        {/*
+          <div className=" w-full flex justify-center md:hidden relative">
+          <UserImage/>
+          </div> 
+        */}
       </div>
     </div>
   );

@@ -19,18 +19,16 @@
 
 
 .title{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 10px 0px;
 }
 
 .menu_div{
-    width: 80vw;
-    /*********/
-    background-color:rgba(255,255,255, 0.9);
-    /*********/
+    width: 60vw;
+    background-color:rgba(255,255,255, 0.7);
     z-index: 10000;
     padding: 10px;
-    height: 90vh;
+    height: 80vh;
     overflow: scroll;
     display: flex;
     flex-direction: column;
@@ -48,6 +46,7 @@
     padding: 10px 20px;
     transition: 0.2s ease;
     color: grey;
+    transition: color .3s ease; 
 }
 
 .close_btn:hover{
@@ -62,9 +61,8 @@
 }
 
 .table_title{
-    font-size: 1.2rem;
-    color: var(--purpleDark);
-    font-weight: bolder;
+    font-size: 1.1rem;
+    color: black;
     border-bottom: 1px solid var(--purpleDark);
     width: 500px;
     padding: 10px;
@@ -73,7 +71,7 @@
 }
 
 .subLinkDiv{
-    transition: 0.4s ease;
+    transition: 0.4s ease-in-out;
 }
 
 .yourSportsactive{
@@ -96,7 +94,7 @@
     overflow: hidden;
 }
 
-.link, .anne_link{
+.link, .subLink{
     border-bottom: 0.5px solid  rgba(255,255,255, 0.3);
     width: 500px;
     padding: 5px 10px;
@@ -105,18 +103,18 @@
     cursor: pointer;
 }
 
-.link:hover, .anne_link:hover{
+.link:hover, .subLink:hover{
     color:var(--purpleDark);
 }
 
 
-.anne_div{
+.subDiv{
     display: flex;
     margin: 10px 0px;
 
 }
 
-.anne_link{
+.subLink{
     width: 250px;
     background-color: var(--purpleDarkHoverOpacity);
     margin: 0px 5px;
@@ -132,7 +130,7 @@
     }
 
     .menu_div{
-        width: 100%;
+        width: 90%;
     }
 
  
@@ -156,27 +154,30 @@
 
      .link{
         width: 450px;
+      
     }
 
-    .anne_link{
+    .subLink{
         width: 150px;
     }
 
     .table_title{
         width: 400px;
+        font-size: 1rem;
     }
 }
 
 
-@media screen and (max-width: 450px){
+@media screen and (max-width: 500px){
 
  
 
      .link{
-        width: 100%;
+        width: 350px;
+        font-size: 0.9rem;
     }
 
-    .anne_link{
+    .subLink{
         width: 160px;
     }
 
@@ -185,18 +186,38 @@
     }
 }
 
+@media screen and (max-width: 400px){
+    .link{
+       width: 260px;
+       font-size: 0.9rem;
+   }
+
+   .subLink{
+       width: 100px;
+       text-align: center;
+       font-size: 0.9rem;
+       padding: 5px;
+       margin: 0px 20px;
+   }
+
+   .table_title{
+       width: 260px;
+       font-size: 0.9rem;
+   }
+}
+
 @media screen and (max-width: 300px){
 
-     .link, .anne_link{
+     .link, .subLink{
         width: 100%;
 
     }
 
-    .anne_div{
+    .subDiv{
         flex-direction: column;
     }
 
-    .anne_link{
+    .subLink{
         text-align: center;
         margin: 5px 0px;
     }
