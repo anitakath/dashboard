@@ -12,7 +12,6 @@ import RandomSportImagesGrid from './FourthSection.js/RandomSportImagesGrid';
 
 const Annual = ({ allSupabaseSports, date, setDate}) => {
   const [showBarChart, setShowBarChart] = useState(null)
-  //const [isScrolled, setIsScrolled] = useState(false)
   const [showFiveYearHistory, setShowFiveYearHistory] = useState({
     favourites: false,
     totalHours: false,
@@ -101,7 +100,7 @@ return (
 
       <div className={styles.container}>
         <div className={styles.images_div}>
-            your memories in {date.year} ...
+            <h2 className='mx-2'>your photographic memories from {date.year} ...</h2>
             <RandomSportImagesGrid />
         </div>
       </div>

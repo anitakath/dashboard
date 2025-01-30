@@ -1,18 +1,15 @@
 .month_modal, .year_modal{
-    position: absolute;
-    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     overflow: scroll;
-    background-color: white;
-
 }
 
 .selected_span{
     color: var(--purpleDarkHover);
     font-weight: bolder;
     margin: 0px 5px;
+
 }
 
 .year_modal h2, .month_modal h2{

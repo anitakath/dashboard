@@ -1,27 +1,10 @@
 
-/*
-.backToHomepage_link{
-    width: 60px;
-    height: 60px;
-    font-size: 1.2rem;
-    margin: 5px 0px 10px 0px;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.2s ease;
-}
-
-.backToHomepage_link:hover{
-    color: var(--purpleDark);
-
-}*/
 
 .container_div{
     display: flex;
     position: relative;
     gap: 5px;
-    margin: 5px 0px;
+    margin: 0px 2px;
 }
 
 .activeNavigationButton{
@@ -60,6 +43,11 @@
     cursor: pointer;
 }
 
+
+.sportNavigationButton{
+    width: 100%;
+    font-size: 1rem;
+}
 
 
 @media screen and (max-width: 1350px){

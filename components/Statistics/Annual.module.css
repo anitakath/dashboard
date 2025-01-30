@@ -7,7 +7,6 @@
     /* UPLOAD A VIDEO HERE!*/
     position: relative;
     top: -30px;
-
    
 }
 
@@ -150,7 +149,6 @@
     width: 80%; 
     overflow: scroll;
     height: 80%;
-
 }
 
 .close {
@@ -186,6 +184,11 @@
 
 
 
+@media screen and (max-width: 600px){
+    .modalContent{
+        width: 98%;
+    }
+}
 
 
 /*-------------------------------------- REST DAYS -------------------------------------- */

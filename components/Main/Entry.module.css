@@ -1,8 +1,6 @@
 
 .container{
     position: relative;
-    position: relative;
-    left: -5px;
     height: 100vh;
     overflow: screen;
 }

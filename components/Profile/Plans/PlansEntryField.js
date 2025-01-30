@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Tooltip from '../../UI/Tooltip'
-
 import styles from "./PlansEntryField.module.css";
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
@@ -23,10 +22,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   const sortedByDate = [...sortedSportsArray].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   const dispatch = useDispatch();
   const [layoutMode, setLayoutMode] = useState("list");
-  const [enlargedEntryId, setEnlargedEntryId] = useState(null);
   const {formatDate} = useFormatDate()
-  //const [expandedGroupId, setExpandedGroupId] = useState(null);
-  console.log('BITTE aus Sing Plur machen, sodass der User nicht nur einen Tag öffnen kann, sondern mehrere! dann durchmappen und so weiter unten rendern')
   const [expandedGroupId, setExpandedGroupId] = useState(true);
 
 
@@ -36,13 +32,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
 
   const toggleLayout = () => {
     setLayoutMode((prevMode) => (prevMode === "list" ? "grid" : "list"));
-    setEnlargedEntryId(null);
-  };
-
-  const enlargeObject = (entryId) => {
-    if (layoutMode === "grid") {
-      setEnlargedEntryId((prevId) => (prevId === entryId ? null : entryId));
-    }
+  
   };
 
 
@@ -100,14 +90,16 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
             .reverse()
             .map((group) => (
               <div key={group.dateTitle} className={styles.sportItem}>
-                {enlargedEntryId === null && (
+              
+              
                   <button 
                     className={styles.date_title} 
                     onClick={() => handleGroupClick(group.dateTitle)}
                   >
                     {group.dateTitle}
                   </button>
-                )}
+               
+      
 
                 {expandedGroupId != group.dateTitle && (
 
@@ -115,23 +107,12 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                      {group.entries.map((sport) => (
                   <div
                     key={sport.entryId}
-                    className={`${
-                      enlargedEntryId === sport.entryId
-                        ? styles.expanded_grid
-                        : styles.collapsed_grid
-                    } ${styles.sport_entry_div} ${styles[sport.label + "_bg"]}`}
-                    style={{
-                      display:
-                        enlargedEntryId !== null &&
-                        enlargedEntryId !== sport.entryId
-                          ? "none"
-                          : "block",
-                    }}
+                    className={`${styles.sport_entry_div} ${styles[sport.label + "_bg"]}`}
                   >
                     <div className=" h-full relative">
                       <div className="relative h-full flex flex-col items-center">
                      
-                      <button className={styles.enlarge_btn} onClick={() => layoutMode === "grid" ? enlargeObject(sport.entryId) : enlargeWorkoutHandler(sport.entryId)}>
+                      <button className={styles.enlarge_btn} onClick={() => layoutMode === "grid" ? enlargeWorkoutHandler(sport.entryId) : enlargeWorkoutHandler(sport.entryId)}>
                       🔍
                       </button>
                       <div className="w-full flex flex-col items-center mt-4">
@@ -172,18 +153,9 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                             </>
                           )}
                       </div>
-                      {(openDetailsIds.includes(sport.entryId) || enlargedEntryId === sport.entryId) && (
+                      {(openDetailsIds.includes(sport.entryId)) && (
                         <div
-                            className={`flex relative min-w-60  justify-center m-2 p-1${
-                              enlargedEntryId !== sport.entryId
-                                ? ""
-                                : "relative"
-                            }`}
-                            style={
-                              enlargedEntryId !== sport.entryId
-                                ? {}
-                                : { position: "absolute", bottom: "0px", }
-                            }
+                            className={`flex relative min-w-60  justify-center m-2 p-1`}
                         >
                           {isLoading === null && (
                             <div className=" ">

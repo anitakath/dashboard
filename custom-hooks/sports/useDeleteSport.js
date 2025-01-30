@@ -11,7 +11,9 @@ const useDeleteSport = () => {
   const userId = useSelector((state) => state.auth.userId);
 
   const deleteSportHandler = async (sport) => {
-    if (
+    console.log('deleting sport ...')
+   
+   /* if (
       window.confirm(
         `Are you sure you want to delete “${sport}”? All entries will be lost`
       )
@@ -48,7 +50,7 @@ const useDeleteSport = () => {
       } catch (error) {
         console.error("Fehler beim Löschen:", error);
       }
-    }
+    }*/
   };
 
   return { deleteSportHandler };

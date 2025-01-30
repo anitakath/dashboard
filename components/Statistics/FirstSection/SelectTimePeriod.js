@@ -23,7 +23,7 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
 
 
   return (
-      <div className="flex  flex-col lg:flex-row h-60 md:h-auto justify-center items-center relative w-full ">
+      <div className="flex-col lg:flex-row md:h-auto justify-center items-center relative w-full ">
         {!isYearModalOpen && !isMonthModalOpen && (
           <button
           className="secondary_button"
@@ -46,8 +46,8 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
           )} 
         */}
        
-        {showBarChart !== "XUNITS" && showBarChart !== "XTIMES"  && (
-           <p className="my-4 lg:my-0">
+        {showBarChart !== "XUNITS" && showBarChart !== "XTIMES"  &&  !isYearModalOpen &&(
+           <p className="my-4  lg:my-0">
            <span className={styles.selected_span}>currently selected:</span>
            {selectedYear} {/* , {selectedMonth} */}
          </p>
@@ -63,7 +63,7 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
                 onClick={() => handleYearChange(year, setIsYearModalOpen, setDate)}
                 className={styles.year}
               >
-                {year}
+                {year} 
               </button>
             ))}
             <button

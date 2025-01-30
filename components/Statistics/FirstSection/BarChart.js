@@ -1,97 +1,80 @@
 
-import { useEffect, useState } from 'react';
-import styles from './BarChart.module.css'
-
-//COMPONENTS
+import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import styles from './BarChart.module.css'; // Styles importieren
 import SelectTimePeriod from './SelectTimePeriod';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-const BarChart = ({
-  allSupabaseSports,
-  sortedSportsByCount,
-  date,
-  setDate,
-  resultArray,
-  showBarChart,
-  //scrollHandler,
-  isScrolled
-}) => {
 
-  const sportCounts = {};
+const BarChartComponent = ({ allSupabaseSports, date, setDate }) => {
+    const [chartData, setChartData] = useState([]);
+    const [maxCount, setMaxCount] = useState(0);
 
-  // Filtere die allSupabaseSports basierend auf dem date-Objekt
-  const filteredSports = allSupabaseSports.filter((sport) => {
-    const createdAtDate = new Date(sport.created_at);
-    const year = createdAtDate.getFullYear();
-    const month = createdAtDate.getMonth(); // 0 = Januar, 1 = Februar, ..., 11 = Dezember
+    useEffect(() => {
+        const sportCounts = {};
 
-    if (date.month === "All") {
-      return year === date.year; // Nur das Jahr überprüfen
-    } else {
-      // Monat in Zahl umwandeln (z.B. 'March' -> 2)
-      const monthIndex = new Date(
-        Date.parse(date.month + " 1, 2020")
-      ).getMonth();
-      return year === date.year && month === monthIndex; // Jahr und Monat überprüfen
-    }
-  });
+        // Filtere die allSupabaseSports basierend auf dem date-Objekt
+        const filteredSports = allSupabaseSports.filter((sport) => {
+            const createdAtDate = new Date(sport.created_at);
+            const year = createdAtDate.getFullYear();
+            const month = createdAtDate.getMonth();
 
-  filteredSports.forEach((sport) => {
-    const { name, label } = sport;
-    if (!sportCounts[name]) {
-      sportCounts[name] = { count: 0, label };
-    }
-    sportCounts[name].count += 1;
-  });
+            if (date.month === "All") {
+                return year === date.year; // Nur das Jahr überprüfen
+            } else {
+                const monthIndex = new Date(Date.parse(date.month + " 1, 2020")).getMonth();
+                return year === date.year && month === monthIndex; // Jahr und Monat überprüfen
+            }
+        });
 
-  // Umwandeln in ein Array und nach der Anzahl sortieren
-  const sortedSports = Object.entries(sportCounts)
-    .map(([name, { count, label }]) => ({ name, count, label }))
-    .sort((a, b) => a.count - b.count); // Aufsteigend sortieren
+        filteredSports.forEach((sport) => {
+            const { name } = sport;
+            if (!sportCounts[name]) {
+                sportCounts[name] = { count: 0 };
+            }
+            sportCounts[name].count += 1;
+        });
 
-  // Maximalen Wert finden
-  //const maxCount = Math.max(...sortedSports.map((sport) => sport.count));
+        // Umwandeln in ein Array und nach der Anzahl sortieren
+        const sortedSports = Object.entries(sportCounts)
+            .map(([name, { count }]) => ({ name, count }))
+            .sort((a, b) => a.count - b.count);
 
+        setMaxCount(Math.max(...sortedSports.map(sport => sport.count)));
+        setChartData(sortedSports);
+        console.log(filteredSports)
+        console.log(sortedSports)
+    }, [allSupabaseSports, date]);
 
-  const [maxCount, setMaxCount] = useState(null)
+    console.log(allSupabaseSports)
+   
 
-  useEffect(() => {
-    if (date.month === "All") {
-      setMaxCount(200);
-    } else if (date.month != "All") {
-      setMaxCount(31);
-    }
-  }, [date, sortedSports]);
+    return (
+        <div className={styles.container}>
+        <h1 className="py-2 flex items-center">
+            Your Bar Chart for {date.year}, {date.month}
+            <span className='text-xs mx-6'> referred to number of units </span>
+        </h1>
+        <div className="flex h-28 lg:h-14 lg:border-red-200 px-4 my-2">
+            <SelectTimePeriod date={date} setDate={setDate} />
+        </div>
 
-
-
-  return (
-    <div className={styles.container} id="container">
-      <h1 className="text-xl py-2 flex items-center">Your Bar Chart for {date.year}, {date.month} <span className='text-xs mx-6 my-2'>(referred to number of units)</span> </h1>
-      <div className=" flex px-4 my-2">
-        <SelectTimePeriod  showBarChart={showBarChart} date={date} setDate={setDate} />
-      </div> 
-
-      <div className={styles.bar_chart} id="barChart">
-
-        {sortedSports.map(({ name, count, label }) => (
-          <div
-            key={name}
-            className={`${styles.bar} ${styles[label]}`}
-            style={{ height: `${(count / maxCount) * 100}vh` }}
-          >
-            <h1 className={styles.barChart_titles}>
-              {name}
-            </h1>
-            <p className='text-zinc-600'> {count}x </p>
-
-
-          </div>
-        ))}
-      </div>
-     
+        {/* Überprüfen ob chartData leer ist */}
+        {chartData.length === 0 ? (
+            <p>No data could be rendered for the year {date.year}.</p>
+        ) : (
+            <div className={styles.bar_chart}>
+                <ResponsiveContainer width="100%" height={400}>
+                    <BarChart data={chartData}>
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="count" fill="hsl(340, 60%, 65%)" name="Count" />
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+        )}
     </div>
-  );
+);
 };
 
-export default BarChart;
+export default BarChartComponent;

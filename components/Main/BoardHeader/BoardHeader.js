@@ -25,7 +25,7 @@ const BoardHeader = () =>{
   const { logoutHandler } = useAuth();
 
   return (
-    <div className={styles.headerDiv}>
+    <div className={styles.headerDiv} id="headerDiv">
       
 
       {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}

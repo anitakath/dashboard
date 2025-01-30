@@ -26,9 +26,24 @@ const Statistic = () =>{
 
 
 
+  const scrollUpHandler = (direction) => {
+    console.log('scrolling up...')
+    const topElement = document.getElementById('statisticNavigation');
+    console.log(topElement)
+
+    if(direction === "up"){
+      if(topElement){
+        topElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+   
+  
+  };
+
   return (
     <div className="w-full h-screen m-0 md:p-14">
-      <div className="flex flex-col w-full border-2 h-full overflow-scroll m-0 p-0 relative z-20">
+      <div className="flex flex-col w-full border-2 h-full overflow-scroll m-0 p-0 relative z-20" >
         {isLoggedIn && (
           <div>
             <BoardHeader allSupabaseSports={allSupabaseSports} />
@@ -54,7 +69,7 @@ const Statistic = () =>{
               </h1>
             </div>
 
-            <div className="flex relative flex-col lg:flex-row mb-2 h-20  md:mx-2">
+            <div className="flex h-28 relative flex-col lg:flex-row mb-2 mx-2">
               <SelectTimePeriod date={date} setDate={setDate} />
             </div>
 
@@ -66,7 +81,7 @@ const Statistic = () =>{
               />
             )}
 
-            <div className="">
+            <div className="flex justify-between" id="sportsOverview">
               <h1 className="text-xl my-4 p-2">
                 Annual overview for
                 {sport != null && (
@@ -81,6 +96,7 @@ const Statistic = () =>{
                 )}
                 
               </h1>
+              <button className="px-14 z-50 hover:text-red-300 " onClick={() =>scrollUpHandler("up")}> go up </button>
             </div>
 
             {sport != null && (
@@ -88,9 +104,6 @@ const Statistic = () =>{
               <SportsOverView />
 
             )}
-
-
-           
           </div>
         )}
 
