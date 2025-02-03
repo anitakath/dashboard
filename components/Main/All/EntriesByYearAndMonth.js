@@ -85,13 +85,13 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                                         className={styles.monthBtn}
                                         onClick={() => toggleMonthEntries(monthName, year)}
                                     >
-                                        <span className='mx-4'> {monthName} </span> 
+                                        <span className='mx-4'> {monthName}  </span> 
                                         <div className={styles.durationDiv}>
                                             <span className={styles.totalDuration}>
                                                 total hours of sport:  <strong> {convertMinutesToHours(totalDuration)} </strong>
                                             </span>
                                             <span className={styles.averageDuration}> 
-                                                average hours of sport per day:  <strong>{averageDurationPerDay(totalDuration)} </strong>
+                                                average hours of sport per day:  <strong>{averageDurationPerDay(totalDuration, monthName)} </strong>
                                             </span>
                                         
                                         </div>

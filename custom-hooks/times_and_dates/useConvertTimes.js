@@ -1,5 +1,5 @@
-
-
+import { useSelector } from "react-redux";
+import useCalendar from "./useCalendar";
 
 const useConvertTimes = () =>{
 
@@ -14,17 +14,34 @@ const useConvertTimes = () =>{
         return hours * 60;
     }
 
-    const averageDurationPerDay = (totalDuration) => {
-        const totalMinutes = totalDuration;
+
+    const {completeMonths,  getMonthsDays} = useCalendar();
+    const calendar = useSelector((state) => state.calendar)
+
+
+    const averageDurationPerDay = (totalDuration, monthName) => {
 
         const currentDate = new Date();
-
         const currentDayOfMonth = currentDate.getDate(); 
+        const currentMonthOfYear = currentDate.getMonth();
+        const monthsDays = getMonthsDays(calendar);
+        const monthData = monthsDays.find(month => month.name.toUpperCase() === monthName.toUpperCase());
 
-        const averageMinutesPerDay = totalMinutes / currentDayOfMonth;
+        if (!monthData) {
+            console.error(`Monat ${monthName} nicht gefunden.`);
+            return null;
+        }
 
-  
-        const roundedAverageMinutesPerDay = Math.floor(averageMinutesPerDay)
+        let averageMinutesPerDay;
+         // current month
+        if (monthName === completeMonths[currentMonthOfYear]) {
+            averageMinutesPerDay = totalDuration / currentDayOfMonth;
+        } else {
+         // previous months
+            averageMinutesPerDay = totalDuration / monthData.days;
+        }
+
+        const roundedAverageMinutesPerDay = Math.floor(averageMinutesPerDay);
 
         return convertMinutesToHours(roundedAverageMinutesPerDay);
     };
