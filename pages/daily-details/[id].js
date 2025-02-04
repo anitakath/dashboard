@@ -144,20 +144,20 @@ import PreviousEntries from "./PreviousEntries";
 
           <div className={styles.entryContainer}>
 
-            <div className="mb-5 w-full p-1 mx-1">
+            <div className="mb-5 w-full md:p-1 my-1 ">
             {/* Render filtered entries here */}
-            {filteredEntries.map(entry => (
-              <div 
-                key={entry.id} 
-                className={` ${styles.entryBg} ${styles[entry.label]} m-2 flex-col cursor-pointer`}
-                onClick={() => selectEntryHandler(entry)}
-              >
-                <h2 className="m-2 text-xl text-center">{entry.title}</h2>
-              </div>
-            ))}
+              {filteredEntries.map(entry => (
+                <div 
+                  key={entry.id} 
+                  className={` ${styles.entryBg} ${styles[entry.label]} md:m-2 m-0 my-1 md:my-2 flex-col cursor-pointer`}
+                  onClick={() => selectEntryHandler(entry)}
+                >
+                  <h2 className="m-2 text-xl text-center">{entry.title}</h2>
+                </div>
+              ))} 
             </div>
 
-            <div className={`mb-10 w-full p-4 mx-1 mr-4 max-h-96 overflow-scroll`}>
+            <div className={`mb-10 w-full md:p-4 mx-1  mr-4 max-h-96 overflow-scroll`}>
                {/* Placeholder für den Inhalt des ausgewählten Eintrags */}
                 {selectedEntry ? (
                  <div className={`min-h-20 animate-zoom-in max-h-96 overflow-scroll p-3 ${styles[selectedEntry?.label]}`}>
@@ -168,19 +168,14 @@ import PreviousEntries from "./PreviousEntries";
                 </div>
                 ) : (
                   <div className="w-full p-2 flex justify-center items-center animate-zoom-in">
-                    <p className="mx-2 pb-4 flex "> 
-                      <FontAwesomeIcon icon={faChevronLeft} className={`${styles.fontAwesomeIcon} mr-2 mt-1 hidden slg:flex`} />
-                      Please select an entry to view its content
-                      <FontAwesomeIcon icon={faChevronUp} className={`${styles.fontAwesomeIcon} ml-2 mt-1 slg:hidden`} />
-                      
-                    </p> 
+                    <p className="mx-2 pb-4 flex "> Please select an entry to view its content </p> 
                   </div>
                 )}
             </div>
 
           </div>
          
-          <div className="my-4 p-2 overflow-scroll relative flex-col">
+          <div className="my-4 overflow-scroll relative flex-col">
             <div className={styles.pastEntriesTitleContainer}> 
               <h1> Want to know what you were doing on January 15 of the last 5 years? </h1>
 
