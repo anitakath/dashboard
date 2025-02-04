@@ -70,6 +70,7 @@
 
 .sport_btn:hover{ 
     overflow: hidden;
+    background: linear-gradient(to right,  var(--ultraLight), var(--purpleDarkHoverOpacity)); 
 }
 
 .navigation_table_div{
@@ -169,6 +170,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .icon{
