@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styles from './BarChart.module.css'; // Styles importieren
-import SelectTimePeriod from './SelectTimePeriod';
 
 const BarChartComponent = ({ allSupabaseSports, date, setDate }) => {
     const [chartData, setChartData] = useState([]);
-    const [maxCount, setMaxCount] = useState(0);
 
     useEffect(() => {
         const sportCounts = {};
@@ -37,14 +35,11 @@ const BarChartComponent = ({ allSupabaseSports, date, setDate }) => {
         const sortedSports = Object.entries(sportCounts)
             .map(([name, { count }]) => ({ name, count }))
             .sort((a, b) => a.count - b.count);
-
-        setMaxCount(Math.max(...sortedSports.map(sport => sport.count)));
         setChartData(sortedSports);
         console.log(filteredSports)
         console.log(sortedSports)
     }, [allSupabaseSports, date]);
 
-    console.log(allSupabaseSports)
    
 
     return (
@@ -53,9 +48,12 @@ const BarChartComponent = ({ allSupabaseSports, date, setDate }) => {
             Your Bar Chart for {date.year}, {date.month}
             <span className='text-xs mx-6'> referred to number of units </span>
         </h1>
+
+        {/*
         <div className="flex h-28 lg:h-14 lg:border-red-200 px-4 my-2">
             <SelectTimePeriod date={date} setDate={setDate} />
-        </div>
+        </div> 
+        */}
 
         {/* Überprüfen ob chartData leer ist */}
         {chartData.length === 0 ? (

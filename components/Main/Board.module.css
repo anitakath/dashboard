@@ -76,11 +76,28 @@
   opacity: 1;
 }
 
+.statisticsLinkCurrentYear{
+  position: absolute;
+  right: -17px;
+  top: -21px;
+}
+
+.mobile_menubutton{
+  display: none;
+}
+
 
 @media screen and (max-width: 1300px){
   .userImageDiv{
     right: 30px;
     top: 30px;
+  }
+
+
+  .statisticsLinkCurrentYear{
+    top: 2.5px;
+    right: 3.5px;
+    padding: 3px;
   }
 }
 
@@ -93,6 +110,7 @@
     right: 35px;
     top: 35px;
   }
+
 }
 
 
@@ -130,6 +148,12 @@
  
 }
 
+@media screen and (max-width: 770px){
+  .mobile_menubutton{
+    display: inline-block;
+  }
+}
+
 @media screen and (max-width: 600px){
 
   .header_div{
@@ -154,5 +178,10 @@
     right: 10px;
     top: 0px;
   }
+  
 
+  .statisticsLinkCurrentYear{
+    font-size: 0.8rem;
+    top: 5px;
+  }
 }

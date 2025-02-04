@@ -69,9 +69,6 @@
 
 
 
-.icons_mobile{
-  display: none;
-}
 
 .icons:hover, .icons_mobile{
   cursor: pointer;
@@ -127,31 +124,6 @@
  
 }
 
-@media screen and (max-width: 770px){
-
-
-    
-  .icons_mobile{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0px 10px;
-    position: absolute;
-    right: 0px;
-    top: 20px;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-   /* position: absolute;
-    top: -35px;
-    left: 0px;
-    width: 25px;
-    height: 25px;
-    */
-    background-color: transparent;
-    /*border: 2px solid purple*/
-  }
-}
 
 @media screen and (max-width: 600px){
 

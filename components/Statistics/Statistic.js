@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 //COMPONENTS
 import BoardHeader from "../Main/BoardHeader/BoardHeader";
@@ -24,8 +23,6 @@ const Statistic = () =>{
 
   let annualBtn = isAnnualOpen ? faDownLeftAndUpRightToCenter :  faUpRightAndDownLeftFromCenter;
 
-
-
   const scrollUpHandler = (direction) => {
     console.log('scrolling up...')
     const topElement = document.getElementById('statisticNavigation');
@@ -36,10 +33,13 @@ const Statistic = () =>{
         topElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
-
-   
-  
   };
+
+
+  console.log(currentSport)
+  console.log(sport)
+
+
 
   return (
     <div className="w-full h-screen m-0 md:p-14">
@@ -69,9 +69,10 @@ const Statistic = () =>{
               </h1>
             </div>
 
+            {/*
             <div className="flex h-28 relative flex-col lg:flex-row mb-2 mx-2">
               <SelectTimePeriod date={date} setDate={setDate} />
-            </div>
+            </div> */}
 
             {isAnnualOpen && (
               <Annual
@@ -81,7 +82,7 @@ const Statistic = () =>{
               />
             )}
 
-            <div className="flex justify-between" id="sportsOverview">
+            <div className="flex justify-between " id="sportsOverview" >
               <h1 className="text-xl my-4 p-2">
                 Annual overview for
                 {sport != null && (

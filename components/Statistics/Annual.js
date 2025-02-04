@@ -1,35 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './Annual.module.css'
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
-import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
 //COMPONENTS
 import FirstSection from './FirstSection/FirstSection';
 import SecondSection from './SecondSection/SecondSection';
 import ThirdSection from './ThirdSection/ThirdSection';
 import RandomSportImagesGrid from './FourthSection.js/RandomSportImagesGrid';
 
-const Annual = ({ allSupabaseSports, date, setDate}) => {
+const Annual = ({ date, setDate}) => {
   const [showBarChart, setShowBarChart] = useState(null)
-  const [showFiveYearHistory, setShowFiveYearHistory] = useState({
-    favourites: false,
-    totalHours: false,
-    restDays: false,
-  })
   const videoRef = useRef(null);
-  const [showControls, setShowControls] = useState(true);
-
+  const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
   const { sortedSportsByCount, resultArray } = useStatistics(
     allSupabaseSports,
     date
   );
-  const { convertMinutesToHours } = useConvertTimes();
   const topSportsByDuration = useTopSportsByDuration(allSupabaseSports, date);
-
   const showBarChartHandler = (item) =>{
     setShowBarChart(item)
-
   }
 
    // Effect for setting the playback speed
@@ -43,8 +34,6 @@ const Annual = ({ allSupabaseSports, date, setDate}) => {
 
 return (
     <div className={styles.staticsticsBodyContainer}>
-
-      {/* VIDEO IN staticsticsBodyContainer  */}
       <video 
         ref={videoRef} 
         width="600" 
@@ -52,9 +41,7 @@ return (
         autoPlay 
         loop 
         muted 
-        className={styles.backgroundVideo}
-        onMouseEnter={() => setShowControls(false)} // Entferne die Steuerung beim Hover
-        onMouseLeave={() => setShowControls(true)}     
+        className={styles.backgroundVideo}   
         >
           <source src="/yoga.mp4" type="video/mp4" />
           Dein Browser unterstützt das Video-Tag nicht.
@@ -67,11 +54,11 @@ return (
       <FirstSection 
         date={date} 
         sortedSportsByCount={sortedSportsByCount}
-        showBarChart={showBarChart}
         topSportsByDuration={topSportsByDuration}
         showBarChartHandler={showBarChartHandler}
         setDate={setDate}
         resultArray={resultArray}
+        showBarChart={showBarChart}
         setShowBarChart={setShowBarChart}
       />
      
@@ -83,8 +70,6 @@ return (
       <SecondSection 
         date={date} 
         resultArray={resultArray}
-        setShowFiveYearHistory={setShowFiveYearHistory}
-        showFiveYearHistory={showFiveYearHistory}
       />
 
 

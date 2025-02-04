@@ -33,6 +33,7 @@ const Board = () => {
   const actualMonth = actualMonthIndex + 1;
   const dispatch = useDispatch();
   const [filteredByDate, setFilteredByDate ] = useState([])
+  const [openMenu, setOpenMenu] = useState(false)
 
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const Board = () => {
       </div>
   
 
-      <BoardHeader />
+      <BoardHeader openMenu={openMenu} setOpenMenu={setOpenMenu} />
 
       {/*---------------------- MOBILE NAVIGATION ---------------------- */}
       <div className="flex w-full lg:hidden">
@@ -85,7 +86,11 @@ const Board = () => {
           )}
 
           {selectedSport != null && selectedSport != "start" && (
-            <BoarderSubHeader currentSport={selectedSport} />
+            <BoarderSubHeader 
+              currentSport={selectedSport}
+              openMenu={openMenu} 
+              setOpenMenu={setOpenMenu} 
+            />
           )}
 
           {/* --------------------------  THE ENTRIES -------------------------- */}

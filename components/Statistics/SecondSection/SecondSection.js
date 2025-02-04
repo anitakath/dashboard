@@ -1,14 +1,20 @@
 import styles from '../Annual.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertMinutesToHours } from '@/utils/helpers';
-
+import { useState } from 'react';
 //COMPONENTS
 import ColumnChart from './ColumnChart';
 
 
-const SecondSection = ({date,  setShowFiveYearHistory,  resultArray, showFiveYearHistory, }) =>{
+
+const SecondSection = ({date,  resultArray, }) =>{
 
 
+  const [showFiveYearHistory, setShowFiveYearHistory] = useState({
+    favourites: false,
+    totalHours: false,
+    restDays: false,
+  })
     return(
         
       <div className={styles.container}>

@@ -1,4 +1,3 @@
-
 import styles from '../Annual.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
@@ -6,13 +5,13 @@ import { useSelector } from 'react-redux';
 //COMPONENTS
 import BarChart from './BarChart';
 //CUSTOM HOOKS
-import { convertMinutesToHours } from '@/utils/helpers';
+//import { convertMinutesToHours } from '@/utils/helpers';
+import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
 
-
-const FirstSection = ({date, sortedSportsByCount, showBarChart, topSportsByDuration, showBarChartHandler, setDate, resultArray, setShowBarChart}) =>{
+const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart, topSportsByDuration, showBarChartHandler, setDate, resultArray}) =>{
 
     const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
-
+    
     return(
         <div className={styles.container}>
         <h1 className={styles.title}>
@@ -92,13 +91,14 @@ const FirstSection = ({date, sortedSportsByCount, showBarChart, topSportsByDurat
             </button>
          </div>
 
-            <div className="mb-4 h-60">
+            <div className="mb-4 ">
               {topSportsByDuration.map(({ name, totalDurationFormatted, label }, index) => {
                 // Konvertiere totalDurationFormatted (z.B. 5.75) in Minuten
                 const totalDurationInMinutes = Math.round(totalDurationFormatted * 60); // 5.75 Stunden * 60 Minuten
-
+                const {convertMinutesToHours} = useConvertTimes()
                 // Verwende die Funktion zum Konvertieren von Minuten in Stunden und Minuten
                 const formattedDuration = convertMinutesToHours(totalDurationInMinutes);
+
 
                 return (
                   <div key={name} className={`${styles[label]} ${styles.fav_sports_div}`}>

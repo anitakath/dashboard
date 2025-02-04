@@ -6,14 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faBars, faCalendar } from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
 import AddEntryForm from '../AddEntryForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedSport } from '@/store/sportReducer';
 import { setSection } from '@/store/profileReducer';
 
-const BoarderSubHeader = ({ currentSport }) => {
+const BoarderSubHeader = ({ currentSport, openMenu, setOpenMenu }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [miniMenu, setMinimenu] = useState(true)
   const dispatch = useDispatch();
+  const currentYear = useSelector((state) => state.calendar.year)
 
   
   const dailyAllHandler = () => {
@@ -55,7 +56,7 @@ const BoarderSubHeader = ({ currentSport }) => {
   };
 
   return (
-    <div className="mb-2  flex-wrap justify-center relative bottom-2">
+    <div className="mb-2 flex-wrap justify-center relative bottom-2">
       <div className="relative w-full h-8">
         <button
           className="absolute top-2 left-2 lg:hidden"
@@ -115,8 +116,11 @@ const BoarderSubHeader = ({ currentSport }) => {
             your diary
           </Link>
           <Link className="primary_link" href="/statistics">
-            your statistics
+            your statistics <span className={styles.statisticsLinkCurrentYear}> {currentYear} ✨ </span>
           </Link>
+          <button className={`secondary_button ${styles.mobile_menubutton}`}>
+            open menu 
+          </button>
         </div>
       )}
 

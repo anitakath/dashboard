@@ -6,7 +6,7 @@ const SportsOverView = () =>{
 
     return(
 
-        <div className="m-4 flex p-2 ">
+        <div className="m-0 flex p-2">
         <p className="m-4 w-6/12 p-4 text-justify">
           At vero eos et accusam et justo duo dolores et ea rebum. Stet
           clita kasd gubergren, no sea takimata sanctus est Lorem ipsum

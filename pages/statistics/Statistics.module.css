@@ -49,6 +49,19 @@
     font-size: 1rem;
 }
 
+.fixedNavigation{
+    z-index: 10000;
+    background-color: white;
+    position: fixed;
+    top: 1vh;
+    left: 0;
+    background-color:white;
+    width: 100%;
+    padding-bottom: 10px;
+    overflow: scroll;
+
+}
+
 
 @media screen and (max-width: 1350px){
     .container_div{

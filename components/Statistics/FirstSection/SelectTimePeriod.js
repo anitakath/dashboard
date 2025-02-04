@@ -1,29 +1,53 @@
 
 import { useState } from 'react';
 import styles from './SelectTimePeriod.module.css'
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setAllSportsFromSupabase } from '@/store/sportReducer';
 //CUSTOM HOOKS
 import { useHandleYearChange,  useHandleMonthChange } from '@/custom-hooks/times_and_dates/useDateChange';
-import useCalendar  from "@/custom-hooks/times_and_dates/useCalendar";
-
+import useFetchEntries from '@/custom-hooks/entries/useFetchEntries';
+//COMPONENTS
+import Spinner from '@/components/UI/Spinner';
 
 const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
   const currentYear = new Date().getFullYear();
+  const userId = useSelector((state) => state.auth.userId)
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
   const [isYearModalOpen, setIsYearModalOpen] = useState(false);
   const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
   const [selectedYear, handleYearChange] = useHandleYearChange(currentYear);
   const [selectedMonth, handleMonthChange] = useHandleMonthChange(currentMonth);
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false)
 
+  const {fetchSportsDataBySelectedYear} = useFetchEntries();
   const years = Array.from(
     { length: 10 },
     (_, i) => 2023 + i
   );
-  const {completeMonths} = useCalendar();
+
+
+  // Neue Funktion zum Ändern des Jahres und Abrufen der Einträge
+  const changeYearAndFetchEntriesHandler = async (year) => {
+    setIsLoading(true)
+    try{
+      // change year and refetch entries, based on the new date
+      
+      // Jahr ändern
+      await handleYearChange(year, setIsYearModalOpen, setDate);
+      // Daten abrufen
+      const entriesInSelectedYear = await fetchSportsDataBySelectedYear(userId, year);
+      await dispatch(setAllSportsFromSupabase(entriesInSelectedYear))
+      setIsLoading(false)
+    }catch{
+      console.error('could not change year and refetch statistics entries')
+      setIsLoading(false)
+    }
+  }; 
 
 
   return (
-      <div className="flex-col lg:flex-row md:h-auto justify-center items-center relative w-full ">
+      <div className="flex-col  lg:flex-row md:h-auto justify-center items-center relative w-full ">
         {!isYearModalOpen && !isMonthModalOpen && (
           <button
           className="secondary_button"
@@ -32,19 +56,12 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
           select year
         </button>)}
 
-        {/*
-         ----------------------------------------------------------- 
-         IF WE WANT TO OFFER THE USER NOT ONLY ANNUAL, BUT ALSO MONTHLY STATISTICS
-         -----------------------------------------------------------
-          {!isYearModalOpen && !isMonthModalOpen && (
-            <button
-            className="secondary_button"
-            onClick={() => setIsMonthModalOpen(true)}
-          >
-            select month
-          </button>
-          )} 
-        */}
+        {isLoading && (
+          <div className='absolute top-0 left-0 w-full h-full bg-white flex-col   justify-center items-center'>
+            <Spinner text="loading statistics data.."/>
+          </div>
+        )}
+     
        
         {showBarChart !== "XUNITS" && showBarChart !== "XTIMES"  &&  !isYearModalOpen &&(
            <p className="my-4  lg:my-0">
@@ -60,7 +77,7 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
             {years.map((year) => (
               <button
                 key={year}
-                onClick={() => handleYearChange(year, setIsYearModalOpen, setDate)}
+                onClick={() => changeYearAndFetchEntriesHandler(year)}
                 className={styles.year}
               >
                 {year} 
@@ -83,15 +100,7 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
             >
               Close
             </button>
-            {completeMonths && completeMonths.map((month) => (
-              <button
-                key={month}
-                onClick={() =>handleMonthChange(month, setIsMonthModalOpen, setDate)}
-                className={styles.month}
-              >
-                {month} 
-              </button>
-            ))}
+            
           </div>
         )}
       </div>

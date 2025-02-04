@@ -17,17 +17,15 @@ import { useSearchTerm } from "@/custom-hooks/useSearchTerm";
 import { useSelector} from "react-redux";
 
 
-const BoardHeader = () =>{
+const BoardHeader = ({openMenu, setOpenMenu}) =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const [searchTerm, setSearchTerm] = useState("");
-  const [openMenu, setOpenMenu] = useState(false)
+
   const filteredSearchedEntries = useSearchTerm(allSupabaseSports, searchTerm)
   const { logoutHandler } = useAuth();
 
   return (
     <div className={styles.headerDiv} id="headerDiv">
-      
-
       {openMenu && <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} />}
 
       <div className={styles.searchBarResult_div}>
@@ -43,14 +41,6 @@ const BoardHeader = () =>{
               </button>
             </div>
           )}
-
-        <div className={styles.icons_mobile}>
-          <FontAwesomeIcon
-            icon={faBars}
-            className=" hover:pointer"
-            onClick={() => setOpenMenu(true)}
-          />
-        </div>
         </div>
 
        

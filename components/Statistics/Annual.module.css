@@ -4,10 +4,8 @@
 
 .staticsticsBodyContainer{
     padding-top: 10px;
-    /* UPLOAD A VIDEO HERE!*/
     position: relative;
     top: -30px;
-   
 }
 
 .backgroundVideo{
@@ -16,7 +14,6 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-
 }
 
 
@@ -101,7 +98,6 @@
 
 
 .images_div{
-    background: var(--purpleDarkHoverOpacity);
     padding: 1px;
     width: 100%;
 }
