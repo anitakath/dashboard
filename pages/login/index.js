@@ -5,7 +5,7 @@ const LoginPage = () =>{
 
 
     return (
-      <div className="w-screen h-screen m-0 md:p-10">
+      <div className="w-screen h-screen m-0">
         <Login />
       </div>
     );

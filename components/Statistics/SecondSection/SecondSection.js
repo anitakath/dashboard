@@ -47,43 +47,6 @@ const SecondSection = ({date,  resultArray, }) =>{
 
         {showFiveYearHistory.totalHours === false && (
           <div className="w-full flex my-4 lg:m-0">
-            
-            <div className='w-full'>
-              <p className='mx-2'> total: </p>
-              {resultArray.length > 0 ? (
-                resultArray.map(({ name, label, totalDurationFormatted }, index) => {
-                  // Konvertiere totalDurationFormatted (z.B. 5.75) in Minuten
-                  const totalDurationInMinutes = Math.round(totalDurationFormatted * 60); // 5.75 Stunden * 60 Minuten
-
-                  // Verwende die Funktion zum Konvertieren von Minuten in Stunden und Minuten
-                  const formattedDuration = convertMinutesToHours(totalDurationInMinutes);
-
-                  return(
-                    <div
-                      key={index}
-                      className={`${styles.totalHours_sports_div} ${styles.linearGradient_bg}`}
-                    >
-                      <p className="flex tems-center">
-                        <span
-                          className={`${styles[label]} ${
-                            styles.centered_span
-                          } `}
-                        >
-                          {name}:
-                        </span>
-                        {formattedDuration} 
-                      </p>
-                    </div>
-                  )
-                    
-                }
-                )
-              ) : (
-                <div className="text-center flex justify-center items-center h-full">
-                  <p className={styles.error_p}>No data available.</p>
-                </div>
-              )}
-            </div>
             <div className=" w-full h-80 m-0 my-2 mr-2 p-2 overflow-scroll">
               <ColumnChart resultArray={resultArray}/>
             </div>

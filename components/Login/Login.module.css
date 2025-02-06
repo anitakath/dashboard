@@ -5,6 +5,11 @@
     margin: 10px 0px;
     padding: 5px;
     width: 400px;
+    background-color: transparent;
+}
+
+.input::placeholder {
+    color: silver; 
 }
 
 .input:focus{
@@ -32,6 +37,7 @@
 .error_input{
     background: var(--purpleDarkHover);
 }
+
 
 .register{
     color: var(--purpleDark);

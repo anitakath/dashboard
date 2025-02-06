@@ -6,6 +6,8 @@ import styles from './Login.module.css'
 import useAuth from "../../custom-hooks/auth/useAuth";
 import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
+import VideoSlider from "../UI/VideoSlider";
+
 
 const Login = ({ successMessage }) => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -48,9 +50,11 @@ const Login = ({ successMessage }) => {
 
   return (
     <div className="w-full h-full p-4">
-      <div className="flex justify-center w-full h-full py-2 m-0 p-0 relative border-2">
+      <div className="flex justify-center w-full h-full m-0 p-0 relative border-2">
+        <VideoSlider/>
+    
         <form
-          className="sm:w-full lg:w-1/2 flex flex-col items-center justify-center"
+          className="sm:w-full absolute top-48 lg:w-1/2 flex flex-col items-center justify-center"
           onSubmit={handleSubmit}
         >
           <input
