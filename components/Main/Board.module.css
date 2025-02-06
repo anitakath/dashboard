@@ -25,8 +25,8 @@
 .userImageDiv{
   display: flex;
   position: fixed;
-  top: 25px;
-  right: 25px;
+  top: 60px;
+  right: 60px;
   z-index: 100;
 }
 
@@ -88,10 +88,7 @@
 
 
 @media screen and (max-width: 1300px){
-  .userImageDiv{
-    right: 30px;
-    top: 30px;
-  }
+ 
 
 
   .statisticsLinkCurrentYear{
@@ -106,20 +103,14 @@
     margin-left: 50px;
   }   
 
-  .userImageDiv{
-    right: 35px;
-    top: 35px;
-  }
+  
 
 }
 
 
 @media screen and (max-width: 900px){
 
-  .userImageDiv{
-    right: 35px;
-    top: 25px;
-  }
+
 }
 
 @media screen and (max-width: 800px){
@@ -142,7 +133,7 @@
   }
 
   .userImageDiv{
-    right: 35px;
+    right: 20px;
     top: 20px;
   }
  
@@ -175,8 +166,8 @@
     margin: 5px 0px;
   }
   .userImageDiv{
-    right: 10px;
-    top: 0px;
+    right: 2px;
+    top: 2px;
   }
   
 

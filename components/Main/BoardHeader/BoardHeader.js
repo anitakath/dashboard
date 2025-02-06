@@ -4,7 +4,6 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faBars, faUser, faHouse, faUsers } from "@fortawesome/free-solid-svg-icons";
 //COMPONENTS
-import UserImage from "@/components/UI/UserImage";
 import SearchBar from "@/components/UI/SearchBar";
 import ResultsBar from "@/components/UI/ResultsBar";
 import Menu from "./Menu";

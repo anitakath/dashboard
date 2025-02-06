@@ -22,6 +22,7 @@ const SecondSection = ({date,  resultArray, }) =>{
         total hours in and per sport in {date.year}
       </h1>
 
+      {/*
       <button
         className="absolute m-1 mx-2  border-b-2 top-0 px-2 hover:text-red-200"
         onClick={() =>
@@ -34,6 +35,7 @@ const SecondSection = ({date,  resultArray, }) =>{
         5 year history
       </button>
 
+      */}
       <div className="flex flex-col lg:flex-row mt-2">
         {showFiveYearHistory.totalHours && (
           <div className={styles.history_div}>
@@ -43,7 +45,7 @@ const SecondSection = ({date,  resultArray, }) =>{
             <p> - Then show for year X and sport Y the number of hours of sport completed. </p>
             <p> - the last row should contain the total number of hours for year X</p>
           </div>
-        )}
+        )} 
 
         {showFiveYearHistory.totalHours === false && (
           <div className="w-full flex my-4 lg:m-0">

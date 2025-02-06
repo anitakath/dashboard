@@ -40,7 +40,7 @@ const ColumnChart = () => {
      }));
 
     return (
-        <div className="w-full h-80 m-0 my-2 mr-2 p-2 overflow-scroll">
+        <div className="w-full  h-80 m-0 my-2 mr-2 p-2 overflow-scroll">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
                     <XAxis dataKey="name" />
