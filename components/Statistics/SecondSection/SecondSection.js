@@ -36,7 +36,7 @@ const SecondSection = ({date,  resultArray, }) =>{
       </button>
 
       */}
-      <div className="flex flex-col lg:flex-row mt-2">
+      <div className="flex p-0 m-0 flex-col lg:flex-row mt-2">
         {showFiveYearHistory.totalHours && (
           <div className={styles.history_div}>
             <h2> history div </h2> 
@@ -49,7 +49,7 @@ const SecondSection = ({date,  resultArray, }) =>{
 
         {showFiveYearHistory.totalHours === false && (
           <div className="w-full flex my-4 lg:m-0">
-            <div className=" w-full h-80 m-0 my-2 mr-2 p-2 overflow-scroll">
+            <div className=" w-full h-80  overflow-scroll">
               <ColumnChart resultArray={resultArray}/>
             </div>
           </div>

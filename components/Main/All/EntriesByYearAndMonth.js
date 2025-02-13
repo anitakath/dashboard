@@ -10,6 +10,8 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setAllSportsFromSupabase } from '@/store/sportReducer';
 //UI 
 import Spinner from '@/components/UI/Spinner';
+
+
 const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const calendar = useSelector((state) => state.calendar)
   const [openMonths, setOpenMonths] = useState({});
@@ -77,7 +79,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         );
 
                         return (
-                            <div key={monthName} >
+                            <div key={monthName}>
 
                                 <div className='w-full p-0 h-20 flex justify-center items-center'>
                                 
@@ -85,7 +87,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                                         className={styles.monthBtn}
                                         onClick={() => toggleMonthEntries(monthName, year)}
                                     >
-                                        <span className='mx-4'> {monthName}  </span> 
+                                        <span className='mx-2 lg:mx-4' style={{fontSize: "0.9rem"}}> {monthName}  </span> 
                                         <div className={styles.durationDiv}>
                                             <span className={styles.totalDuration}>
                                                 total hours of sport:  <strong> {convertMinutesToHours(totalDuration)} </strong>
@@ -102,17 +104,20 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                                 {openMonths[`${monthName}-${year}`] && entries.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at)).map((entry, index) => (
                                     <div className={styles.entry} key={index} style={{ background: getComputedStyle(document.documentElement).getPropertyValue(`--${entry.label}`), }}>
                                         <Link href={`/details/${entry.entryPath}`}>
-                                            <div className={styles.link}>
-                                                <p className="my-2 text-xs absolute right-2">
-                                                    {formatDate(entry.created_at)}
-                                                </p>
-                                                <p className="my-2 px-2 text-xs absolute right-4 top-6">
-                                                    {convertMinutesToHours(entry.duration)}
-                                                </p>
-                                                <h2 className="text-2xl mb-4 mt-0 w-8/12 px-2">
+                                            <div className={styles.linkDiv}>
+                                                <div className={styles.linkPararaphDiv}>
+                                                    <p className={styles.linkParagraphDate}>
+                                                        {formatDate(entry.created_at)}
+                                                    </p>
+                                                    <p className={styles.linkParagraphDuration}>
+                                                        {convertMinutesToHours(entry.duration)}
+                                                    </p>
+                                                </div>
+                                                
+                                                <h2 className={styles.linkTitle}>
                                                     {entry.title}
                                                 </h2>
-                                                <p className="px-2 mb-4">{entry.entry}</p>
+                                                <p className={styles.linkEntry}>{entry.entry}</p>
                                             </div>
                                         </Link>
                                     </div>

@@ -33,6 +33,7 @@
   --purpleDark: hsl(340, 100%, 35%);
   --purpleDarkHover: rgba(179, 0, 60, 0.7);
   --purpleDarkHoverOpacity:rgba(179, 0, 60, 0.2);
+  --purpleDarkHoverUltraOpacity: rgba(179, 0, 60, 0.1);
   
   --error-opaque: rgba(218, 42, 28, 0.5);
   --error: rgba(218, 42, 28);
@@ -63,6 +64,8 @@
   --frenchGrey: #BCBDC0;
   --eggplant: #734B5E;
   --mossGreen: #255200;
+
+
   /*----*/
 
     --fandango_opaque: rgba(168, 8, 116, 0.7); /* #A80874 */
@@ -84,7 +87,7 @@
 
 
 
-   --chiliRed: #E3170A;
+  --chiliRed: #E3170A;
   --tyianPurple: #5F0F40;
   --carmine: #9A031E;
   --orange:#E36414;

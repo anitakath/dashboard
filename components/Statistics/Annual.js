@@ -85,7 +85,7 @@ return (
 
       <div className={styles.container}>
         <div className={styles.images_div}>
-            <h2 className='mx-2'>your photographic memories from {date.year} ...</h2>
+            <h1 className={styles.title}> your sports memories in {date.year} ...</h1>
             <RandomSportImagesGrid />
         </div>
       </div>

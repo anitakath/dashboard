@@ -98,7 +98,7 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
               className={styles.modal_input}
             />
           </label>
-          <label className="py-2">
+          <label className="py-2 ">
             Title:
             <input
               type="text"
@@ -108,7 +108,7 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
               className={styles.modal_input}
             />
           </label>
-          <label className="py-2">
+          <label className="py-2 ">
             Entry:
             <textarea
               name="entry"
@@ -118,9 +118,9 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
             />
           </label>
 
-          <div className="w-full flex  justify-center">
+          <div className={styles.radioInputContainer}>
             {sportProviders.map((provider) => (
-              <div key={provider} className="mx-2 mb-6">
+              <div key={provider} className={`${styles.radioInputDiv}`}>
                 <input 
                   type="radio" 
                   id={provider} 
@@ -135,24 +135,24 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
           </div>
 
           <div className="flex justify-evenly">
-            <label className="py-2">
+            <label className={styles.datesDiv}>
               Duration:
               <input
                 type="number"
                 name="duration"
                 value={currentSport.duration}
                 onChange={handleInputChange}
-                className={styles.modal_input}
+                className={styles.modal_dates_input}
               />
             </label>
-            <label className="py-2 ">
+            <label className={styles.datesDiv}>
               Date:
               <input
                 type="datetime-local"
                 name="created_at" 
                 value={formatDateForInput(currentSport.created_at)} 
                 onChange={(e) => handleInputChange(e)}
-                className={styles.modal_input}
+                className={styles.modal_dates_input}
               />
             </label>
           </div>

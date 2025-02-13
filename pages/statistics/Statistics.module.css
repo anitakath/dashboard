@@ -7,6 +7,19 @@
     margin: 0px 2px;
 }
 
+.title{
+    font-size: 1.3rem;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 10px;
+    margin-left: 10px;
+    padding: 10px 5px;
+}
+
+
+
 .activeNavigationButton{
     background-color: var(--purpleDarkHoverOpacity);
 }
@@ -55,7 +68,6 @@
     position: fixed;
     top: 1vh;
     left: 0;
-    background-color:white;
     width: 100%;
     padding-bottom: 10px;
     overflow: scroll;
@@ -67,11 +79,13 @@
     .container_div{
         flex-wrap: wrap;
         justify-content: center;
+        gap: 0;
 
     }
 
     .sport_div{
-        width: 150px;
+        width: 45%;
+        margin: 3px 5px;
     }
 }
 

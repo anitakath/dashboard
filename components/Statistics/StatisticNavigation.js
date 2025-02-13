@@ -13,7 +13,6 @@ const StatisticNavigation = ({ currentSport, setSport, sport }) => {
         }
         setFixedNavigation(true)
         setSport(sport)
-      
     }
 
     // Effect to handle scroll events

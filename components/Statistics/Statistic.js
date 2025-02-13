@@ -2,7 +2,6 @@ import { useState } from "react";
 //COMPONENTS
 import BoardHeader from "../Main/BoardHeader/BoardHeader";
 import StatisticNavigation from "./StatisticNavigation";
-import SelectTimePeriod from "./FirstSection/SelectTimePeriod";
 import Annual from "./Annual";
 import Login from "../Login/Login";
 import { useSelector } from "react-redux";
@@ -24,9 +23,7 @@ const Statistic = () =>{
   let annualBtn = isAnnualOpen ? faDownLeftAndUpRightToCenter :  faUpRightAndDownLeftFromCenter;
 
   const scrollUpHandler = (direction) => {
-    console.log('scrolling up...')
     const topElement = document.getElementById('statisticNavigation');
-    console.log(topElement)
 
     if(direction === "up"){
       if(topElement){
@@ -35,9 +32,6 @@ const Statistic = () =>{
     }
   };
 
-
-  console.log(currentSport)
-  console.log(sport)
 
 
 
@@ -48,13 +42,13 @@ const Statistic = () =>{
           <div>
             <BoardHeader allSupabaseSports={allSupabaseSports} />
 
-            <h1 className="text-xl text-center mt-2 mb-4"> Statistics </h1>
+            <h1 className={styles.title}> Statistics </h1>
 
             <StatisticNavigation currentSport={currentSport} sport={sport} setSport={setSport}/>
             
 
-            <div className="flex items-center">
-              <h1 className="text-xl w-full p-2">
+            <div className="flex my-2 items-center">
+              <h1 className={styles.title}>
                 Annual overview for
                 <span
                   style={{ color: "var(--purpleDark)", margin: "0px 10px" }}
@@ -69,10 +63,6 @@ const Statistic = () =>{
               </h1>
             </div>
 
-            {/*
-            <div className="flex h-28 relative flex-col lg:flex-row mb-2 mx-2">
-              <SelectTimePeriod date={date} setDate={setDate} />
-            </div> */}
 
             {isAnnualOpen && (
               <Annual
@@ -82,8 +72,8 @@ const Statistic = () =>{
               />
             )}
 
-            <div className="flex justify-between " id="sportsOverview" >
-              <h1 className="text-xl my-4 p-2">
+            <div className="flex relative  justify-between" id="sportsOverview" >
+              <h1 className={styles.title}>
                 Annual overview for
                 {sport != null && (
                   <span
@@ -92,19 +82,16 @@ const Statistic = () =>{
                   {sport}
                 </span>
                 )}
-                {sport === null && (
-                  <span>: please select a sport from the navigation above</span>
-                )}
-                
               </h1>
-              <button className="px-14 z-50 hover:text-red-300 " onClick={() =>scrollUpHandler("up")}> go up </button>
+              {sport === null && (
+              <h2 className="ml-2 text-xs absolute bottom-1 left-20"> (please select a sport from the navigation above) </h2>
+              )}
+              <button className=" absolute right-4 top-0 md:top-3 z-50 hover:text-red-300 " onClick={() =>scrollUpHandler("up")}> go up </button>
             </div>
 
-            {sport != null && (
+            <SportsOverView sport={sport}/>
 
-              <SportsOverView />
-
-            )}
+            
           </div>
         )}
 

@@ -43,6 +43,8 @@
     padding: 10px 5px;
 }
 
+
+
 .subContainer{
     display: flex;
     
@@ -50,8 +52,9 @@
 
 .showBarChartButton{
     width: 20px;
-    margin: 0px 10px;
+    height: 20px;
     transition: 0.2s ease-in-out;
+   
 }
 
 .showBarChartButton:hover{
@@ -86,7 +89,10 @@
 
 }
 
-
+.spaceDiv{
+    height: 31px;
+    border: 2px solid transparent;
+}
 
 /*--------------------------------------Total number of sports lessons in the year / last 5 years*-------------------------------------- */
 
@@ -180,11 +186,27 @@
 }
 
 
+@media screen and (max-width: 1000px){
+    .subContainer{
+        margin: 0;
+        padding: 0;
+        flex-direction: column;
+    }
+}
+
 
 @media screen and (max-width: 600px){
+
+    .container{
+        margin: 0;
+        background-color: rgba(255,255,255, 0.3);
+    }
+
     .modalContent{
         width: 98%;
     }
+
+
 }
 
 
