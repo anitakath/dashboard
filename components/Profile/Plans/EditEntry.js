@@ -11,6 +11,10 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
+    if(name === "name"){
+      return
+    }
+
     setCurrentSport((prev) => {
        // look for an object in currentSports (name & color)whose .name matches the input.name property
        const matchingSport = currentSports.find((sport) => sport.name === value);
@@ -81,14 +85,12 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
   ];
 
 
-
-
   return (
     <div className={styles.modal_container} id="editPlannedEntryForm">
       <form className={styles.modal_form}>
         <h2 className={styles.modal_header}>Edit Sport Entry</h2>
         <div className={styles.modal_body}>
-          <label className="py-2">
+          <label className="py-2 ">
             Name:
             <input
               type="text"
