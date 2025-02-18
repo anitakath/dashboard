@@ -104,7 +104,7 @@ export default function Home() {
 
 
   return (
-    <div className="w-screen h-screen m-0 md:p-10">
+    <div className="w-screen h-screen border-8 m-0 md:p-10">
      
       <Head>
         <title>Sports Diary</title>

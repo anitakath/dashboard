@@ -26,15 +26,17 @@ const VideoSlider = () => {
 
     return (
         <div className={styles.sliderContainer}>
-            {videos.length > 0 && (
-                <div className={styles.slider} style={{ transform: `translateY(-${currentIndex * 100}%)`}} >
-                    {videos.map((video, index) => (
-                        <div key={index} className={styles.slide}>
-                            <video src={video} autoPlay loop muted />
-                        </div>
-                    ))}
-                </div>
-            )}
+        
+
+            {videos.length > 0 && 
+                videos.map((video, index) => (
+                    <div key={index} className={styles.slide} style={{ transform: `translateY(-${currentIndex * 100}%)`}}>
+                        <video src={video} autoPlay loop muted />
+                    </div>
+                ))
+            }
+         
+           
             <div className={styles.actionButtons}>
                 <button onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + videos.length) % videos.length)}>Up</button>
                 <button onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % videos.length)}>Down</button>

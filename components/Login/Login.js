@@ -5,7 +5,6 @@ import styles from './Login.module.css'
 //CUSTOM HOOKS
 import useAuth from "../../custom-hooks/auth/useAuth";
 import { useSelector } from "react-redux";
-import { current } from "@reduxjs/toolkit";
 import VideoSlider from "../UI/VideoSlider";
 
 
@@ -50,7 +49,7 @@ const Login = ({ successMessage }) => {
 
   return (
     <div className="w-full h-full p-4">
-      <div className="flex justify-center w-full h-full m-0 p-0 relative border-2">
+      <div className="flex justify-center w-full h-full m-0 p-0 relative border-2 overflow-hidden">
         <VideoSlider/>
     
         <form

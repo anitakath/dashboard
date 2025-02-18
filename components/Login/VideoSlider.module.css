@@ -1,0 +1,40 @@
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Damit das Video den gesamten Bereich ausfüllt */
+  }
+  
+  .slideIn {
+    animation: slideInFromBottom 1s forwards; /* Animation von unten */
+  }
+  
+  .slideOut {
+    animation: slideOutToTop 1s forwards; /* Animation nach oben */
+  }
+  
+  @keyframes slideInFromBottom {
+    from {
+      transform: translateY(100%); /* Start außerhalb des Bildschirms */
+      opacity: 0; /* Unsichtbar */
+    }
+  
+    to {
+      transform: translateY(0); /* Endposition im Sichtbereich */
+      opacity: 1; /* Voll sichtbar */
+    }
+  }
+  
+  @keyframes slideOutToTop {
+    from {
+      transform: translateY(0); /* Startposition im Sichtbereich */
+      opacity: 1; /* Voll sichtbar */
+    }
+  
+    to {
+      transform: translateY(-100%); /* Nach oben aus dem Sichtbereich */
+      opacity: 0; /* Unsichtbar */
+    }
+  }
