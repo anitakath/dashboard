@@ -19,6 +19,7 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
        // look for an object in currentSports (name & color)whose .name matches the input.name property
        const matchingSport = currentSports.find((sport) => sport.name === value);
 
+
        //If there is an object whose name property matches the name of the input, the colour of the object is used as the label property.
        return {
          ...prev,
@@ -83,6 +84,7 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
     "Self Paid",
     "Other"
   ];
+
 
 
   return (

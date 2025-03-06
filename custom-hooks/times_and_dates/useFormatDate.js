@@ -10,6 +10,14 @@ const useFormatDate = () => {
         return date.toLocaleDateString("en-US", options); // Amerikanisches Datumsformat
     };
 
+    const formatTime = (dateString) => {
+        const date = new Date(dateString);
+        const hours = String(date.getHours()).padStart(2, '0'); 
+        const minutes = String(date.getMinutes()).padStart(2, '0'); 
+        return `${hours}:${minutes}`; 
+    };
+
+
 
 
   const formatDateUS = (dateString) => {
@@ -42,7 +50,7 @@ const useFormatDate = () => {
       return date.toLocaleDateString("de-DE", options); // DE-Format: 15. Januar 2025
   };
 
-  return { formatDate, formatDateUS, formatDateUK, formatDateDE };
+  return { formatDate,formatTime, formatDateUS, formatDateUK, formatDateDE };
 };
 
 export default useFormatDate;

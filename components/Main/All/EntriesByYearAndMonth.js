@@ -44,7 +44,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
 
 
   return (
-    <div className='w-full'>
+    <div className='w-full border-8'>
         {isLoading && (
             <div className='h-screen w-full m-0'>
                 <div className='w-full h-60'>
@@ -65,7 +65,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         className={`${styles.yearHeader} ${parseInt(year) === openYear ? styles.yearHeaderActive : ''}`}
                         onClick={() => handleYearChange(year)}
                     >
-                        {year} 
+                        {year}
                     </button>
 
              
@@ -79,7 +79,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         );
 
                         return (
-                            <div key={monthName}>
+                            <div key={monthName} className='border-8'>
 
                                 <div className='w-full p-0 h-20 flex justify-center items-center'>
                                 

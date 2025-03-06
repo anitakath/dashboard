@@ -22,7 +22,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   const sortedByDate = [...sortedSportsArray].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   const dispatch = useDispatch();
   const [layoutMode, setLayoutMode] = useState("list");
-  const {formatDate} = useFormatDate()
+  const {formatDate, formatTime} = useFormatDate()
   const [expandedGroupId, setExpandedGroupId] = useState(true);
 
 
@@ -120,10 +120,10 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                             className="w-full text-center hover:text-red-800 text-s md:text-xl cursor-pointer"
                             onClick={() => enlargeWorkoutHandler(sport.entryId)}
                           >
-                            {sport.name}
+                            {sport.name} 
                           </h1>
                           <h2 className={styles.created_at_h2}>
-                            {formatDate(sport.created_at)}
+                            {formatDate(sport.created_at)} - {formatTime(sport.created_at)}
                           </h2>
                           <h3 className={styles.duration_h3}>
                             {sport.duration} min

@@ -26,8 +26,7 @@ const VideoSlider = () => {
 
     return (
         <div className={styles.sliderContainer}>
-        
-
+    
             {videos.length > 0 && 
                 videos.map((video, index) => (
                     <div key={index} className={styles.slide} style={{ transform: `translateY(-${currentIndex * 100}%)`}}>
