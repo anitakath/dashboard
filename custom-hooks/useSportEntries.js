@@ -162,12 +162,9 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
       return errors;
     };
 
-    const formatText = (text) => {
-      return text.toLowerCase().replace(/\s+/g, "-");
-    };
 
     const transformTitle = (title) => {
-      // Ersetze Umlaute
+      // Replace umlauts and ß
       const umlautMap = {
           'ä': 'ae',
           'ö': 'oe',
@@ -175,19 +172,22 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
           'Ä': 'Ae',
           'Ö': 'Oe',
           'Ü': 'Ue',
-          'ß': 'ss'  // Füge die Ersetzung für ß hinzu
+          'ß': 'ss'
       };
   
-      // Ersetze Slashes
-      title = title.replace(/\//g, '');
+      // Remove slashes and unwanted characters
+      title = title.replace(/[\/\?&%#=+]/g, '') // Remove slashes and other unwanted characters
+                   .replace(/[^a-zA-Z0-9äöüÄÖÜß\s]/g, '') // Remove all non-alphanumeric characters except umlauts and spaces
+                   .replace(/\s+/g, '-') // Replace multiple spaces with a hyphen
+                   .trim(); // Remove leading and trailing spaces
   
-      // Ersetze Umlaute und ß
+      // Replace umlauts
       for (const [umlaut, replacement] of Object.entries(umlautMap)) {
           title = title.replace(new RegExp(umlaut, 'g'), replacement);
       }
   
-      // Wandle in Kleinbuchstaben um und ersetze Leerzeichen durch Bindestriche
-      return title.toLowerCase().replace(/\s+/g, "-");
+      // Convert to lowercase
+      return title.toLowerCase();
   };
 
   const submitHandler = async (e) => {
@@ -208,9 +208,6 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
     setErrorMessage("");
 
     const formattedTitle = transformTitle(inputs.title);
-
-
-    //const formattedTitle = formatText(inputs.title);
     const uniqueID = uuidv4();
 
     const data =
