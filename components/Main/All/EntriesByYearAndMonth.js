@@ -10,6 +10,7 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setAllSportsFromSupabase } from '@/store/sportReducer';
 //UI 
 import Spinner from '@/components/UI/Spinner';
+import { current } from '@reduxjs/toolkit';
 
 
 const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
@@ -60,6 +61,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             console.log(months)
             return (
                 <div key={year}>
+                    
 
                     <button
                         className={`${styles.yearHeader} ${parseInt(year) === openYear ? styles.yearHeaderActive : ''}`}
@@ -69,6 +71,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                     </button>
 
              
+                   
 
                     {months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
                      months.slice().reverse().map((monthEntry) => {
