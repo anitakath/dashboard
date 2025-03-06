@@ -33,7 +33,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const [isLoading, setIsLoading] = useState(false)
 
 
-  
+
   const handleYearChange = async (year) => {
     setIsLoading(true);
     try {
@@ -43,8 +43,13 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
         // Fetch sports data for the selected year
         const entries = await fetchSportsDataBySelectedYear(userId, year);
 
+        console.log(entries)
+
         // Dispatch the action to set all sports from Supabase
-        await dispatch(setAllSportsFromSupabase(entries));
+        const allSupabaseSports = await dispatch(setAllSportsFromSupabase(entries));
+
+
+        console.log(allSupabaseSports)
 
         // Update the open year state
         setOpenYear(parseInt(year));
@@ -57,11 +62,11 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
     }
 };
 
-  console.log(entriesByYearAndMonth)
+console.log(entriesByYearAndMonth)
 
 
   return (
-    <div className='w-full border-8'>
+    <div className='w-full'>
         {isLoading && (
             <div className='h-screen w-full m-0'>
                 <div className='w-full h-60'>
@@ -76,6 +81,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const months = yearEntry ? yearEntry[year] : [];
 
             console.log(months)
+            console.log(yearEntry)
             return (
                 <div key={year}>
                     
@@ -100,7 +106,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         );
 
                         return (
-                            <div key={monthName} className='border-8'>
+                            <div key={monthName}>
 
                                 <div className='w-full p-0 h-20 flex justify-center items-center'>
                                 
