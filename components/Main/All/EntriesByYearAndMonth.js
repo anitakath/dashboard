@@ -43,13 +43,9 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
         // Fetch sports data for the selected year
         const entries = await fetchSportsDataBySelectedYear(userId, year);
 
-        console.log(entries)
 
         // Dispatch the action to set all sports from Supabase
         const allSupabaseSports = await dispatch(setAllSportsFromSupabase(entries));
-
-
-        console.log(allSupabaseSports)
 
         // Update the open year state
         setOpenYear(parseInt(year));
@@ -62,7 +58,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
     }
 };
 
-console.log(entriesByYearAndMonth)
 
 
   return (
@@ -80,8 +75,6 @@ console.log(entriesByYearAndMonth)
             const yearEntry = entriesByYearAndMonth ?  entriesByYearAndMonth.find(entry => Object.keys(entry)[0] === year.toString()) : "";
             const months = yearEntry ? yearEntry[year] : [];
 
-            console.log(months)
-            console.log(yearEntry)
             return (
                 <div key={year}>
                     

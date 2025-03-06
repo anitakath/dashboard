@@ -86,11 +86,6 @@ useEffect(() => {
                     [year]: sortedData[year]
                 }));
 
-                console.log('HALLO!??!?!?!?')
-            console.log(finalSortedArray)
-
-
-            //return{finalSortedArray}
 
             setEntriesByYearAndMonth(finalSortedArray);
             setEntriesByMonth(updatedEntriesByMonth);
