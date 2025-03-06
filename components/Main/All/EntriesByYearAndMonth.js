@@ -87,20 +87,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                     >
                         {year}
                     </button>
-
-                    {months && months.length && months.map((month) =>{
-                        console.log(month)
-
-                        return(
-                            <div> 
-                                moin
-                            </div> 
-                        )
-                    })
-                    }
-                   
-
-             
                    
 
                     {months && months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
