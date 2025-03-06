@@ -82,6 +82,8 @@ console.log(entriesByYearAndMonth)
 
             console.log(months)
             console.log(yearEntry)
+
+            console.log(year)
             return (
                 <div key={year}>
                     
@@ -93,10 +95,22 @@ console.log(entriesByYearAndMonth)
                         {year}
                     </button>
 
+                    {months && months.length && months.map((month) =>{
+                        console.log(month)
+
+                        return(
+                            <div> 
+                                moin
+                            </div> 
+                        )
+                    })
+                    }
+                   
+
              
                    
 
-                    {months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
+                    {months && months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
                      months.slice().reverse().map((monthEntry) => {
                         const monthName = Object.keys(monthEntry)[0];
                         const entries = monthEntry[monthName];

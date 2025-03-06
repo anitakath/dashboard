@@ -2,14 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { getMonth } from "@/utils/helpers";
+import { useSelector } from "react-redux";
 
 const useEntries = (filteredByDate, allSupabaseSports) => {
   const [entriesByMonth, setEntriesByMonth] = useState({});
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
+
+
+  const allSportsBySupabase = useSelector((state) => state.sport.allSupabaseSports);
+
       
 
   
-useEffect(() => {
+    useEffect(() => {
         if (filteredByDate) {
             const updatedEntriesByMonth = {};
             const updatedEntriesByDay = {};
@@ -86,7 +91,7 @@ useEffect(() => {
                     [year]: sortedData[year]
                 }));
 
-                console.log('HALLO!??!?!?!?')
+            console.log('HALLO!??!?!?!?')
             console.log(finalSortedArray)
 
 
