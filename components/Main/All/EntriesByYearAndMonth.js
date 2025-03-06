@@ -42,7 +42,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   };
 
 
-
   return (
     <div className='w-full border-8'>
         {isLoading && (
@@ -58,6 +57,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const yearEntry = entriesByYearAndMonth ?  entriesByYearAndMonth.find(entry => Object.keys(entry)[0] === year.toString()) : "";
             const months = yearEntry ? yearEntry[year] : [];
 
+            console.log(months)
             return (
                 <div key={year}>
 
@@ -70,7 +70,8 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
 
              
 
-                    {months.length > 0 && parseInt(year) === openYear && currentSport === "all" && months.map((monthEntry) => {
+                    {months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
+                     months.slice().reverse().map((monthEntry) => {
                         const monthName = Object.keys(monthEntry)[0];
                         const entries = monthEntry[monthName];
                         const totalDuration = entries.reduce(
