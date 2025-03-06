@@ -33,14 +33,31 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const [isLoading, setIsLoading] = useState(false)
 
 
+  
   const handleYearChange = async (year) => {
-    setIsLoading(true)
-    dispatch(updateDate({ month: calendar.month, year }));
-    const entries = await fetchSportsDataBySelectedYear(userId, year)
-    await dispatch(setAllSportsFromSupabase(entries));
-    setOpenYear(parseInt(year))
-    setIsLoading(false)
-  };
+    setIsLoading(true);
+    try {
+        // Dispatch the action to update the date
+        dispatch(updateDate({ month: calendar.month, year }));
+
+        // Fetch sports data for the selected year
+        const entries = await fetchSportsDataBySelectedYear(userId, year);
+
+        // Dispatch the action to set all sports from Supabase
+        await dispatch(setAllSportsFromSupabase(entries));
+
+        // Update the open year state
+        setOpenYear(parseInt(year));
+    } catch (error) {
+        console.error("Error while changing year:", error);
+        // Hier kannst du auch eine Fehlermeldung anzeigen oder andere Maßnahmen ergreifen
+    } finally {
+        // Set loading state to false in both success and error cases
+        setIsLoading(false);
+    }
+};
+
+  console.log(entriesByYearAndMonth)
 
 
   return (
