@@ -43,9 +43,19 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
         // Fetch sports data for the selected year
         const entries = await fetchSportsDataBySelectedYear(userId, year);
 
+<<<<<<< HEAD
 
         // Dispatch the action to set all sports from Supabase
         const allSupabaseSports = await dispatch(setAllSportsFromSupabase(entries));
+=======
+        console.log(entries)
+
+        // Dispatch the action to set all sports from Supabase
+        const allSupabaseSports = await dispatch(setAllSportsFromSupabase(entries));
+
+
+        console.log(allSupabaseSports)
+>>>>>>> 3d745cdef8c0a3230fe182850ef2e4e3563eb1d6
 
         // Update the open year state
         setOpenYear(parseInt(year));
@@ -58,6 +68,10 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
     }
 };
 
+<<<<<<< HEAD
+=======
+console.log(entriesByYearAndMonth)
+>>>>>>> 3d745cdef8c0a3230fe182850ef2e4e3563eb1d6
 
 
   return (
@@ -75,6 +89,13 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const yearEntry = entriesByYearAndMonth ?  entriesByYearAndMonth.find(entry => Object.keys(entry)[0] === year.toString()) : "";
             const months = yearEntry ? yearEntry[year] : [];
 
+<<<<<<< HEAD
+=======
+            console.log(months)
+            console.log(yearEntry)
+
+            console.log(year)
+>>>>>>> 3d745cdef8c0a3230fe182850ef2e4e3563eb1d6
             return (
                 <div key={year}>
                     
@@ -86,10 +107,22 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         {year}
                     </button>
 
+                    {months && months.length && months.map((month) =>{
+                        console.log(month)
+
+                        return(
+                            <div> 
+                                moin
+                            </div> 
+                        )
+                    })
+                    }
+                   
+
              
                    
 
-                    {months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
+                    {months && months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
                      months.slice().reverse().map((monthEntry) => {
                         const monthName = Object.keys(monthEntry)[0];
                         const entries = monthEntry[monthName];
