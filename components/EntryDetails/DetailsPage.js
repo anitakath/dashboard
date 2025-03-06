@@ -42,6 +42,11 @@ const DetailsPage = () => {
     e.preventDefault();
   }
 
+  console.log(lastPathPart)
+  console.log(filteredEntry)
+ 
+
+
   return (
     <div className="w-full h-screen m-0 md:p-14">
       <div className="flex w-full h-full border-2 overflow-scroll py-2 m-0 p-0 relative z-20">
@@ -49,7 +54,6 @@ const DetailsPage = () => {
           
         </div>
         <div className="absolute w-full h-full z-10 top-0">
-
           <div className="border-b-2   border-red-200 w-full h-20 relative flex justify-between items-center">
             <Link href="/" className="p-4 cursor-pointer">
               <FontAwesomeIcon icon={faArrowLeft} className={styles.goback_link}/>

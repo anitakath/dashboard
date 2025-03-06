@@ -166,7 +166,29 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
       return text.toLowerCase().replace(/\s+/g, "-");
     };
 
-
+    const transformTitle = (title) => {
+      // Ersetze Umlaute
+      const umlautMap = {
+          'ä': 'ae',
+          'ö': 'oe',
+          'ü': 'ue',
+          'Ä': 'Ae',
+          'Ö': 'Oe',
+          'Ü': 'Ue',
+          'ß': 'ss'  // Füge die Ersetzung für ß hinzu
+      };
+  
+      // Ersetze Slashes
+      title = title.replace(/\//g, '');
+  
+      // Ersetze Umlaute und ß
+      for (const [umlaut, replacement] of Object.entries(umlautMap)) {
+          title = title.replace(new RegExp(umlaut, 'g'), replacement);
+      }
+  
+      // Wandle in Kleinbuchstaben um und ersetze Leerzeichen durch Bindestriche
+      return title.toLowerCase().replace(/\s+/g, "-");
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -185,7 +207,10 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
 
     setErrorMessage("");
 
-    const formattedTitle = formatText(inputs.title);
+    const formattedTitle = transformTitle(inputs.title);
+
+
+    //const formattedTitle = formatText(inputs.title);
     const uniqueID = uuidv4();
 
     const data =
@@ -267,6 +292,8 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
       setSubmitting(false);
     }
   };
+
+
     return {
       submitHandler,
       successMessage,
