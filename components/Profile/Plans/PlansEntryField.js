@@ -4,7 +4,7 @@ import styles from "./PlansEntryField.module.css";
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //REDUX
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAllPlannedSports } from "@/store/sportReducer";
 
 const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
@@ -71,7 +71,9 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
     // Toggle the expanded group
     setExpandedGroupId(expandedGroupId === dateTitle ? null : dateTitle);
   };
+  
 
+ 
 
   return (
     <div className="w-full">
@@ -103,7 +105,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
 
                 {expandedGroupId != group.dateTitle && (
 
-                  <div className="w-full">
+                  <div className="w-full ">
                      {group.entries.map((sport) => (
                   <div
                     key={sport.entryId}

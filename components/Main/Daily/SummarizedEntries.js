@@ -24,6 +24,9 @@ const SummarizedEntries = () => {
   const year = useSelector((state) => state.calendar.year)
   const month = useSelector((state) => state.calendar.month);
   const dispatch = useDispatch();
+
+
+
   const groupAndSortEntries = (entries) => {
     const groupedEntries = {};
     entries.forEach((entry) => {
@@ -136,6 +139,9 @@ const SummarizedEntries = () => {
 
     await dispatch(setAllSportsFromSupabase(entries));
 };
+
+  
+
 
 
   return (

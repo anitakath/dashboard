@@ -76,6 +76,7 @@
     opacity: 1;
     width: 100%;
     cursor: pointer;
+
 }
 
 .day_date:hover{
@@ -290,4 +291,79 @@
 
 .mossGreen_opaque{
     background:var(--mossGreen_opaque)
+}
+
+
+
+.fandango_opaque_planned{
+    background: var(--fandango_opaque_planned);
+    
+}
+
+.celeste_opaque_planned{
+    background: var(--celeste_opaque_planned);
+}
+
+
+.springGreen_opaque_planned{
+    background: var(--springGreen_opaque_planned);
+}
+
+
+.sinopia_opaque_planned{
+    background: var(--sinopia_opaque_planned);
+}
+
+.lightOrange_opaque_planned{
+    background: var(--lightOrange_opaque_planned);
+}
+
+.wenge_opaque_planned{
+    background: var(--wenge_opaque_planned);
+}
+
+
+.spaceCadet_opaque_planned{
+    background: var(--spaceCadet_opaque_planned);
+}
+
+
+.mauve_opaque_planned{
+    background: var(--mauve_opaque_planned)
+}
+
+
+.aquamarine_opaque_planned{
+    background: var(--aquamarine_opaque_planned)
+    /*background: red;*/
+}
+
+.mandarine_opaque_planned{
+    background: var(--mandarine_opaque_planned)
+}
+
+.brown_opaque_planned{
+    background: var(--brown_opaque_planned)
+}
+
+
+.mustard_opaque_planned{
+    background: var(--mustard_opaque_planned);
+}
+
+
+.jasmine_opaque_planned{
+    background: var(--jasmine_opaque_planned)
+}
+
+.frenchGrey_opaque_planned{
+    background: var(--frenchGrey_opaque_planned)
+}
+
+.eggplant_opaque_planned{
+    background: var(--eggplant_opaque_planned)
+}
+
+.mossGreen_opaque_planned{
+    background:var(--mossGreen_opaque_planned)
 }

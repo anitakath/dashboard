@@ -23,6 +23,8 @@ const SummarizedCalendar = (props) => {
     const chosenMonth = useSelector((state) => state.calendar.month);
     const {monthAbbreviations} = useCalendar()
 
+    const  allPlannedSports = useSelector((state) => state.sport.allPlannedSports)
+
     
     return (
         <div className={styles.calendar_div}>
@@ -53,7 +55,9 @@ const SummarizedCalendar = (props) => {
                         
                                   const isToday = new Date().toISOString().split("T")[0] === dateString;
 
-                                  return (
+                                  
+
+                                    return (
                                       <div key={dayNumber} className={`${styles.day} ${isToday ? styles.today : ""}`}>
                                           <Link className={styles.day_date} href={`/daily-details/${dateString}`}>
                                               {dayNumber} 
@@ -74,14 +78,33 @@ const SummarizedCalendar = (props) => {
                                                 const height = entry.duration < 20 ? "3px" : `${Math.floor(entry.duration / 20) * 5}px`;
                                                 const entryClass = styles[`${entry.label}_opaque`] || styles.defaultLabel;
                             
+                                                console.log(entryClass)
 
                                                   return (
                                                       <div key={entry.entryId} className={`${styles.sport_subsectionLabel} ${entryClass}`} style={{ height }}> </div>
                                                   );
                                               })}
+
+
+                                                {allPlannedSports.filter(sport => {
+                                                        const sportDate = new Date(sport.created_at).toISOString().split("T")[0];
+                                                        return sportDate === dateString && sportDate >= new Date().toISOString().split("T")[0]; // Nur zukünftige Sporteinheiten für den aktuellen Tag
+                                                    }).map((plannedSport) => {
+                                                        const plannedHeight = plannedSport.duration < 20 ? "3px" : `${Math.floor(plannedSport.duration / 20) * 5}px`;
+
+                                                        const plannedEntryClass = styles[`${plannedSport.label}_opaque_planned`] || styles.defaultLabel;
+
+                                                        console.log(plannedEntryClass)
+                                                        return (
+                                                        <div key={plannedSport.entryId} className={`${styles.sport_subsectionLabel} ${plannedEntryClass}`} style={{ height: plannedHeight}}>
+                                                        
+                                                        </div>
+                                                        );
+                                                })}
+                                             
                                           </div>
                                       </div>
-                                  );
+                                    );
                               })}
                           </div>
                       </div>
