@@ -78,7 +78,6 @@ const SummarizedCalendar = (props) => {
                                                 const height = entry.duration < 20 ? "3px" : `${Math.floor(entry.duration / 20) * 5}px`;
                                                 const entryClass = styles[`${entry.label}_opaque`] || styles.defaultLabel;
                             
-                                                console.log(entryClass)
 
                                                   return (
                                                       <div key={entry.entryId} className={`${styles.sport_subsectionLabel} ${entryClass}`} style={{ height }}> </div>
@@ -94,8 +93,7 @@ const SummarizedCalendar = (props) => {
 
                                                         const plannedEntryClass = styles[`${plannedSport.label}_opaque_planned`] || styles.defaultLabel;
 
-                                                        console.log(plannedEntryClass)
-                                                        return (
+                                                      return (
                                                         <div key={plannedSport.entryId} className={`${styles.sport_subsectionLabel} ${plannedEntryClass}`} style={{ height: plannedHeight}}>
                                                         
                                                         </div>

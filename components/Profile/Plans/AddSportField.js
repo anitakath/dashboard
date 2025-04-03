@@ -4,8 +4,38 @@ import AddEntryForm from "@/components/Main/AddEntryForm";
 //STYLES
 import styles from './Plans.module.css'
 import colors from '../../../styles/Colors.module.css'
+import { useSelector } from "react-redux";
 
 const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSports, activeSport, addSportClickHandler, formIsOpen, setFormIsOpen, chosenSport, chooseSportHandler}) =>{
+
+
+  const allPlannedSports = useSelector((state) => state.sport.allPlannedSports)
+
+   // Funktion zum Abgleichen der Sportarten
+   const updateCurrentSports = (currentSports, allPlannedSports) => {
+    const existingSportNames = new Set(currentSports.map(sport => sport.name.trim().toLowerCase()));
+
+    allPlannedSports.forEach(plannedSport => {
+        const sportName = plannedSport.title.trim();
+        if (!existingSportNames.has(sportName.toLowerCase())) {
+            // Wenn der Sport nicht existiert, füge ihn hinzu
+            currentSports.push({
+                name: sportName,
+                color: plannedSport.color || 'defaultColor', // Fallback-Farbe
+                icon: plannedSport.icon || null // Fallback-Icon
+            });
+        }
+    });
+
+    return currentSports;
+};
+
+   // Aktualisiere currentSports mit den neuen Sportarten
+   const updatedCurrentSports = updateCurrentSports([...currentSports], allPlannedSports);
+
+
+
+
 
   return (
     <div>

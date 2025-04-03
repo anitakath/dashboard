@@ -74,6 +74,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   
 
  
+  console.log(groupedEntries)
 
   return (
     <div className="w-full">
@@ -125,7 +126,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                             {sport.name} 
                           </h1>
                           <h2 className={styles.created_at_h2}>
-                            {formatDate(sport.created_at)} - {formatTime(sport.created_at)}
+                            {formatDate(sport.created_at)} - {formatTime(sport.created_at)} 
                           </h2>
                           <h3 className={styles.duration_h3}>
                             {sport.duration} min
