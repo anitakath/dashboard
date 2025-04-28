@@ -71,10 +71,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
     // Toggle the expanded group
     setExpandedGroupId(expandedGroupId === dateTitle ? null : dateTitle);
   };
-  
 
- 
-  console.log(groupedEntries)
 
   return (
     <div className="w-full">
@@ -106,7 +103,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
 
                 {expandedGroupId != group.dateTitle && (
 
-                  <div className="w-full ">
+                  <div className="w-full">
                      {group.entries.map((sport) => (
                   <div
                     key={sport.entryId}
@@ -120,10 +117,10 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                       </button>
                       <div className="w-full flex flex-col items-center mt-4">
                           <h1
-                            className="w-full text-center hover:text-red-800 text-s md:text-xl cursor-pointer"
+                            className="w-full mb-2 text-center hover:text-red-800 text-s md:text-xl cursor-pointer"
                             onClick={() => enlargeWorkoutHandler(sport.entryId)}
                           >
-                            {sport.name} 
+                            {sport.title}
                           </h1>
                           <h2 className={styles.created_at_h2}>
                             {formatDate(sport.created_at)} - {formatTime(sport.created_at)} 

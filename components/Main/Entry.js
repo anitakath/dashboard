@@ -8,17 +8,23 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //HOOKS
 import useEntries from "@/custom-hooks/Entry/useEntries";
 import useConvertTimes from "@/custom-hooks/times_and_dates/useConvertTimes";
+import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 // Importiere die neue Hook
 //REDUX
 import { setSortedEntriesByMonth } from "@/store/sportReducer";
+import { updateDate } from "@/store/CalendarReducer";
 //COMPONENTS
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
+import { useDeleteSport } from "@/custom-hooks/useSportEntries";
 
 
 const Entry = ({ filteredByDate, filteredEntries }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const dispatch = useDispatch();
+  const selectedSport = useSelector((state) => state.sport.selectedSport);
   const [sortedEntries, setSortedEntries] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState("")
+  const year = useSelector((state) => state.calendar.year)
    const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   // SORTED OBJECTS AND ARRAYS FOR ENTRIESBYYEARANDMONTH; SELECTEDSPORT === "ALL"
   const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate, allSupabaseSports);
@@ -26,8 +32,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
     dispatch(setSortedEntriesByMonth(entriesByMonth));
   }, [allSupabaseSports, filteredEntries]);
   const { formatDate } = useFormatDate();
-
-
+  const {currentMonth} = useCalendar()
   const filteredEntriesByMonth = {};
 
   for (const month in entriesByMonth) {
@@ -43,6 +48,13 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
 
     filteredEntriesByMonth[month] = filteredEntries;
   }
+
+  useEffect(() => {
+ 
+    setSelectedMonth(currentMonth);
+
+    dispatch(updateDate({ month: currentMonth, year: year }));
+  }, [dispatch, year]);
 
 
   useEffect(() => {
@@ -72,8 +84,6 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
 
 
 
-
-
   return (
     <div className={styles.container}>
       {currentSport != "all" && (
@@ -97,7 +107,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
             <Link href={`/details/${entry.entryPath}`}>
               <div className={styles.link}>
                 <p className={styles.date}>
-                  {formatDate(entry.created_at)}
+                  {formatDate(entry.created_at)} 
                 </p>
                 <h2 className={styles.title}> {entry.title} </h2>
                 <p className={styles.description}> {entry.entry} </p>
@@ -107,6 +117,13 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
             </Link>
           </div>
         ))}
+        <div>
+        {sortedEntries.length === 0 &&
+            selectedSport != "all" &&
+            (
+              <p className="m-2 text-xl text-red-400 h-20 flex justify-center items-center"> no entries were made </p>
+            )}
+        </div>
 
         {currentSport === "all" && (
            <EntriesByYearAndMonth

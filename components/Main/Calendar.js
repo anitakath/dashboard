@@ -19,24 +19,14 @@ const Calendar = ({ filteredByDate }) => {
   const { getMonthStyle, months, useEntryCountForMonth } = useCalendar();
   const [selectedMonth, setSelectedMonth] = useState("");
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
-  const {monthAbbreviations} = useCalendar()
+  const {monthAbbreviations, currentMonth} = useCalendar()
   const userId = useSelector((state) => state.auth.userId)
   const {fetchSportsDataBySelectedYear} = useFetchEntries()
   const year = useSelector((state) => state.calendar.year)
 
 
   useEffect(() => {
-    let currentMonth = new Date().toLocaleString("default", {
-      month: "short",
-    });
-
-    if (currentMonth === "Okt") {
-      currentMonth = "Oct";
-    }
-
-    if (currentMonth === "Dez") {
-      currentMonth = "Dec";
-    }
+ 
     setSelectedMonth(currentMonth);
 
     dispatch(updateDate({ month: currentMonth, year: year }));

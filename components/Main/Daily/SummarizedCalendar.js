@@ -9,20 +9,16 @@ import useCalendar from "../../../custom-hooks/times_and_dates/useCalendar";
 import QuotesSlider from "@/components/UI/QuotesSlider";
 
 const SummarizedCalendar = (props) => {
-  const filteredAndGroupedEntries = props.filteredAndGroupedEntries;
+    const filteredAndGroupedEntries = props.filteredAndGroupedEntries;
 
-  const renderCalendar = () => {
+    const renderCalendar = () => {
 
     const calendar = useSelector((state) => state.calendar)
     const selectedYear = calendar.year;
-
     const {getMonthsDays} = useCalendar();
-
     const monthsInYear = getMonthsDays(calendar);
-
     const chosenMonth = useSelector((state) => state.calendar.month);
     const {monthAbbreviations} = useCalendar()
-
     const  allPlannedSports = useSelector((state) => state.sport.allPlannedSports)
 
     

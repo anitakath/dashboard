@@ -101,7 +101,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         return (
                             <div key={monthName}>
 
-                                <div className='w-full p-0 h-20 flex justify-center items-center'>
+                                <div className='w-full  p-0 h-20 flex justify-center items-center'>
                                 
                                     <button
                                         className={styles.monthBtn}

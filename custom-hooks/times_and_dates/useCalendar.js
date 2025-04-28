@@ -209,7 +209,21 @@ const useCalendar = () => {
   };
 
 
-  return { getMonthStyle, months, completeMonths, monthAbbreviations, useEntryCountForMonth,  getMonthsDays, currentDatee };
+  
+  let currentMonth = new Date().toLocaleString("default", {
+    month: "short",
+  });
+
+  if (currentMonth === "Okt") {
+    currentMonth = "Oct";
+  }
+
+  if (currentMonth === "Dez") {
+    currentMonth = "Dec";
+  }
+
+
+  return { getMonthStyle, currentMonth, months, completeMonths, monthAbbreviations, useEntryCountForMonth,  getMonthsDays, currentDatee };
 };
 
 export default useCalendar;

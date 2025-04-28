@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import { removeSport, setSportsArrayy } from "@/store/profileReducer";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/supabaseClient";
-import { setAllSportsFromSupabase } from "@/store/sportReducer";
+import { setAllPlannedSports, setAllSportsFromSupabase } from "@/store/sportReducer";
 
 
 /******** DELETE COMPLETED SPORT ********/
@@ -134,6 +134,7 @@ export const fetchSportsDataAfterEntry = async (dispatch, userId,  currentSport)
 /* ADDENTRYFORM */
 export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, currentSport) => {
   const dispatch = useDispatch();
+
   const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -222,7 +223,8 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
             entryPath: `${formattedTitle}-${uniqueID}`,
             duration: inputs.duration,
             created_at: inputs.created_at,
-            provider: inputs.provider
+            provider: inputs.provider,
+            status: "planned"
           }
         : {
             name: inputs.name,
@@ -282,6 +284,7 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
         setFormIsOpen(false);
       }
 
+
       setSuccessMessage(true);
     } catch (error) {
       console.error("Error:", error);
@@ -300,6 +303,9 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
     };
 
 };
+
+
+
 
 // ADDENTRYFORM
 

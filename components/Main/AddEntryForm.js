@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 //STYLES
 import styles from "./AddEntryForm.module.css";
 //REDUX
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 //CUSTOM HOOKS
 import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
 import {
@@ -21,6 +21,8 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const currentSport = useSelector((state) => state.sport.currentSport);
   const currentPath = router.pathname;
+  const currentPlannedSports = useSelector((state) => state.sport.allPlannedSports);
+  const dispatch= useDispatch();
   
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
   const [inputs, setInputs] = useState({
@@ -96,6 +98,8 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
   "Club",
   "Other"
 ];
+
+
 
 
 

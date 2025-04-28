@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 //STYLES 
 import styles from './Plans.module.css'
 //COMPONENTS
@@ -32,7 +32,8 @@ const Plans = () =>{
   const [isLoading, setIsLoading] = useState(null)
   const [formIsOpen, setFormIsOpen] = useState(false);
   let addSportBtnText = addSport ? "close form" : "add a sport";
-
+  
+ 
 
   useEffect(() => {
     const fetchPlannedSports = async () => {

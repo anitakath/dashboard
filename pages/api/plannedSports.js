@@ -28,6 +28,8 @@ export default async function handler(req, res) {
       // 3. delete the object in the table that corresponds to the specified parameter
       const { entryId } = req.body;
 
+      console.log(entryId)
+
       const { data: deleteData, error: deleteError } = await supabase
         .from("sports_planned")
         .delete()

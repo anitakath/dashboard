@@ -58,7 +58,7 @@
   --springGreen: #5EF38C;
   --brown: #A44200;
   --mustard: #FFC233;
-  --lightOrange: #FCDDBC;
+  --lightOrange: #ff6f61;
   --spaceCadet: #F8C0C8;
   --aquamarine: #B7FFD8;
   --frenchGrey: #BCBDC0;
@@ -78,7 +78,7 @@
     --springGreen_opaque: rgba(94, 243, 140, 0.7); /* #5EF38C */
     --brown_opaque: rgba(164, 66, 0, 0.7); /* #A44200 */
     --mustard_opaque: rgba(255, 194, 51, 0.7); /* #FFC233 */
-    --lightOrange_opaque: rgba(252, 221, 188, 0.8); /* #FCDDBC */
+    --lightOrange_opaque: rgba(255, 111, 97, 0.8); /* #FCDDBC */
     --spaceCadet_opaque: rgba(248, 192, 200, 0.8); /* #F8C0C8 */
     --aquamarine_opaque: rgba(183, 255, 216, 0.8); /* #B7FFD8 */
     --frenchGrey_opaque: rgba(188,189,192, 0.8);/* #BCBDC0; */
@@ -93,9 +93,9 @@
     --jasmine_opaque_planned: rgba(255,240,0, 0.4); /* #F4D58D */
     --mauve_opaque_planned: rgba(226, 160, 255, 0.4); /* #E2A0FF */
     --springGreen_opaque_planned: rgba(94, 243, 140, 0.4); /* #5EF38C */
-    --brown_opaqu_plannede: rgba(164, 66, 0, 0.4); /* #A44200 */
+    --brown_opaque_planned: rgba(164, 66, 0, 0.4); /* #A44200 */
     --mustard_opaque_planned: rgba(255, 194, 51, 0.4); /* #FFC233 */
-    --lightOrange_opaque_planned: rgba(252, 221, 188, 0.4); /* #FCDDBC */
+    --lightOrange_opaque_planned: rgba(255, 111, 97, 0.4); /* #FCDDBC */
     --spaceCadet_opaque_planned: rgba(248, 192, 200, 0.4); /* #F8C0C8 */
     --aquamarine_opaque_planned: rgba(183, 255, 216, 0.4); /* #B7FFD8 */
     --frenchGrey_opaque_planned: rgba(188,189,192, 0.4);/* #BCBDC0; */

@@ -5,7 +5,7 @@ import styles from './Board.module.css'
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
-import { setSelectedSport } from "@/store/sportReducer";
+import { setAllPlannedSports, setSelectedSport } from "@/store/sportReducer";
 //COMPONENTS
 import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
@@ -27,7 +27,6 @@ const Board = () => {
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  //const actualDate = useSelector((state) => state.calendar);
   const { months } = useCalendar();
   const actualMonthIndex = months.findIndex((month) => month === currentDate.month);
   const actualMonth = actualMonthIndex + 1;
@@ -43,6 +42,23 @@ const Board = () => {
     }
   }, []);
 
+
+  useEffect(() => {
+    const fetchPlannedSports = async () => {
+      try {
+        const response = await fetch("/api/get-plannedSports");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        dispatch(setAllPlannedSports(data.data))
+        //setSportsArray(data.data); // Setze die erhaltenen Objekte in den State
+      } catch (error) {
+        console.error("Error fetching planned sports:", error);
+      }
+    };
+    fetchPlannedSports();
+  }, [selectedSport]);
 
 
 
@@ -95,12 +111,7 @@ const Board = () => {
 
           {/* --------------------------  THE ENTRIES -------------------------- */}
 
-          {filteredByDate.length === 0 &&
-            selectedSport != "all" &&
-            selectedSport !== "daily" &&
-            selectedSport != "start" && (
-              <p className="m-2 text-xl"> no entries were made </p>
-            )}
+       
           {selectedSport === "daily" && selectedSport != "start" && (
             <SummarizedEntries filteredEntries={filteredEntries} />
           )}

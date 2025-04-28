@@ -48,7 +48,7 @@ const useConvertTimes = () =>{
 
 
 
-    return{ convertMinutesToHours, convertHoursToMinutes, averageDurationPerDay}
+    return{convertMinutesToHours, convertHoursToMinutes, averageDurationPerDay}
 }
 
 
