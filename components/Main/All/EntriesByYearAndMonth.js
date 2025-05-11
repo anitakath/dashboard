@@ -77,8 +77,10 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const yearEntry = entriesByYearAndMonth ?  entriesByYearAndMonth.find(entry => Object.keys(entry)[0] === year.toString()) : "";
             const months = yearEntry ? yearEntry[year] : [];
 
+            console.log(months)
+
             return (
-                <div key={year}>
+                <div key={year} >
                     
 
                     <button
@@ -86,7 +88,14 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                         onClick={() => handleYearChange(year)}
                     >
                         {year}
-                    </button>
+                    </button> 
+
+                   {months.map((entry) => {
+
+                    const monthName = Object.keys(entry)[0];
+
+                    return(<p> {monthName} </p>)
+                   })}
                    
 
                     {months && months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
@@ -98,8 +107,10 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                             0
                         );
 
+                        console.log(monthName)
+
                         return (
-                            <div key={monthName}>
+                            <div key={monthName} >
 
                                 <div className='w-full  p-0 h-20 flex justify-center items-center'>
                                 

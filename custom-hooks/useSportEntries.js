@@ -195,7 +195,6 @@ export const useSubmitHandler = (currentPath, chosenSport, inputs, userId, curre
     e.preventDefault();
     setSubmitting(true);
 
-
     // Input validation
     const validationErrors = validateInputs(inputs);
 

@@ -92,6 +92,8 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
           <span> {summedDurationPerSportPerMonthInHours} </span>
         </h1>
       )}
+
+      <h1> MOIN</h1>
       
       {currentSport !== "all" &&
         sortedEntries.map((entry, index) => (
