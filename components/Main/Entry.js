@@ -97,7 +97,6 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
         </h1>
       )}
 
-      <h1> {filteredByDate.length}</h1>
       
       {currentSport !== "all" &&
         sortedEntries.map((entry, index) => (

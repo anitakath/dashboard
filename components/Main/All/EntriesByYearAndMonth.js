@@ -34,7 +34,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   };
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log(calendar)
 
 
   const handleYearChange = async (year) => {
@@ -81,7 +80,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const months = yearEntry ? yearEntry[year] : [];
 
             console.log(entriesByYearAndMonth)
-
             console.log( year.toString())
             return (
                 <div key={year} >
