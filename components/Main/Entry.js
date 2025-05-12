@@ -15,7 +15,6 @@ import { setSortedEntriesByMonth } from "@/store/sportReducer";
 import { updateDate } from "@/store/CalendarReducer";
 //COMPONENTS
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
-import { useDeleteSport } from "@/custom-hooks/useSportEntries";
 
 
 const Entry = ({ filteredByDate, filteredEntries }) => {
@@ -84,6 +83,11 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
 
 
 
+
+
+  console.log(entriesByYearAndMonth)
+  console.log(filteredByDate)
+
   return (
     <div className={styles.container}>
       {currentSport != "all" && (
@@ -93,7 +97,7 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
         </h1>
       )}
 
-      <h1> MOIN</h1>
+      <h1> {filteredByDate.length}</h1>
       
       {currentSport !== "all" &&
         sortedEntries.map((entry, index) => (

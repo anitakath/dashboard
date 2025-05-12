@@ -184,7 +184,6 @@ const useAuth = (userId) => {
         console.log(signUpError)
         throw new Error("Fehler bei der Registrierung: " + signUpError.message);
       } else{
-        console.log('SIGNED HIM UP!')
         console.log(user)
         console.log(registerData)
       }

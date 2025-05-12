@@ -7,9 +7,8 @@ const useEntries = (filteredByDate, allSupabaseSports) => {
   const [entriesByMonth, setEntriesByMonth] = useState({});
   const [entriesByYearAndMonth, setEntriesByYearAndMonth] = useState(null);
       
-
   
-useEffect(() => {
+    useEffect(() => {
         if (filteredByDate) {
             const updatedEntriesByMonth = {};
             const updatedEntriesByDay = {};

@@ -61,7 +61,6 @@ const Board = () => {
   }, [selectedSport]);
 
 
-
   return (
     <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">
 

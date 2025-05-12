@@ -11,7 +11,9 @@ import { setAllSportsFromSupabase } from '@/store/sportReducer';
 //UI 
 import Spinner from '@/components/UI/Spinner';
 import { current } from '@reduxjs/toolkit';
-
+import 'intl';
+import 'intl/locale-data/jsonp/en'; // für Englisch
+import 'intl/locale-data/jsonp/de'; // für Deutsch
 
 const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const calendar = useSelector((state) => state.calendar)
@@ -32,6 +34,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   };
   const [isLoading, setIsLoading] = useState(false)
 
+  console.log(calendar)
 
 
   const handleYearChange = async (year) => {
@@ -63,7 +66,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
 
 
   return (
-    <div className='w-full'>
+    <div className={styles.container}>
         {isLoading && (
             <div className='h-screen w-full m-0'>
                 <div className='w-full h-60'>
@@ -77,11 +80,11 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const yearEntry = entriesByYearAndMonth ?  entriesByYearAndMonth.find(entry => Object.keys(entry)[0] === year.toString()) : "";
             const months = yearEntry ? yearEntry[year] : [];
 
-            console.log(months)
+            console.log(entriesByYearAndMonth)
 
+            console.log( year.toString())
             return (
                 <div key={year} >
-                    
 
                     <button
                         className={`${styles.yearHeader} ${parseInt(year) === openYear ? styles.yearHeaderActive : ''}`}
@@ -89,14 +92,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                     >
                         {year}
                     </button> 
-
-                   {months.map((entry) => {
-
-                    const monthName = Object.keys(entry)[0];
-
-                    return(<p> {monthName} </p>)
-                   })}
-                   
 
                     {months && months.length > 0 && parseInt(year) === openYear && currentSport === "all" && 
                      months.slice().reverse().map((monthEntry) => {
@@ -107,7 +102,8 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                             0
                         );
 
-                        console.log(monthName)
+                        //console.log(monthName)
+                        //console.log(monthEntry)
 
                         return (
                             <div key={monthName} >

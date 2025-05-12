@@ -1,3 +1,9 @@
+
+.container{
+    width: 100%;
+}
+
+
 .yearHeader{
     font-weight: bolder;
     color: var(--purpleDark);
