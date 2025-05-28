@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect} from "react";
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //HOOKS
-import useEntries from "@/custom-hooks/Entry/useEntries";
+import useEntries from "@/custom-hooks/entries/useEntries";
 import useConvertTimes from "@/custom-hooks/times_and_dates/useConvertTimes";
 import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 // Importiere die neue Hook

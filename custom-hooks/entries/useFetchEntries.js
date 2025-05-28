@@ -4,8 +4,6 @@ const useFetchEntries = (userId) => {
  //FETCH ENTRIES IN CURRENT YEAR BUT ALSO EXTRACT UNIQUE SPORTS TITLE (FOR NAVIGATION?)
   const fetchSportsData = async (userId, currentSport, currentDate) => {
 
-  
-    console.log(currentDate)
     try {
       // userId und year als Query-Parameter an die API übergeben um Einträge hiernach filtern zu können
       const year = currentDate.year;
