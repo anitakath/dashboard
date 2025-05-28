@@ -85,8 +85,8 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
 
 
 
-  console.log(entriesByYearAndMonth)
-  console.log(filteredByDate)
+  //console.log(entriesByYearAndMonth)
+  //console.log(filteredByDate)
 
   return (
     <div className={styles.container}>

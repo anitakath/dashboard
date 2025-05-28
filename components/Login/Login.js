@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import VideoSlider from "../UI/VideoSlider";
 
 
-const Login = ({ successMessage }) => {
+const Login = () => {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const [inputErrors, setInputErrors] = useState({
@@ -18,6 +18,7 @@ const Login = ({ successMessage }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const router = useRouter();
   const { loginHandler } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,16 +27,22 @@ const Login = ({ successMessage }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true)
 
     try {
       await loginHandler(loginData, currentSport);
+      setIsSubmitting(false)
       router.push("/");
     } catch (err) {
       setError(err.message);
       console.log(err.message)
       setInputErrors({ email: true, password: true });
+      setIsSubmitting(false)
     }
+
+    setIsSubmitting(false)
   };
+
 
   const handleBlur = (e) => {
     const { name, value } = e.target;
@@ -47,8 +54,17 @@ const Login = ({ successMessage }) => {
     }
   };
 
+  let submitButtonText = ""
+
+  if(isSubmitting){
+    submitButtonText = "LOGGING IN ..."
+  } else{
+    submitButtonText = "LOGIN"
+  }
+
   return (
     <div className="w-full h-full p-4">
+ 
       <div className="flex justify-center w-full h-full m-0 p-0 relative border-2 overflow-hidden">
         <VideoSlider/>
     
@@ -77,14 +93,15 @@ const Login = ({ successMessage }) => {
             onChange={handleChange}
           />
           <button type="submit" className={styles.btn}>
-            LOGIN
+            {submitButtonText}
           </button>
+          
           {error && <p className="text-red-500">{error}</p>}
           <Link href="/register" className="relative top-2 text-xl">
             not registered yet?
             <span className={styles.register}>register here</span>
           </Link>
-          {successMessage && <p>{successMessage}</p>}
+    
         </form>
       </div>
     </div>

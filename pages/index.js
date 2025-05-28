@@ -7,9 +7,7 @@ import { setCurrentSport } from "@/store/sportReducer";
 import Head from "next/head";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import Login from "@/components/Login/Login";
-
 import '@fortawesome/fontawesome-svg-core/styles.css';
-// Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
@@ -26,21 +24,29 @@ export default function Home() {
   const [register, setRegister] = useState(false);
   const currentSport = useSelector((state) => state.sport.currentSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  const [successMessage, setSuccessMessage] = useState(null);
+  
   const userId = useSelector((state)=> state.auth.userId)
   const {fetchSportsData} = useFetchEntries();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(setSelectedSport("all"))
     dispatch(updateDate({ month: "Jan", year:  2025 }));
   }, [])
 
 
 
-  useEffect(()=>{
+  useEffect(() => {
+
     if(userId){
+
+      const currentDate = {
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+        restDaysPerMonth: null,
+      };
+
       const fetchData = async(userId) =>{
-        const response = await fetchSportsData(userId)
+        const response = await fetchSportsData(userId, currentSport, currentDate)
 
         const entries = await response.filter(
           (sport) => sport.name === currentSport
@@ -106,6 +112,7 @@ export default function Home() {
 
 
 
+
   return (
     <div className="w-screen h-screen border-8 m-0 md:p-10">
      
@@ -119,21 +126,10 @@ export default function Home() {
         <meta property="og:image" content="/path/to/your/image.jpg" /> {/* Add the path to an image here */}
         <meta property="og:url" content="https://your-website.com/" /> {/* Replace with your website's URL */}
         <meta name="mobile-web-app-capable" content="yes"></meta>
-       </Head>
+      </Head>
 
-
-      {!isLoggedIn &&
-        register &&
-        {
-          /* A register component could be located here */
-        }}
       {!isLoggedIn && !register && (
-        <Login
-          setSuccessMessage={setSuccessMessage}
-          successMessage={successMessage}
-          setRegister={setRegister}
-          register={register}
-        />
+        <Login />
       )}
       {isLoggedIn && <Dashboard />}
     </div>

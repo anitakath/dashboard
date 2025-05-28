@@ -1,29 +1,12 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setNavigation } from "@/store/sportReducer";
 
 const useFetchEntries = (userId) => {
 
-  //EXTRACT UNIQUE SPORTS TITLE (FOR NAVIGATION?)
-  const extractUniqueSportsTitles = async(data) => {
-
-    const uniqueTitlesSet = new Set();
-
-    data.forEach(entry => {
-        if (entry.title) {
-            uniqueTitlesSet.add(entry.name); // Hier verwenden wir entry.name für die Sportarten
-        }
-    });
-
-    // Konvertiere das Set zurück in ein Array
-    return Array.from(uniqueTitlesSet);
-  };
-
  //FETCH ENTRIES IN CURRENT YEAR BUT ALSO EXTRACT UNIQUE SPORTS TITLE (FOR NAVIGATION?)
-  const fetchSportsData = async (userId) => {
+  const fetchSportsData = async (userId, currentSport, currentDate) => {
     try {
-      // Den userId als Query-Parameter an die API übergeben
-      const response = await fetch(`/api/sports?userId=${userId}`);
+      // userId und year als Query-Parameter an die API übergeben um Einträge hiernach filtern zu können
+      const year = currentDate.year;
+      const response = await fetch(`/api/sports?userId=${userId}&year=${year}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch sports data");
@@ -32,14 +15,7 @@ const useFetchEntries = (userId) => {
       const data = await response.json();
 
       if (data) {
-        const filteredEntriesByUserId = data.data; 
-        const sportsArray = await extractUniqueSportsTitles(filteredEntriesByUserId);
-
-        const currentYear = new Date().getFullYear();
-        const entriesInCurrentYear = filteredEntriesByUserId.filter(entry => {
-          const entryYear = new Date(entry.created_at).getFullYear();
-          return entryYear === currentYear;
-        });
+        const entriesInCurrentYear = data.data;
         return entriesInCurrentYear;
       }
     } catch (error) {
@@ -48,6 +24,56 @@ const useFetchEntries = (userId) => {
 
     return []; 
   };
+
+
+  /** FOLGENDE KOMPONENTE MUSS ENTFERNT WERDEN! CALENDAR.JS && ENTRIESBYYEARANDMONTH NUTZEN SIE NOCH, MÖCHTE DASS FETCHSPORTSDATA GENUTZT WIRD */
+
+  //FETCH ENTRIES IN SELECTED YEAR
+  const fetchSportsDataBySelectedYear = async (userId, selectedYear) =>{
+
+
+    try {
+      const response = await fetch(`/api/sports?userId=${userId}&year=${selectedYear}`);
+      if (!response.ok) {
+          throw new Error("Failed to fetch sports data");
+      }
+      const data = await response.json();
+      
+      if (data) {
+
+        const filteredEntriesByUserId = data.data;
+
+        const entriesInSelectedYear = filteredEntriesByUserId.filter(entry => {
+          const entryYear = new Date(entry.created_at).getFullYear();
+ 
+          return entryYear === parseInt(selectedYear);
+        });
+        
+        return entriesInSelectedYear; 
+      }
+  } catch (error) {
+      console.error("Error fetching sports data:", error);
+  }
+  return [];
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
 
   // FETCH ENTRIES OF ALL YEARS
   const fetchAllSportsFromUser  = async(userId) =>{
@@ -77,8 +103,6 @@ const useFetchEntries = (userId) => {
           }
         });
 
-        console.log(newArray)
-
       return newArray
 
       
@@ -90,37 +114,9 @@ const useFetchEntries = (userId) => {
 
   }
 
-  //FETCH ENTRIES IN SELECTED YEAR
-  const fetchSportsDataBySelectedYear = async (userId, selectedYear) =>{
-    try {
-      const response = await fetch(`/api/sports?userId=${userId}`);
-      if (!response.ok) {
-          throw new Error("Failed to fetch sports data");
-      }
-      const data = await response.json();
-      if (data) {
-   
-          const filteredEntriesByUserId = data.data;
-
-          const entriesInSelectedYear = filteredEntriesByUserId.filter(entry => {
-              const entryYear = new Date(entry.created_at).getFullYear();
- 
-              return entryYear === parseInt(selectedYear);
-          });
-
-
-
-          return entriesInSelectedYear; 
-      }
-  } catch (error) {
-      console.error("Error fetching sports data:", error);
-  }
-  return [];
-  }
-
   
 
-  return { fetchSportsData, fetchSportsDataBySelectedYear, fetchAllSportsFromUser, };
+  return { fetchSportsData,  fetchSportsDataBySelectedYear, fetchAllSportsFromUser, };
 };
 
 export default useFetchEntries;

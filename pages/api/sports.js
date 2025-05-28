@@ -44,17 +44,29 @@ export default async (req, res) => {
 
   // Handle GET requests (optional)
   if (req.method === "GET") {
-    const { userId } = req.query;
+    const { userId, year } = req.query;
+
+    // Sicherstellen, dass das Jahr als Ganzzahl vorliegt
+    const parsedYear = parseInt(year, 10);
+
+    // Erstelle Start- und Enddatum des Jahres
+    const startDate = `${parsedYear}-01-01T00:00:00.000Z`;
+    const endDate = `${parsedYear + 1}-01-01T00:00:00.000Z`;
+
+
     const { data, error } = await supabase
+
       .from("sports")
       .select("*")
       .eq("userId", userId)
+      .gte("created_at", startDate)
+      .lt("created_at", endDate)
       .order("id", { ascending: false });
 
     if (error) {
       return res.status(500).json({ error: error.message });
     }
-
+    
     return res.status(200).json({ data });
   }
 

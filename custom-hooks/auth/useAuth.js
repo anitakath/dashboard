@@ -1,21 +1,14 @@
-
 import { useDispatch } from "react-redux";
 import { persistor } from "../../store";
 import { setLogin, setLogout, setUserId, setUser } from "../../store/authReducer";
 import { setSelectedSport, setAllSportsFromSupabase, setFilteredEntriesByCurrentSportAndDate  } from "../../store/sportReducer";
 import { supabase } from "../../services/supabaseClient";
-
-
-
 import useFetchEntries from "../entries/useFetchEntries";
-import useFilterAndSortEntries from "../entries/useFilterAndSortEntries";
-import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
-import { v1ToV6 } from "uuid";
+/*import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";*/
 
 const useAuth = (userId) => {
   const dispatch = useDispatch();
 
-  const {months} = useCalendar();
 
   const logoutHandler = async () => {
     await supabase.auth.signOut();
@@ -36,6 +29,7 @@ const useAuth = (userId) => {
 
     if (error) {
       throw new Error(error.message);
+      console.log(error)
     }
 
 
@@ -54,9 +48,13 @@ const useAuth = (userId) => {
       };
 
       
-      // FETCHSPORTSDATA FETCHES ALL SUPABASE OBJECTS BY USER ID IN CURRNT YEAR
-      const filteredEntriesByUserId = await fetchSportsData(userId);
 
+      
+      // FETCHSPORTSDATA FETCHES ALL SUPABASE OBJECTS BY USER ID IN CURRNT YEAR
+      const filteredEntriesByUserId = await fetchSportsData(userId, currentSport, currentDate);
+
+
+      console.log(filteredEntriesByUserId)
 
       //FILTER AND SORT SPORT ENTRIES BY CURRENTLY SELECTED SPORT
       const filteredEntriesByCurrentSport =
@@ -64,7 +62,9 @@ const useAuth = (userId) => {
           filteredEntriesByUserId,
           currentSport,
           currentDate
-        );
+      );
+
+      console.log(filteredEntriesByCurrentSport)
 
  
 
@@ -78,11 +78,17 @@ const useAuth = (userId) => {
     return user;
   };
 
+
+
+
+
+
+
   const getFilteredEntriesByCurrentSportAndDate = async (
     filteredEntriesByUserId,
     currentSport,
     currentDate
-  ) => {
+    ) => {
 
 
     const entries = filteredEntriesByUserId.filter(
@@ -104,6 +110,9 @@ const useAuth = (userId) => {
 
 
 
+
+
+
   const fetchUserSession = async () => {
     const {
       data: { session },
@@ -115,12 +124,22 @@ const useAuth = (userId) => {
       console.error("Error fetching session:", error);
       return null;
     } else if (session) {
+
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
       await dispatch(setUserId(session.user.id));
       await dispatch(setUser(session));
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
+      /**----------------------------------------------------**/
 
       return session;
     } else {
-      console.log("No user is logged in");
       return null;
     }
   };
@@ -167,38 +186,36 @@ const useAuth = (userId) => {
     } else if (existingUser) {
       throw new Error("Ein Benutzer mit dieser E-Mail-Adresse ist bereits registriert.");
     }  else if (fetchError && fetchError.code === 'PGRST116') { 
-      //"Kein User gefunden"
-      console.log('NO USER WAS FOUND')
+        //"Kein User gefunden"
+        console.log('NO USER WAS FOUND')
 
-      // Benutzer registrieren
-      console.log("signing user up...")
-      const { user, error: signUpError } = await supabase.auth.signUp({
-        email: registerData.email,
-        password: registerData.password,
-      });
+        // Benutzer registrieren
+        console.log("signing user up...")
+        const { user, error: signUpError } = await supabase.auth.signUp({
+          email: registerData.email,
+          password: registerData.password,
+        });
 
-      console.log(registerData)
-
-      if (signUpError) {
-        console.log('SIGNUP ERROR')
-        console.log(signUpError)
-        throw new Error("Fehler bei der Registrierung: " + signUpError.message);
-      } else{
-        console.log(user)
         console.log(registerData)
+
+        if (signUpError) {
+          console.log('SIGNUP ERROR')
+          console.log(signUpError)
+          throw new Error("Fehler bei der Registrierung: " + signUpError.message);
+        } else{
+          console.log(user)
+          console.log(registerData)
+        }
+
+        // Optional: Hier kannst du zusätzliche Informationen zum Benutzer in deiner Datenbank speichern
+        const { error: insertError } = await supabase
+        .from('users') // Ersetze 'users' durch den tatsächlichen Tabellennamen in deiner Supabase-Datenbank
+        .insert([{ /*id: registerData.id,*/ name: registerData.name, email: registerData.email }]);
+
+      if (insertError) {
+        throw new Error("Fehler beim Speichern der Benutzerdaten: " + insertError.message);
       }
-
-      // Optional: Hier kannst du zusätzliche Informationen zum Benutzer in deiner Datenbank speichern
-      const { error: insertError } = await supabase
-      .from('users') // Ersetze 'users' durch den tatsächlichen Tabellennamen in deiner Supabase-Datenbank
-      .insert([{ /*id: registerData.id,*/ name: registerData.name, email: registerData.email }]);
-
-  if (insertError) {
-      throw new Error("Fehler beim Speichern der Benutzerdaten: " + insertError.message);
-  }
-
-
-  }
+    }
 
 
 
@@ -212,8 +229,6 @@ const useAuth = (userId) => {
     if (signUpError) {
         throw new Error("Fehler bei der Registrierung: " + signUpError.message);
     }*/
-
-  
 
     console.log(registerData); // Optionales Logging
 

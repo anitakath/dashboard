@@ -21,7 +21,7 @@ const Calendar = ({ filteredByDate }) => {
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
   const {monthAbbreviations, currentMonth} = useCalendar()
   const userId = useSelector((state) => state.auth.userId)
-  const {fetchSportsDataBySelectedYear} = useFetchEntries()
+  const {fetchSportsDataBySelectedYear, fetchSportsData} = useFetchEntries()
   const year = useSelector((state) => state.calendar.year)
 
 
@@ -35,6 +35,9 @@ const Calendar = ({ filteredByDate }) => {
   const handleYearChange = async (e) => {
     const year = parseInt(e.target.value);
     dispatch(updateDate({ month: selectedMonth, year }));
+    //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
+    //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
+    //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
     const entries = await fetchSportsDataBySelectedYear(userId, e.target.value)
     await dispatch(setAllSportsFromSupabase(entries));
   };

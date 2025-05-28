@@ -10,13 +10,13 @@ import { updateDate } from '@/store/CalendarReducer';
 import { setAllSportsFromSupabase } from '@/store/sportReducer';
 //UI 
 import Spinner from '@/components/UI/Spinner';
-import { current } from '@reduxjs/toolkit';
 import 'intl';
 import 'intl/locale-data/jsonp/en'; // für Englisch
 import 'intl/locale-data/jsonp/de'; // für Deutsch
 
 const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const calendar = useSelector((state) => state.calendar)
+  const allSportsFromSupabase = useSelector((state) => state.sport.allSupabaseSports)
   const [openMonths, setOpenMonths] = useState({});
   const [openYear, setOpenYear] = useState(calendar.year)
   const years = [2024, 2025];
@@ -34,8 +34,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   };
   const [isLoading, setIsLoading] = useState(false)
 
-
-
   const handleYearChange = async (year) => {
     setIsLoading(true);
     try {
@@ -44,9 +42,6 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
 
         // Fetch sports data for the selected year
         const entries = await fetchSportsDataBySelectedYear(userId, year);
-
-
-
         // Dispatch the action to set all sports from Supabase
         const allSupabaseSports = await dispatch(setAllSportsFromSupabase(entries));
 
@@ -79,8 +74,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
             const yearEntry = entriesByYearAndMonth ?  entriesByYearAndMonth.find(entry => Object.keys(entry)[0] === year.toString()) : "";
             const months = yearEntry ? yearEntry[year] : [];
 
-            console.log(entriesByYearAndMonth)
-            console.log( year.toString())
+      
             return (
                 <div key={year} >
 
