@@ -39,7 +39,7 @@ export default function Home() {
 
     if(userId){
 
-      const currentDate = {
+        const currentDate = {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
         restDaysPerMonth: null,

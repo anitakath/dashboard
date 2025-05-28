@@ -19,7 +19,9 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
   const [selectedMonth, handleMonthChange] = useHandleMonthChange(currentMonth);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false)
+  const currentDate = useSelector((state) => state.calendar)
 
+  console.log(currentDate)
   const {fetchSportsDataBySelectedYear} = useFetchEntries();
   const years = Array.from(
     { length: 10 },

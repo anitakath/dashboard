@@ -23,7 +23,9 @@ const Calendar = ({ filteredByDate }) => {
   const userId = useSelector((state) => state.auth.userId)
   const {fetchSportsDataBySelectedYear, fetchSportsData} = useFetchEntries()
   const year = useSelector((state) => state.calendar.year)
+  //const currentDate = useSelector((state) => state.calendar)
 
+  //console.log(currentDate)
 
   useEffect(() => {
  
@@ -35,10 +37,20 @@ const Calendar = ({ filteredByDate }) => {
   const handleYearChange = async (e) => {
     const year = parseInt(e.target.value);
     dispatch(updateDate({ month: selectedMonth, year }));
+
     //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
     //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
     //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
-    const entries = await fetchSportsDataBySelectedYear(userId, e.target.value)
+    const currentDate = {
+      year: year,
+      month: null, // oder ggf. aktueller Monat?
+      restDaysPerMonth: null,
+    };
+
+    // Fetch sports data for the selected year
+
+
+    const entries = await fetchSportsData(userId, null, currentDate);
     await dispatch(setAllSportsFromSupabase(entries));
   };
 

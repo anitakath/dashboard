@@ -22,7 +22,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const years = [2024, 2025];
   const userId = useSelector((state) => state.auth.userId)
   const dispatch = useDispatch();
-  const {fetchSportsDataBySelectedYear} = useFetchEntries()
+  const {fetchSportsData} = useFetchEntries()
   const {convertMinutesToHours, averageDurationPerDay} = useConvertTimes()
   const {formatDate} = useFormatDate()
   const toggleMonthEntries = (monthName, year) => {
@@ -34,14 +34,23 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   };
   const [isLoading, setIsLoading] = useState(false)
 
+
+
+
   const handleYearChange = async (year) => {
     setIsLoading(true);
     try {
         // Dispatch the action to update the date
         dispatch(updateDate({ month: calendar.month, year }));
 
+        const currentDate = {
+            year: year,
+            month: null, // oder ggf. aktueller Monat?
+            restDaysPerMonth: null,
+        };
+
         // Fetch sports data for the selected year
-        const entries = await fetchSportsDataBySelectedYear(userId, year);
+        const entries = await fetchSportsData(userId, null, currentDate);
         // Dispatch the action to set all sports from Supabase
         const allSupabaseSports = await dispatch(setAllSportsFromSupabase(entries));
 
@@ -56,6 +65,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
         setIsLoading(false);
     }
 };
+
 
 
 

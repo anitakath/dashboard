@@ -3,6 +3,9 @@ const useFetchEntries = (userId) => {
 
  //FETCH ENTRIES IN CURRENT YEAR BUT ALSO EXTRACT UNIQUE SPORTS TITLE (FOR NAVIGATION?)
   const fetchSportsData = async (userId, currentSport, currentDate) => {
+
+  
+    console.log(currentDate)
     try {
       // userId und year als Query-Parameter an die API übergeben um Einträge hiernach filtern zu können
       const year = currentDate.year;
@@ -26,7 +29,7 @@ const useFetchEntries = (userId) => {
   };
 
 
-  /** FOLGENDE KOMPONENTE MUSS ENTFERNT WERDEN! CALENDAR.JS && ENTRIESBYYEARANDMONTH NUTZEN SIE NOCH, MÖCHTE DASS FETCHSPORTSDATA GENUTZT WIRD */
+  /** FOLGENDE KOMPONENTE MUSS ENTFERNT WERDEN! CSELECTTIMEPERIOD.JS NUTZT SIE NOCH, MÖCHTE DASS FETCHSPORTSDATA GENUTZT WIRD */
 
   //FETCH ENTRIES IN SELECTED YEAR
   const fetchSportsDataBySelectedYear = async (userId, selectedYear) =>{
@@ -56,7 +59,6 @@ const useFetchEntries = (userId) => {
   }
   return [];
   }
-
 
 
 

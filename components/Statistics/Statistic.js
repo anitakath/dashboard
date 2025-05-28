@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 //STYLING 
 import styles from "../../pages/statistics/Statistics.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faChartLine, faDownLeftAndUpRightToCenter , faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
+import { faDownLeftAndUpRightToCenter , faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 import SportsOverView from "./SportsOverview";
 
 const Statistic = () =>{
@@ -36,7 +36,7 @@ const Statistic = () =>{
 
 
   return (
-    <div className="w-full h-screen m-0 md:p-14">
+    <div className="w-full  h-screen m-0 md:p-14">
       <div className="flex flex-col w-full border-2 h-full overflow-scroll m-0 p-0 relative z-20" >
         {isLoggedIn && (
           <div>

@@ -115,9 +115,9 @@ const BoarderSubHeader = ({ currentSport, openMenu, setOpenMenu }) => {
           <Link className="primary_link" href="/diary">
             your diary
           </Link>
-          <Link className="primary_link" href="/statistics">
+          {/*<Link className="primary_link" href="/statistics">
             your statistics <span className={styles.statisticsLinkCurrentYear}> {currentYear} ✨ </span>
-          </Link>
+          </Link>*/}
           <button className={`secondary_button ${styles.mobile_menubutton}`}>
             open menu 
           </button>

@@ -12,16 +12,9 @@ import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
 const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart, topSportsByDuration, showBarChartHandler, setDate, resultArray}) =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
     
+  console.log(allSupabaseSports)
     return(
         <div className={styles.container}>
-          {/*<div className='flex border-8'>
-            <h1 className={styles.title}>
-              your favourite sports in {date.year} ...
-            </h1> 
-            <h1 className={styles.title}>
-              any sport in {date.year} ...
-            </h1> 
-          </div>*/}
       
        
         <div className={styles.subContainer}>
@@ -100,6 +93,7 @@ const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart,
                   <FontAwesomeIcon icon={faChartLine} />
                 </button>
               </div>
+
               <div>
                 {topSportsByDuration.map(({ name, totalDurationFormatted, label }, index) => {
                   // Konvertiere totalDurationFormatted (z.B. 5.75) in Minuten

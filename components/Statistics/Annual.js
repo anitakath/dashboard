@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './Annual.module.css'
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
@@ -9,6 +9,10 @@ import FirstSection from './FirstSection/FirstSection';
 import SecondSection from './SecondSection/SecondSection';
 import ThirdSection from './ThirdSection/ThirdSection';
 import RandomSportImagesGrid from './FourthSection.js/RandomSportImagesGrid';
+import useFetchEntries from '@/custom-hooks/entries/useFetchEntries';
+import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
+
 
 const Annual = ({ date, setDate}) => {
   const [showBarChart, setShowBarChart] = useState(null)
@@ -18,6 +22,12 @@ const Annual = ({ date, setDate}) => {
     allSupabaseSports,
     date
   );
+  const userId = useSelector((state)=> state.auth.userId)
+  const currentSport = useSelector((state) => state.sport.currentSport);
+  const {fetchSportsData} = useFetchEntries();
+  const dispatch = useDispatch();
+
+  console.log(date)
   const topSportsByDuration = useTopSportsByDuration(allSupabaseSports, date);
   const showBarChartHandler = (item) =>{
     setShowBarChart(item)
@@ -28,6 +38,28 @@ const Annual = ({ date, setDate}) => {
     if (videoRef.current) {
         videoRef.current.playbackRate = 0.5; // Setze die Wiedergabegeschwindigkeit auf 0.75
     }
+
+    const fetchData = async(userId) =>{
+      const response = await fetchSportsData(userId, currentSport, date)
+
+      const entries = await response.filter(
+        (sport) => sport.name === currentSport
+      );
+
+      const filterEntries = await entries.filter((entry) => {
+        const entryDate = new Date(entry.created_at);
+        return (
+          entryDate.getFullYear() === currentDate.year &&
+          entryDate.getMonth() + 1 === currentDate.month // Hier direkt currentDate.month verwenden
+        );
+      });
+
+      
+
+      dispatch(setFilteredEntriesByCurrentSportAndDate(filterEntries));
+      await dispatch(setAllSportsFromSupabase(response));
+    }
+    fetchData(userId);
 }, []);
 
 
