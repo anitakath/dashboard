@@ -7,10 +7,8 @@ import {  setAllSportsFromSupabase } from "@/store/sportReducer";
 
 
 /******** DELETE COMPLETED SPORT ********/
-/******** DELETE COMPLETED SPORT ********/
-/******** DELETE COMPLETED SPORT ********/
-/******** DELETE COMPLETED SPORT ********/
-/*used at DetailsPage.js*/
+
+/*used at: DetailsPage.js*/
 export const useDeleteCompletedSport = (userId) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,8 +28,8 @@ export const useDeleteCompletedSport = (userId) => {
       if (!response.ok) {
         throw new Error('Fehler beim Löschen des Eintrags');
       }
-
-      await fetchSportsDataAfterEntry(dispatch, userId); // Aktualisiere die Sportdaten nach dem Löschen
+      /* FETCH SPORTS DATA AFTER DELETED ENTRY:::: */
+      await fetchSportsDataAfterEntry(dispatch, userId);
       return { success: true };
     } catch (err) {
       console.error("Error when deleting the entry:", err.message);
@@ -47,11 +45,8 @@ export const useDeleteCompletedSport = (userId) => {
 };
 
 
+/******** DELETE PLANNED SPORT ********/
 
-/******** DELETE PLANNED SPORT ********/
-/******** DELETE PLANNED SPORT ********/
-/******** DELETE PLANNED SPORT ********/
-/******** DELETE PLANNED SPORT ********/
 /*used at Plans.js*/
 export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
   const dispatch = useDispatch();
@@ -93,15 +88,13 @@ export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
 }; 
 
 
-/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE  ********/
-/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE  ********/
-/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE  ********/
-/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE ********/
+/******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE || DELETED ONE  ********/
 /*used at useSportEntries.js in submitHandler further down  and useDeleteCompletedSport further up */
 export const fetchSportsDataAfterEntry = async (dispatch, userId,  currentSport) => {
   
   try {
-    const response = await fetch(`/api/sports?userId=${userId}`);
+    const year = new Date().getFullYear();
+    const response = await fetch(`/api/sports?userId=${userId}&year=${year}`);
     if (!response.ok) {
       throw new Error("Failed to fetch sports data");
     }
@@ -109,6 +102,7 @@ export const fetchSportsDataAfterEntry = async (dispatch, userId,  currentSport)
 
      // Extrahiere die Namen aus currentSport
      const currentSportNames = currentSport.map(sport => sport.name);
+   
 
      // Filtere die Daten basierend auf den aktuellen Sportnamen
      const filteredData = data.data.filter(sport => 
@@ -229,6 +223,8 @@ export const useSubmitHandler = (
       } else {
         const { error } = await supabase.from("sports").insert([data]);
         if (error) throw new Error("Supabase insert failed");
+
+        /* FETCH SPORTS DATA AFTER SUBMITTED ENTRY:::: */
         await fetchSportsDataAfterEntry(dispatch, userId, currentSport);
         setFormIsOpen(false);
       }
@@ -280,70 +276,3 @@ export const useChangeHandler = (inputs, setInputs, validateTitle, validateText,
 
 
 
-
-
-
-
-
-export const addSportHandler = async (newSport, setSportsArray, dispatch) => {
-  try {
-    const response = await fetch("/api/plannedSports", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newSport),
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const addedSport = await response.json();
-
-    // Update the sports array with the new sport
-    setSportsArray((prevSports) => [...prevSports, addedSport]);
-
-    // Optionally dispatch an action to update Redux store
-    dispatch(addSport(addedSport));
-  } catch (error) {
-    console.error("Error adding sport:", error);
-  }
-};
-
-
-
-export const editSportHandler = async (
-  sport,
-  updatedValues,
-  setSportsArray,
-  dispatch
-) => {
-  try {
-    const response = await fetch(`/api/plannedSports/${sport.entryId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedValues),
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const updatedSport = await response.json();
-
-    // Update the sports array with the edited sport
-    setSportsArray((prevSports) =>
-      prevSports.map((s) =>
-        s.entryId === updatedSport.entryId ? updatedSport : s
-      )
-    );
-
-    // Optionally dispatch an action to update Redux store
-    dispatch(editSport(updatedSport));
-  } catch (error) {
-    console.error("Error editing sport:", error);
-  }
-};

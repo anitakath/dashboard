@@ -10,15 +10,15 @@ import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
 //COMPONENTS
 import Spinner from "../UI/Spinner";
 
-
 const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
   const userId = useSelector((state) => state.auth.userId)
   const router = useRouter();
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const currentSport = useSelector((state) => state.sport.currentSport);
+  const currentDate = useSelector((state) => state.calendar)
   const currentPath = router.pathname;
   const currentPlannedSports = useSelector((state) => state.sport.allPlannedSports);
-  
+
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
   const [inputs, setInputs] = useState({
     name: selectedSport,

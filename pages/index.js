@@ -34,6 +34,12 @@ export default function Home() {
   }, [])
 
 
+  if (process.env.NODE_ENV === "production") {
+    console.log("Running in PRODUCTION mode");
+  } else {
+    console.log("Running in DEVELOPMENT mode");
+  }
+
 
   useEffect(() => {
 
