@@ -3,14 +3,10 @@ import { useRouter } from "next/router";
 //STYLES
 import styles from "./AddEntryForm.module.css";
 //REDUX
-import { useSelector, useDispatch} from "react-redux";
+import { useSelector} from "react-redux";
 //CUSTOM HOOKS
 import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
-import {
-  validateTitle,
-  validateText,
-  validateDuration,
-} from "@/custom-hooks/validation/validation";
+
 //COMPONENTS
 import Spinner from "../UI/Spinner";
 
@@ -22,7 +18,6 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
   const currentSport = useSelector((state) => state.sport.currentSport);
   const currentPath = router.pathname;
   const currentPlannedSports = useSelector((state) => state.sport.allPlannedSports);
-  const dispatch= useDispatch();
   
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
   const [inputs, setInputs] = useState({
@@ -36,6 +31,15 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
     img: "",
     provider: "",
   });
+
+
+  const isValidTitle = (title) => title.length >= 3 && title.length <= 50;
+  const isValidText = (text) => text.length >= 5 && text.length <= 1000;
+  const isValidDuration = (duration) => {
+    const num = parseFloat(duration);
+    return !isNaN(num) && num > 0;
+  };
+
 
 
   /* ------------ ADD A SPORT HANDLER --------------- */
@@ -122,7 +126,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
             name="title"
             placeholder="title"
             className={`${styles.inputs} ${
-              isTouched.title && !validateTitle(inputs.title)
+              isTouched.title && !isValidTitle(inputs.title)
                 ? styles.error
                 : ""
             }`}
@@ -131,7 +135,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
           ></input>
 
           <div className="md:h-12">
-            {isTouched.title && !validateTitle(inputs.title) && (
+            {isTouched.title && !isValidTitle(inputs.title) && (
               <p className={styles.errorText}>
                 The title must be between 3 and 50 characters long
               </p>
@@ -143,14 +147,14 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
             name="text"
             placeholder="text"
             className={`${styles.inputs_textarea} ${
-              isTouched.text && !validateText(inputs.text) ? styles.error : ""
+              isTouched.text && !isValidText(inputs.text) ? styles.error : ""
             }`}
             onBlur={() => blurHandler("text")}
             onChange={changeHandler}
           ></textarea>
 
           <div className="  md:h-12 ">
-            {isTouched.text && !validateText(inputs.text) && (
+            {isTouched.text && !isValidText(inputs.text) && (
               <p className={styles.errorText}>
                 The text must be between 5 and 1000 characters long.
               </p>
@@ -197,7 +201,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
               name="duration"
               placeholder="60 min"
               className={`${styles.duration} ${
-                isTouched.duration && !validateDuration(inputs.duration)
+                isTouched.duration && !isValidDuration(inputs.duration)
                   ? styles.error
                   : ""
               }`}
@@ -207,7 +211,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
           </div>
 
           <div className="h-14 h-18 lg:h-20 md:h-12">
-            {isTouched.duration && !validateDuration(inputs.duration) && (
+            {isTouched.duration && !isValidDuration(inputs.duration) && (
               <p className={styles.errorText}>
                 The duration must be a positive number.
               </p>

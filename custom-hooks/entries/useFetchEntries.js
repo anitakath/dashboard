@@ -22,7 +22,6 @@ const useFetchEntries = (userId) => {
     } catch (error) {
       console.error("Error fetching sports data:", error);
     }
-
     return []; 
   };
 
@@ -104,17 +103,12 @@ const useFetchEntries = (userId) => {
         });
 
       return newArray
-
-      
-       }
+      }
 
     } catch(error){
       console.error("Error fetching sports data:", error);
     }
-
   }
-
-  
 
   return { fetchSportsData,  fetchSportsDataBySelectedYear, fetchAllSportsFromUser, };
 };
