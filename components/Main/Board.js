@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 //STYLES
 import styles from './Board.module.css'
-//TRANSITION GROUP
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
 import { setAllPlannedSports, setSelectedSport } from "@/store/sportReducer";
@@ -15,7 +14,7 @@ import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
 import SummarizedEntries from "./Daily/SummarizedEntries";
 //CUSTOM HOOKS
-import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
+//import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import UserImage from "../UI/UserImage";
@@ -23,13 +22,9 @@ import UserImage from "../UI/UserImage";
 
 const Board = () => {
   const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSportAndDate);
-  const currentDate = useSelector((state) => state.calendar);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
-  const { months } = useCalendar();
-  const actualMonthIndex = months.findIndex((month) => month === currentDate.month);
-  const actualMonth = actualMonthIndex + 1;
   const dispatch = useDispatch();
   const [filteredByDate, setFilteredByDate ] = useState([])
   const [openMenu, setOpenMenu] = useState(false)

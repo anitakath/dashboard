@@ -4,9 +4,10 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/supabaseClient";
 import {  setAllSportsFromSupabase } from "@/store/sportReducer";
+/* you will find here: */
+/* submitHandler @ ADDENTRYFORM.JS */
+/* deleteCompletedSport @ DETAILSPAGE.JS */
 
-
-/******** DELETE COMPLETED SPORT ********/
 
 /*used at: DetailsPage.js*/
 export const useDeleteCompletedSport = (userId) => {
@@ -249,30 +250,6 @@ export const useSubmitHandler = (
 };
 
 
-
-// ADDENTRYFORM
-
-export const useChangeHandler = (inputs, setInputs, validateTitle, validateText, validateDuration) => (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
-
-    // Hier kannst du auch die Validierung aufrufen und den Zustand entsprechend setzen
-    if (name === "title") {
-        if (!validateTitle(value)) {
-            console.log("Titel ist ungültig");
-        }
-    }
-    if (name === "text") {
-        if (!validateText(value)) {
-            console.log("Text ist ungültig");
-        }
-    }
-    if (name === "duration") {
-        if (!validateDuration(value)) {
-            console.log("Dauer ist ungültig");
-        }
-    }
-};
 
 
 

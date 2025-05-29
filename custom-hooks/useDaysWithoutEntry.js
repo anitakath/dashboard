@@ -13,28 +13,6 @@ const useDaysWithoutEntry = (entriesByMonth) => {
   const [activeDaysPerMonth, setActiveDaysPerMonth] = useState({});
   const [restDaysPerMonth, setRestDaysPerMonth] = useState({});
 
-  //console.log(entriesByMonth);
-
-  // Berechne die Anzahl der Tage in jedem Monat
-  /*
-  useEffect(() => {
-    const getDaysInMonth = () => {
-      const daysInYear = [];
-      for (let month = 1; month <= 12; month++) {
-        const days = new Date(currentYear, month, 0).getDate();
-        const monthName = new Date(currentYear, month - 1).toLocaleString(
-          "en-US",
-          { month: "long" }
-        );
-        daysInYear.push({ month: monthName.trim(), days });
-      }
-      setDaysInMonth(daysInYear);
-    };
-    getDaysInMonth();
-  }, [currentYear]);
-  */
-  // get the days of each month of the year
-  
   useEffect(() => {
     const getDaysInMonth = () => {
       const daysInYear = [];
@@ -97,22 +75,6 @@ const useDaysWithoutEntry = (entriesByMonth) => {
 
 
 
-  // Berechne die restlichen Tage pro Monat
-  /*
-  useEffect(() => {
-    const countRestDays = () => {
-      const restDayObject = {};
-      daysInMonth.forEach(({ month, days }) => {
-        const activeDaysCount = activeDaysPerMonth[month] || 0;
-        restDayObject[month] = days - activeDaysCount;
-      });
-      setRestDaysPerMonth(restDayObject);
-      dispatch(setRestDays(restDayObject));
-    };
-    countRestDays();
-  }, [activeDaysPerMonth, daysInMonth]);
-
-  */
   useEffect(() => {
     const countRestDays = async () => {
       const activeDaysArray = Object.entries(activeDaysPerMonth).map(
