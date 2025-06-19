@@ -13,16 +13,30 @@ export default async function handler(req, res) {
       }
       return res.status(200).json({ data: insertData });
 
-    case "GET":
-      // 2. get an object from the table
-      const { data: selectData, error: selectError } = await supabase
-        .from("sports_planned")
-        .select("*");
-
-      if (selectError) {
-        return res.status(400).json({ error: selectError.message });
-      }
-      return res.status(200).json({ data: selectData });
+      case "GET":
+        // 2. fetch all entries for a specific userId and year
+        const { userId, year } = req.query;
+  
+        if (!userId || !year) {
+          return res.status(400).json({ error: "Missing userId or year parameter" });
+        }
+  
+        const startOfYear = `${year}-01-01T00:00:00+00:00`;
+        const endOfYear = `${year}-12-31T23:59:59+00:00`;
+  
+        const { data: getData, error: getError } = await supabase
+          .from("sports_planned")
+          .select("*")
+          .eq("userId", userId) // ← hier muss der Spaltenname exakt stimmen!
+          .gte("created_at", startOfYear)
+          .lte("created_at", endOfYear);
+  
+        if (getError) {
+          console.error("Supabase GET error:", getError);
+          return res.status(400).json({ error: getError.message });
+        }
+  
+        return res.status(200).json({ data: getData });  
 
     case "DELETE":
       // 3. delete the object in the table that corresponds to the specified parameter

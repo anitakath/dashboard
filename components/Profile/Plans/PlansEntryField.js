@@ -5,7 +5,6 @@ import styles from "./PlansEntryField.module.css";
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { setAllPlannedSports } from "@/store/sportReducer";
 
 const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -25,10 +24,10 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   const {formatDate, formatTime} = useFormatDate()
   const [expandedGroupId, setExpandedGroupId] = useState(true);
 
-
+/*
   useEffect(() => {
     dispatch(setAllPlannedSports(sortedByDate));
-  }, [sortedByDate]);
+  }, [sortedByDate]);*/
 
   const toggleLayout = () => {
     setLayoutMode((prevMode) => (prevMode === "list" ? "grid" : "list"));

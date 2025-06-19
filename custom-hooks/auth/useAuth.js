@@ -20,7 +20,7 @@ const useAuth = (userId) => {
   const loginHandler = async (loginData, currentSport) => {
 
     const {
-      data: { user },
+      data: { session, user },
       error
     } = await supabase.auth.signInWithPassword({
       email: loginData.email,
@@ -33,7 +33,20 @@ const useAuth = (userId) => {
     }
 
 
-    const session = await fetchUserSession();
+
+    //const session = await fetchUserSession();
+    if (session) {
+      const userId = session.user.id;
+      await dispatch(setUserId(session.user.id));
+      await dispatch(setUser(session));
+
+
+      console.log(userId)
+    }
+    
+    console.log(session)
+
+    console.log('Supabase session:', session);
 
 
     if (session) {
@@ -107,44 +120,6 @@ const useAuth = (userId) => {
 
     return filterEntries;
   };
-
-
-
-
-
-
-  const fetchUserSession = async () => {
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.getSession();
-
-    if (error) {
-      console.log('ERROR')
-      console.error("Error fetching session:", error);
-      return null;
-    } else if (session) {
-
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-      await dispatch(setUserId(session.user.id));
-      await dispatch(setUser(session));
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-      /**----------------------------------------------------**/
-
-      return session;
-    } else {
-      return null;
-    }
-  };
-
-
 
 
 

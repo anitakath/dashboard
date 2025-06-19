@@ -3,22 +3,22 @@ import { useRouter } from "next/router";
 //STYLES
 import styles from "./AddEntryForm.module.css";
 //REDUX
-import { useSelector} from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 //CUSTOM HOOKS
 import { useSubmitHandler } from "@/custom-hooks/useSportEntries";
-
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 //COMPONENTS
 import Spinner from "../UI/Spinner";
 
-const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
+const AddEntryForm = ({chosenSport}) => {
   const userId = useSelector((state) => state.auth.userId)
   const router = useRouter();
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const currentSport = useSelector((state) => state.sport.currentSport);
-  const currentDate = useSelector((state) => state.calendar)
+  const currentYear = useSelector((state) => state.calendar.year)
   const currentPath = router.pathname;
-  const currentPlannedSports = useSelector((state) => state.sport.allPlannedSports);
-
+  const dispatch = useDispatch();
+  const {fetchPlannedSports} = useFetchEntries()
   const [isTouched, setIsTouched] = useState({ title: false, text: false });
   const [inputs, setInputs] = useState({
     name: selectedSport,
@@ -103,7 +103,14 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
   "Other"
 ];
 
-
+const onSubmit = async (e) => {
+  try {
+    await submitHandler(e); 
+    await fetchPlannedSports(userId, currentYear, dispatch);
+  } catch (error) {
+    console.error("error while submitting", error);
+  }
+};
 
 
 
@@ -118,7 +125,7 @@ const AddEntryForm = ({setFormIsOpen, chosenSport}) => {
       {!submitting && formIsOpen && (
         <form
           className="my-2  p-2   flex flex-col items-center w-full"
-          onSubmit={submitHandler}
+          onSubmit={onSubmit}
         >
           <label className={styles.labels}> Title </label>
           <input

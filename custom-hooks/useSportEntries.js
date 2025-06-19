@@ -1,9 +1,11 @@
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { removeSport, setSportsArrayy } from "@/store/profileReducer";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/services/supabaseClient";
 import {  setAllSportsFromSupabase } from "@/store/sportReducer";
+import useFetchEntries from "./entries/useFetchEntries";
+import { useCallback } from "react";
 /* you will find here: */
 /* submitHandler @ ADDENTRYFORM.JS */
 /* deleteCompletedSport @ DETAILSPAGE.JS */
@@ -49,36 +51,34 @@ export const useDeleteCompletedSport = (userId) => {
 /******** DELETE PLANNED SPORT ********/
 
 /*used at Plans.js*/
-export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
+
+export const useDeleteSport = () => {
   const dispatch = useDispatch();
+  const plannedSports = useSelector((state) => state.sport.allPlannedSports);
+  const {fetchPlannedSports} = useFetchEntries()
+  const currentYear = useSelector((state) => state.calendar.year)
+  const userId = useSelector((state) => state.auth.userId)
+
 
   const deleteSportHandler = async (sport) => {
-    // Show confirmation dialog
     if (window.confirm("Are you sure you want to delete your workout?")) {
       try {
-        // Send DELETE request to the API
         const response = await fetch("/api/plannedSports", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ entryId: sport.entryId }), // Pass the entryId of the sport to be deleted
+          body: JSON.stringify({ entryId: sport.entryId }),
         });
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
-        // Filter the original sportsArray
-        const filteredSportsArray = sportsArray.filter(
-          (sportObj) => sportObj.entryId !== sport.entryId
-        );
-
-        // Update the state with the filtered array
-        setSportsArray(filteredSportsArray);
-
-        // Dispatch the removeSport action to the Redux Store
+     
+        // Redux-Store aktualisieren
         dispatch(removeSport(sport.entryId));
+        await fetchPlannedSports(userId, currentYear, dispatch);
+        console.log(sport.entryId)
       } catch (error) {
         console.error("Error deleting sport:", error);
       }
@@ -86,7 +86,63 @@ export const useDeleteSport = (sportsArray, setSportsArray, userId) => {
   };
 
   return deleteSportHandler;
-}; 
+};
+
+
+/*used at Plans.js*/
+
+// /custom-hooks/useSportEntries.js
+
+
+
+export const useCheckAndRemoveSport = () => {
+  const dispatch = useDispatch();
+  const currentYear = useSelector((state) => state.calendar.year)
+  const userId = useSelector((state) => state.auth.userId)
+
+  const checkAndRemoveSport = useCallback(async (sport, setIsLoading) => {
+    setIsLoading("checkPlannedSport");
+
+    try {
+      // 1. Sporteintrag als abgeschlossen markieren
+      const response = await fetch("/api/sports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sport),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error adding sport:", errorData.error);
+        return;
+      }
+
+      // 2. Geplanten Eintrag löschen
+      const deleteRes = await fetch("/api/plannedSports", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entryId: sport.entryId }),
+      });
+
+      if (!deleteRes.ok) {
+        console.error("Failed to delete planned sport");
+        return;
+      }
+
+      // 3. Redux Store aktualisieren
+      dispatch(removeSport(sport.entryId));
+      
+      await fetchPlannedSports(userId, currentYear, dispatch);
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+    } finally {
+      setIsLoading(null);
+    }
+  }, [dispatch]);
+
+  return checkAndRemoveSport;
+};
+
 
 
 /******** REFETCH ENTRIES, WHEN  USER MADE A NEW ONE || DELETED ONE  ********/
@@ -220,7 +276,10 @@ export const useSubmitHandler = (
 
         if (!response.ok) throw new Error("Failed to send planned entry");
         const result = await response.json();
+        console.log(result.data)
         dispatch(setSportsArrayy(result.data));
+
+        console.log(result)
       } else {
         const { error } = await supabase.from("sports").insert([data]);
         if (error) throw new Error("Supabase insert failed");

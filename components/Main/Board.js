@@ -4,7 +4,7 @@ import styles from './Board.module.css'
 
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
-import { setAllPlannedSports, setSelectedSport } from "@/store/sportReducer";
+import {setSelectedSport } from "@/store/sportReducer";
 //COMPONENTS
 import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
@@ -18,7 +18,7 @@ import SummarizedEntries from "./Daily/SummarizedEntries";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import UserImage from "../UI/UserImage";
-
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 
 const Board = () => {
   const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSportAndDate);
@@ -28,7 +28,10 @@ const Board = () => {
   const dispatch = useDispatch();
   const [filteredByDate, setFilteredByDate ] = useState([])
   const [openMenu, setOpenMenu] = useState(false)
+  const userId = useSelector((state)=> state.auth.userId)
+  const currentYear = useSelector((state) => state.calendar.year)
 
+  const {fetchPlannedSports} = useFetchEntries()
 
   useEffect(() => {
     if (navigation.includes(selectedSport)) {
@@ -37,24 +40,12 @@ const Board = () => {
     }
   }, []);
 
-
+  
   useEffect(() => {
-    const fetchPlannedSports = async () => {
-      try {
-        const response = await fetch("/api/get-plannedSports");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        dispatch(setAllPlannedSports(data.data))
-        //setSportsArray(data.data); // Setze die erhaltenen Objekte in den State
-      } catch (error) {
-        console.error("Error fetching planned sports:", error);
-      }
-    };
-    fetchPlannedSports();
-  }, [selectedSport]);
-
+  
+    fetchPlannedSports(userId, currentYear, dispatch);
+  }, [currentYear]);
+  
 
   return (
     <div className="w-full relative overflow-scroll flex flex-col items-center h-full p-2 ">

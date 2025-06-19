@@ -16,7 +16,7 @@ import { setSelectedSport } from "@/store/sportReducer";
 import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 import { updateDate } from "@/store/CalendarReducer";
-
+import { supabase } from "@/services/supabaseClient";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -33,15 +33,40 @@ export default function Home() {
     dispatch(updateDate({ month: "Jan", year:  2025 }));
   }, [])
 
-
+/*
   if (process.env.NODE_ENV === "production") {
     console.log("Running in PRODUCTION mode");
   } else {
     console.log("Running in DEVELOPMENT mode");
-  }
+  }*/
+
+
+    console.log(userId)
+
+ 
 
 
   useEffect(() => {
+
+
+    const fetchUser = async () =>{
+      const user = await supabase.auth.getUser();
+      console.log(user);
+  
+    }
+
+    const getSession = async () =>{
+      const { data: { session } } = await supabase.auth.getSession()
+
+      if (session) {
+        console.log('Authenticated')
+      }
+
+    }
+
+    getSession();
+
+    fetchUser();
 
     if(userId){
 

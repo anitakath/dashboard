@@ -1,4 +1,5 @@
-
+import { setAllPlannedSports } from "@/store/sportReducer";
+import { supabase } from "@/services/supabaseClient";
 const useFetchEntries = (userId) => {
 
  //FETCH ENTRIES IN CURRENT YEAR BUT ALSO EXTRACT UNIQUE SPORTS TITLE (FOR NAVIGATION?)
@@ -7,7 +8,18 @@ const useFetchEntries = (userId) => {
     try {
       // userId und year als Query-Parameter an die API übergeben um Einträge hiernach filtern zu können
       const year = currentDate.year;
-      const response = await fetch(`/api/sports?userId=${userId}&year=${year}`);
+      const session = await supabase.auth.getSession();
+      const token = session.data.session.access_token;
+
+      console.log(token)
+
+      //const response = await fetch(`/api/sports?userId=${userId}&year=${year}`);
+
+      const response = await fetch(`/api/sports?userId=${userId}&year=${year}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch sports data");
@@ -23,6 +35,20 @@ const useFetchEntries = (userId) => {
       console.error("Error fetching sports data:", error);
     }
     return []; 
+  };
+
+  const fetchPlannedSports = async (userId, currentYear, dispatch) => {
+    try {
+      const response = await fetch(`/api/plannedSports?userId=${userId}&year=${currentYear}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data.data);
+      dispatch(setAllPlannedSports(data.data));
+    } catch (error) {
+      console.error("Error fetching planned sports:", error);
+    }
   };
 
 
@@ -110,7 +136,7 @@ const useFetchEntries = (userId) => {
     }
   }
 
-  return { fetchSportsData,  fetchSportsDataBySelectedYear, fetchAllSportsFromUser, };
+  return { fetchSportsData, fetchPlannedSports,  fetchSportsDataBySelectedYear, fetchAllSportsFromUser, };
 };
 
 export default useFetchEntries;

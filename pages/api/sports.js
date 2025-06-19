@@ -1,8 +1,23 @@
 
-
+//api/sports.js
 import { supabase } from "@/services/supabaseClient";
+import { createClient } from "@supabase/supabase-js";
 
 export default async (req, res) => {
+
+  const supabaseServerClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, // ⚠️ Nur im sicheren Server-Kontext verwenden!
+    {
+      global: {
+        headers: {
+          Authorization: req.headers.authorization,
+        },
+      },
+    }
+  )
+
+
   if (req.method === "POST") {
     const {
       entryId,
@@ -19,7 +34,7 @@ export default async (req, res) => {
     } = req.body;
 
     // Füge den neuen Sport zur Supabase-Datenbank hinzu
-    const { data, error } = await supabase.from("sports").insert([
+    const { data, error } = await supabaseServerClient.from("sports").insert([
       {
         entryId,
         name,
@@ -54,7 +69,7 @@ export default async (req, res) => {
     const endDate = `${parsedYear + 1}-01-01T00:00:00.000Z`;
 
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseServerClient
 
       .from("sports")
       .select("*")
