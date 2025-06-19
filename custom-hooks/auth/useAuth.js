@@ -9,7 +9,6 @@ import useFetchEntries from "../entries/useFetchEntries";
 const useAuth = (userId) => {
   const dispatch = useDispatch();
 
-
   const logoutHandler = async () => {
     await supabase.auth.signOut();
     dispatch(setLogout(false));
@@ -39,14 +38,7 @@ const useAuth = (userId) => {
       const userId = session.user.id;
       await dispatch(setUserId(session.user.id));
       await dispatch(setUser(session));
-
-
-      console.log(userId)
     }
-    
-    console.log(session)
-
-    console.log('Supabase session:', session);
 
 
     if (session) {
@@ -61,13 +53,9 @@ const useAuth = (userId) => {
       };
 
       
-
-      
       // FETCHSPORTSDATA FETCHES ALL SUPABASE OBJECTS BY USER ID IN CURRNT YEAR
       const filteredEntriesByUserId = await fetchSportsData(userId, currentSport, currentDate);
 
-
-      console.log(filteredEntriesByUserId)
 
       //FILTER AND SORT SPORT ENTRIES BY CURRENTLY SELECTED SPORT
       const filteredEntriesByCurrentSport =
@@ -192,18 +180,6 @@ const useAuth = (userId) => {
       }
     }
 
-
-
-    /*
-    // Benutzer registrieren
-    const { user, error: signUpError } = await supabase.auth.signUp({
-        email: registerData.email,
-        password: registerData.password,
-    });
-
-    if (signUpError) {
-        throw new Error("Fehler bei der Registrierung: " + signUpError.message);
-    }*/
 
     console.log(registerData); // Optionales Logging
 

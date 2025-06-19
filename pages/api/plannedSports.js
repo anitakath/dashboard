@@ -1,10 +1,27 @@
 import { supabase } from "@/services/supabaseClient";
+import { createClient } from "@supabase/supabase-js";
+
 
 export default async function handler(req, res) {
+
+
+  const supabaseServerClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, 
+    {
+      global: {
+        headers: {
+          Authorization: req.headers.authorization,
+        },
+      },
+    }
+  )
+
+
   switch (req.method) {
     case "POST":
       // 1. send an object to the table
-      const { data: insertData, error: insertError } = await supabase
+      const { data: insertData, error: insertError } = await supabaseServerClient
         .from("sports_planned")
         .insert([req.body]);
 
@@ -24,7 +41,7 @@ export default async function handler(req, res) {
         const startOfYear = `${year}-01-01T00:00:00+00:00`;
         const endOfYear = `${year}-12-31T23:59:59+00:00`;
   
-        const { data: getData, error: getError } = await supabase
+        const { data: getData, error: getError } = await supabaseServerClient
           .from("sports_planned")
           .select("*")
           .eq("userId", userId) // ← hier muss der Spaltenname exakt stimmen!
@@ -44,7 +61,7 @@ export default async function handler(req, res) {
 
       console.log(entryId)
 
-      const { data: deleteData, error: deleteError } = await supabase
+      const { data: deleteData, error: deleteError } = await supabaseServerClient
         .from("sports_planned")
         .delete()
         .eq("entryId", entryId);
@@ -58,7 +75,7 @@ export default async function handler(req, res) {
       console.log("Received PUT request with body:", req.body);
      
       const { id, ...updateFields } = req.body; // Extrahiere id und die restlichen Felder
-      const { data: updateData, error: updateError } = await supabase
+      const { data: updateData, error: updateError } = await supabaseServerClient
         .from("sports_planned")
         .update(updateFields)
         .eq("id", id); // Hier wird angenommen, dass 'id' der Primärschlüssel ist

@@ -1,13 +1,12 @@
 
 //api/sports.js
-import { supabase } from "@/services/supabaseClient";
 import { createClient } from "@supabase/supabase-js";
 
 export default async (req, res) => {
 
   const supabaseServerClient = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, // ⚠️ Nur im sicheren Server-Kontext verwenden!
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, 
     {
       global: {
         headers: {
