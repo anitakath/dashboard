@@ -1,12 +1,26 @@
-import { supabase } from "@/services/supabaseClient";
+
+import { createClient } from "@supabase/supabase-js";
 
 
 
 export default async function handler(req, res) {
+
+  const supabaseServerClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, 
+    {
+      global: {
+        headers: {
+          Authorization: req.headers.authorization,
+        },
+      },
+    }
+  )
+
   if (req.method === "DELETE") {
     const { title, id, userId } = req.body;
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseServerClient
         .from("sports")
         .delete()
         .eq("title", title)

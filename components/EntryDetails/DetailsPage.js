@@ -41,9 +41,6 @@ const DetailsPage = () => {
   const editEntryHandler = (e) =>{
     e.preventDefault();
   }
-
-  console.log(lastPathPart)
-  console.log(filteredEntry)
  
 
 

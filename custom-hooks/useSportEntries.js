@@ -22,9 +22,12 @@ export const useDeleteCompletedSport = (userId) => {
     setError(null);
 
     try {
+      const session = await supabase.auth.getSession();
+      const token = session.data.session.access_token;
+
       const response = await fetch('/api/deleteCompletedSportEntry', {
         method: 'DELETE',
-        headers: {'Content-Type': 'application/json',},
+        headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`,},
         body: JSON.stringify({ title, id, userId }),
       });
 
