@@ -11,6 +11,11 @@ import { useCallback } from "react";
 /* deleteCompletedSport @ DETAILSPAGE.JS */
 
 
+export const getAccessToken = async () => {
+  const session = await supabase.auth.getSession();
+  return session?.data?.session?.access_token;
+};
+
 /*used at: DetailsPage.js*/
 export const useDeleteCompletedSport = (userId) => {
   const [loading, setLoading] = useState(false);
@@ -66,10 +71,13 @@ export const useDeleteSport = () => {
   const deleteSportHandler = async (sport) => {
     if (window.confirm("Are you sure you want to delete your workout?")) {
       try {
+        const session = await supabase.auth.getSession();
+        const token = session.data.session.access_token;
         const response = await fetch("/api/plannedSports", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ entryId: sport.entryId }),
         });
@@ -81,7 +89,7 @@ export const useDeleteSport = () => {
         // Redux-Store aktualisieren
         dispatch(removeSport(sport.entryId));
         await fetchPlannedSports(userId, currentYear, dispatch);
-        console.log(sport.entryId)
+
       } catch (error) {
         console.error("Error deleting sport:", error);
       }
@@ -107,10 +115,14 @@ export const useCheckAndRemoveSport = () => {
     setIsLoading("checkPlannedSport");
 
     try {
+      const session = await supabase.auth.getSession();
+      const token = session.data.session.access_token;
       // 1. Sporteintrag als abgeschlossen markieren
+
+
       const response = await fetch("/api/sports", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, },
         body: JSON.stringify(sport),
       });
 
@@ -123,7 +135,7 @@ export const useCheckAndRemoveSport = () => {
       // 2. Geplanten Eintrag löschen
       const deleteRes = await fetch("/api/plannedSports", {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, },
         body: JSON.stringify({ entryId: sport.entryId }),
       });
 
@@ -134,6 +146,7 @@ export const useCheckAndRemoveSport = () => {
 
       // 3. Redux Store aktualisieren
       dispatch(removeSport(sport.entryId));
+      const {fetchPlannedSports} = useFetchEntries()
       
       await fetchPlannedSports(userId, currentYear, dispatch);
     } catch (error) {
@@ -216,6 +229,8 @@ export const useSubmitHandler = (
     e.preventDefault();
     setSubmitting(true);
     setErrorMessage("");
+    const session = await supabase.auth.getSession();
+    const token = session.data.session.access_token;
 
     const formattedTitle = transformTitle(inputs.title);
     const uniqueID = uuidv4();
@@ -258,6 +273,7 @@ export const useSubmitHandler = (
       const validationResponse = await fetch("/api/formValidation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        
         body: JSON.stringify(data),
       });
 
@@ -273,16 +289,17 @@ export const useSubmitHandler = (
       if (currentPath === "/profile") {
         const response = await fetch("/api/send-plannedSports", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify(data),
         });
 
         if (!response.ok) throw new Error("Failed to send planned entry");
         const result = await response.json();
-        console.log(result.data)
         dispatch(setSportsArrayy(result.data));
 
-        console.log(result)
       } else {
         const { error } = await supabase.from("sports").insert([data]);
         if (error) throw new Error("Supabase insert failed");

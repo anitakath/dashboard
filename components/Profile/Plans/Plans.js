@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useEffect, useState } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 //STYLES 
 import styles from './Plans.module.css'
 //COMPONENTS
@@ -8,17 +8,14 @@ import EditEntry from "./EditEntry";
 import EditEntryField from './EditEntryField';
 import PlansEntryField from "./PlansEntryField";
 //REDUX 
-import { useSelector, useDispatch } from 'react-redux';
-import { removeSport } from "@/store/profileReducer";
+import { useSelector} from 'react-redux';
 //CUSTOM HOOKS
 import { useDeleteSport } from '@/custom-hooks/useSportEntries';
 import { useCheckAndRemoveSport } from '@/custom-hooks/useSportEntries'; 
 
 const Plans = () => {
-  const dispatch = useDispatch();
   const plannedSports = useSelector((state) => state.sport.allPlannedSports);
   const currentSports = useSelector((state) => state.sport.currentSport);
-
   const [openDetailsIds, setOpenDetailsIds] = useState([]);
   const [areAllOpen, setAreAllOpen] = useState(false);
   const [addSportVisible, setAddSportVisible] = useState(false);
@@ -28,10 +25,10 @@ const Plans = () => {
   const [currentSport, setCurrentSport] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [formIsOpen, setFormIsOpen] = useState(false);
-
   const checkAndRemoveSport = useCheckAndRemoveSport()
   const deleteSportHandler = useDeleteSport();
 
+  
   const sortedSportsArray = useMemo(() => {
     return plannedSports
       ?.slice()

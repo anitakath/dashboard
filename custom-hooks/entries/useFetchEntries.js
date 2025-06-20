@@ -11,8 +11,6 @@ const useFetchEntries = (userId) => {
       const session = await supabase.auth.getSession();
       const token = session.data.session.access_token;
 
-      //const response = await fetch(`/api/sports?userId=${userId}&year=${year}`);
-
       const response = await fetch(`/api/sports?userId=${userId}&year=${year}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -46,10 +44,12 @@ const useFetchEntries = (userId) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+
       dispatch(setAllPlannedSports(data.data));
     } catch (error) {
       console.error("Error fetching planned sports:", error);
@@ -106,7 +106,7 @@ const useFetchEntries = (userId) => {
 
 
   // FETCH ENTRIES OF ALL YEARS
-  const fetchAllSportsFromUser  = async(userId) =>{
+  /*const fetchAllSportsFromUser  = async(userId) =>{
     try{
        // Den userId als Query-Parameter an die API übergeben
        const response = await fetch(`/api/sports?userId=${userId}`);
@@ -139,9 +139,9 @@ const useFetchEntries = (userId) => {
     } catch(error){
       console.error("Error fetching sports data:", error);
     }
-  }
+  }*/
 
-  return { fetchSportsData, fetchPlannedSports,  fetchSportsDataBySelectedYear, fetchAllSportsFromUser, };
+  return { fetchSportsData, fetchPlannedSports,  fetchSportsDataBySelectedYear, /*fetchAllSportsFromUser,*/ };
 };
 
 export default useFetchEntries;

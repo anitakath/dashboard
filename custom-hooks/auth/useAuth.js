@@ -183,7 +183,7 @@ const useAuth = (userId) => {
 
     console.log(registerData); // Optionales Logging
 
-    return user; // Benutzer zurückgeben für weitere Verwendung
+    return user; 
   };
 
 
