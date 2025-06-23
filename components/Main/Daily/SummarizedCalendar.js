@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from './SummarizedEntries.module.css'
+import colors from '../../../styles/Colors.module.css'
 import Calendar from "../Calendar";
 //REDUX
 import { useSelector } from "react-redux";
@@ -72,7 +73,7 @@ const SummarizedCalendar = (props) => {
                                                 }
                                                 // Berechnung der Höhe des Markers basierend auf der Dauer
                                                 const height = entry.duration < 20 ? "3px" : `${Math.floor(entry.duration / 20) * 5}px`;
-                                                const entryClass = styles[`${entry.label}_opaque`] || styles.defaultLabel;
+                                                const entryClass = colors[`${entry.label}_opaque`] || styles.defaultLabel;
                             
 
                                                   return (

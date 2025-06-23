@@ -55,7 +55,7 @@ export default function Home() {
 
       fetchData();
     }
-  }, [])
+  }, [allSupabaseSports])
 
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));

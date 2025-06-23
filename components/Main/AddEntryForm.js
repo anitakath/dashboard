@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 //STYLES
 import styles from "./AddEntryForm.module.css";
+
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
 //CUSTOM HOOKS
@@ -32,6 +33,10 @@ const AddEntryForm = ({chosenSport}) => {
     provider: "",
   });
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
+
 
   const isValidTitle = (title) => title.length >= 3 && title.length <= 50;
   const isValidText = (text) => text.length >= 5 && text.length <= 1000;
@@ -41,6 +46,19 @@ const AddEntryForm = ({chosenSport}) => {
   };
 
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file));
+      setInputs({ ...inputs, img: file }); // optional: base64 oder File speichern
+    } else {
+      setSelectedImage(null);
+      setImagePreview(null);
+      setInputs({ ...inputs, img: "" });
+    }
+  };
+  
 
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {
@@ -116,7 +134,7 @@ const onSubmit = async (e) => {
 
 
   return (
-    <div className="lg:my-2 lg:p-2  flex-col justify-center w-full overflow-scroll flex items-center ">
+    <div className="lg:my-2 lg:p-2 flex-col justify-center w-full overflow-scroll flex items-center ">
       {submitting && (
         <div className="relative w-full h-96 flex justify-center items-center">
             <Spinner text="submitting"/> 
@@ -217,7 +235,7 @@ const onSubmit = async (e) => {
             ></input>
           </div>
 
-          <div className="h-14 h-18 lg:h-20 md:h-12">
+          <div className="h-12  ">
             {isTouched.duration && !isValidDuration(inputs.duration) && (
               <p className={styles.errorText}>
                 The duration must be a positive number.
@@ -228,7 +246,38 @@ const onSubmit = async (e) => {
               <p className={styles.errorText}> please set a date!</p>
             )}
           </div>
-          <div className=" w-full flex  justify-center">
+
+          <div className="mt-2 mb-6  w-full flex items-center justify-center">
+            <div className=" flex-col p-2">
+              <h2 className=" mx-2 my-4 "> add an image</h2>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="text-sm text-transparent  file:mr-4 file:py-2 file:px-4
+                          file:rounded-full file:border-0  
+                          file:bg-red-50 cursor-pointer file:text-red-800 hover:file:bg-violet-100"
+              />
+
+            </div>
+
+
+
+            {imagePreview && (
+                <div className="mt-4  w-6/12">
+                 <p className="my-2"> Selected:<br/> <strong>{selectedImage.name}</strong></p> 
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="max-h-60 w-full  rounded shadow object-cover"
+                  />
+                </div>
+            )}
+        
+          </div>
+
+          <div className=" w-full flex justify-center">
             <button className={styles.submit_btn}>
               submit
             </button>

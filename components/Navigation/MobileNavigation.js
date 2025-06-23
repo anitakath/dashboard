@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import styles from './MobileNavigation.module.css'
+import colors from '../../styles/Colors.module.css'
 import SortSports from './SortSports'
 //CUSTOM HOOKS
 import { useFontAwesomeIcons } from '@/custom-hooks/FontAwesome/useFontAwesomeIcons'
@@ -62,9 +63,9 @@ const MobileNavigation = ({
                   <span className={styles.sportBtnText}>{sportsObj.name}</span>
                   <div className={styles.circle_div}>
                     <div
-                      className={`${styles.circle_background} ${styles[sportsObj.color]}`}
+                      className={`${styles.circle_background} ${colors[sportsObj.color]}`}
                     ></div>
-                    <div className={`${styles[sportsObj.color]} ${styles.circle}`}>
+                    <div className={`${colors[sportsObj.color]} ${styles.circle}`}>
                       {sportsObj.icon &&
                         fontAwesomeIcons[sportsObj.icon] && (
                           <FontAwesomeIcon

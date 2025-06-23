@@ -190,6 +190,163 @@
 
 }
 
+.expanded_grid{
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0px;
+    margin: 0px;
+    height: 400px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.indigoDye {
+    background: var(--indigoDye);
+}
+
+.persianGreen {
+    background: var(--persianGreen);
+}
+
+.roseTaupe {
+    background: var(--roseTaupe);
+}
+
+.coralRed {
+    background: var(--coralRed);
+}
+
+.lapisBlue {
+    background: var(--lapisBlue);
+}
+
+.pistachio {
+    background: var(--pistachio);
+}
+
+.powderBlue {
+    background: var(--powderBlue);
+}
+
+.vermilion {
+    background: var(--vermilion);
+}
+
+.iceBlue {
+    background: var(--iceBlue);
+}
+
+.deepLilac {
+    background: var(--deepLilac);
+}
+
+.saffron {
+    background: var(--saffron);
+}
+
+.oliveGreen {
+    background: var(--oliveGreen);
+}
+
+.midnightPurple {
+    background: var(--midnightPurple);
+}
+
+.peach {
+    background: var(--peach);
+}
+
+.mint {
+    background: var(--mint);
+}
+
+.terracotta {
+    background: var(--terracotta);
+}
+
+/* Neue Farben – linear gradient */
+.indigoDye_bg {
+    background: linear-gradient(to right, transparent, var(--indigoDye));
+}
+
+.persianGreen_bg {
+    background: linear-gradient(to right, transparent, var(--persianGreen));
+}
+
+.roseTaupe_bg {
+    background: linear-gradient(to right, transparent, var(--roseTaupe));
+}
+
+.coralRed_bg {
+    background: linear-gradient(to right, transparent, var(--coralRed));
+}
+
+.lapisBlue_bg {
+    background: linear-gradient(to right, transparent, var(--lapisBlue));
+}
+
+.pistachio_bg {
+    background: linear-gradient(to right, transparent, var(--pistachio));
+}
+
+.powderBlue_bg {
+    background: linear-gradient(to right, transparent, var(--powderBlue));
+}
+
+.vermilion_bg {
+    background: linear-gradient(to right, transparent, var(--vermilion));
+}
+
+.iceBlue_bg {
+    background: linear-gradient(to right, transparent, var(--iceBlue));
+}
+
+.deepLilac_bg {
+    background: linear-gradient(to right, transparent, var(--deepLilac));
+}
+
+.saffron_bg {
+    background: linear-gradient(to right, transparent, var(--saffron));
+}
+
+.oliveGreen_bg {
+    background: linear-gradient(to right, transparent, var(--oliveGreen));
+}
+
+.midnightPurple_bg {
+    background: linear-gradient(to right, transparent, var(--midnightPurple));
+}
+
+.peach_bg {
+    background: linear-gradient(to right, transparent, var(--peach));
+}
+
+.mint_bg {
+    background: linear-gradient(to right, transparent, var(--mint));
+}
+
+.terracotta_bg {
+    background: linear-gradient(to right, transparent, var(--terracotta));
+}
+
+
+
 
 .fandango_bg{
     background: linear-gradient(to right, transparent, var(--fandango));
@@ -255,82 +412,4 @@
     background: linear-gradient(to right, transparent, var(--mossGreen));
 }
 
-.expanded_grid{
-    width: 100%;
-    position: absolute;
-    z-index: 1000;
-    left: 0;
-    top: 0px;
-    margin: 0px;
-    height: 400px;
-}
 
-
-
-
-
-.fandango{
-    background: var(--fandango);
-}
-
-.celeste{
-    background: var(--celeste);
-}
-
-.springGreen{
-    background: var(--springGreen);
-}
-
-.sinopia{
-    background: var(--sinopia);
-}
-
-.lightOrange{
-    background: var(--lightOrange);
-}
-
-.wenge{
-    background: var(--wenge);
-}
-
-
-.spaceCadet{
-    background: var(--spaceCadet);
-}
-
-.mauve{
-    background: var(--mauve)
-}
-
-.aquamarine{
-    background: var(--aquamarine);
-  
-}
-
-.mandarine{
-    background: var(--mandarine)
-}
-
-.brown{
-    background: var(--brown)
-}
-
-.mustard{
-    background: var(--mustard);
-}
-
-.jasmine{
-    background: var(--jasmine)
-}
-
-.frenchGrey{
-    background:var(--frenchGrey);
-}
-
-.eggplant{
-    background: var(--eggplant);
-}
-
-.mossGreen{
-    background: var(--mossGreen);
-}

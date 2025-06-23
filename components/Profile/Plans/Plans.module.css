@@ -42,20 +42,6 @@
 }
 
 
-.sport_buttons{
-    width: 100%;
-    margin: 5px 0px;
-    height: 40px;
-    cursor: pointer;
-    transition: 0.2s ease;
-    font-size: 1.3rem;
-    
-}
-
-.sport_buttons:hover{
-    box-shadow: 0px 0px 10px grey;
-}
-
 
 .active{
     border-radius: 5px;
@@ -80,11 +66,48 @@
     color: beige;
 }
 
+.current_sport_grid{
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    justify-content: start;
+    align-items: center;
+}
+
+
+.sport_buttons{
+    width: 100%;
+    margin: 2px;
+    height: 100px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 0.7rem;
+    
+}
+
+.sport_buttons:hover{
+    box-shadow: 0px 0px 10px grey;
+}
+
+
+
 
 
 @media screen and (max-width: 1200px){
     .container{
         width: 100%;
+    }
+
+    .current_sport_grid{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+@media screen and (max-width: 1000px){
+    .current_sport_grid{
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -94,144 +117,15 @@
     .duration_h3{
         display: none;
     }
-}
 
-.fandango_bg{
-    background: linear-gradient(to right, transparent, var(--fandango));
-}
+    .current_sport_grid{
+        grid-template-columns: repeat(1, 1fr);
+    }
 
-.celeste_bg {
-    background: linear-gradient(to right, transparent, var(--celeste));
-}
+    .sport_buttons{
+        height: 40px;
+    }
 
-.springGreen_bg {
-    background: linear-gradient(to right, transparent, var(--springGreen));
-}
-
-.sinopia_bg {
-    background: linear-gradient(to right, transparent, var(--sinopia));
-}
-
-.lightOrange_bg {
-    background: linear-gradient(to right, transparent, var(--lightOrange));
-}
-
-.wenge_bg {
-    background: linear-gradient(to right, transparent, var(--wenge));
-}
-
-.spaceCadet_bg {
-    background: linear-gradient(to right, transparent, var(--spaceCadet));
-}
-
-.mauve_bg {
-    background: linear-gradient(to right, transparent, var(--mauve));
-}
-
-.aquamarine_bg {
-    background: linear-gradient(to right, transparent, var(--aquamarine));
-}
-
-.mandarine_bg{
-    background: linear-gradient(to right, transparent, var(--mandarine));
-}
-
-.brown_bg{
-    background: linear-gradient(to right, transparent, var(--brown));
-}
-
-.mustard_bg {
-    background: linear-gradient(to right, transparent, var(--mustard));
-}
-
-.jasmine_bg {
-    background: linear-gradient(to right, transparent, var(--jasmine));
-}
-
-.frenchGrey_bg{
-    background: linear-gradient(to right, transparent, var(--frenchGrey));
-}
-
-.eggplant_bg{
-    background: linear-gradient(to right, transparent, var(--eggplant));
-}
-
-.mossGreen_bg{
-    background: linear-gradient(to right, transparent, var(--mossGreen));
-}
-
-
-
-
-
-.fandango{
-    background: var(--fandango);
-}
-
-.celeste{
-    background: var(--celeste);
-}
-
-.springGreen{
-    background: var(--springGreen);
-}
-
-.sinopia{
-    background: var(--sinopia);
-}
-
-.lightOrange{
-    background: var(--lightOrange);
-}
-
-.wenge{
-    background: var(--wenge);
-}
-
-
-.spaceCadet{
-    background: var(--spaceCadet);
-}
-
-.mauve{
-    background: var(--mauve)
-}
-
-.aquamarine{
-    background: var(--aquamarine);
-  
-}
-
-.mandarine{
-    background: var(--mandarine)
-}
-
-.brown{
-    background: var(--brown)
-}
-
-.mustard{
-    background: var(--mustard);
-}
-
-.jasmine{
-    background: var(--jasmine)
-}
-
-.frenchGrey{
-    background:var(--frenchGrey);
-}
-
-.eggplant{
-    background: var(--eggplant);
-}
-
-.mossGreen{
-    background: var(--mossGreen);
-}
-
-
-@media screen and (max-width: 600px){
 
     .form_container{
         padding: 0;
@@ -247,5 +141,7 @@
         background: transparent;
 
     }
-
+    
 }
+
+

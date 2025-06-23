@@ -77,27 +77,13 @@ const DetailsPage = () => {
               )}
 
               {loading && (
-                <p className="text-2xl flex justify-center text-red-500">
+                <p className="text-2xl absolute w-full h-full top-0 z-100 bg-red-50  pt-10  flex justify-center text-zinc-500">
                   deleting ...
                 </p>
               )}
             </div>
 
-            <div className={styles.imageDiv}>
-              <div className="h-60 my-2 w-full flex bg-red-200 justify-center items-center">
-                <h1 className="font_meowScript text-xl text-amber-400 p-4 "> future image div </h1>
-              </div>
-              <div className="h-60 my-2 w-full flex bg-red-200 justify-center items-center  ">
-                <h1 className="font_meowScript text-xl text-amber-400 p-4"> *placeholder* </h1>
-              </div>
-              <div className="h-60 my-2 w-full flex bg-red-200 justify-center items-center">
-                <h1 className="font_meowScript text-xl text-amber-400 p-4"> *placeholder*  </h1>
-              </div>
-              <div className="h-60 my-2  w-full flex bg-red-200 justify-center items-center">
-                <h1 className="font_meowScript text-xl text-amber-400 p-4"> *placeholder*  </h1>
-              </div>
-            </div>
-
+          
           </div>
           
         </div>

@@ -1,4 +1,5 @@
 import styles from "./Navigation.module.css";
+import colors from '../../styles/Colors.module.css'
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -39,9 +40,9 @@ const WebNavigation = ({deleteSportHandler, sortedNavigationArr,  active,  handl
                     <span className={styles.sportBtnText}>{sportsObj.name}</span>
                     <div className={styles.circle_div}>
                       <div
-                        className={`${styles.circle_background} ${styles[sportsObj.color]}`}
+                        className={`${styles.circle_background} ${colors[sportsObj.color]}`}
                       ></div>
-                      <div className={`${styles[sportsObj.color]} ${styles.circle}`}>
+                      <div className={`${colors[sportsObj.color]} ${styles.circle}`}>
                         {/* Hier wird das Icon gerendert */}
                         {sportsObj.icon && fontAwesomeIcons[sportsObj.icon] && (
                           <FontAwesomeIcon icon={fontAwesomeIcons[sportsObj.icon]} className={styles.icon} />

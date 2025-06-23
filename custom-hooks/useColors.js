@@ -19,6 +19,23 @@ const useColors = () =>{
         "frenchGrey",
         "eggplant",
         "mossGreen",
+        "indigoDye",
+        "persianGreen",
+        "roseTaupe",
+        "coralRed",
+        "lapisBlue",
+        "pistachio",
+        "powderBlue",
+        "vermilion",
+        "iceBlue",
+        "deepLilac",
+        "saffron",
+        "oliveGreen",
+        "midnightPurple",
+        "peach",
+        "mint",
+        "terracotta",
+
       ];
     return{ colors }
 }

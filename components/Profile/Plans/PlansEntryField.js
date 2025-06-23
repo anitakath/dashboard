@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Tooltip from '../../UI/Tooltip'
 import styles from "./PlansEntryField.module.css";
+
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //REDUX
@@ -98,18 +99,18 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                     {group.dateTitle}
                   </button>
                
-      
 
                 {expandedGroupId != group.dateTitle && (
 
                   <div className="w-full">
-                     {group.entries.map((sport) => (
-                  <div
-                    key={sport.entryId}
-                    className={`${styles.sport_entry_div} ${styles[sport.label + "_bg"]}`}
-                  >
+                    {group.entries.map((sport) => (
+                    <div
+                      key={sport.entryId}
+                      className={`${styles.sport_entry_div} ${styles[sport.label+"_bg"]}`}
+                    >
                     <div className=" h-full relative">
                       <div className="relative h-full flex flex-col items-center">
+                    
                      
                       <button className={styles.enlarge_btn} onClick={() => layoutMode === "grid" ? enlargeWorkoutHandler(sport.entryId) : enlargeWorkoutHandler(sport.entryId)}>
                       🔍

@@ -26,7 +26,6 @@ const Board = () => {
   const navigation = useSelector((state) => state.sport.navigation);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const dispatch = useDispatch();
-  const [filteredByDate, setFilteredByDate ] = useState([])
   const [openMenu, setOpenMenu] = useState(false)
   const userId = useSelector((state)=> state.auth.userId)
   const currentYear = useSelector((state) => state.calendar.year)
@@ -42,9 +41,10 @@ const Board = () => {
 
   
   useEffect(() => {
-  
     fetchPlannedSports(userId, currentYear, dispatch);
   }, [currentYear]);
+
+  
   
 
   return (
@@ -120,7 +120,7 @@ const Board = () => {
 
         {selectedSport != "daily" && selectedSport != "start" && (
           <div className="w-full lg:w-6/12">
-            <Calendar filteredByDate={filteredByDate} />
+            <Calendar  />
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@ import {setNavigation, setSelectedSport, setCurrentSport} from "@/store/sportRed
 import { useSelector, useDispatch } from "react-redux";
 //STYLES
 import styles from "./AddSportForm.module.css";
+import coloring from '../../styles/Colors.module.css'
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 //CUSTOM HOOKS
 import useColors from "@/custom-hooks/useColors";
@@ -145,7 +146,7 @@ const AddSportForm = ({ addSportClickHandler }) => {
   return (
     <div className="w-full" id="addSportContainer">
     <form className="w-full my-2 p-2 overflow-scroll" onSubmit={handleSubmit}>
-      <label className="text-xs hidden">sport </label>
+      <label className="text-xs hidden"> sport </label>
       <input
         type="text"
         onChange={(e) =>
@@ -164,7 +165,7 @@ const AddSportForm = ({ addSportClickHandler }) => {
 
 
     {showSportButtons && (
-            <div>
+      <div>
                 {navigationsArray.map((sport, index) => {
                     if (!sport || !sport.name || !sport.color) {
                         return null; 
@@ -181,6 +182,7 @@ const AddSportForm = ({ addSportClickHandler }) => {
                             >
                                 {sport.name}
                             </button> 
+                            
                             {isColorUsed && (
                               <div className={styles.overlay}>
                                   <h2 className={styles.text}>Already in use</h2> {/* Dunkelschwarzer Text */}
@@ -198,7 +200,7 @@ const AddSportForm = ({ addSportClickHandler }) => {
              <button
                key={color}
                type="button"
-               className={`${styles.colors} ${styles[color]} ${
+               className={`${styles.colors} ${coloring[color]} ${
                  color === state.selectedSportStyle ? styles.selectedSport : ""
                }`}
                onClick={() => colorLabelHandler(color)}

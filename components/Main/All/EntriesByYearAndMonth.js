@@ -16,7 +16,6 @@ import 'intl/locale-data/jsonp/de'; // für Deutsch
 
 const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
   const calendar = useSelector((state) => state.calendar)
-  const allSportsFromSupabase = useSelector((state) => state.sport.allSupabaseSports)
   const [openMonths, setOpenMonths] = useState({});
   const [openYear, setOpenYear] = useState(calendar.year)
   const years = [2024, 2025];
@@ -104,9 +103,7 @@ const EntriesByYearAndMonth = ({  entriesByYearAndMonth, currentSport }) =>{
                             0
                         );
 
-                        //console.log(monthName)
-                        //console.log(monthEntry)
-
+                        
                         return (
                             <div key={monthName} >
 
