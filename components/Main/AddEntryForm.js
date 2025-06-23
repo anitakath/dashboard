@@ -58,7 +58,7 @@ const AddEntryForm = ({chosenSport}) => {
       setInputs({ ...inputs, img: "" });
     }
   };
-  
+
 
   /* ------------ ADD A SPORT HANDLER --------------- */
   const {
@@ -124,6 +124,7 @@ const AddEntryForm = ({chosenSport}) => {
 const onSubmit = async (e) => {
   try {
     await submitHandler(e); 
+    //awai submitImageHandler!
     await fetchPlannedSports(userId, currentYear, dispatch);
   } catch (error) {
     console.error("error while submitting", error);
@@ -142,7 +143,7 @@ const onSubmit = async (e) => {
        )}
       {!submitting && formIsOpen && (
         <form
-          className="my-2  p-2   flex flex-col items-center w-full"
+          className="my-2 p-2 flex flex-col items-center w-full"
           onSubmit={onSubmit}
         >
           <label className={styles.labels}> Title </label>
@@ -208,7 +209,7 @@ const onSubmit = async (e) => {
           <h2 className=" mb-4 text-center">
             enter the date and duration of your sports sessions
           </h2>
-          <div className="flex pb-2 lg:p-0  border-b-2 w-full flex-col md:flex-row justify-evenly items-center ">
+          <div className="flex pb-2 lg:p-0 w-full flex-col md:flex-row justify-evenly items-center ">
             <div className={styles.date_div}>
               <input
                 type="datetime-local"
@@ -235,7 +236,7 @@ const onSubmit = async (e) => {
             ></input>
           </div>
 
-          <div className="h-12  ">
+          <div className="  ">
             {isTouched.duration && !isValidDuration(inputs.duration) && (
               <p className={styles.errorText}>
                 The duration must be a positive number.
@@ -248,8 +249,8 @@ const onSubmit = async (e) => {
           </div>
 
           <div className="mt-2 mb-6  w-full flex items-center justify-center">
-            <div className=" flex-col p-2">
-              <h2 className=" mx-2 my-4 "> add an image</h2>
+            
+              <h2 className=" w-6/12 text-center  mx-2 my-4 relative bottom-0.5 "> add an image</h2>
 
               <input
                 type="file"
@@ -259,8 +260,6 @@ const onSubmit = async (e) => {
                           file:rounded-full file:border-0  
                           file:bg-red-50 cursor-pointer file:text-red-800 hover:file:bg-violet-100"
               />
-
-            </div>
 
 
 
