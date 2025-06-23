@@ -68,7 +68,7 @@ const Board = () => {
         <Navigation />
       </div>
 
-      <div className="flex justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
+      <div className="flex  justify-center lg:flex-row flex-col w-full lg:max-h-screen  ">
         <div className={styles.entryField}>
           {selectedSport != "start" && (
             <h2 className={`flex mt-4 items-center text-center ${styles.title}`}>
