@@ -1,7 +1,6 @@
 import { useState } from "react";
 //COMPONENTS
 import BoardHeader from "../Main/BoardHeader/BoardHeader";
-import StatisticNavigation from "./StatisticNavigation";
 import Annual from "./Annual";
 import Login from "../Login/Login";
 import { useSelector } from "react-redux";
@@ -10,9 +9,9 @@ import styles from "../../pages/statistics/Statistics.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownLeftAndUpRightToCenter , faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 import SportsOverView from "./SportsOverview";
+import useStatistics from "@/custom-hooks/useStatistics";
 
 const Statistic = () =>{
-  const currentSport = useSelector((state) => state.sport.currentSport);
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const currentYear = new Date().getFullYear();
   const [date, setDate] = useState({ year: currentYear, month: "All" });
@@ -32,6 +31,20 @@ const Statistic = () =>{
     }
   };
 
+  console.log(allSupabaseSports)
+  console.log(currentYear)
+  const { totalDuration, totalEntries, averageDuration,  activeDays, averageDurationPerDay} = useStatistics(allSupabaseSports, 2025);
+
+
+  console.log(totalDuration)
+  console.log(totalEntries)
+  console.log(averageDuration)
+  console.log(activeDays)
+  console.log(averageDurationPerDay)
+
+
+
+
 
 
 
@@ -44,8 +57,38 @@ const Statistic = () =>{
 
             <h1 className={styles.title}> Statistics </h1>
 
-            <StatisticNavigation currentSport={currentSport} sport={sport} setSport={setSport}/>
-            
+           {/* <StatisticNavigation currentSport={currentSport} sport={sport} setSport={setSport}/>*/}
+
+           <div className="flex flex-col justify-center items-center"> 
+
+              <div className="flex flex-col items-center w-11/12 my-3 p-4 shadow-sm bg-red-50">
+                <h1 className="text-lg text-gray-700">Total hours of all sports in {currentYear}:</h1>
+                <p className="font-semibold text-red-700">{totalDuration}</p>
+              </div>
+
+              <div className="flex flex-col items-center w-11/12 my-3 p-4 shadow-sm bg-red-50">
+                <h1 className="text-lg text-gray-700">Total number of sports units in {currentYear}</h1>
+                <p className="font-semibold text-red-700">{totalEntries}</p>
+              </div>
+
+              <div className="flex flex-col items-center w-11/12 my-3 p-4  shadow-sm bg-red-50">
+                <h1 className="text-lg text-gray-700">Average number of hours of sport per day in {currentYear}</h1>
+                <p className="font-semibold text-red-700">{averageDurationPerDay}</p>
+              </div>
+
+              <div className="flex flex-col items-center w-11/12 my-3 p-4 shadow-sm bg-red-50">
+                <h1 className="text-lg text-gray-700">Active days in {currentYear}</h1>
+                <p className="font-semibold text-red-700">...</p>
+              </div>
+
+              <div className="flex flex-col items-center w-11/12 my-3 p-4  shadow-sm bg-red-50">
+                <h1 className="text-lg text-gray-700">Longest series of days with sport (streak) in {currentYear}</h1>
+                <p className="font-semibold text-red-700">...</p>
+              </div>
+
+            </div>
+
+                        
 
             <div className="flex my-2 items-center">
               <h1 className={styles.title}>

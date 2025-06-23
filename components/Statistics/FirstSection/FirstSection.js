@@ -12,7 +12,6 @@ import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
 const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart, topSportsByDuration, showBarChartHandler, setDate, resultArray}) =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
     
-  console.log(allSupabaseSports)
     return(
         <div className={styles.container}>
       
