@@ -12,7 +12,6 @@
 
 .listItem{
     height: 100px;
-    background: var(--purpleDarkHoverOpacity);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

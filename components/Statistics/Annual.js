@@ -66,18 +66,7 @@ const Annual = ({ date, setDate}) => {
 
 return (
     <div className={styles.staticsticsBodyContainer}>
-      <video 
-        ref={videoRef} 
-        width="600" 
-        controls 
-        autoPlay 
-        loop 
-        muted 
-        className={styles.backgroundVideo}   
-        >
-          <source src="/yoga.mp4" type="video/mp4" />
-          Dein Browser unterstützt das Video-Tag nicht.
-      </video>
+     
    
 
       {/* -------------------------------- 1. TOP 3 SPORTS (HOURS + FREQUENCY) --------------------------------*/}
@@ -98,11 +87,7 @@ return (
 
       {/* -------------------------------- 2. TOTAL HOURS OF  EACH SPORT  + BarChart! -------------------------------- */}
       {/* -------------------------------- 2. TOTAL HOURS OF  EACH SPORT  + BarChart! -------------------------------- */}
-     
-      <SecondSection 
-        date={date} 
-        resultArray={resultArray}
-      />
+    
 
 
       {/* -------------------------------- 3. REST DAYS !!! -------------------------------- */}

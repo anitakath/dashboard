@@ -17,12 +17,12 @@ const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart,
       
        
         <div className={styles.subContainer}>
-          <div className='w-full'>
+          <div className='w-full '>
             <h1 className={styles.title}>
               your favourite sports in {date.year} ...
             </h1> 
 
-            <div className="w-full">
+            <div className="w-full pr-2">
               <div className='flex'>
                 <h1 className='mx-4'> ...referred to number of units.</h1>
 
@@ -76,7 +76,7 @@ const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart,
               )}
             </div>
 
-            <div className="w-full">
+            <div className="w-full pr-2">
 
               
               <div className='flex border-transparent'>

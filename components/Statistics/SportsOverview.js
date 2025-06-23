@@ -8,13 +8,7 @@ const SportsOverView = ({sport}) =>{
 
       <div className={`m-0 flex  p-2 ${styles.container}`}>
 
-        {sport === null && (
-          <video className={styles.video} autoPlay loop muted>
-            <source src="/videos/a-pexel.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        )}
-        
+      
         {sport != null && (
 
           <div className={styles.sportsDetailsContainer}>

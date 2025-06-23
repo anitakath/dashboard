@@ -11,55 +11,55 @@
 
 /* Unterschiedliche Hintergrundfarben für die einzelnen divs */
 .item:nth-child(1) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 2; 
     grid-row: span 2; 
 }
 
 .item:nth-child(2) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 1; 
     grid-row: span 2;
 }
 
 .item:nth-child(3) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 1; 
     grid-row: span 1; 
 }
 
 .item:nth-child(4) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 1; 
     grid-row: span 1; 
 }
 
 .item:nth-child(5) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 1;
     grid-row: span 1; 
 }
 
 .item:nth-child(6) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 1; 
     grid-row: span 1;
 }
 
 .item:nth-child(7) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 2; 
     grid-row: span 1; 
 }
 
 .item:nth-child(8) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 2; 
     grid-row: span 1; 
 }
 
 .item:nth-child(9) {
-    background-color: rgba(0,0, 0, 0.2);
+    background-color: var(--spaceCadet_superopaque);
     grid-column: span 2; 
 }
 

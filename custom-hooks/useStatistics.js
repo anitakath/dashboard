@@ -42,8 +42,6 @@ const useStatistics = (allSupabaseSports, currentDate) => {
     const minutes = Math.round(((totalDuration / daysSinceStart) - hours) * 60);
     const averageDurationPerDay = `${hours}h ${minutes}min`;
     
-    
-
 
     const averageDuration =
       totalEntries > 0 ? totalDurationMinutes / totalEntries : 0;
@@ -56,12 +54,52 @@ const useStatistics = (allSupabaseSports, currentDate) => {
     );
     const activeDays = uniqueDays.size;
 
+    // 5. Inaktive Tage = Tage ohne Sport
+    const inactiveDays = daysSinceStart - activeDays;
+
+
+    // 6. den längsten Streak filtern
+
+    let longestStreakLength = 0;
+    let currentStreak = 0;
+    let streakStart = null;
+    let longestStreakStart = null;
+    let longestStreakEnd = null;
+    
+    // Iteriere über alle Tage vom 1. Januar bis heute
+    for (let d = new Date(startOfYear); d <= endDate; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split("T")[0];
+    
+      if (uniqueDays.has(dateStr)) {
+        if (currentStreak === 0) {
+          streakStart = new Date(d);
+        }
+        currentStreak++;
+        if (currentStreak > longestStreakLength) {
+          longestStreakLength = currentStreak;
+          longestStreakStart = new Date(streakStart);
+          longestStreakEnd = new Date(d);
+        }
+      } else {
+        currentStreak = 0;
+        streakStart = null;
+      }
+    }
+    
+    const longestStreak = {
+      length: longestStreakLength,
+      from: longestStreakStart ? longestStreakStart.toISOString().split("T")[0] : null,
+      to: longestStreakEnd ? longestStreakEnd.toISOString().split("T")[0] : null,
+    };
+
+
     return {
       totalDuration,     // in Stunden
       totalEntries,
       averageDurationPerDay,
-      averageDuration,   // in Minuten
       activeDays,
+      inactiveDays,
+      longestStreak 
     };
   }, [allSupabaseSports, currentDate]);
 

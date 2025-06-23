@@ -30,7 +30,7 @@ const RestDaysCalendar = ({ allSupabaseSports, date }) => {
               key={month} // Hier wird der key prop hinzugefügt
               className={`${styles.listItem} ${
                 month === currentMonth ? styles.active : ""
-              }`}
+              } bg-red-50`}
             >
               <p className="mt-2">{month}</p>
               <span className="mb-7 text-xl">{adjustedRestDays[month]}</span>

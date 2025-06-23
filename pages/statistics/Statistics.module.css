@@ -8,13 +8,15 @@
 }
 
 .title{
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     width: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
     margin: 10px;
     margin-left: 10px;
+    display: flex;
+    justify-content: center;
     padding: 10px 5px;
 }
 

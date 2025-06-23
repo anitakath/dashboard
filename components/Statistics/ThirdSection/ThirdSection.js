@@ -9,7 +9,7 @@ const ThirdSection = ({date}) =>{
 
     return(
         <div className={styles.container}>
-            <h1 className="text-xl w-full flex mx-4 my-4 items-center ">
+            <h1 className="text-xl w-full flex mx-4 my-4 justify-center items-center ">
                 rest days in {date.year} ...
             </h1>
             <RestDaysCalendar allSupabaseSports={allSupabaseSports} date={date} />

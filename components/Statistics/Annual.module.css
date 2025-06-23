@@ -28,7 +28,7 @@
     position: relative;
     overflow: scroll;
     margin: 20px 20px 5px 20px; 
-    background-color: rgba(255,255,255, 0.8);
+    background-color: rgba(255,255,255, 0.5);
 }
 
 .title{
