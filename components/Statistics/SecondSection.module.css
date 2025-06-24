@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+.staticsticsBodyContainer{
+    padding-top: 10px;
+    position: relative;
+    top: -30px;
+}
+
+.backgroundVideo{
+    position: absolute;
+    top: 20px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+
+
+.container{
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: scroll;
+    position: relative;
+    overflow: scroll;
+    margin: 20px 20px 5px 20px; 
+    background-color: rgba(255,255,255, 0.5);
+}
+
+.title{
+    font-size: 1.3rem;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 5px;
+    margin-left: 10px;
+    padding: 10px 5px;
+}
+
+
+
+.subContainer{
+    display: flex;
+    
+}
+
+.showBarChartButton{
+    width: 20px;
+    height: 20px;
+    transition: 0.2s ease-in-out;
+   
+}
+
+.showBarChartButton:hover{
+    color: var(--purpleDark);
+}
+
+.container h1{
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  /*font-weight: <weight>;
+  font-style: normal;*/
+}
+
+.container p{
+    font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  /*font-weight: <weight>;
+  font-style: normal;*/
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
+.fav_sports_div{
+    /*height: 60px;*/
+    margin: 10px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    
+
+}
+
+.spaceDiv{
+    height: 31px;
+    border: 2px solid transparent;
+}
+
+/*--------------------------------------Total number of sports lessons in the year / last 5 years*-------------------------------------- */
+
+
+
+.totalHours_sports_div{
+    background: linear-gradient(to left, var(--purpleDarkHoverOpacity), rgba(255,255,255, 0.5));
+    margin: 4px 0px;
+}
+
+
+.images_div{
+    padding: 1px;
+    width: 100%;
+}
+
+.centered_span {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 1rem;
+  margin: 0px 4px;
+  min-width: 160px;
+  height: 100%;
+  margin-right: 10px;
+
+}
+
+.error_p{
+    color: var(--purpleDark);
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+   background-color: #fefefe; 
+    margin: 15% auto;
+    border: 1px solid #888;
+    width: 80%; 
+    overflow: scroll;
+    height: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+    top: 10px;
+    right: 24px;
+    height: 30px;
+    transition: 0.2s ease-in-out;
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--purpleDark);
+}
+
+
+
+
+
+.history_div{
+    padding: 3px;
+    width: 100%;
+}
+
+
+@media screen and (max-width: 1000px){
+    .subContainer{
+        margin: 0;
+        padding: 0;
+        flex-direction: column;
+    }
+}
+
+
+@media screen and (max-width: 600px){
+
+    .container{
+        margin: 0;
+        background-color: rgba(255,255,255, 0.3);
+    }
+
+    .modalContent{
+        width: 98%;
+    }
+
+
+}
+
+
+/*-------------------------------------- REST DAYS -------------------------------------- */
+
+
+
+
+.fandango{
+    background: var(--fandango_opaque);
+}
+
+.celeste{
+    background: var(--celeste_opaque);
+}
+
+.springGreen{
+    background: var(--springGreen_opaque);
+}
+
+.sinopia{
+    background: var(--sinopia_opaque);
+}
+
+.lightOrange{
+    background: var(--lightOrange_opaque);
+}
+
+.wenge{
+    background: var(--wenge_opaque);
+}
+.spaceCadet{
+    background: var(--spaceCadet_opaque);
+}
+
+.mauve{
+    background: var(--mauve_opaque);
+}
+
+.aquamarine{
+    background: var(--aquamarine_opaque);
+  
+}
+
+.mandarine{
+    background: var(--mandarine_opaque)
+}
+
+.brown{
+    background: var(--brown_opaque)
+}
+
+.mustard{
+    background: var(--mustard_opaque);
+}
+
+.jasmine{
+    background: var(--jasmine_opaque)
+}
+
+.frenchGrey{
+    background:var(--frenchGrey_opaque);
+}
+
+.eggplant{
+    background: var(--eggplant_opaque);
+}
+
+.mossGreen{
+    background: var(--mossGreen_opaque);
+}

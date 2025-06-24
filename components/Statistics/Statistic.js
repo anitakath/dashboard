@@ -1,17 +1,21 @@
 import { useState } from "react";
 //COMPONENTS
 import BoardHeader from "../Main/BoardHeader/BoardHeader";
-import Annual from "./Annual";
 import Login from "../Login/Login";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateDate } from "@/store/CalendarReducer";
 //STYLING 
 import styles from "../../pages/statistics/Statistics.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownLeftAndUpRightToCenter , faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 import SportsOverView from "./SportsOverview";
-import useStatistics from "@/custom-hooks/useStatistics";
 
-
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
+import { setAllSportsFromSupabase } from "@/store/sportReducer";
+import FirstSection from "./FirstSection";
+import SecondSection from "./SecondSection";
+import RestDaysCalendar from "./RestDaysCalendar";
+import HeatMap from "./HeatMap";
 
 const Statistic = () =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
@@ -20,7 +24,11 @@ const Statistic = () =>{
   const [sport, setSport] = useState(null)
   const [isAnnualOpen, setIsAnnualOpen] = useState(true);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [currentSport, setCurrentSport] = useState(null)
+  const year = useSelector((state) => state.calendar.year)
+  const dispatch= useDispatch()
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const { fetchSportsData} = useFetchEntries()
+  const userId = useSelector((state) => state.auth.userId)
 
   let annualBtn = isAnnualOpen ? faDownLeftAndUpRightToCenter :  faUpRightAndDownLeftFromCenter;
 
@@ -33,11 +41,6 @@ const Statistic = () =>{
       }
     }
   };
-
-  console.log(allSupabaseSports)
-  console.log(currentYear)
-  const { totalDuration, totalEntries, averageDuration,  activeDays, inactiveDays, averageDurationPerDay, longestStreak } = useStatistics(allSupabaseSports, 2025);
-
 
 
 
@@ -53,59 +56,59 @@ const Statistic = () =>{
   
 
 
+  const handleYearChange = async (e) => {
+    const year = parseInt(e.target.value);
+    dispatch(updateDate({ month: selectedMonth, year }));
+
+    //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
+    //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
+    //* REPLACE FETCHSPORTSDATABYSELECTEDYEAR WITH FETCHSPORTSDATA!!! */
+    const currentDate = {
+      year: year,
+      month: null, // oder ggf. aktueller Monat?
+      restDaysPerMonth: null,
+    };
+
+    // Fetch sports data for the selected year
+
+
+    const entries = await fetchSportsData(userId, null, currentDate);
+    await dispatch(setAllSportsFromSupabase(entries));
+  };
 
   return (
-    <div className="w-full  h-screen m-0 md:p-14">
+    <div className="w-full h-screen m-0 md:p-14">
       <div className="flex flex-col w-full border-2 h-full overflow-scroll m-0 p-0 relative z-20" >
         {isLoggedIn && (
-          <div>
+          <div className="border-2 relative">
             <BoardHeader allSupabaseSports={allSupabaseSports} />
 
             <h1 className={styles.title}> Statistics </h1>
 
+          {/*}
+            <div className="absolute left-16 top-24">
+              change year
+              <select
+                name="year"
+                id="year"
+                className={styles.year_input}
+                value={year}
+                onChange={handleYearChange}
+              >
+                {[2023, 2024, 2025, 2026, 2027, 2028].map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+            
+              </select>
+          </div> */}
 
 
-           <div className="flex flex-col justify-center items-center"> 
-            <h1 className="text-xl">   in {currentYear} you have completed: </h1>
-
-              <div className="flex flex-col items-center w-11/12 my-3 p-4 shadow-sm bg-red-50">
-        
-                <p className="font-semibold text-red-700 text-xl my-2">{totalDuration}</p>
-                <h1 className="text-lg text-gray-700"> hours of sport </h1>
-              </div>
-
-              <div className="flex flex-col items-center w-11/12 my-3 p-4 shadow-sm bg-red-50">
-                <p className="font-semibold text-red-700 text-xl my-2">{totalEntries}</p>
-                <h1 className="text-lg text-gray-700"> sports units </h1>
-              </div>
-
-              <div className="flex flex-col items-center w-11/12 my-3 p-4  shadow-sm bg-red-50">
-
-                <p className="font-semibold text-red-700 text-xl my-2">{averageDurationPerDay}</p>
-                <h1 className="text-lg text-gray-700"> average hours of sport per day </h1>
-              </div>
-
-              <div className="flex justify-center items-center w-11/12 my-3 p-4 shadow-sm bg-red-50">
-                <div className="mx-6 flex flex-col items-center justify-center">
-                  <p className="font-semibold text-red-700 text-xl my-2"> {activeDays} </p>
-                  <h1 className="text-lg text-gray-700"> active sports days</h1>
-                </div>
-                <div className="mx-6 flex flex-col justify-center items-center">
-                  
-                  <p className="font-semibold text-red-700 text-xl my-2"> {inactiveDays} </p>
-                  <h1 className="text-lg text-gray-700"> rest days</h1>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-center w-11/12 my-3 p-4  shadow-sm bg-red-50">
-
-                <p className="font-semibold text-red-700 text-xl my-2"> {longestStreak.length} </p>
-                <h1 className="text-lg text-gray-700"> days of sport in a row </h1>
-              
-                <p className="text-xs my-2"> there was no day of rest between {formatDate(longestStreak.from)} and {formatDate(longestStreak.to)} </p>
-              </div>
-
-            </div>
+          <FirstSection 
+          currentYear={currentYear}
+          formatDate={formatDate}
+          />
 
                         
 
@@ -125,15 +128,24 @@ const Statistic = () =>{
               </h1>
             </div>
 
-
             {isAnnualOpen && (
-              <Annual
+              <SecondSection
                 allSupabaseSports={allSupabaseSports}
                 date={date}
                 setDate={setDate}
               />
             )}
 
+
+            <h1 className="text-xl w-full flex mx-4 my-4 justify-center items-center ">
+                rest days in {date.year} ...
+            </h1>
+
+
+            <RestDaysCalendar 
+            allSupabaseSports={allSupabaseSports}
+            date={date} 
+            />
 
             {sport != null && (
                <div className="flex relative border-8 justify-between" id="sportsOverview" >
@@ -156,7 +168,17 @@ const Statistic = () =>{
 
            
 
-            <SportsOverView sport={sport}/>
+   
+
+
+            <h1 className="text-xl w-full flex mx-4 my-4 justify-center items-center ">
+                A Github inspired Heatmap
+            </h1>
+
+            <HeatMap
+            allSupabaseSports={allSupabaseSports}
+            date={date} 
+            />
 
             
           </div>

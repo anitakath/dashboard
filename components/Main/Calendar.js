@@ -21,7 +21,7 @@ const Calendar = ({ filteredByDate }) => {
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
   const {monthAbbreviations, currentMonth} = useCalendar()
   const userId = useSelector((state) => state.auth.userId)
-  const {fetchSportsDataBySelectedYear, fetchSportsData} = useFetchEntries()
+  const { fetchSportsData} = useFetchEntries()
   const year = useSelector((state) => state.calendar.year)
   //const currentDate = useSelector((state) => state.calendar)
 

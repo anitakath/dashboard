@@ -1,18 +1,36 @@
 import { useState } from 'react';
-import styles from '../Annual.module.css'
+import styles from './SecondSection.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-import { convertMinutesToHours } from '@/utils/helpers';
-//COMPONENTS
-import BarChart from './BarChart';
 
+//COMPONENTS
+import BarChart from './BarCharts/BarChart';
 import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
 
-const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart, topSportsByDuration, showBarChartHandler, setDate, resultArray}) =>{
+
+//CUSTOM HOOKS
+import useStatistics from '@/custom-hooks/Statistics/useStatistics';
+import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
+
+
+const FirstSection = ({date, setDate}) =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports)
-    
-    return(
+  const [showBarChart, setShowBarChart] = useState();
+
+  const { sortedSportsByCount, resultArray } = useStatistics(
+    allSupabaseSports,
+    date
+  );
+
+  const topSportsByDuration = useTopSportsByDuration(allSupabaseSports, date);
+
+  const showBarChartHandler = (item) =>{
+    setShowBarChart(item)
+  }
+
+
+    return( 
         <div className={styles.container}>
       
        
@@ -37,7 +55,7 @@ const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart,
 
               </div>
         
-            {sortedSportsByCount.length > 0 ? (
+            {sortedSportsByCount && sortedSportsByCount.length > 0 ? (
               sortedSportsByCount.map(([name, { count, label }], index) => (
                 <div
                   key={name}
@@ -94,7 +112,7 @@ const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart,
               </div>
 
               <div>
-                {topSportsByDuration.map(({ name, totalDurationFormatted, label }, index) => {
+                {topSportsByDuration && topSportsByDuration.map(({ name, totalDurationFormatted, label }, index) => {
                   // Konvertiere totalDurationFormatted (z.B. 5.75) in Minuten
                   const totalDurationInMinutes = Math.round(totalDurationFormatted * 60); // 5.75 Stunden * 60 Minuten
                   const {convertMinutesToHours} = useConvertTimes()
@@ -119,7 +137,7 @@ const FirstSection = ({date, sortedSportsByCount, showBarChart, setShowBarChart,
               any sport in {date.year} ...
             </h1> 
               <h1 className='mx-2'> ...sorted by total hours </h1>
-              {resultArray.length > 0 ? (
+              {resultArray && resultArray.length > 0 ? (
                 resultArray
                   .sort((a, b) => b.totalDuration - a.totalDuration)
                   .map(({ name, label, totalDurationFormatted }, index) => {

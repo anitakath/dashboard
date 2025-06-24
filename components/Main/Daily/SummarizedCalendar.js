@@ -83,7 +83,7 @@ const SummarizedCalendar = (props) => {
                                               })}
 
 
-                                                {allPlannedSports.filter(sport => {
+                                                {allPlannedSports && allPlannedSports.filter(sport => {
                                                         const sportDate = new Date(sport.created_at).toISOString().split("T")[0];
                                                         return sportDate === dateString && sportDate >= new Date().toISOString().split("T")[0]; // Nur zukünftige Sporteinheiten für den aktuellen Tag
                                                     }).map((plannedSport) => {

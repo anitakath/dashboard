@@ -21,7 +21,6 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
   const [isLoading, setIsLoading] = useState(false)
   const currentDate = useSelector((state) => state.calendar)
 
-  console.log(currentDate)
   const {fetchSportsDataBySelectedYear} = useFetchEntries();
   const years = Array.from(
     { length: 10 },
@@ -49,7 +48,7 @@ const SelectTimePeriod = ({date, setDate, showBarChart}) =>{
 
 
   return (
-      <div className="flex-col  lg:flex-row md:h-auto justify-center items-center relative w-full ">
+      <div className="flex-col border-8 lg:flex-row md:h-auto justify-center items-center relative w-full ">
         {!isYearModalOpen && !isMonthModalOpen && (
           <button
           className="secondary_button"

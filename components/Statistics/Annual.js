@@ -5,14 +5,14 @@ import styles from './Annual.module.css'
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
 //COMPONENTS
-import FirstSection from './FirstSection/FirstSection';
-import SecondSection from './SecondSection/SecondSection';
+import FirstSection from './FirstSection/BarCharts';
+import SecondSection from './ColumnCharts/ColumCharts';
 import ThirdSection from './ThirdSection/ThirdSection';
 import RandomSportImagesGrid from './FourthSection.js/RandomSportImagesGrid';
 import useFetchEntries from '@/custom-hooks/entries/useFetchEntries';
 import { setFilteredEntriesByCurrentSportAndDate } from "@/store/sportReducer";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
-
+import HeatMap from './FourthSection.js/Heatmap';
 
 const Annual = ({ date, setDate}) => {
   const [showBarChart, setShowBarChart] = useState(null)
@@ -95,6 +95,10 @@ return (
 
       <ThirdSection date={date}/>
 
+      {/* -------------------------------- 4. HEATMAP -------------------------------- */}
+      {/* -------------------------------- 4. HEATMAP -------------------------------- */}
+
+      <HeatMap/>
 
 
       {/* -------------------------------- 4. IMAGE GRID -------------------------------- */}

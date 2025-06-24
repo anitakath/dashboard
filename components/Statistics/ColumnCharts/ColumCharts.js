@@ -1,13 +1,13 @@
-import styles from '../Annual.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { convertMinutesToHours } from '@/utils/helpers';
+import styles from '../SecondSection.module.css'
+
 import { useState } from 'react';
 //COMPONENTS
 import ColumnChart from './ColumnChart';
-
-
+import useStatistics from '@/custom-hooks/Statistics/useStatistics';
+import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
 
 const SecondSection = ({date,  resultArray, }) =>{
+
 
 
   const [showFiveYearHistory, setShowFiveYearHistory] = useState({
@@ -24,7 +24,7 @@ const SecondSection = ({date,  resultArray, }) =>{
 
     
 
-      <div className="flex p-0 m-0 flex-col lg:flex-row mt-2">
+      <div className="flex border-8 p-0 m-0 flex-col lg:flex-row mt-2">
         {showFiveYearHistory.totalHours && (
           <div className={styles.history_div}>
             <h2> history div </h2> 
