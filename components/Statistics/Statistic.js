@@ -8,7 +8,6 @@ import { updateDate } from "@/store/CalendarReducer";
 import styles from "../../pages/statistics/Statistics.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownLeftAndUpRightToCenter , faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
-import SportsOverView from "./SportsOverview";
 
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
@@ -16,6 +15,7 @@ import FirstSection from "./FirstSection";
 import SecondSection from "./SecondSection";
 import RestDaysCalendar from "./RestDaysCalendar";
 import HeatMap from "./HeatMap";
+import Goals from "./Goals";
 
 const Statistic = () =>{
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
@@ -24,7 +24,6 @@ const Statistic = () =>{
   const [sport, setSport] = useState(null)
   const [isAnnualOpen, setIsAnnualOpen] = useState(true);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const year = useSelector((state) => state.calendar.year)
   const dispatch= useDispatch()
   const [selectedMonth, setSelectedMonth] = useState("");
   const { fetchSportsData} = useFetchEntries()
@@ -137,7 +136,7 @@ const Statistic = () =>{
             )}
 
 
-            <h1 className="text-xl w-full flex mx-4 my-4 justify-center items-center ">
+            <h1 className="text-xl w-full flex mx-4 my-4 mt-10 justify-center items-center ">
                 rest days in {date.year} ...
             </h1>
 
@@ -171,7 +170,7 @@ const Statistic = () =>{
    
 
 
-            <h1 className="text-xl w-full flex mx-4 my-4 justify-center items-center ">
+            <h1 className="text-xl w-full flex mx-4 my-4 mt-10 justify-center items-center ">
                 A Github inspired Heatmap
             </h1>
 
@@ -179,6 +178,12 @@ const Statistic = () =>{
             allSupabaseSports={allSupabaseSports}
             date={date} 
             />
+
+
+            <h1 className="text-xl w-full flex mx-4 my-4 mt-10 justify-center items-center ">
+            soon available: set and track your goals!
+            </h1>
+            <Goals />
 
             
           </div>

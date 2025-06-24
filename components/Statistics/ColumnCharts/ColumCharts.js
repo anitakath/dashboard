@@ -3,8 +3,6 @@ import styles from '../SecondSection.module.css'
 import { useState } from 'react';
 //COMPONENTS
 import ColumnChart from './ColumnChart';
-import useStatistics from '@/custom-hooks/Statistics/useStatistics';
-import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
 
 const SecondSection = ({date,  resultArray, }) =>{
 

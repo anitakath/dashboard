@@ -17,7 +17,7 @@ const useStatistics = (allSupabaseSports, currentDate) => {
       (sum, entry) => sum + (entry.duration || 0),
       0
     );
-    const totalDuration = totalDurationMinutes / 60;
+    const totalDuration = Math.round(totalDurationMinutes / 60);
 
     // 2. Anzahl Sporteinheiten insgesamt
     const totalEntries = allSupabaseSports.length;
