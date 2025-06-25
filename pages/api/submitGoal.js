@@ -1,25 +1,53 @@
-// pages/api/submitGoal.js
-import { supabase } from "../../utils/supabaseClient";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, 
+);
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Only POST requests allowed" });
   }
 
-  const { id, title, description, target_date, created_at } = req.body;
+  const {
+    goal_id,
+    title,
+    isCompleted,
+    target_date,
+    image_path,
+    description,
+    user_id,
+  } = req.body;
 
-  if (!id || !title || !target_date || !created_at) {
+  // Input-Validierung (optional, aber empfohlen)
+  if (!goal_id || !title || !target_date || !user_id) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
-  const { error } = await supabase.from("sports_goals").insert([
-    { id, title, description, target_date, created_at },
-  ]);
+  try {
+    const { data, error } = await supabase
+      .from("sports_goals")
+      .insert([
+        {
+          goal_id,
+          title,
+          isCompleted: isCompleted,
+          target_date,
+          image_path: image_path || null,
+          description,
+          user_id: user_id,
+        },
+      ]);
 
-  if (error) {
-    console.error("Insert error:", error.message);
-    return res.status(500).json({ error: "Database insert failed" });
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Fehler beim Speichern in Supabase" });
+    }
+
+    return res.status(200).json({ message: "Ziel erfolgreich gespeichert", data });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Serverfehler" });
   }
-
-  return res.status(200).json({ message: "Goal successfully saved" });
 }

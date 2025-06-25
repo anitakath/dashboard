@@ -1,0 +1,54 @@
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* passt sich gut an */
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+.goalCard {
+    background-color: #fee2e2; /* red-50 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 160px;
+    padding: 1rem;
+    text-align: center;
+    margin-top:10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+  
+
+
+  
+.goalCard:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+  
+
+.delete_btn{
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    transition: transform 0.4s ease;
+    font-size: 0.8rem;
+}
+
+.delete_btn:hover{
+    color: darkred;
+}
+
+
+.check_btn{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 0.8rem;
+    transition: transform 0.4s ease;
+}
+
+.check_btn:hover{
+    color: darkgreen;
+}

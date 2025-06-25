@@ -1,19 +1,43 @@
 
 
-
-
-
-
-import { useState } from "react";
+import styles from './Goals.module.css'
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useSelector } from 'react-redux';
+
+
 
 const Goals = () => {
+
+  const [goals, setGoals] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [targetDate, setTargetDate] = useState("");
+  const [imagePath, setImagePath] = useState(null)
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
+  const userId = useSelector((state) => state.auth.userId)
+
+
+  useEffect(() => {
+    const fetchGoals = async () => {
+      try {
+        const res = await fetch("/api/getGoals");
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Fehler beim Laden der Ziele");
+
+        setGoals(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchGoals();
+  }, []);
+
 
   const allowedPattern = /^[a-zA-Z0-9\s\-?!\.]*$/;
 
@@ -53,12 +77,18 @@ const Goals = () => {
     setLoading(true);
 
     const newGoal = {
-      id: uuidv4(),
+      goal_id: uuidv4(),
       title,
-      description,
+      isCompleted: false,
       target_date: targetDate,
-      created_at: new Date().toISOString(),
+      image_path: null,
+      description,
+      user_id: userId,
     };
+
+
+
+    console.log(newGoal)
 
     try {
       const res = await fetch("/api/submitGoal", {
@@ -86,35 +116,72 @@ const Goals = () => {
     setLoading(false);
   };
 
-  return (
-    <div className="pt-10 relative">
 
-        <button className="absolute bg-red-50 hover:bg-red-200 transition-colors duration-300 top-2 left-2 py-2 mx-2 px-4">
+  const handleDelete = async (goal_id, title) => {
+
+    const confirm = window.confirm(`Are you sure you want to delete this goal? "${title}"`);
+    if (!confirm) return;
+  
+    try {
+      const res = await fetch("/api/deleteGoal", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ goal_id }),
+      });
+  
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Fehler beim Löschen des Ziels.");
+  
+      // Entferne das gelöschte Ziel aus dem lokalen State
+      setGoals(goals.filter(goal => goal.goal_id !== goal_id));
+    } catch (err) {
+      console.error(err);
+      alert("Ziel konnte nicht gelöscht werden.");
+    }
+  };
+
+  const scrollToFormHandler = () => {
+    const formElement = document.getElementById("form_container");
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  
+
+  return (
+    <div className="pt-10  relative">
+
+        <button 
+          className="absolute bg-red-50 hover:bg-red-200 transition-colors duration-300 top-2 left-2 py-2 mx-2 px-4"
+          onClick={scrollToFormHandler}>
             create a new goal
         </button>
 
-      <div className="h-screen md:h-80 p-2 flex flex-col sm:flex-row items-center justify-center w-full">
-        {/* Beispiel-Ziele */}
-        <div className="bg-red-50 h-full flex justify-center items-center md:h-5/6 w-full sm:w-1/4 m-2">
-          <h1 className="text-center">Master the Ayesha</h1>
+        <div className={styles.gridContainer}>
+          {goals.map((goal) => (
+            <div key={goal.goal_id} className={styles.goalCard}>
+            <div className="flex justify-between items-start">
+              <h1>{goal.title}</h1>
+              <button
+                className={styles.delete_btn}
+                onClick={() => handleDelete(goal.goal_id, goal.title)}
+              >
+                Delete
+              </button>
+              <button className={styles.check_btn}> Completed!  </button>
+            </div>
+          </div>
+          
+          ))}
         </div>
-        <div className="bg-red-50 h-full flex justify-center items-center md:h-5/6 w-full sm:w-1/4 m-2">
-          <h1 className="text-center">Master the Handspring</h1>
-        </div>
-        <div className="bg-red-50 h-full flex justify-center items-center md:h-5/6 w-full sm:w-1/4 m-2">
-          <h1 className="text-center">Take part in a figure skating competition</h1>
-        </div>
-        <div className="bg-red-50 h-full flex justify-center items-center md:h-5/6 w-full sm:w-1/4 m-2">
-          <h1 className="text-center">Jump the Axel</h1>
-        </div>
-
-      </div>
 
       
-      <div id="form_container" className="p-4 max-w-xl mx-auto">
+      <div id="form_container" className="p-4 bg-red-50  flex justify-center w-full px-4">
         <form
           onSubmit={submitHandler}
-          className="flex flex-col gap-4 bg-red-50 p-4 shadow-md"
+          className="flex w-6/12 flex-col gap-4  p-4 "
         >
           <input
             type="text"
@@ -122,7 +189,7 @@ const Goals = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-0"
+            className="p-2 border  rounded focus:outline-none focus:ring-0"
           />
           {errors.title && <p className="text-red-600 text-xs">{errors.title}</p>}
 
@@ -131,7 +198,7 @@ const Goals = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
-            className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-0"
+            className="p-2 border rounded focus:outline-none focus:ring-0"
           />
           {errors.description && <p className="text-red-600 text-xs">{errors.description}</p>}
 
@@ -144,7 +211,7 @@ const Goals = () => {
             value={targetDate}
             onChange={(e) => setTargetDate(e.target.value)}
             required
-            className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-0"
+            className="p-2 border rounded focus:outline-none focus:ring-0"
           />
           {errors.targetDate && <p className="text-red-600 text-xs">{errors.targetDate}</p>}
 

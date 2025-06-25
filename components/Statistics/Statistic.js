@@ -181,7 +181,7 @@ const Statistic = () =>{
 
 
             <h1 className="text-xl w-full flex mx-4 my-4 mt-10 justify-center items-center ">
-            soon available: set and track your goals!
+            Set and track your goals!
             </h1>
             <Goals />
 
