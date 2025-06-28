@@ -11,31 +11,31 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
 
   const allPlannedSports = useSelector((state) => state.sport.allPlannedSports)
 
-   // Funktion zum Abgleichen der Sportarten
-   const updateCurrentSports = (currentSports, allPlannedSports) => {
+  const updateCurrentSports = (currentSports, allPlannedSports) => {
     const existingSportNames = new Set(currentSports.map(sport => sport.name.trim().toLowerCase()));
-
+  
     allPlannedSports.forEach(plannedSport => {
-        const sportName = plannedSport.title.trim();
-        if (!existingSportNames.has(sportName.toLowerCase())) {
-            // Wenn der Sport nicht existiert, füge ihn hinzu
-            currentSports.push({
-                name: sportName,
-                color: plannedSport.color || 'defaultColor', // Fallback-Farbe
-                icon: plannedSport.icon || null // Fallback-Icon
-            });
-        }
+      const sportName = plannedSport.name?.trim(); // <- statt title
+      if (sportName && !existingSportNames.has(sportName.toLowerCase())) {
+        currentSports.push({
+          name: sportName,
+          color: plannedSport.label || 'defaultColor', // <- label statt color
+          icon: plannedSport.icon || null
+        });
+      }
     });
-
+  
     return currentSports;
-};
+  };
+  
+  // Jetzt ist die Funktion definiert und kann verwendet werden
+  const updatedCurrentSports = updateCurrentSports([...currentSports], allPlannedSports);
+  
 
-   // Aktualisiere currentSports mit den neuen Sportarten
-   const updatedCurrentSports = updateCurrentSports([...currentSports], allPlannedSports);
 
 
 
-
+   
 
   return (
     <div>
@@ -55,7 +55,7 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
                           colors[currSport.color]
                         } ${activeSport === currSport.name ? styles.active : ""}`}
                       >
-                        {currSport.name}  
+                        {currSport.name}
                       </button>
                     </div>
                   ))}

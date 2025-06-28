@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Tooltip from '../../UI/Tooltip'
 import styles from "./PlansEntryField.module.css";
 
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
-//REDUX
-import { useDispatch, useSelector } from "react-redux";
+
 
 const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -20,15 +19,9 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   };
   // Sortiere nach dem Erstellungsdatum aufsteigend (ältestes Datum zuerst)
   const sortedByDate = [...sortedSportsArray].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-  const dispatch = useDispatch();
   const [layoutMode, setLayoutMode] = useState("list");
   const {formatDate, formatTime} = useFormatDate()
   const [expandedGroupId, setExpandedGroupId] = useState(true);
-
-/*
-  useEffect(() => {
-    dispatch(setAllPlannedSports(sortedByDate));
-  }, [sortedByDate]);*/
 
   const toggleLayout = () => {
     setLayoutMode((prevMode) => (prevMode === "list" ? "grid" : "list"));

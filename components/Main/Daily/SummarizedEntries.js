@@ -135,7 +135,6 @@ const SummarizedEntries = () => {
     console.log(newYear); // Log the new year instead of the old one
 
     const entries = await fetchSportsDataBySelectedYear(userId, newYear);
-    console.log(entries);
 
     await dispatch(setAllSportsFromSupabase(entries));
 };

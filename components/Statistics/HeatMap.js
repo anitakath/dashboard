@@ -9,16 +9,16 @@ import {
   parseISO,
   differenceInCalendarWeeks,
 } from "date-fns";
+import useCalendar from "@/custom-hooks/times_and_dates/useCalendar";
 
 const weekdayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
 const HeatMap = ({ allSupabaseSports, date }) => {
   const year = date.year;
   const days = eachDayOfInterval({
     start: startOfYear(new Date(year, 0, 1)),
     end: endOfYear(new Date(year, 11, 31)),
   });
+  const {months} = useCalendar()
 
   const dayCounts = {};
   allSupabaseSports.forEach((entry) => {
@@ -53,7 +53,7 @@ const HeatMap = ({ allSupabaseSports, date }) => {
   return (
     <div className={styles.container}>
       <div className={styles.monthLabels}>
-        {monthLabels.map((month) => (
+        {months.map((month) => (
           <div
             key={month}
             className={styles.month}

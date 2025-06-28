@@ -59,7 +59,7 @@
   --brown: #A44200;
   --mustard: #FFC233;
   --lightOrange: #ff6f61;
-  --spaceCadet: #F8C0C8;
+  --spaceCadet: #ee7f90;
   --aquamarine: #B7FFD8;
   --frenchGrey: #BCBDC0;
   --eggplant: #734B5E;
@@ -96,7 +96,7 @@
     --brown_opaque: rgba(164, 66, 0, 0.7); /* #A44200 */
     --mustard_opaque: rgba(255, 194, 51, 0.7); /* #FFC233 */
     --lightOrange_opaque: rgba(255, 111, 97, 0.8); /* #FCDDBC */
-    --spaceCadet_opaque: rgba(248, 192, 200, 0.8); /* #F8C0C8 */
+    --spaceCadet_opaque: rgba(238, 127, 144, 0.8);
     --spaceCadet_superopaque: rgba(248, 192, 200, 0.2);
     --aquamarine_opaque: rgba(183, 255, 216, 0.8); /* #B7FFD8 */
     --frenchGrey_opaque: rgba(188,189,192, 0.8);/* #BCBDC0; */

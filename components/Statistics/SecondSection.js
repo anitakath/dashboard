@@ -3,12 +3,9 @@ import styles from './SecondSection.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-
 //COMPONENTS
 import BarChart from './BarCharts/BarChart';
 import useConvertTimes from '@/custom-hooks/times_and_dates/useConvertTimes';
-
-
 //CUSTOM HOOKS
 import useStatistics from '@/custom-hooks/Statistics/useStatistics';
 import { useTopSportsByDuration } from '@/custom-hooks/Statistics/useStatistics';
