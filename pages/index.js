@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -15,7 +14,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false; /* eslint-disable import/first */
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
-const inter = Inter({ subsets: ["latin"] });
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -103,7 +102,7 @@ export default function Home() {
 
 
   return (
-    <div className="w-screen h-screen border-8 m-0 md:p-10">
+    <div className="w-screen h-screen m-0 md:p-10">
      
       <Head>
         <title>Sports Diary</title>

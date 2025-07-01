@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 //STYLES
 import styles from './Board.module.css'
-
 //REDUX
 import { useSelector, useDispatch} from "react-redux";
 import {setSelectedSport } from "@/store/sportReducer";
 //COMPONENTS
 import BoardHeader from "./BoardHeader/BoardHeader";
 import BoarderSubHeader from "./BoardHeader/BoarderSubHeader";
-import HowToUseThisApp from "./HowToUseThisApp.js/HowToUseThisApp";
 import Calendar from "./Calendar";
 import Entry from "./Entry";
 import Navigation from "../Navigation/Navigation";
@@ -20,7 +18,8 @@ import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import UserImage from "../UI/UserImage";
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 
-const Board = () => {
+const Board = () => { 
+
   const filteredEntries = useSelector((state) => state.sport.filteredEntriesByCurrentSportAndDate);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const navigation = useSelector((state) => state.sport.navigation);
@@ -78,8 +77,6 @@ const Board = () => {
             </h2>
           )}
 
-          {selectedSport === "start" && <HowToUseThisApp />}
-
           {selectedSport === null && (
             <p className=" my-10 text-2xl text-center">
               select your sport from the navigation bar
@@ -120,7 +117,7 @@ const Board = () => {
 
         {selectedSport != "daily" && selectedSport != "start" && (
           <div className="w-full lg:w-6/12">
-            <Calendar  />
+            <Calendar />
           </div>
         )}
       </div>

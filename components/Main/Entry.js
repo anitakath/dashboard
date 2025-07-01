@@ -22,17 +22,15 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   const dispatch = useDispatch();
   const selectedSport = useSelector((state) => state.sport.selectedSport);
   const [sortedEntries, setSortedEntries] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState("")
   const year = useSelector((state) => state.calendar.year)
    const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   // SORTED OBJECTS AND ARRAYS FOR ENTRIESBYYEARANDMONTH; SELECTEDSPORT === "ALL"
   const { entriesByMonth, entriesByYearAndMonth } = useEntries(filteredByDate, allSupabaseSports);
-  useEffect(() => {
-    dispatch(setSortedEntriesByMonth(entriesByMonth));
-  }, [allSupabaseSports, filteredEntries]);
   const { formatDate } = useFormatDate();
   const {currentMonth} = useCalendar()
   const filteredEntriesByMonth = {};
+
+
 
   for (const month in entriesByMonth) {
     const uniqueDates = new Set();
@@ -49,14 +47,14 @@ const Entry = ({ filteredByDate, filteredEntries }) => {
   }
 
   useEffect(() => {
- 
-    setSelectedMonth(currentMonth);
 
     dispatch(updateDate({ month: currentMonth, year: year }));
   }, [dispatch, year]);
 
 
   useEffect(() => {
+    dispatch(setSortedEntriesByMonth(entriesByMonth));
+
     const newSortedEntries = Array.isArray(filteredEntries)
       ? [...filteredEntries]
       : [];

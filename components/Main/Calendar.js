@@ -12,20 +12,16 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
 import { setAllSportsFromSupabase } from "@/store/sportReducer";
 
-const Calendar = ({ filteredByDate }) => {
+const Calendar = () => {
   const dispatch = useDispatch();
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const selectedSport = useSelector((state) => state.sport.selectedSport);
-  const { getMonthStyle, months, useEntryCountForMonth } = useCalendar();
+  const { getMonthStyle, months, useEntryCountForMonth, monthAbbreviations, currentMonth } = useCalendar();
   const [selectedMonth, setSelectedMonth] = useState("");
   const getEntryCountForMonth = useEntryCountForMonth(allSupabaseSports);
-  const {monthAbbreviations, currentMonth} = useCalendar()
   const userId = useSelector((state) => state.auth.userId)
   const { fetchSportsData} = useFetchEntries()
   const year = useSelector((state) => state.calendar.year)
-  //const currentDate = useSelector((state) => state.calendar)
-
-  //console.log(currentDate)
 
   useEffect(() => {
  
