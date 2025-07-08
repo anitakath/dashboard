@@ -65,6 +65,199 @@
     background: var(--mossGreen);
 }
 
+.indigoDye {
+    background: var(--indigoDye);
+}
+
+.persianGreen {
+    background: var(--persianGreen);
+}
+
+.roseTaupe {
+    background: var(--roseTaupe);
+}
+
+.coralRed {
+    background: var(--coralRed);
+}
+
+.lapisBlue {
+    background: var(--lapisBlue);
+}
+
+.pistachio {
+    background: var(--pistachio);
+}
+
+.powderBlue {
+    background: var(--powderBlue);
+}
+
+.vermilion {
+    background: var(--vermilion);
+}
+
+.iceBlue {
+    background: var(--iceBlue);
+}
+
+.deepLilac {
+    background: var(--deepLilac);
+}
+
+.saffron {
+    background: var(--saffron);
+}
+
+.oliveGreen {
+    background: var(--oliveGreen);
+}
+
+.midnightPurple {
+    background: var(--midnightPurple);
+}
+
+.peach {
+    background: var(--peach);
+}
+
+.mint {
+    background: var(--mint);
+}
+
+.terracotta {
+    background: var(--terracotta);
+}
+
+/* Opaque Variants */
+.indigoDye_opaque {
+    background: var(--indigoDye_opaque);
+}
+
+.persianGreen_opaque {
+    background: var(--persianGreen_opaque);
+}
+
+.roseTaupe_opaque {
+    background: var(--roseTaupe_opaque);
+}
+
+.coralRed_opaque {
+    background: var(--coralRed_opaque);
+}
+
+.lapisBlue_opaque {
+    background: var(--lapisBlue_opaque);
+}
+
+.pistachio_opaque {
+    background: var(--pistachio_opaque);
+}
+
+.powderBlue_opaque {
+    background: var(--powderBlue_opaque);
+}
+
+.vermilion_opaque {
+    background: var(--vermilion_opaque);
+}
+
+.iceBlue_opaque {
+    background: var(--iceBlue_opaque);
+}
+
+.deepLilac_opaque {
+    background: var(--deepLilac_opaque);
+}
+
+.saffron_opaque {
+    background: var(--saffron_opaque);
+}
+
+.oliveGreen_opaque {
+    background: var(--oliveGreen_opaque);
+}
+
+.midnightPurple_opaque {
+    background: var(--midnightPurple_opaque);
+    background-color: red;
+}
+
+.peach_opaque {
+    background: var(--peach_opaque);
+}
+
+.mint_opaque {
+    background: var(--mint_opaque);
+}
+
+.terracotta_opaque {
+    background: var(--terracotta_opaque);
+}
+
+/* Opaque Planned Variants */
+.indigoDye_opaque_planned {
+    background: var(--indigoDye_opaque_planned);
+}
+
+.persianGreen_opaque_planned {
+    background: var(--persianGreen_opaque_planned);
+}
+
+.roseTaupe_opaque_planned {
+    background: var(--roseTaupe_opaque_planned);
+}
+
+.coralRed_opaque_planned {
+    background: var(--coralRed_opaque_planned);
+}
+
+.lapisBlue_opaque_planned {
+    background: var(--lapisBlue_opaque_planned);
+}
+
+.pistachio_opaque_planned {
+    background: var(--pistachio_opaque_planned);
+}
+
+.powderBlue_opaque_planned {
+    background: var(--powderBlue_opaque_planned);
+}
+
+.vermilion_opaque_planned {
+    background: var(--vermilion_opaque_planned);
+}
+
+.iceBlue_opaque_planned {
+    background: var(--iceBlue_opaque_planned);
+}
+
+.deepLilac_opaque_planned {
+    background: var(--deepLilac_opaque_planned);
+}
+
+.saffron_opaque_planned {
+    background: var(--saffron_opaque_planned);
+}
+
+.oliveGreen_opaque_planned {
+    background: var(--oliveGreen_opaque_planned);
+    
+}
+
+
+
+.peach_opaque_planned {
+    background: var(--peach_opaque_planned);
+}
+
+.mint_opaque_planned {
+    background: var(--mint_opaque_planned);
+}
+
+.terracotta_opaque_planned {
+    background: var(--terracotta_opaque_planned);
+}
 
 
 
@@ -382,6 +575,10 @@
     background: var(--mauve_opaque_planned)
 }
 
+.midnightPurple_opaque_planned{
+    background-color: var(--midnightPurple_opaque_planned);
+}
+
 
 .aquamarine_opaque_planned{
     background: var(--aquamarine_opaque_planned)
@@ -417,3 +614,5 @@
 .mossGreen_opaque_planned{
     background:var(--mossGreen_opaque_planned)
 }
+
+

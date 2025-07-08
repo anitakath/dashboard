@@ -1,73 +1,54 @@
 
-
+import { useEffect, useState } from 'react';
 import styles from './Details.module.css'
 
-const PreviousEntries = ({openHistory, viewOldEntry, setViewOldEntry, lastFiveYears}) =>{
+const PreviousEntries = ({id, openHistory, viewOldEntry, setViewOldEntry, lastFiveYears}) =>{
 
+  const [entries, setEntries] = useState([]);
 
-    const fiveYearsExampleData = [
-        {
-          created_at: "2024-01-15T17:15:00+00:00",
-          duration: 90,
-          entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-          entryId:"3dc8f3789-2239-4c0w-9ad5-e59mnsd5642f",
-          entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-          icon: null,
-          id: 111,
-          label: "wenge",
-          name: "Gym",
-          title:"lorem ipsum at the gym",
-          userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-        },
-        {
-          created_at: "2024-01-15T17:15:00+00:00",
-          duration: 90,
-          entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-          entryId:"3fv36gzny9-2650-0huw-zzz5-e6dbnz9hunff",
-          entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-          icon: null,
-          id: 111,
-          label: "wenge",
-          name: "Gym",
-          title:"lorem ipsum at the gym",
-          userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-        },
-        {
-          created_at: "2023-01-15T17:15:00+00:00",
-          duration: 120,
-          entry:" gym session: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-          entryId:"ju87f3789-2zu9-4c0w-9if5-os89swd5642f",
-          entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-          icon: null,
-          id: 112,
-          label: "wenge",
-          name: "Gym",
-          title:"lorem ipsum at the gym - part 2",
-          userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-        },
-        {
-          created_at: "2022-01-15T17:15:00+00:00",
-          duration: 60,
-          entry:" Poledance is such  a lovely sport!.",
-          entryId:"3dh4is789-0w28-4zzz-cf65-e59mhsn2837ds",
-          entryPath: "loremIpsum-zhs827329d-242-224-nnxhsm-11",
-          icon: null,
-          id: 111,
-          label: "fandango",
-          name: "Poledance",
-          title:"lorem ipsum at the Poledance Studio",
-          userId: "29517271-304a-4ce5-a60b-881a43e91d84"
-        },
-    ]
+  useEffect(() => {
+    if (id && openHistory) {
+      fetchSportsData();
+    }
+  }, [id, openHistory]);
 
+  const fetchSportsData = async () => {
 
+    try {
+      const response = await fetch('/api/getSportsFromLastFiveYears', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, years: lastFiveYears })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+
+        const targetMonthDay = new Date(id).toISOString().slice(5, 10); // "07-08"
+        const filteredEntries = result.data.filter(entry =>
+          entry.created_at.slice(5, 10) === targetMonthDay
+        );
+  
+
+        console.log(filteredEntries)
+
+        setEntries(filteredEntries);
+
+      } else {
+        console.error(result.error);
+      }
+
+    } catch (error) {
+      console.error('Fetch failed:', error);
+    }
+  };
 
   const filterEntriesByYear = (year) => {
-    return fiveYearsExampleData.filter(entry => {
-      const entryYear = new Date(entry.created_at).getFullYear();
-      return entryYear === year;
-    });
+    return entries.filter(entry => new Date(entry.created_at).getFullYear() === year);
   };
+
+
+
 
 
     return(

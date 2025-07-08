@@ -43,7 +43,7 @@ const useFetchEntries = (userId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
+      })
 
       if (!response.ok) {
         throw new Error("Network response was not ok");

@@ -4,7 +4,9 @@ import styles from "./PlansEntryField.module.css";
 
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
-
+//COMPONETS
+import PlannedSportsCompact from "./PlanedSportsCompact";
+import PlannedSportsTable from "./PlannedSportsTable";
 
 const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -23,9 +25,19 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   const {formatDate, formatTime} = useFormatDate()
   const [expandedGroupId, setExpandedGroupId] = useState(true);
 
+  /*
   const toggleLayout = () => {
     setLayoutMode((prevMode) => (prevMode === "list" ? "grid" : "list"));
   
+  };*/
+
+  const toggleLayout = () => {
+    setLayoutMode((prevMode) => {
+      if (prevMode === "list") return "grid";
+      if (prevMode === "grid") return "table";
+      if (prevMode === "table") return "compact";
+      return "list";
+    });
   };
 
 
@@ -65,12 +77,13 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
     setExpandedGroupId(expandedGroupId === dateTitle ? null : dateTitle);
   };
 
-
   return (
     <div className="w-full">
       <button onClick={toggleLayout} className={styles.layout_btn}>
         LAYOUT
       </button>
+
+      {(layoutMode === "grid" || layoutMode === "list") && (
 
       <div
         className={`${styles.field} ${
@@ -198,12 +211,35 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
                 ))}
               </div>
               )}
-
-
-     
-            </div>
+                </div>
           ))}
       </div>
+
+
+      )}
+
+
+      {layoutMode === "table" && (
+        <div>
+
+          <PlannedSportsTable
+            groupedEntries={groupedEntries}
+          />
+        </div>
+      )}
+
+
+      {layoutMode === "compact" && (
+        <div>
+
+          <PlannedSportsCompact
+           groupedEntries={groupedEntries}
+          />
+        </div>
+      )}
+    
+     
+          
     </div>
   );
 };

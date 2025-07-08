@@ -54,7 +54,7 @@ export default function Home() {
 
       fetchData();
     }
-  }, [allSupabaseSports])
+  }, [])
 
   const addSportsToReduxStore = (arr) => {
     dispatch(setCurrentSport(arr));
@@ -95,9 +95,6 @@ export default function Home() {
   useEffect(() => {
     processSportsData();
   }, [allSupabaseSports, allSupabaseSports]);
-
-
-
 
 
 

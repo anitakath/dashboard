@@ -24,9 +24,7 @@ const Calendar = () => {
   const year = useSelector((state) => state.calendar.year)
 
   useEffect(() => {
- 
     setSelectedMonth(currentMonth);
-
     dispatch(updateDate({ month: currentMonth, year: year }));
   }, [dispatch, year]);
 

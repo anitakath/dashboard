@@ -16,7 +16,6 @@ import { updateDate } from "@/store/CalendarReducer";
 //COMPONENTS
 import EntriesByYearAndMonth from "./All/EntriesByYearAndMonth";
 
-
 const Entry = ({ filteredByDate, filteredEntries }) => {
   const currentSport = useSelector((state) => state.sport.selectedSport);
   const dispatch = useDispatch();

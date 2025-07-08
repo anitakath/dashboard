@@ -49,6 +49,9 @@ export default async (req, res) => {
       },
     ]);
 
+
+
+
     if (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -76,6 +79,7 @@ export default async (req, res) => {
       .gte("created_at", startDate)
       .lt("created_at", endDate)
       .order("id", { ascending: false });
+      
 
     if (error) {
       return res.status(500).json({ error: error.message });

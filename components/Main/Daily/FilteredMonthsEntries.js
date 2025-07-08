@@ -8,7 +8,7 @@ import { formatDate } from '@/custom-hooks/times_and_dates/useFormatDate';
 const FilteredMonthEntries = (props) =>{
 
 
-  const filteredCurrentMonthEntries = props. filteredCurrentMonthEntries
+  const filteredCurrentMonthEntries = props.filteredCurrentMonthEntries
 
 
     return (

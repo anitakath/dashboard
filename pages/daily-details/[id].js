@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faChevronLeft, faChevronUp} from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Details.module.css";
+import colors from '../../styles/Colors.module.css'
 import { useSelector } from "react-redux";
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //COMPONENTS
@@ -29,6 +30,8 @@ const DailyDetails = () => {
     const [allFilteredPlannedSports, setAllFilteredPlannedSports] = useState([])
     const allPlannedSports = useSelector((state) => state.sport.allPlannedSports)
     const dispatch = useDispatch();
+
+
 
 
   const getFormattedDate = (dateString) => {
@@ -232,7 +235,7 @@ const deletePlannedSport = async (selectedEntry) => {
               {allFilteredPlannedSports.length >= 0 && allFilteredPlannedSports.map(entry => (
                 <div 
                 key={entry.id} 
-                className={` ${styles.entryBg} ${styles[entry.label]} md:m-2 m-0 my-1 md:my-2 flex-col cursor-pointer`}
+                className={` ${styles.entryBg} ${colors[entry.label]} md:m-2 m-0 my-1 md:my-2 flex-col cursor-pointer`}
                 onClick={() => selectEntryHandler(entry)}
               >
                 <h2 className="m-2 text-xl text-center">{entry.title}</h2>
@@ -286,6 +289,7 @@ const deletePlannedSport = async (selectedEntry) => {
               viewOldEntry={viewOldEntry} 
               setViewOldEntry={setViewOldEntry} 
               lastFiveYears={lastFiveYears}
+              id={id}
             /> 
            
           </div>
