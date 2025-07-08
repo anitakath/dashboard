@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Tooltip from '../../UI/Tooltip'
 import styles from "./PlansEntryField.module.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedlayout } from "@/store/profileReducer";
 //HOOKS
 import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 //COMPONETS
@@ -11,6 +12,8 @@ import PlannedSportsTable from "./PlannedSportsTable";
 const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
+  const dispatch = useDispatch();
+  const layoutMode = useSelector((state) => state.profile.selectedLayout);
   const handleMouseEnter = (text) => {
     setTooltipText(text);
     setTooltipVisible(true);
@@ -21,7 +24,7 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   };
   // Sortiere nach dem Erstellungsdatum aufsteigend (ältestes Datum zuerst)
   const sortedByDate = [...sortedSportsArray].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-  const [layoutMode, setLayoutMode] = useState("list");
+  //const [layoutMode, setLayoutMode] = useState("list");
   const {formatDate, formatTime} = useFormatDate()
   const [expandedGroupId, setExpandedGroupId] = useState(true);
 
@@ -32,12 +35,16 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
   };*/
 
   const toggleLayout = () => {
-    setLayoutMode((prevMode) => {
-      if (prevMode === "list") return "grid";
-      if (prevMode === "grid") return "table";
-      if (prevMode === "table") return "compact";
-      return "list";
-    });
+    const nextLayout =
+    layoutMode === "list"
+      ? "grid"
+      : layoutMode === "grid"
+      ? "table"
+      : layoutMode === "table"
+      ? "compact"
+      : "list";
+
+  dispatch(setSelectedlayout(nextLayout));
   };
 
 

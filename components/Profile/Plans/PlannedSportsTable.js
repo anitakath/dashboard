@@ -1,6 +1,8 @@
 import { format, parseISO, isSameWeek, addDays, startOfWeek, compareAsc } from "date-fns";
 import styles from "./PlannedSportsTable.module.css";
 import colors from '../../../styles/Colors.module.css'
+//COMPONENTS
+import PlannedSportsTableMobile from "./PlannedSportsTableMobile";
 
 
 const getTimeSlot = (date) => {
@@ -52,6 +54,7 @@ const PlannedSportsTable = ({ groupedEntries }) => {
 
 
 
+
   const handleWeekSelect = (e) => {
     const targetId = e.target.value;
     const element = document.getElementById(targetId);
@@ -75,6 +78,11 @@ const PlannedSportsTable = ({ groupedEntries }) => {
         ))}
         </select>
     </div>
+
+
+    <PlannedSportsTableMobile
+      filteredWeeks={filteredWeeks}
+    />
 
 
       {filteredWeeks.map(([weekStart, weekEntries]) => {
@@ -104,11 +112,11 @@ const PlannedSportsTable = ({ groupedEntries }) => {
         return (
           <div key={weekStart} className={styles.week} id={weekStart}>
             <h2 className={styles.weekTitle}>
-              Woche ab {format(parseISO(weekStart), "dd.MM.yyyy")}
+              Week from {format(parseISO(weekStart), "dd.MM.yyyy")}
             </h2>
 
             <div className={styles.table}>
-              <div className={styles.cell + " " + styles.header}>Zeit</div>
+              <div className={styles.cell + " " + styles.header + " " + styles.time}>Time</div>
               {weekdays.map((day, idx) => (
                 <div key={idx} className={styles.cell + " " + styles.header}>
                   {day} 
@@ -123,10 +131,6 @@ const PlannedSportsTable = ({ groupedEntries }) => {
                   {Array.from({ length: 7 }).map((_, idx) => {
                     const currentDay = format(addDays(start, idx), "yyyy-MM-dd");
                     const entries = weekStructure[currentDay]?.[slot] || [];
-
-
-                    const labels = entries.map((entry) => entry.label)
-
                     
                     return (
                       <div key={idx} className={styles.cell}>

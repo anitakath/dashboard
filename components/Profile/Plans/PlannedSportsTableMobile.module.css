@@ -1,0 +1,64 @@
+.mobile_container {
+    display: none;
+  }
+
+
+
+
+  @media screen and (max-width: 1000px){
+    .mobile_container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      
+      .week {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 1rem;
+      }
+      
+      .weekTitle {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      
+      .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        margin: 0.4rem 0rem;
+        transition: 0.2s ease-in-out;
+      }
+
+      .card:hover{
+        transform: scale(1.02);
+        cursor: pointer;
+      }
+      
+      .date {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 0.3rem;
+      }
+      
+      .title {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
+      }
+      
+      .note {
+        font-size: 0.85rem;
+        color: #444;
+        margin-bottom: 0.3rem;
+      }
+      
+      .duration {
+        font-size: 0.75rem;
+        color: #999;
+      }
+      
+  }

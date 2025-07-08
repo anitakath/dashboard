@@ -5,6 +5,7 @@ const profileSlice = createSlice({
   initialState: {
     section: "sports",
     sportsArray: [],
+    selectedLayout: "list"
   },
   reducers: {
     setSection(state, action) {
@@ -18,6 +19,9 @@ const profileSlice = createSlice({
           state.sportsArray.push(action.payload);
         }
       }
+    },
+    setSelectedlayout(state, action){
+      state.selectedLayout = action.payload;
     },
     replaceSportsArray(state, action){
       state.sportsArray = action.payload;
@@ -33,4 +37,4 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const { setSection, setSportsArrayy, removeSport, replaceSportsArray } = profileSlice.actions;
+export const { setSection, setSportsArrayy, setSelectedlayout, removeSport, replaceSportsArray } = profileSlice.actions;
