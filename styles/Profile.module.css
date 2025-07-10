@@ -81,7 +81,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 0.7rem;
   opacity: 0.3;
 }
 
@@ -94,13 +94,9 @@
         width: 100%;
     }
 
-    .textBackground {
-        font-size: 2rem;
-    }
+   
 }
 
 @media screen and (max-width: 600px){
-        .textBackground {
-        font-size: 1.5rem;
-    }
+ 
 }

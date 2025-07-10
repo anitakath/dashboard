@@ -3,14 +3,10 @@ import styles from "./PlannedSportsTable.module.css";
 import colors from '../../../styles/Colors.module.css'
 //COMPONENTS
 import PlannedSportsTableMobile from "./PlannedSportsTableMobile";
+//CUSTOM HOOKS
+import usePlannedSports from "@/custom-hooks/times_and_dates/usePlannedSports";
 
 
-const getTimeSlot = (date) => {
-  const hour = date.getHours();
-  if (hour >= 5 && hour <= 13) return "morning";
-  if (hour >= 14 && hour <= 17) return "afternoon";
-  return "evening"; // 18–04 Uhr
-};
 
 const timeSlotLabels = {
   morning: "MORNING",
@@ -18,7 +14,6 @@ const timeSlotLabels = {
   evening: "EVENING",
 };
 
-const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
 const groupByWeek = (entries) => {
   const weeks = {};
@@ -38,7 +33,9 @@ const groupByWeek = (entries) => {
   return weeks;
 };
 
-const PlannedSportsTable = ({ groupedEntries }) => {
+const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, groupedEntries }) => {
+
+  const {getTimeSlot, weekdays} = usePlannedSports()
   const weeklyGroups = groupByWeek(groupedEntries);
 
   // ⬇️ Sortiere Wochen aufsteigend (älteste zuerst)
@@ -70,10 +67,10 @@ const PlannedSportsTable = ({ groupedEntries }) => {
       <div className={styles.selectWrapper}>
 
         <select id="week-select" onChange={handleWeekSelect}>
-        <option value="">— choose a week —</option>
+        <option value=""> choose a week </option>
         {filteredWeeks.map(([weekStart]) => (
             <option key={weekStart} value={weekStart}>
-            Woche ab {format(parseISO(weekStart), "dd.MM.yyyy")}
+            Week from {format(parseISO(weekStart), "dd.MM.yyyy")}
             </option>
         ))}
         </select>
@@ -82,6 +79,9 @@ const PlannedSportsTable = ({ groupedEntries }) => {
 
     <PlannedSportsTableMobile
       filteredWeeks={filteredWeeks}
+      formIsOpen={formIsOpen}
+      setFormIsOpen={setFormIsOpen}
+      addSportClickHandler={addSportClickHandler}
     />
 
 

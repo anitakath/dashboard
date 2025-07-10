@@ -9,7 +9,7 @@ import useFormatDate from "@/custom-hooks/times_and_dates/useFormatDate";
 import PlannedSportsCompact from "./PlanedSportsCompact";
 import PlannedSportsTable from "./PlannedSportsTable";
 
-const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
+const PlansEntryField = ({addSportClickHandler, formIsOpen, setFormIsOpen, sortedSportsArray, enlargeWorkoutHandler, editSportHandler, checkSportHandler, deleteSportHandler, openDetailsIds, isLoading }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
   const dispatch = useDispatch();
@@ -230,7 +230,10 @@ const PlansEntryField = ({sortedSportsArray, enlargeWorkoutHandler, editSportHan
         <div>
 
           <PlannedSportsTable
+            formIsOpen={formIsOpen}
+            setFormIsOpen={setFormIsOpen}
             groupedEntries={groupedEntries}
+            addSportClickHandler={addSportClickHandler}
           />
         </div>
       )}

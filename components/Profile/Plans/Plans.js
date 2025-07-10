@@ -91,6 +91,7 @@ const Plans = () => {
       <EditEntryField
         addSportBtnText={addSportVisible ? "close form" : "add a sport"}
         addSportHandler={toggleAddSport}
+        
       />
 
       <div className={styles.form_container}>
@@ -126,6 +127,9 @@ const Plans = () => {
               sortedSportsArray={sortedSportsArray}
               enlargeWorkoutHandler={enlargeWorkoutHandler}
               isLoading={isLoading}
+              formIsOpen={formIsOpen}
+              setFormIsOpen={setFormIsOpen}
+              addSportClickHandler={toggleFormVisibility}
             />
           </div>
         )}

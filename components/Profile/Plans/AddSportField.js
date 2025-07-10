@@ -35,6 +35,8 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
 
 
 
+  console.log(formIsOpen)
+
    
 
   return (

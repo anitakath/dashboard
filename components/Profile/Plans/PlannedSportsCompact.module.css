@@ -1,0 +1,28 @@
+.wrapper {
+    padding: 1rem;
+    font-family: sans-serif;
+  }
+  
+  .group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .dateTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    color: #333;
+  }
+  
+  .entryList {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .entryItem {
+    font-size: 0.95rem;
+    margin-left: 1rem;
+    color: #555;
+  }
+  

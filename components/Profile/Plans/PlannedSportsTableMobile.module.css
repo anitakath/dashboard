@@ -31,17 +31,59 @@
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         margin: 0.4rem 0rem;
         transition: 0.2s ease-in-out;
+        position: relative;
+      }
+
+      .info{
+        background-color: var(--ultraLight);
+        color: grey;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 0;
+        border-bottom: 0.5px solid lightgrey;
+        box-shadow: none;
+        margin: 5px 0px;
+      }
+
+      .button{
+        border: 0.5px solid  var(--light);
+        padding: 5px;
+        margin: 15px 0px 5px 0px;
+        background-color: var(--light);
+        transition: 0.2s ease-in-out;
+      }
+
+      .button:hover{
+        transform: scale(1.02);
+        background-color: var(--mediumLight);
+        color: beige;
+        border: 0.5px solid var(--mediumLight)
       }
 
       .card:hover{
         transform: scale(1.02);
         cursor: pointer;
       }
+
+
       
       .date {
         font-size: 0.85rem;
         color: #666;
         margin-bottom: 0.3rem;
+
+      }
+
+
+      .dayTitle{
+        margin: 30px 0px 20px 0px;
+        border-bottom: 1px solid lightgrey;
+      }
+
+      .timeOfDay{
+        margin: 20px 0px;
+        color: var(--purpleDarkHover);
+        text-align: center;
       }
       
       .title {
@@ -59,6 +101,15 @@
       .duration {
         font-size: 0.75rem;
         color: #999;
+      }
+
+      .image_container{
+        
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        height: 80%;
+        width: 20%;
       }
       
   }
