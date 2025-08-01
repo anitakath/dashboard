@@ -234,6 +234,8 @@ const PlansEntryField = ({addSportClickHandler, formIsOpen, setFormIsOpen, sorte
             setFormIsOpen={setFormIsOpen}
             groupedEntries={groupedEntries}
             addSportClickHandler={addSportClickHandler}
+            deleteSportHandler={deleteSportHandler}
+            checkSportHandler={checkSportHandler}
           />
         </div>
       )}

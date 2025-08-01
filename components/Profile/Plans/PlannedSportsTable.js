@@ -3,10 +3,10 @@ import styles from "./PlannedSportsTable.module.css";
 import colors from '../../../styles/Colors.module.css'
 //COMPONENTS
 import PlannedSportsTableMobile from "./PlannedSportsTableMobile";
+import PlannedSportItemModal from "./Modals/PlannedSportItemModal";
 //CUSTOM HOOKS
 import usePlannedSports from "@/custom-hooks/times_and_dates/usePlannedSports";
-
-
+import { useState } from "react";
 
 const timeSlotLabels = {
   morning: "MORNING",
@@ -33,10 +33,11 @@ const groupByWeek = (entries) => {
   return weeks;
 };
 
-const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, groupedEntries }) => {
+const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, groupedEntries, deleteSportHandler, checkSportHandler }) => {
 
   const {getTimeSlot, weekdays} = usePlannedSports()
   const weeklyGroups = groupByWeek(groupedEntries);
+  const [showModal, setShowModal] = useState({display: false, content: {} })
 
   // ⬇️ Sortiere Wochen aufsteigend (älteste zuerst)
   const sortedWeeks = Object.entries(weeklyGroups).sort(([a], [b]) =>
@@ -50,7 +51,11 @@ const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, g
   );
 
 
-
+  function extractTime(timeString) {
+    const match = timeString.match(/T(\d{2}:\d{2})/);
+    return match ? match[1] : '';
+  }
+  
 
   const handleWeekSelect = (e) => {
     const targetId = e.target.value;
@@ -60,10 +65,16 @@ const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, g
     }
   };
 
+
+  const showModalHandler = (entry) => {
+    setShowModal({display: true, content: entry})
+  }
+
+  console.log(showModal)
+
   return (
     <div className={styles.wrapper}>
       
-
       <div className={styles.selectWrapper}>
 
         <select id="week-select" onChange={handleWeekSelect}>
@@ -82,6 +93,11 @@ const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, g
       formIsOpen={formIsOpen}
       setFormIsOpen={setFormIsOpen}
       addSportClickHandler={addSportClickHandler}
+      setShowModal={setShowModal}
+      showModal={showModal}
+      deleteSportHandler={deleteSportHandler}
+      checkSportHandler={checkSportHandler}
+      showModalHandler={showModalHandler}
     />
 
 
@@ -115,6 +131,16 @@ const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, g
               Week from {format(parseISO(weekStart), "dd.MM.yyyy")}
             </h2>
 
+            {showModal && (
+              <PlannedSportItemModal 
+                setShowModal={setShowModal}
+                showModal={showModal}
+                deleteSportHandler={deleteSportHandler}
+                checkSportHandler={checkSportHandler}
+              /> 
+              
+            )}
+
             <div className={styles.table}>
               <div className={styles.cell + " " + styles.header + " " + styles.time}>Time</div>
               {weekdays.map((day, idx) => (
@@ -134,13 +160,13 @@ const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, g
                     
                     return (
                       <div key={idx} className={styles.cell}>
-                        {entries.map((e) => (
-                        <div key={e.id} className={`${styles.card} ${colors[e.label] || ""}`}>
-                            <div className={styles.cardTitle}>{e.title}</div>
-                            <p>{entries.label}</p>
-                            <div className={styles.cardNote}>{e.entry}</div>
-                            <div className={styles.cardTime}>{e.duration} min</div>
-                          </div>
+                        {entries.map((entry) => (
+                        <button  onClick={() => showModalHandler(entry)} key={entry.id} className={`${styles.card} ${colors[entry.label] || ""}`}>
+                            <p>{extractTime(entry.created_at)}</p>
+                            <div className={styles.cardTitle}>{entry.title}</div>
+                            <div className={styles.cardNote}>{entry.entry}</div>
+                            <div className={styles.cardTime}>{entry.duration} min</div>
+                          </button>
                         ))}
                       </div>
                     );

@@ -5,10 +5,11 @@ import colors from "../../../styles/Colors.module.css";
 import {  addDays } from "date-fns";
 //CUSTOM HOOKS
 import usePlannedSports from "@/custom-hooks/times_and_dates/usePlannedSports";
+import PlannedSportItemModal from "./Modals/PlannedSportItemModal";
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-const PlannedSportsTableMobile = ({ addSportClickHandler, formIsOpen, setFormIsOpen, filteredWeeks }) => {
+const PlannedSportsTableMobile = ({ showModal, setShowModal, showModalHandler, deleteSportHandler, checkSportHandler, addSportClickHandler, formIsOpen, setFormIsOpen, filteredWeeks }) => {
 
   const {getTimeSlot, daysOfWeek} = usePlannedSports()
 
@@ -46,6 +47,16 @@ const PlannedSportsTableMobile = ({ addSportClickHandler, formIsOpen, setFormIsO
               Week from {format(parseISO(weekStart), "dd.MM.yyyy")}
             </h2>
 
+            {showModal && (
+              <PlannedSportItemModal 
+                setShowModal={setShowModal}
+                showModal={showModal}
+                deleteSportHandler={deleteSportHandler}
+                checkSportHandler={checkSportHandler}
+              /> 
+              
+            )}
+
             {Object.entries(daysMap).map(([dateKey, { date, morning, afternoon, evening }]) => {
               const dayName = format(date, "EEEE"); // z. B. "Thursday"
               const fullDate = format(date, "dd.MM.yyyy");
@@ -64,7 +75,7 @@ const PlannedSportsTableMobile = ({ addSportClickHandler, formIsOpen, setFormIsO
                     <>
                       <h4 className={styles.timeOfDay}>Morning</h4>
                       {morning.map((entry) => (
-                        <div key={entry.id} className={`${styles.card} ${colors[entry.label] || ""}`}>
+                        <div onClick={() => showModalHandler(entry)} key={entry.id} className={`${styles.card} ${colors[entry.label] || ""}`}>
                           <div className={styles.date}>
                             {format(parseISO(entry.created_at), "dd.MM.yyyy, HH:mm")} Uhr
                           </div>
@@ -84,7 +95,7 @@ const PlannedSportsTableMobile = ({ addSportClickHandler, formIsOpen, setFormIsO
                     <>
                       <h4 className={styles.timeOfDay}>Afternoon</h4>
                       {afternoon.map((entry) => (
-                        <div key={entry.id} className={`${styles.card} ${colors[entry.label] || ""}`}>
+                        <div onClick={() => showModalHandler(entry)} key={entry.id} className={`${styles.card} ${colors[entry.label] || ""}`}>
                           <div className={styles.date}>
                             {format(parseISO(entry.created_at), "dd.MM.yyyy, HH:mm")} Uhr
                           </div>
@@ -104,7 +115,7 @@ const PlannedSportsTableMobile = ({ addSportClickHandler, formIsOpen, setFormIsO
                     <>
                       <h4 className={styles.timeOfDay}>Evening</h4>
                       {evening.map((entry) => (
-                        <div key={entry.id} className={`${styles.card} ${colors[entry.label] || ""}`}>
+                        <div onClick={() => showModalHandler(entry)} key={entry.id} className={`${styles.card} ${colors[entry.label] || ""}`}>
                           <div className={styles.date}>
                             {format(parseISO(entry.created_at), "dd.MM.yyyy, HH:mm")} Uhr
                           </div>

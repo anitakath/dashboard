@@ -21,6 +21,8 @@ const Navigation = () => {
   const allSupabaseSports = useSelector((state) => state.sport.allSupabaseSports);
   const userId = useSelector((state) => state.auth.userId);
   const calendar =  useSelector((state) => state.calendar);
+
+  
   const navigationArr = allSupabaseSports ? allSupabaseSports
     .filter((sport) => sport.userId === userId)
     .map((sport) => ({
@@ -94,8 +96,6 @@ const Navigation = () => {
 
   return (
     <div className="w-full relative  lg:my-4 p-0 flex flex-col items-center shadow-section">
-      <h1 className="title title_maxi">DASHBOARD</h1>
-
       <div className="hidden lg:inline">
         <SortSports
           sortedNavigationArr={sortedNavigationArr}

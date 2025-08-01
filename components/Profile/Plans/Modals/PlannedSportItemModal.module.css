@@ -1,0 +1,85 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(0.5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    padding: 24px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: fadeInUp 0.3s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+    transition:0.2s ease-in-out;
+   text-align: center;
+  }
+
+  .closeButton:hover{
+
+    font-size: 1.4rem;
+  }
+  
+
+  .title{
+    font-size: 1.6rem;
+  }
+ 
+
+  .subTitle{
+    font-size: 1.2rem;
+    margin: 5px 0px;
+  }
+
+
+  .done_btn{
+    margin: 0px 5px;
+    padding: 5px;
+    background-color: rgba(255,255,255, 0.3);
+    transition: 0.2s ease-in-out;
+
+  }
+
+  .delete_btn{
+    margin: 0px 5px;
+    padding: 5px;
+    transition: 0.2s ease-in-out;
+    background-color: rgba(255,255,255, 0.3);
+  }
+
+  .done_btn:hover{
+    background-color: rgb(144, 195, 144);
+  }
+
+  .delete_btn:hover{
+    background-color: rgb(244, 119, 119);
+  }
