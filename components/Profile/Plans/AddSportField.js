@@ -32,11 +32,6 @@ const AddSportField = ({addSport, addSportHandler, addSportBtnText, currentSport
   const updatedCurrentSports = updateCurrentSports([...currentSports], allPlannedSports);
   
 
-
-
-
-  console.log(formIsOpen)
-
    
 
   return (

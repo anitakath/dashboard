@@ -1,13 +1,25 @@
 import React from "react";
 import styles from "./EditEntry.module.css"; // Importiere die CSS-Moduldatei
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
+import { supabase } from "@/services/supabaseClient";
+import useFetchEntries from "@/custom-hooks/entries/useFetchEntries";
+
+export const getAccessToken = async () => {
+  const session = await supabase.auth.getSession();
+  return session?.data?.session?.access_token;
+};
 
 
 const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen }) => {
   // Füge setIsModalOpen als Prop hinzu
   const currentSports = useSelector((state) => state.sport.currentSport);
-  if (!isModalOpen) return null;
+  const userId = useSelector((state) => state.auth.userId)
+  const year = useSelector((state) => state.calendar.year)
+  const dispatch = useDispatch();
+  const {fetchPlannedSports} = useFetchEntries()
 
+  if (!isModalOpen) return null;
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -29,46 +41,41 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
     });
   };
 
-  const saveChanges = async () => {
-      if (!currentSport) return; //Check whether currentSport is set
-      try {
-        // 1. Send the edited sports object to the API for updating
-        const response = await fetch("/api/plannedSports", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(currentSport), // Send the entire current sports object
-        });
+  const saveChanges = async (e) => {
+    e.preventDefault();
+  
+  
+    if (!currentSport || !currentSport.id) {
+      console.error("Kein gültiges Sportobjekt zum Aktualisieren.");
+      return;
+    }
+  
+    try {
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Error updating planned sport:", errorData.error);
-          return; // Exit the function if an error occurs
-        }
+      const session = await supabase.auth.getSession();
+      const token = session.data.session.access_token;
 
-        const updateData = await response.json();
-        console.log("Planned sport updated successfully:", updateData);
-
-        // 2. replace the object in the local array
-        const replaceObjectInArray = (array, currentSport) => {
-          return array
-            .map((item) => {
-              if (item.entryId === currentSport.entryId) {
-                return currentSport; // Replace the object with currentSport
-              }
-              return item; //stay with the original object
-            })
-            .filter((item) => item !== null); // Filter out any zero values
-        };
-
-        setSportsArray((prevArray) =>
-          replaceObjectInArray(prevArray, currentSport)
-        );
-      } catch (error) {
-        console.error("An unexpected error occurred:", error);
+      const response = await fetch("/api/plannedSports", {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},
+        body: JSON.stringify(currentSport),
+      });
+  
+      const result = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(result.error || "Update failed");
       }
+
+      fetchPlannedSports(userId, year, dispatch)
+      
+      setIsModalOpen(false); 
+    
+    } catch (error) {
+      console.error("Fehler beim Speichern:", error.message);
+    }
   };
+  
 
 
   const formatDateForInput = (dateString) => {
@@ -84,7 +91,6 @@ const EditEntry = ({ isModalOpen, currentSport, setCurrentSport, setIsModalOpen 
     "Self Paid",
     "Other"
   ];
-
 
 
   return (

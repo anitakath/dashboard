@@ -4,6 +4,10 @@ import { createClient } from "@supabase/supabase-js";
 
 export default async function handler(req, res) {
 
+  console.log('Moincito')
+
+  console.log("📩 API request received:", req.method);
+
 
   const supabaseServerClient = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -71,27 +75,35 @@ export default async function handler(req, res) {
       }
       return res.status(200).json({ data: deleteData });
 
-    case "PUT": // Neue Methode zum Aktualisieren eines Eintrags
-      console.log("Received PUT request with body:", req.body);
-     
-      const { id, ...updateFields } = req.body; // Extrahiere id und die restlichen Felder
-      const { data: updateData, error: updateError } = await supabaseServerClient
-        .from("sports_planned")
-        .update(updateFields)
-        .eq("id", id); // Hier wird angenommen, dass 'id' der Primärschlüssel ist
-
-      if (updateError) {
-        return res.status(400).json({ error: updateError.message });
-      }
-      return res.status(200).json({ data: updateData });
-
-    default:
-    res.setHeader("Access-Control-Allow-Origin", "*"); // Erlaube alle Ursprünge (oder spezifische Domains)
-    res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET, POST, PUT, DELETE"
-    );
-    res.setHeader("Allow", ["POST", "GET", "DELETE", "PUT"]);
-      return res.status(405).end(`Method ${req.method} Not Allowed`);
+      case "PUT":
+        try {
+          const { id, ...updateFields } = req.body;
+      
+          console.log("🔄 PUT request received");
+          console.log("🔎 Updating entry with ID:", id);
+          console.log("🛠 Update fields:", updateFields);
+      
+          if (!id) {
+            return res.status(400).json({ error: "Missing ID for update." });
+          }
+      
+          const { data: updatedData, error: updateError } = await supabaseServerClient
+            .from("sports_planned")
+            .update(updateFields)
+            .eq("id", id)
+            .select();
+      
+          if (updateError) {
+            console.error("❌ Update error:", updateError.message);
+            return res.status(400).json({ error: updateError.message });
+          }
+      
+          console.log("✅ Update successful:", updatedData);
+          return res.status(200).json({ data: updatedData });
+        } catch (error) {
+          console.error("❗ Unexpected error during PUT:", error.message);
+          return res.status(500).json({ error: "Internal server error." });
+        }
+      
   }
 }
