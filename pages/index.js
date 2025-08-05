@@ -24,9 +24,14 @@ export default function Home() {
   const userId = useSelector((state)=> state.auth.userId)
   const {fetchSportsData} = useFetchEntries();
 
+
+  const selectedSport = useSelector((state) => state.sport)
+
+  
   useEffect(() => {
     dispatch(setSelectedSport("all"))
   }, [dispatch])
+
 
   useEffect(() => {
 

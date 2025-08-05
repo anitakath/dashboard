@@ -191,19 +191,22 @@ const deletePlannedSport = async (selectedEntry) => {
         </div>
 
         <div className="w-full">
-          <div className="flex justify-center">
-          <h1 className=" md:text-xl flex justify-center my-6">
-            {formattedDate}
-          </h1>
-          <button 
-            onClick={() => setCurrentFormat(currentFormat === 'US' ? 'UK' : currentFormat === 'UK' ? 'DE' : 'US')} 
-            className="mx-2 "
-          >
-            {currentFormat === 'US' && <span> 🇺🇸 </span>}
-            {currentFormat === 'UK' && <span> 🇬🇧 </span>}
-            {currentFormat === 'DE' && <span> 🇩🇪 </span>}
-            
-          </button>
+          <div className="flex justify-center items-center">
+
+            <h1 className=" md:text-xl flex justify-center my-6">
+              {formattedDate}
+            </h1>
+            <button 
+              onClick={() => setCurrentFormat(currentFormat === 'US' ? 'UK' : currentFormat === 'UK' ? 'DE' : 'US')} 
+              className="mx-2  "
+            >
+              {currentFormat === 'US' && <span> 🇺🇸 </span>}
+              {currentFormat === 'UK' && <span> 🇬🇧 </span>}
+              {currentFormat === 'DE' && <span> 🇩🇪 </span>}
+
+            </button>
+      
+            <h2 className="mx-2 text-xs "> <em> change date</em>  </h2>
           </div>
 
 
@@ -216,7 +219,7 @@ const deletePlannedSport = async (selectedEntry) => {
               {filteredEntries.length >= 0 && filteredEntries.map(entry => (
                 <div 
                   key={entry.id} 
-                  className={` ${styles.entryBg} ${styles[entry.label]} md:m-2 m-0 my-1 md:my-2 flex-col cursor-pointer`}
+                  className={` ${styles.entryBg} ${colors[entry.label]} md:m-2 m-0 my-1 md:my-2 flex-col cursor-pointer`}
                   onClick={() => selectEntryHandler(entry)}
                 >
                   <h2 className="m-2 text-xl text-center">{entry.title}</h2>
@@ -239,6 +242,7 @@ const deletePlannedSport = async (selectedEntry) => {
                 onClick={() => selectEntryHandler(entry)}
               >
                 <h2 className="m-2 text-xl text-center">{entry.title}</h2>
+               
               </div>
               ))}
 
