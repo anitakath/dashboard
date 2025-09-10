@@ -33,7 +33,7 @@ const groupByWeek = (entries) => {
   return weeks;
 };
 
-const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, groupedEntries, deleteSportHandler, checkSportHandler }) => {
+const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, groupedEntries, deleteSportHandler, checkSportHandler, editSportHandler }) => {
 
   const {getTimeSlot, weekdays} = usePlannedSports()
   const weeklyGroups = groupByWeek(groupedEntries);
@@ -70,7 +70,6 @@ const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, g
     setShowModal({display: true, content: entry})
   }
 
-  console.log(showModal)
 
   return (
     <div className={styles.wrapper}>
@@ -137,6 +136,7 @@ const PlannedSportsTable = ({ addSportClickHandler, formIsOpen, setFormIsOpen, g
                 showModal={showModal}
                 deleteSportHandler={deleteSportHandler}
                 checkSportHandler={checkSportHandler}
+                editSportHandler={editSportHandler}
               /> 
               
             )}

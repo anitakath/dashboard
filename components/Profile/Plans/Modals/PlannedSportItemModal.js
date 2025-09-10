@@ -1,7 +1,7 @@
 import styles from './PlannedSportItemModal.module.css';
 import colors from '../../../../styles/Colors.module.css'
 
-const PlannedSportItemModal = ({ showModal, setShowModal, checkSportHandler, deleteSportHandler }) => {
+const PlannedSportItemModal = ({ showModal, setShowModal, checkSportHandler, deleteSportHandler, editSportHandler }) => {
   const { display, content } = showModal;
 
   if (!display) return null;
@@ -24,6 +24,9 @@ const PlannedSportItemModal = ({ showModal, setShowModal, checkSportHandler, del
       checkSportHandler(content)
     } else if( action === "delete"){
       deleteSportHandler(content)
+    } else if(action === "edit"){
+      editSportHandler(content)
+
     }
 
     setShowModal({display: false, content: {}})
@@ -45,6 +48,7 @@ const PlannedSportItemModal = ({ showModal, setShowModal, checkSportHandler, del
         <div className='flex w-full justify-end '>
           <button className={styles.done_btn} onClick={() =>contentHandler("check", content)}> done </button>
           <button className={styles.delete_btn} onClick={() =>contentHandler("delete", content)}> delete </button>
+          <button className={styles.delete_btn} onClick={() =>contentHandler("edit", content)}> edit</button>
         </div>
       
       </div>

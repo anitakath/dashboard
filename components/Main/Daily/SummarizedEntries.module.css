@@ -19,8 +19,30 @@
 .placeholdersDiv{
     height: 400px;
     overflow: scroll;
-    background-color: var(--purpleDarkHoverOpacity);
-    box-shadow: 0px 0px 2px grey;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.select_input{
+    transition: 0.2s ease-in-out;
+    padding: 10px;
+    margin: 3px;
+}
+
+.select_input:hover{
+    color: var(--purpleDarkHover);
+    cursor: pointer;
+}
+
+.select_input:focus{
+    outline: none;
+}
+
+.select_input_active{
+    border-bottom: 2px solid var(--purpleDarkHoverOpacity);
+    padding-bottom: 5px;
+    color: var(--purpleDark);
 }
 
 .title{
@@ -51,7 +73,7 @@
     text-align: center; 
     display: flex;
     flex-direction: column;
-    height: 35px;
+    height: 47px;
     position: relative;
     overflow: scroll;
 }

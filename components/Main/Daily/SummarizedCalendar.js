@@ -45,11 +45,11 @@ const SummarizedCalendar = (props) => {
                 </div>
                 <div className={styles.placeholdersDiv}>
                     <select
-                        className="bg-white p-2 m-2"
+                        className={`${styles.select_input} ${selectedSport != "" ? styles.select_input_active : ''}`}
                         value={selectedSport}
                         onChange={(e) => setSelectedSport(e.target.value)}
                     >
-                        <option value="">-- Alle Sportarten --</option>
+                        <option value=""> Filter out a specific sport </option>
                         {allSports.map((sport) => (
                             <option key={sport.name} value={sport.name}>
                                 {sport.name}
@@ -91,6 +91,25 @@ const SummarizedCalendar = (props) => {
                                                         <div key={entry.entryId} className={`${styles.sport_subsectionLabel} ${entryClass}`} style={{ height }}> </div>
                                                     );
                                                 })}
+
+
+                                                 {selectedSport === "" && allPlannedSports && allPlannedSports.filter(sport => {
+                                                        const sportDate = new Date(sport.created_at).toISOString().split("T")[0];
+                                                        return sportDate === dateString && sportDate >= new Date().toISOString().split("T")[0]; // Nur zukünftige Sporteinheiten für den aktuellen Tag
+                                                    }).map((plannedSport) => {
+                                                        const plannedHeight = plannedSport.duration < 20 ? "3px" : `${Math.floor(plannedSport.duration / 20) * 5}px`;
+
+                                                        const plannedEntryClass = colors[`${plannedSport.label}_opaque_planned`] || styles.defaultLabel;
+                                                      return (
+                                                        <div key={plannedSport.entryId} className={`${styles.sport_subsectionLabel} ${plannedEntryClass}`} style={{ height: plannedHeight}}>
+                                                        
+                                                        </div>
+                                                        );
+                                                })}
+
+
+
+
                                             </div>
                                         </div>
                                     );
